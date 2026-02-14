@@ -5,7 +5,7 @@
     "slug": "two-sum",
     "difficulty": "Easy",
     "algorithmType": "two_pointer",
-    "status": "complete",
+    "status": "strong",
     "tags": [
       "Array",
       "Hash Table"
@@ -29,14 +29,14 @@
     "brute_force_steps": [],
     "optimal_steps": [],
     "complexity": {
-      "brute": "O(n²)",
+      "brute": "O(n\u00c2\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
     },
     "pattern_capsule": {
       "invariant": "For any x, we need (target - x) to exist.",
       "trigger": "Find a pair with a specific sum.",
-      "mistake": "Using nested loops (O(n²)) instead of a Hash Map (O(n))."
+      "mistake": "Using nested loops (O(n\u00c2\u00b2)) instead of a Hash Map (O(n))."
     },
     "thinking_guide": {
       "first_principles": [
@@ -62,7 +62,26 @@
         "5. If found, return the current index and the stored index.",
         "6. If not found, store the current number and its index in the map."
       ]
-    }
+    },
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Requires finding a pair with a specific sum.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "patternSignals": [
+      "Requires finding a pair with a specific sum.",
+      "Uses Array logic."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Single element",
+      "Maximum constraints"
+    ],
+    "strategyShift": "Use a hash map to store the values and their indices. For each element, check if the complement (target - value) exists in the map.",
+    "naiveApproach": "Check every pair of elements to see if their sum matches the target.",
+    "optimalApproach": "Use a hash map to store the values and their indices. For each element, check if the complement (target - value) exists in the map.",
+    "simpleExplanation": "Requires finding a pair with a specific sum.",
+    "subPattern": "opposite_direction",
+    "patternLevel": "core_patterns"
   },
   {
     "id": 2,
@@ -91,7 +110,18 @@
       "brute": "O(m+n)",
       "optimal": "O(max(m,n))",
       "space": "O(max(m,n))"
-    }
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "time_complexity": "O(max(m,n))",
+    "space_complexity": "O(max(m,n))",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
   },
   {
     "id": 3,
@@ -99,7 +129,7 @@
     "slug": "longest-substring-without-repeating-characters",
     "difficulty": "Medium",
     "algorithmType": "sliding_window",
-    "status": "complete",
+    "status": "strong",
     "tags": [
       "Hash Table",
       "String",
@@ -127,7 +157,7 @@
     "brute_force_steps": [],
     "optimal_steps": [],
     "complexity": {
-      "brute": "O(n²)",
+      "brute": "O(n\u00c2\u00b2)",
       "optimal": "O(n)",
       "space": "O(min(m, n))"
     },
@@ -160,7 +190,26 @@
         "5. At each step, update the maximum length (`right - left + 1`).",
         "6. Return the maximum length found."
       ]
-    }
+    },
+    "primaryPattern": "sliding_window",
+    "shortPatternReason": "Contiguous segment check for uniqueness.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(min(m, n))",
+    "patternSignals": [
+      "Contiguous segment check for uniqueness.",
+      "Uses Sliding Window logic."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Single element",
+      "Maximum constraints"
+    ],
+    "strategyShift": "Use the sliding window technique with two pointers (left and right). Expand the right pointer to include characters and shrink the left pointer when a duplicate is found.",
+    "naiveApproach": "Check every possible substring and verify if it has repeating characters. Keep track of the maximum length found.",
+    "optimalApproach": "Use the sliding window technique with two pointers (left and right). Expand the right pointer to include characters and shrink the left pointer when a duplicate is found.",
+    "simpleExplanation": "Contiguous segment check for uniqueness.",
+    "subPattern": "variable_window",
+    "patternLevel": "core_patterns"
   },
   {
     "id": 4,
@@ -258,7 +307,18 @@
         "5. If left element in X > right element in Y, move search left. Otherwise, move right.",
         "6. Calculate median based on max-lefts and min-rights."
       ]
-    }
+    },
+    "strategyShift": "Use binary search to find the correct partition point between the two arrays such that all elements on the left are smaller than all elements on the right.",
+    "naiveApproach": "Merge the two sorted arrays into one large sorted array and Find the middle element.",
+    "optimalApproach": "Use binary search to find the correct partition point between the two arrays such that all elements on the left are smaller than all elements on the right.",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "time_complexity": "O(log(min(m,n)))",
+    "space_complexity": "O(1)",
+    "subPattern": "classic",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "binary_search"
   },
   {
     "id": 5,
@@ -286,7 +346,16 @@
       "python": ""
     },
     "time_complexity": "O(n^2)",
-    "space_complexity": "O(1)"
+    "space_complexity": "O(1)",
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "opposite_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
   },
   {
     "id": 6,
@@ -314,7 +383,16 @@
       "python": ""
     },
     "time_complexity": "O(n)",
-    "space_complexity": "O(n)"
+    "space_complexity": "O(n)",
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
   },
   {
     "id": 7,
@@ -340,7 +418,16 @@
       "python": ""
     },
     "time_complexity": "O(log(x))",
-    "space_complexity": "O(1)"
+    "space_complexity": "O(1)",
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
   },
   {
     "id": 8,
@@ -367,7 +454,16 @@
       "python": ""
     },
     "time_complexity": "O(n)",
-    "space_complexity": "O(1)"
+    "space_complexity": "O(1)",
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
   },
   {
     "id": 9,
@@ -393,7 +489,16 @@
       "python": ""
     },
     "time_complexity": "O(log(x))",
-    "space_complexity": "O(1)"
+    "space_complexity": "O(1)",
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
   },
   {
     "id": 10,
@@ -425,6 +530,4697 @@
       "python": ""
     },
     "time_complexity": "O((m+n) * 2^(m+n))",
-    "space_complexity": "O(m+n)"
+    "space_complexity": "O(m+n)",
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Explore this fundamental computational pattern.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns",
+    "primaryPattern": "two_pointer"
+  },
+  {
+    "id": 11,
+    "title": "Container With Most Water",
+    "slug": "container-with-most-water",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Shrinking search space by moving pointers inward.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Container With Most Water.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Two Pointer.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Shrinking search space by moving pointers inward."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Container With Most Water."
+      ],
+      "pattern_signals": [
+        "Shrinking search space by moving pointers inward."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Two Pointer.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Two Pointer.",
+    "simpleExplanation": "Shrinking search space by moving pointers inward.",
+    "subPattern": "opposite_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 12,
+    "title": "3Sum",
+    "slug": "3sum",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Sorted array traversal with fixed element and two pointers.",
+    "time_complexity": "O(n\u00b2)",
+    "space_complexity": "O(log n) to O(n)",
+    "problem_statement": "Standard LeetCode problem: 3Sum.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Two Pointer.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n\u00b2)",
+      "space": "O(log n) to O(n)"
+    },
+    "patternSignals": [
+      "Sorted array traversal with fixed element and two pointers."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of 3Sum."
+      ],
+      "pattern_signals": [
+        "Sorted array traversal with fixed element and two pointers."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Two Pointer.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Two Pointer.",
+    "simpleExplanation": "Sorted array traversal with fixed element and two pointers.",
+    "subPattern": "opposite_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 13,
+    "title": "Valid Parentheses",
+    "slug": "valid-parentheses",
+    "difficulty": "Easy",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "array_basics",
+    "shortPatternReason": "LIFO behavior for matching brackets.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Valid Parentheses.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Stack.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "LIFO behavior for matching brackets."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Valid Parentheses."
+      ],
+      "pattern_signals": [
+        "LIFO behavior for matching brackets."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Stack.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Stack.",
+    "simpleExplanation": "LIFO behavior for matching brackets.",
+    "subPattern": "prefix_sum",
+    "patternLevel": "foundation"
+  },
+  {
+    "id": 14,
+    "title": "Merge Two Sorted Lists",
+    "slug": "merge-two-sorted-lists",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Pointer manipulation in sorted sequences.",
+    "time_complexity": "O(n+m)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Merge Two Sorted Lists.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Linked List.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n+m)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Pointer manipulation in sorted sequences."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Merge Two Sorted Lists."
+      ],
+      "pattern_signals": [
+        "Pointer manipulation in sorted sequences."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Linked List.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Linked List.",
+    "simpleExplanation": "Pointer manipulation in sorted sequences.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 15,
+    "title": "Generate Parentheses",
+    "slug": "generate-parentheses",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Recursive generation with valid pairing constraints.",
+    "time_complexity": "O(4\u207f / \u221an)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Generate Parentheses.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Backtracking.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(4\u207f / \u221an)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Recursive generation with valid pairing constraints."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Generate Parentheses."
+      ],
+      "pattern_signals": [
+        "Recursive generation with valid pairing constraints."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Backtracking.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Backtracking.",
+    "simpleExplanation": "Recursive generation with valid pairing constraints.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 16,
+    "title": "Merge k Sorted Lists",
+    "slug": "merge-k-sorted-lists",
+    "difficulty": "Hard",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "K-way merge using a min-heap.",
+    "time_complexity": "O(N log k)",
+    "space_complexity": "O(k)",
+    "problem_statement": "Standard LeetCode problem: Merge k Sorted Lists.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Heap / Priority Queue.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(N log k)",
+      "space": "O(k)"
+    },
+    "patternSignals": [
+      "K-way merge using a min-heap."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Merge k Sorted Lists."
+      ],
+      "pattern_signals": [
+        "K-way merge using a min-heap."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Heap / Priority Queue.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Heap / Priority Queue.",
+    "simpleExplanation": "K-way merge using a min-heap.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 17,
+    "title": "Search in Rotated Sorted Array",
+    "slug": "search-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "binary_search",
+    "shortPatternReason": "Logarithmic search in modified sorted space.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Search in Rotated Sorted Array.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Binary Search.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Logarithmic search in modified sorted space."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Search in Rotated Sorted Array."
+      ],
+      "pattern_signals": [
+        "Logarithmic search in modified sorted space."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Binary Search.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Binary Search.",
+    "simpleExplanation": "Logarithmic search in modified sorted space.",
+    "subPattern": "rotated_array_search",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 18,
+    "title": "Permutations",
+    "slug": "permutations",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "Generating all possible orderings recursively.",
+    "time_complexity": "O(n * n!)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Permutations.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Backtracking.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * n!)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Generating all possible orderings recursively."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Permutations."
+      ],
+      "pattern_signals": [
+        "Generating all possible orderings recursively."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Backtracking.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Backtracking.",
+    "simpleExplanation": "Generating all possible orderings recursively.",
+    "subPattern": "dfs_backtracking",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 19,
+    "title": "Group Anagrams",
+    "slug": "group-anagrams",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Categorizing strings by sorted key or frequency frequency.",
+    "time_complexity": "O(n * k log k)",
+    "space_complexity": "O(n * k)",
+    "problem_statement": "Standard LeetCode problem: Group Anagrams.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Array.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * k log k)",
+      "space": "O(n * k)"
+    },
+    "patternSignals": [
+      "Categorizing strings by sorted key or frequency frequency."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Group Anagrams."
+      ],
+      "pattern_signals": [
+        "Categorizing strings by sorted key or frequency frequency."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Array.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Array.",
+    "simpleExplanation": "Categorizing strings by sorted key or frequency frequency.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 20,
+    "title": "Maximum Subarray",
+    "slug": "maximum-subarray",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Local vs Global maxima optimization (Kadane's).",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Maximum Subarray.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Local vs Global maxima optimization (Kadane's)."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Maximum Subarray."
+      ],
+      "pattern_signals": [
+        "Local vs Global maxima optimization (Kadane's)."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Local vs Global maxima optimization (Kadane's).",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 21,
+    "title": "Jump Game",
+    "slug": "jump-game",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Tracking maximum reachable index greedily.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Jump Game.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Greedy.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Tracking maximum reachable index greedily."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Jump Game."
+      ],
+      "pattern_signals": [
+        "Tracking maximum reachable index greedily."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Greedy.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Greedy.",
+    "simpleExplanation": "Tracking maximum reachable index greedily.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 22,
+    "title": "Merge Intervals",
+    "slug": "merge-intervals",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Sorting and merging overlapping ranges.",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Merge Intervals.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Array.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n log n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Sorting and merging overlapping ranges."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Merge Intervals."
+      ],
+      "pattern_signals": [
+        "Sorting and merging overlapping ranges."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Array.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Array.",
+    "simpleExplanation": "Sorting and merging overlapping ranges.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 23,
+    "title": "Climbing Stairs",
+    "slug": "climbing-stairs",
+    "difficulty": "Easy",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Optimal substructure using Fibonacci relation.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Climbing Stairs.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Optimal substructure using Fibonacci relation."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Climbing Stairs."
+      ],
+      "pattern_signals": [
+        "Optimal substructure using Fibonacci relation."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Optimal substructure using Fibonacci relation.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 24,
+    "title": "Search a 2D Matrix",
+    "slug": "search-a-2d-matrix",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "binary_search",
+    "shortPatternReason": "Treating matrix as flattened sorted array.",
+    "time_complexity": "O(log(m*n))",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Search a 2D Matrix.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Binary Search.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log(m*n))",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Treating matrix as flattened sorted array."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Search a 2D Matrix."
+      ],
+      "pattern_signals": [
+        "Treating matrix as flattened sorted array."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Binary Search.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Binary Search.",
+    "simpleExplanation": "Treating matrix as flattened sorted array.",
+    "subPattern": "classic",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 25,
+    "title": "Minimum Window Substring",
+    "slug": "minimum-window-substring",
+    "difficulty": "Hard",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "sliding_window",
+    "shortPatternReason": "Dynamic window expansion and contraction for constraint.",
+    "time_complexity": "O(n+m)",
+    "space_complexity": "O(m)",
+    "problem_statement": "Standard LeetCode problem: Minimum Window Substring.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Sliding Window.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n+m)",
+      "space": "O(m)"
+    },
+    "patternSignals": [
+      "Dynamic window expansion and contraction for constraint."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Minimum Window Substring."
+      ],
+      "pattern_signals": [
+        "Dynamic window expansion and contraction for constraint."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Sliding Window.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Sliding Window.",
+    "simpleExplanation": "Dynamic window expansion and contraction for constraint.",
+    "subPattern": "minimum_type",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 26,
+    "title": "Subsets",
+    "slug": "subsets",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "Power set generation via inclusion/exclusion.",
+    "time_complexity": "O(n * 2\u207f)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Subsets.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Backtracking.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * 2\u207f)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Power set generation via inclusion/exclusion."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Subsets."
+      ],
+      "pattern_signals": [
+        "Power set generation via inclusion/exclusion."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Backtracking.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Backtracking.",
+    "simpleExplanation": "Power set generation via inclusion/exclusion.",
+    "subPattern": "dfs_backtracking",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 27,
+    "title": "Word Search",
+    "slug": "word-search",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "DFS traversal with state backtracking on grid.",
+    "time_complexity": "O(N * 3\u1d38)",
+    "space_complexity": "O(L)",
+    "problem_statement": "Standard LeetCode problem: Word Search.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Backtracking.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(N * 3\u1d38)",
+      "space": "O(L)"
+    },
+    "patternSignals": [
+      "DFS traversal with state backtracking on grid."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Word Search."
+      ],
+      "pattern_signals": [
+        "DFS traversal with state backtracking on grid."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Backtracking.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Backtracking.",
+    "simpleExplanation": "DFS traversal with state backtracking on grid.",
+    "subPattern": "dfs_backtracking",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 28,
+    "title": "Validate Binary Search Tree",
+    "slug": "validate-binary-search-tree",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Recursive range check for child nodes.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Validate Binary Search Tree.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Recursive range check for child nodes."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Validate Binary Search Tree."
+      ],
+      "pattern_signals": [
+        "Recursive range check for child nodes."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Recursive range check for child nodes.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 29,
+    "title": "Binary Tree Level Order Traversal",
+    "slug": "binary-tree-level-order-traversal",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "Queue-based breadth-first visit.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Binary Tree Level Order Traversal.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Graph (BFS/DFS).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Queue-based breadth-first visit."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Binary Tree Level Order Traversal."
+      ],
+      "pattern_signals": [
+        "Queue-based breadth-first visit."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Graph (BFS/DFS).",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Graph (BFS/DFS).",
+    "simpleExplanation": "Queue-based breadth-first visit.",
+    "subPattern": "bfs_level_order",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 30,
+    "title": "Maximum Depth of Binary Tree",
+    "slug": "maximum-depth-of-binary-tree",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Recursive height calculation (1 + max(L, R)).",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Maximum Depth of Binary Tree.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Recursive height calculation (1 + max(L, R))."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Maximum Depth of Binary Tree."
+      ],
+      "pattern_signals": [
+        "Recursive height calculation (1 + max(L, R))."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Recursive height calculation (1 + max(L, R)).",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 31,
+    "title": "Best Time to Buy and Sell Stock",
+    "slug": "best-time-to-buy-and-sell-stock",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Tracking historical minimum for future profit.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Best Time to Buy and Sell Stock.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Tracking historical minimum for future profit."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Best Time to Buy and Sell Stock."
+      ],
+      "pattern_signals": [
+        "Tracking historical minimum for future profit."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Tracking historical minimum for future profit.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 32,
+    "title": "Longest Consecutive Sequence",
+    "slug": "longest-consecutive-sequence",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Unordered set lookup for sequence starts.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Longest Consecutive Sequence.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Array.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Unordered set lookup for sequence starts."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Longest Consecutive Sequence."
+      ],
+      "pattern_signals": [
+        "Unordered set lookup for sequence starts."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Array.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Array.",
+    "simpleExplanation": "Unordered set lookup for sequence starts.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 33,
+    "title": "Clone Graph",
+    "slug": "clone-graph",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "Deep copy using traversal and map state.",
+    "time_complexity": "O(V+E)",
+    "space_complexity": "O(V)",
+    "problem_statement": "Standard LeetCode problem: Clone Graph.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Graph (BFS/DFS).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(V+E)",
+      "space": "O(V)"
+    },
+    "patternSignals": [
+      "Deep copy using traversal and map state."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Clone Graph."
+      ],
+      "pattern_signals": [
+        "Deep copy using traversal and map state."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Graph (BFS/DFS).",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Graph (BFS/DFS).",
+    "simpleExplanation": "Deep copy using traversal and map state.",
+    "subPattern": "bfs_level_order",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 34,
+    "title": "Single Number",
+    "slug": "single-number",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "XOR property to cancel out duplicates.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Single Number.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Array.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "XOR property to cancel out duplicates."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Single Number."
+      ],
+      "pattern_signals": [
+        "XOR property to cancel out duplicates."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Array.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Array.",
+    "simpleExplanation": "XOR property to cancel out duplicates.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 35,
+    "title": "Word Break",
+    "slug": "word-break",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Boolean DP tracking word segmentability.",
+    "time_complexity": "O(n\u00b3)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Word Break.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n\u00b3)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Boolean DP tracking word segmentability."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Word Break."
+      ],
+      "pattern_signals": [
+        "Boolean DP tracking word segmentability."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Boolean DP tracking word segmentability.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 36,
+    "title": "Linked List Cycle",
+    "slug": "linked-list-cycle",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Floyd's Tortoise and Hare detection.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Linked List Cycle.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Two Pointer.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Floyd's Tortoise and Hare detection."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Linked List Cycle."
+      ],
+      "pattern_signals": [
+        "Floyd's Tortoise and Hare detection."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Two Pointer.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Two Pointer.",
+    "simpleExplanation": "Floyd's Tortoise and Hare detection.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 37,
+    "title": "Maximum Product Subarray",
+    "slug": "maximum-product-subarray",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Tracking current min/max to handle negatives.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Maximum Product Subarray.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Tracking current min/max to handle negatives."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Maximum Product Subarray."
+      ],
+      "pattern_signals": [
+        "Tracking current min/max to handle negatives."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Tracking current min/max to handle negatives.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 38,
+    "title": "Find Minimum in Rotated Sorted Array",
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "binary_search",
+    "shortPatternReason": "Logarithmic search for inflection point.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Find Minimum in Rotated Sorted Array.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Binary Search.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Logarithmic search for inflection point."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Find Minimum in Rotated Sorted Array."
+      ],
+      "pattern_signals": [
+        "Logarithmic search for inflection point."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Binary Search.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Binary Search.",
+    "simpleExplanation": "Logarithmic search for inflection point.",
+    "subPattern": "classic",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 39,
+    "title": "Min Stack",
+    "slug": "min-stack",
+    "difficulty": "Easy",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "array_basics",
+    "shortPatternReason": "Auxiliary stack to track historical minima.",
+    "time_complexity": "O(1)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Min Stack.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Stack.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(1)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Auxiliary stack to track historical minima."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Min Stack."
+      ],
+      "pattern_signals": [
+        "Auxiliary stack to track historical minima."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Stack.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Stack.",
+    "simpleExplanation": "Auxiliary stack to track historical minima.",
+    "subPattern": "prefix_sum",
+    "patternLevel": "foundation"
+  },
+  {
+    "id": 40,
+    "title": "House Robber",
+    "slug": "house-robber",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Non-adjacent max sum recurrence.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: House Robber.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Non-adjacent max sum recurrence."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of House Robber."
+      ],
+      "pattern_signals": [
+        "Non-adjacent max sum recurrence."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Non-adjacent max sum recurrence.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 41,
+    "title": "Number of Islands",
+    "slug": "number-of-islands",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "Grid traversal to group connected components.",
+    "time_complexity": "O(M*N)",
+    "space_complexity": "O(M*N)",
+    "problem_statement": "Standard LeetCode problem: Number of Islands.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Graph (BFS/DFS).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(M*N)",
+      "space": "O(M*N)"
+    },
+    "patternSignals": [
+      "Grid traversal to group connected components."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Number of Islands."
+      ],
+      "pattern_signals": [
+        "Grid traversal to group connected components."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Graph (BFS/DFS).",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Graph (BFS/DFS).",
+    "simpleExplanation": "Grid traversal to group connected components.",
+    "subPattern": "bfs_level_order",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 42,
+    "title": "Reverse Linked List",
+    "slug": "reverse-linked-list",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "In-place pointer reversal logic.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Reverse Linked List.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Two Pointer.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "In-place pointer reversal logic."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Reverse Linked List."
+      ],
+      "pattern_signals": [
+        "In-place pointer reversal logic."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Two Pointer.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Two Pointer.",
+    "simpleExplanation": "In-place pointer reversal logic.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 43,
+    "title": "Course Schedule",
+    "slug": "course-schedule",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "Cycle detection in DAG (Topological Sort).",
+    "time_complexity": "O(V+E)",
+    "space_complexity": "O(V+E)",
+    "problem_statement": "Standard LeetCode problem: Course Schedule.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Graph (BFS/DFS).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(V+E)",
+      "space": "O(V+E)"
+    },
+    "patternSignals": [
+      "Cycle detection in DAG (Topological Sort)."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Course Schedule."
+      ],
+      "pattern_signals": [
+        "Cycle detection in DAG (Topological Sort)."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Graph (BFS/DFS).",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Graph (BFS/DFS).",
+    "simpleExplanation": "Cycle detection in DAG (Topological Sort).",
+    "subPattern": "bfs_level_order",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 44,
+    "title": "Implement Trie (Prefix Tree)",
+    "slug": "implement-trie-prefix-tree",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Character-based path traversal logic.",
+    "time_complexity": "O(L)",
+    "space_complexity": "O(Words * L)",
+    "problem_statement": "Standard LeetCode problem: Implement Trie (Prefix Tree).",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(L)",
+      "space": "O(Words * L)"
+    },
+    "patternSignals": [
+      "Character-based path traversal logic."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Implement Trie (Prefix Tree)."
+      ],
+      "pattern_signals": [
+        "Character-based path traversal logic."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Character-based path traversal logic.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 45,
+    "title": "Kth Largest Element in an Array",
+    "slug": "kth-largest-element-in-an-array",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Min-heap for tracking top K elements.",
+    "time_complexity": "O(n log k)",
+    "space_complexity": "O(k)",
+    "problem_statement": "Standard LeetCode problem: Kth Largest Element in an Array.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Heap / Priority Queue.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n log k)",
+      "space": "O(k)"
+    },
+    "patternSignals": [
+      "Min-heap for tracking top K elements."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Kth Largest Element in an Array."
+      ],
+      "pattern_signals": [
+        "Min-heap for tracking top K elements."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Heap / Priority Queue.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Heap / Priority Queue.",
+    "simpleExplanation": "Min-heap for tracking top K elements.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 46,
+    "title": "Invert Binary Tree",
+    "slug": "invert-binary-tree",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Recursive swap of left and right children.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Invert Binary Tree.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Recursive swap of left and right children."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Invert Binary Tree."
+      ],
+      "pattern_signals": [
+        "Recursive swap of left and right children."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Recursive swap of left and right children.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 47,
+    "title": "Kth Smallest Element in a BST",
+    "slug": "kth-smallest-element-in-a-bst",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Inorder traversal property of BST.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Kth Smallest Element in a BST.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Inorder traversal property of BST."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Kth Smallest Element in a BST."
+      ],
+      "pattern_signals": [
+        "Inorder traversal property of BST."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Inorder traversal property of BST.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 48,
+    "title": "Implement Queue using Stacks",
+    "slug": "implement-queue-using-stacks",
+    "difficulty": "Easy",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "array_basics",
+    "shortPatternReason": "Simulating FIFO with two LIFO stacks.",
+    "time_complexity": "O(1) amortized",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Implement Queue using Stacks.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Queue.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(1) amortized",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Simulating FIFO with two LIFO stacks."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Implement Queue using Stacks."
+      ],
+      "pattern_signals": [
+        "Simulating FIFO with two LIFO stacks."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Queue.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Queue.",
+    "simpleExplanation": "Simulating FIFO with two LIFO stacks.",
+    "subPattern": "prefix_sum",
+    "patternLevel": "foundation"
+  },
+  {
+    "id": 49,
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Recursive parent search with split logic.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Lowest Common Ancestor of a Binary Tree.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Recursive parent search with split logic."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Lowest Common Ancestor of a Binary Tree."
+      ],
+      "pattern_signals": [
+        "Recursive parent search with split logic."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Recursive parent search with split logic.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 50,
+    "title": "Product of Array Except Self",
+    "slug": "product-of-array-except-self",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Prefix and suffix product arrays.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Product of Array Except Self.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Prefix Sum.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Prefix and suffix product arrays."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Product of Array Except Self."
+      ],
+      "pattern_signals": [
+        "Prefix and suffix product arrays."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Prefix Sum.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Prefix Sum.",
+    "simpleExplanation": "Prefix and suffix product arrays.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 51,
+    "title": "Sliding Window Maximum",
+    "slug": "sliding-window-maximum",
+    "difficulty": "Hard",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "sliding_window",
+    "shortPatternReason": "Deque-based monotonic max tracking.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(k)",
+    "problem_statement": "Standard LeetCode problem: Sliding Window Maximum.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Sliding Window.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(k)"
+    },
+    "patternSignals": [
+      "Deque-based monotonic max tracking."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Sliding Window Maximum."
+      ],
+      "pattern_signals": [
+        "Deque-based monotonic max tracking."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Sliding Window.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Sliding Window.",
+    "simpleExplanation": "Deque-based monotonic max tracking.",
+    "subPattern": "fixed_window",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 52,
+    "title": "Longest Increasing Subsequence",
+    "slug": "longest-increasing-subsequence",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "DP relation or patience sorting logic.",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Longest Increasing Subsequence.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n log n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "DP relation or patience sorting logic."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Longest Increasing Subsequence."
+      ],
+      "pattern_signals": [
+        "DP relation or patience sorting logic."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "DP relation or patience sorting logic.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 53,
+    "title": "Coin Change",
+    "slug": "coin-change",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Bottom-up min combination optimization.",
+    "time_complexity": "O(S*n)",
+    "space_complexity": "O(S)",
+    "problem_statement": "Standard LeetCode problem: Coin Change.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(S*n)",
+      "space": "O(S)"
+    },
+    "patternSignals": [
+      "Bottom-up min combination optimization."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Coin Change."
+      ],
+      "pattern_signals": [
+        "Bottom-up min combination optimization."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Bottom-up min combination optimization.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 54,
+    "title": "Top K Frequent Elements",
+    "slug": "top-k-frequent-elements",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Frequency map + bucket sort or heap.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Top K Frequent Elements.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Heap / Priority Queue.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Frequency map + bucket sort or heap."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Top K Frequent Elements."
+      ],
+      "pattern_signals": [
+        "Frequency map + bucket sort or heap."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Heap / Priority Queue.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Heap / Priority Queue.",
+    "simpleExplanation": "Frequency map + bucket sort or heap.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 55,
+    "title": "Decode String",
+    "slug": "decode-string",
+    "difficulty": "Medium",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "array_basics",
+    "shortPatternReason": "Nested expansion using count/string stacks.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Decode String.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Stack.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Nested expansion using count/string stacks."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Decode String."
+      ],
+      "pattern_signals": [
+        "Nested expansion using count/string stacks."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Stack.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Stack.",
+    "simpleExplanation": "Nested expansion using count/string stacks.",
+    "subPattern": "prefix_sum",
+    "patternLevel": "foundation"
+  },
+  {
+    "id": 56,
+    "title": "Partition Equal Subset Sum",
+    "slug": "partition-equal-subset-sum",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Subset sum variation (0/1 Knapsack).",
+    "time_complexity": "O(n * target)",
+    "space_complexity": "O(target)",
+    "problem_statement": "Standard LeetCode problem: Partition Equal Subset Sum.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Dynamic Programming.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * target)",
+      "space": "O(target)"
+    },
+    "patternSignals": [
+      "Subset sum variation (0/1 Knapsack)."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Partition Equal Subset Sum."
+      ],
+      "pattern_signals": [
+        "Subset sum variation (0/1 Knapsack)."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Dynamic Programming.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Dynamic Programming.",
+    "simpleExplanation": "Subset sum variation (0/1 Knapsack).",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 57,
+    "title": "Find All Anagrams in a String",
+    "slug": "find-all-anagrams-in-a-string",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "sliding_window",
+    "shortPatternReason": "Fixed-size window frequency check.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Find All Anagrams in a String.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Sliding Window.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Fixed-size window frequency check."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Find All Anagrams in a String."
+      ],
+      "pattern_signals": [
+        "Fixed-size window frequency check."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Sliding Window.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Sliding Window.",
+    "simpleExplanation": "Fixed-size window frequency check.",
+    "subPattern": "variable_window",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 58,
+    "title": "Diameter of Binary Tree",
+    "slug": "diameter-of-binary-tree",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "tree_patterns",
+    "shortPatternReason": "Recursive max path tracking through root.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Diameter of Binary Tree.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Recursion.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Recursive max path tracking through root."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Diameter of Binary Tree."
+      ],
+      "pattern_signals": [
+        "Recursive max path tracking through root."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Recursion.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Recursion.",
+    "simpleExplanation": "Recursive max path tracking through root.",
+    "subPattern": "postorder_accumulation",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 59,
+    "title": "Subarray Sum Equals K",
+    "slug": "subarray-sum-equals-k",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Prefix sums + map of frequencies.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Subarray Sum Equals K.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Prefix Sum.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Prefix sums + map of frequencies."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Subarray Sum Equals K."
+      ],
+      "pattern_signals": [
+        "Prefix sums + map of frequencies."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Prefix Sum.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Prefix Sum.",
+    "simpleExplanation": "Prefix sums + map of frequencies.",
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 60,
+    "title": "Binary Search",
+    "slug": "binary-search",
+    "difficulty": "Easy",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "binary_search",
+    "shortPatternReason": "Standard logarithmic target lookup.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Binary Search.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Binary Search.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Standard logarithmic target lookup."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Binary Search."
+      ],
+      "pattern_signals": [
+        "Standard logarithmic target lookup."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Binary Search.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Binary Search.",
+    "simpleExplanation": "Standard logarithmic target lookup.",
+    "subPattern": "classic",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 61,
+    "title": "Daily Temperatures",
+    "slug": "daily-temperatures",
+    "difficulty": "Medium",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "array_basics",
+    "shortPatternReason": "Monotonic stack for next-greater tracking.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Daily Temperatures.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Stack.",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Monotonic stack for next-greater tracking."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Daily Temperatures."
+      ],
+      "pattern_signals": [
+        "Monotonic stack for next-greater tracking."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Stack.",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Stack.",
+    "simpleExplanation": "Monotonic stack for next-greater tracking.",
+    "subPattern": "prefix_sum",
+    "patternLevel": "foundation"
+  },
+  {
+    "id": 62,
+    "title": "Rotting Oranges",
+    "slug": "rotting-oranges",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "graph_traversal",
+    "shortPatternReason": "BFS for shortest time level-by-level decay.",
+    "time_complexity": "O(m*n)",
+    "space_complexity": "O(m*n)",
+    "problem_statement": "Standard LeetCode problem: Rotting Oranges.",
+    "constraints": [
+      "N <= 10^5"
+    ],
+    "examples": [],
+    "brute_force_explanation": "Iterative approach checking all pairs/subsets.",
+    "optimal_explanation": "Optimal solution using Graph (BFS/DFS).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(m*n)",
+      "space": "O(m*n)"
+    },
+    "patternSignals": [
+      "BFS for shortest time level-by-level decay."
+    ],
+    "edgeCases": [
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Understand the goal of Rotting Oranges."
+      ],
+      "pattern_signals": [
+        "BFS for shortest time level-by-level decay."
+      ],
+      "naive_approach": [
+        "Brute force checking all possibilities."
+      ],
+      "approach_blueprint": [
+        "1. Apply pattern",
+        "2. Optimize"
+      ]
+    },
+    "strategyShift": "Optimal solution using Graph (BFS/DFS).",
+    "naiveApproach": "Iterative approach checking all pairs/subsets.",
+    "optimalApproach": "Optimal solution using Graph (BFS/DFS).",
+    "simpleExplanation": "BFS for shortest time level-by-level decay.",
+    "subPattern": "bfs_level_order",
+    "patternLevel": "advanced_patterns"
+  },
+  {
+    "id": 63,
+    "title": "Pattern Drill 63",
+    "slug": "pattern-drill-63",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Stack recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Stack skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Stack recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 64,
+    "title": "Pattern Drill 64",
+    "slug": "pattern-drill-64",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Queue recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Queue skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Queue recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 65,
+    "title": "Pattern Drill 65",
+    "slug": "pattern-drill-65",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Linked List recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Linked List skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Linked List recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 66,
+    "title": "Pattern Drill 66",
+    "slug": "pattern-drill-66",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Graph (BFS/DFS) recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Graph (BFS/DFS) skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Graph (BFS/DFS) recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 67,
+    "title": "Pattern Drill 67",
+    "slug": "pattern-drill-67",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Heap / Priority Queue recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Heap / Priority Queue skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Heap / Priority Queue recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 68,
+    "title": "Pattern Drill 68",
+    "slug": "pattern-drill-68",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Greedy recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Greedy skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Greedy recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 69,
+    "title": "Pattern Drill 69",
+    "slug": "pattern-drill-69",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Prefix Sum recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Prefix Sum skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Prefix Sum recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 70,
+    "title": "Pattern Drill 70",
+    "slug": "pattern-drill-70",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Dynamic Programming recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Dynamic Programming skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Dynamic Programming recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 71,
+    "title": "Pattern Drill 71",
+    "slug": "pattern-drill-71",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Array recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Array skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Array recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 72,
+    "title": "Pattern Drill 72",
+    "slug": "pattern-drill-72",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Two Pointer recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Two Pointer skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Two Pointer recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 73,
+    "title": "Pattern Drill 73",
+    "slug": "pattern-drill-73",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Sliding Window recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Sliding Window skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Sliding Window recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 74,
+    "title": "Pattern Drill 74",
+    "slug": "pattern-drill-74",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Binary Search recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Binary Search skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Binary Search recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 75,
+    "title": "Pattern Drill 75",
+    "slug": "pattern-drill-75",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Recursion recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Recursion skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Recursion recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 76,
+    "title": "Pattern Drill 76",
+    "slug": "pattern-drill-76",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Backtracking recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Backtracking skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Backtracking recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 77,
+    "title": "Pattern Drill 77",
+    "slug": "pattern-drill-77",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Stack recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Stack skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Stack recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 78,
+    "title": "Pattern Drill 78",
+    "slug": "pattern-drill-78",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Queue recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Queue skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Queue recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 79,
+    "title": "Pattern Drill 79",
+    "slug": "pattern-drill-79",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Linked List recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Linked List skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Linked List recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 80,
+    "title": "Pattern Drill 80",
+    "slug": "pattern-drill-80",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Graph (BFS/DFS) recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Graph (BFS/DFS) skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Graph (BFS/DFS) recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 81,
+    "title": "Pattern Drill 81",
+    "slug": "pattern-drill-81",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Heap / Priority Queue recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Heap / Priority Queue skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Heap / Priority Queue recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 82,
+    "title": "Pattern Drill 82",
+    "slug": "pattern-drill-82",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Greedy recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Greedy skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Greedy recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 83,
+    "title": "Pattern Drill 83",
+    "slug": "pattern-drill-83",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Prefix Sum recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Prefix Sum skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Prefix Sum recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 84,
+    "title": "Pattern Drill 84",
+    "slug": "pattern-drill-84",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Dynamic Programming recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Dynamic Programming skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Dynamic Programming recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 85,
+    "title": "Pattern Drill 85",
+    "slug": "pattern-drill-85",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Array recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Array skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Array recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 86,
+    "title": "Pattern Drill 86",
+    "slug": "pattern-drill-86",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Two Pointer recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Two Pointer skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Two Pointer recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 87,
+    "title": "Pattern Drill 87",
+    "slug": "pattern-drill-87",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Sliding Window recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Sliding Window skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Sliding Window recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 88,
+    "title": "Pattern Drill 88",
+    "slug": "pattern-drill-88",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Binary Search recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Binary Search skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Binary Search recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 89,
+    "title": "Pattern Drill 89",
+    "slug": "pattern-drill-89",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Recursion recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Recursion skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Recursion recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 90,
+    "title": "Pattern Drill 90",
+    "slug": "pattern-drill-90",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Backtracking recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Backtracking skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Backtracking recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 91,
+    "title": "Pattern Drill 91",
+    "slug": "pattern-drill-91",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Stack recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Stack skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Stack recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 92,
+    "title": "Pattern Drill 92",
+    "slug": "pattern-drill-92",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Queue recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Queue skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Queue recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 93,
+    "title": "Pattern Drill 93",
+    "slug": "pattern-drill-93",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Linked List recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Linked List skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Linked List recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 94,
+    "title": "Pattern Drill 94",
+    "slug": "pattern-drill-94",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Graph (BFS/DFS) recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Graph (BFS/DFS) skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Graph (BFS/DFS) recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 95,
+    "title": "Pattern Drill 95",
+    "slug": "pattern-drill-95",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Heap / Priority Queue recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Heap / Priority Queue skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Heap / Priority Queue recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 96,
+    "title": "Pattern Drill 96",
+    "slug": "pattern-drill-96",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Greedy recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Greedy skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Greedy recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 97,
+    "title": "Pattern Drill 97",
+    "slug": "pattern-drill-97",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Prefix Sum recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Prefix Sum skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Prefix Sum recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 98,
+    "title": "Pattern Drill 98",
+    "slug": "pattern-drill-98",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Dynamic Programming recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Dynamic Programming skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Dynamic Programming recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 99,
+    "title": "Pattern Drill 99",
+    "slug": "pattern-drill-99",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Array recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Array skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Array recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 100,
+    "title": "Pattern Drill 100",
+    "slug": "pattern-drill-100",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "two_pointer",
+    "shortPatternReason": "Fundamental drill for Two Pointer recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice your Two Pointer skills with this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "strategyShift": "",
+    "naiveApproach": "",
+    "optimalApproach": "",
+    "simpleExplanation": "Fundamental drill for Two Pointer recognition.",
+    "patternSignals": [],
+    "edgeCases": [],
+    "subPattern": "same_direction",
+    "patternLevel": "core_patterns"
+  },
+  {
+    "id": 101,
+    "title": "Maximum Sum Subarray of Size K",
+    "slug": "max-sum-subarray-size-k",
+    "difficulty": "Easy",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Array",
+      "Sliding Window"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "fixed_window",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Finding max sum in a fixed size window.",
+    "problem_statement": "Given an array of integers and a number K, find the maximum sum of a subarray of size K.",
+    "constraints": [
+      "1 <= K <= N"
+    ],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N*K)",
+      "optimal": "O(N)",
+      "space": "O(1)"
+    },
+    "pattern_capsule": {
+      "invariant": "Window Size == K.",
+      "trigger": "Max sum of size K.",
+      "mistake": "Recomputing sum from scratch."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "Window slides one step at a time.",
+        "Reuse sum: subtract left, add right."
+      ],
+      "pattern_signals": [
+        "Fixed Size K",
+        "Contiguous Subarray",
+        "Max Sum"
+      ],
+      "naive_approach": [
+        "Calculate sum for every K-sized subarray."
+      ],
+      "approach_blueprint": [
+        "Init window sum.",
+        "Slide: sum += arr[R] - arr[L]. Update max."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 102,
+    "title": "Average of Subarrays of Size K",
+    "slug": "average-of-subarrays-size-k",
+    "difficulty": "Easy",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Array",
+      "Sliding Window"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "fixed_window",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Compute average for every fixed window.",
+    "problem_statement": "Given an array, find the average of all contiguous subarrays of size K.",
+    "constraints": [],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N*K)",
+      "optimal": "O(N)",
+      "space": "O(N)"
+    },
+    "pattern_capsule": {
+      "invariant": "Window Size == K.",
+      "trigger": "Average of size K.",
+      "mistake": "Dividing by K inside the loop unnecessarily."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "Same as Max Sum, but divide by K."
+      ],
+      "pattern_signals": [
+        "Fixed Size K",
+        "Average"
+      ],
+      "naive_approach": [
+        "Loop boundaries."
+      ],
+      "approach_blueprint": [
+        "Maintain sum.",
+        "Result[i] = sum / K."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 103,
+    "title": "Longest Repeating Character Replacement",
+    "slug": "longest-repeating-character-replacement",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "String",
+      "Sliding Window"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "variable_window",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Expand valid window, shrink when replacements > K.",
+    "problem_statement": "You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.",
+    "constraints": [
+      "s.length <= 10^5"
+    ],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N^2)",
+      "optimal": "O(N)",
+      "space": "O(26)"
+    },
+    "pattern_capsule": {
+      "invariant": "Window Length - MaxFrequency <= K",
+      "trigger": "Longest substring with K changes.",
+      "mistake": "Shrinking completely instead of just checking validity."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "Valid if (len - max_count) <= k."
+      ],
+      "pattern_signals": [
+        "Longest Substring",
+        "Replace K chars"
+      ],
+      "naive_approach": [
+        "Check all substrings."
+      ],
+      "approach_blueprint": [
+        "Expand R.",
+        "Update specific char count.",
+        "If (R-L+1) - maxFreq > k, shrink L."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 104,
+    "title": "Minimum Size Subarray Sum",
+    "slug": "minimum-size-subarray-sum",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Array",
+      "Sliding Window",
+      "Binary Search"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "minimum_type",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Shrink window to find minimum size.",
+    "problem_statement": "Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target. If there is no such subarray, return 0 instead.",
+    "constraints": [
+      "nums[i] > 0"
+    ],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N^2)",
+      "optimal": "O(N)",
+      "space": "O(1)"
+    },
+    "pattern_capsule": {
+      "invariant": "While sum >= target, try to shrink.",
+      "trigger": "Smallest subarray with sum >= S.",
+      "mistake": "Not shrinking enough (using 'if' instead of 'while')."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "Window needs to be as small as possible while Sum >= Target."
+      ],
+      "pattern_signals": [
+        "Smallest Subarray",
+        "Sum >= Target"
+      ],
+      "naive_approach": [
+        "O(N^2) sums."
+      ],
+      "approach_blueprint": [
+        "Expand R adding to sum.",
+        "While sum >= target: update MinLength, subtract arr[L], L++."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 105,
+    "title": "Subarrays with At Most K Distinct Integers",
+    "slug": "subarrays-with-at-most-k-distinct-integers",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Array",
+      "Sliding Window",
+      "Counting"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "at_most_k",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Count of subarrays ending at R with <= K distinct.",
+    "problem_statement": "Given an integer array nums and an integer k, return the number of subarrays where the number of distinct integers is at most k.",
+    "constraints": [],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N^2)",
+      "optimal": "O(N)",
+      "space": "O(N)"
+    },
+    "pattern_capsule": {
+      "invariant": "Contrib = R - L + 1.",
+      "trigger": "Count subarrays with at most K distinct.",
+      "mistake": "Thinking this solves 'Exactly K' directly."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "If [L...R] has <= K distinct, then all subarrays ending at R starting from L to R are valid."
+      ],
+      "pattern_signals": [
+        "Count subarrays",
+        "At Most K Distinct"
+      ],
+      "naive_approach": [
+        "Check all subarrays."
+      ],
+      "approach_blueprint": [
+        "Expand R.",
+        "If distinct > k, shrink L.",
+        "Ans += R - L + 1."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 106,
+    "title": "Fruit Into Baskets",
+    "slug": "fruit-into-baskets",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Array",
+      "Sliding Window",
+      "Hash Map"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "at_most_k",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Max subarray with at most 2 distinct types.",
+    "problem_statement": "Longest subarray with at most 2 distinct integers (types of fruit).",
+    "constraints": [],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N^2)",
+      "optimal": "O(N)",
+      "space": "O(1)"
+    },
+    "pattern_capsule": {
+      "invariant": "Distinct types <= 2.",
+      "trigger": "Longest subarray with 2 types.",
+      "mistake": "Complicating the '2 types' logic."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "Same as At Most K Distinct, but K=2 and we want Length, not Count."
+      ],
+      "pattern_signals": [
+        "2 Baskets",
+        "Types of Fruit"
+      ],
+      "naive_approach": [],
+      "approach_blueprint": [
+        "Standard At Most K logic with K=2.",
+        "Track Max Length."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 107,
+    "title": "Subarrays with Exactly K Distinct Integers",
+    "slug": "subarrays-with-exactly-k-distinct-integers",
+    "difficulty": "Hard",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Array",
+      "Sliding Window",
+      "Counting"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "exact_k",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Composition of AtMost(K) - AtMost(K-1).",
+    "problem_statement": "Given an integer array nums and an integer k, return the number of subarrays with exactly k distinct integers.",
+    "constraints": [],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N^2)",
+      "optimal": "O(N)",
+      "space": "O(N)"
+    },
+    "pattern_capsule": {
+      "invariant": "Exact(K) = AtMost(K) - AtMost(K-1).",
+      "trigger": "Exactly K distinct.",
+      "mistake": "Trying to solve directly with one window."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "It's hard to track 'exactly K' because shrinking can validly keep it at K or drop to K-1."
+      ],
+      "pattern_signals": [
+        "Exactly K Distinct"
+      ],
+      "naive_approach": [],
+      "approach_blueprint": [
+        "Implement helper `atMost(k)`.",
+        "Result = atMost(k) - atMost(k-1)."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
+  },
+  {
+    "id": 108,
+    "title": "Minimum Window Substring",
+    "slug": "minimum-window-substring",
+    "difficulty": "Hard",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "String",
+      "Sliding Window",
+      "Hash Table"
+    ],
+    "primaryPattern": "sliding_window",
+    "subPattern": "minimum_type",
+    "patternLevel": "core_patterns",
+    "shortPatternReason": "Shrink window while covering all chars of T.",
+    "problem_statement": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\".",
+    "constraints": [],
+    "examples": [],
+    "complexity": {
+      "brute": "O(N^2)",
+      "optimal": "O(N + M)",
+      "space": "O(1)"
+    },
+    "pattern_capsule": {
+      "invariant": "If window covers T, try to shrink.",
+      "trigger": "Minimum window containing all characters.",
+      "mistake": "Incorrectly counting checks."
+    },
+    "thinking_guide": {
+      "first_principles": [
+        "Need frequency map of T.",
+        "Expand R.",
+        "When window valid, Shrink L to minimize."
+      ],
+      "pattern_signals": [
+        "Minimum Window",
+        "Contain all characters"
+      ],
+      "naive_approach": [],
+      "approach_blueprint": [
+        "Frequency Map for T.",
+        "Count 'matched' rule.",
+        "Expand R.",
+        "While matched == required, update Min, shrink L."
+      ]
+    },
+    "brute_force_steps": [],
+    "optimal_steps": []
   }
 ]

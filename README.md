@@ -38,3 +38,4 @@ By understanding this evolution, you see how each algorithm solves the bottlenec
 ## Cognitive Transfer
 
 The ultimate goal is **Transfer Learning**. Algoscope explicitly maps foundational patterns (e.g., "Sliding Window") to complex, unseen problems, helping you recognize underlying structures in novel challenges.
+

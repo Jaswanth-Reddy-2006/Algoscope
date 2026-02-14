@@ -1,0 +1,86 @@
+
+> algoscope-frontend@0.0.0 lint
+> eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0
+
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\CategoryView.tsx
+  4:10  error  'Clock' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\FoundationModule.tsx
+  1:1  error  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any' or '@typescript-eslint/no-unused-vars')
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\code\CodePanel.tsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars
+  2:18  error  'AnimatePresence' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  3:33  error  'Check' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\SearchEngine.tsx
+   1:47  error  'useRef' is defined but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars
+   5:18  error  'AnimatePresence' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  25:13  error  'arr' is never reassigned. Use 'const' instead                                     prefer-const
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\SearchEngine\core\binarySearchCore.ts
+  20:11  error  'states' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\SearchEngine\visual\BinarySearchCanvas.tsx
+  10:55  error  'mode' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\SlidingWindowEngine\core\slidingWindowCore.ts
+   35:9  error  'states' is never reassigned. Use 'const' instead  prefer-const
+   69:9  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  119:9  error  'states' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\SortingEngine.tsx
+  33:13  error  'newArr' is never reassigned. Use 'const' instead  prefer-const
+  37:19  error  'i' is never reassigned. Use 'const' instead       prefer-const
+  37:26  error  'j' is never reassigned. Use 'const' instead       prefer-const
+  46:29  error  'temp' is never reassigned. Use 'const' instead    prefer-const
+  62:19  error  'i' is never reassigned. Use 'const' instead       prefer-const
+  62:26  error  'j' is never reassigned. Use 'const' instead       prefer-const
+  62:33  error  'minIdx' is never reassigned. Use 'const' instead  prefer-const
+  76:25  error  'temp' is never reassigned. Use 'const' instead    prefer-const
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\TwoPointerEngine.tsx
+  157:0  error  Parsing error: Unterminated template literal
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\TwoPointerEngine\core\twoPointerCore.ts
+  20:11  error  'states' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\TwoPointerEngine\visual\TwoPointerCanvas.tsx
+  22:11  error  'totalStep' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\ArrayVisualizer.tsx
+   1:27  error  'useEffect' is defined but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars
+   3:10  error  'ArrowDown' is defined but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars
+   6:12  error  'array' is assigned a value but never used. Allowed unused vars must match /^_/u              @typescript-eslint/no-unused-vars
+   6:19  error  'setArray' is assigned a value but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars
+   7:12  error  'capacity' is assigned a value but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars
+   7:22  error  'setCapacity' is assigned a value but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars
+   8:12  error  'size' is assigned a value but never used. Allowed unused vars must match /^_/u               @typescript-eslint/no-unused-vars
+   8:18  error  'setSize' is assigned a value but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars
+   9:12  error  'highlightIndex' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+   9:28  error  'setHighlightIndex' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  10:12  error  'accessIndex' is assigned a value but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars
+  10:25  error  'setAccessIndex' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+  11:12  error  'insertValue' is assigned a value but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars
+  11:25  error  'setInsertValue' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+  12:12  error  'insertIndex' is assigned a value but never used. Allowed unused vars must match /^_/u        @typescript-eslint/no-unused-vars
+  12:25  error  'setInsertIndex' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+  13:12  error  'message' is assigned a value but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars
+  13:21  error  'setMessage' is assigned a value but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars
+  14:12  error  'operation' is assigned a value but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars
+  14:23  error  'setOperation' is assigned a value but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\HashMapVisualizer.tsx
+  3:36  error  'CornerDownRight' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\StringVisualizer.tsx
+  3:10  error  'AlertCircle' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  3:23  error  'Copy' is defined but never used. Allowed unused vars must match /^_/u         @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\pages\FoundationsLayout.tsx
+  10:5  error  'Lock' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+✖ 48 problems (48 errors, 0 warnings)
+  13 errors and 0 warnings potentially fixable with the `--fix` option.
+

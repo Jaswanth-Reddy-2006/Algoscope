@@ -1,0 +1,19 @@
+# Handle line endings automatically for files detected as text 
+# and truly force LF on check-in to the repository.
+* text=auto eol=lf
+
+# Explicitly declare documentation/config files
+*.md text
+*.json text
+*.js text
+*.ts text
+*.tsx text
+*.css text
+*.html text
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary

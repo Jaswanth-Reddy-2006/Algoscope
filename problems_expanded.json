@@ -1,0 +1,4484 @@
+[
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "slug": "two-sum",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Requires finding a pair with a specific sum.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Two Sum.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Requires finding a pair with a specific sum."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Two Sum using first principles."
+      ],
+      "pattern_signals": [
+        "Requires finding a pair with a specific sum."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "title": "Longest Substring Without Repeating Characters",
+    "slug": "longest-substring-without-repeating-characters",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Contiguous segment check for uniqueness.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(min(m, n))",
+    "problem_statement": "Standard LeetCode problem: Longest Substring Without Repeating Characters.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(min(m, n))"
+    },
+    "patternSignals": [
+      "Requires Sliding Window approach.",
+      "Contiguous segment check for uniqueness."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Longest Substring Without Repeating Characters using first principles."
+      ],
+      "pattern_signals": [
+        "Contiguous segment check for uniqueness."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "title": "Container With Most Water",
+    "slug": "container-with-most-water",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Shrinking search space by moving pointers inward.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Container With Most Water.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Shrinking search space by moving pointers inward."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Container With Most Water using first principles."
+      ],
+      "pattern_signals": [
+        "Shrinking search space by moving pointers inward."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "title": "3Sum",
+    "slug": "3sum",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Sorted array traversal with fixed element and two pointers.",
+    "time_complexity": "O(n\u00b2)",
+    "space_complexity": "O(log n) to O(n)",
+    "problem_statement": "Standard LeetCode problem: 3Sum.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n\u00b2)",
+      "space": "O(log n) to O(n)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Sorted array traversal with fixed element and two pointers."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve 3Sum using first principles."
+      ],
+      "pattern_signals": [
+        "Sorted array traversal with fixed element and two pointers."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "title": "Valid Parentheses",
+    "slug": "valid-parentheses",
+    "difficulty": "Easy",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "Stack",
+    "shortPatternReason": "LIFO behavior for matching brackets.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Valid Parentheses.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Stack approach.",
+      "LIFO behavior for matching brackets."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Valid Parentheses using first principles."
+      ],
+      "pattern_signals": [
+        "LIFO behavior for matching brackets."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "title": "Merge Two Sorted Lists",
+    "slug": "merge-two-sorted-lists",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "Linked List",
+    "shortPatternReason": "Pointer manipulation in sorted sequences.",
+    "time_complexity": "O(n+m)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Merge Two Sorted Lists.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Linked List pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n+m)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Linked List approach.",
+      "Pointer manipulation in sorted sequences."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Merge Two Sorted Lists using first principles."
+      ],
+      "pattern_signals": [
+        "Pointer manipulation in sorted sequences."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 33,
+    "title": "Search in Rotated Sorted Array",
+    "slug": "search-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "Binary Search",
+    "shortPatternReason": "Logarithmic search in modified sorted space.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Search in Rotated Sorted Array.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Binary Search approach.",
+      "Logarithmic search in modified sorted space."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Search in Rotated Sorted Array using first principles."
+      ],
+      "pattern_signals": [
+        "Logarithmic search in modified sorted space."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 46,
+    "title": "Permutations",
+    "slug": "permutations",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Generating all possible orderings recursively.",
+    "time_complexity": "O(n * n!)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Permutations.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Backtracking pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * n!)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Backtracking approach.",
+      "Generating all possible orderings recursively."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Permutations using first principles."
+      ],
+      "pattern_signals": [
+        "Generating all possible orderings recursively."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 48,
+    "title": "Rotate Image",
+    "slug": "rotate-image",
+    "difficulty": "Medium",
+    "algorithmType": "two_init",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Layer-by-layer matrix transformation.",
+    "time_complexity": "O(n\u00b2)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Rotate Image.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n\u00b2)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Layer-by-layer matrix transformation."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Rotate Image using first principles."
+      ],
+      "pattern_signals": [
+        "Layer-by-layer matrix transformation."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 49,
+    "title": "Group Anagrams",
+    "slug": "group-anagrams",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Categorizing strings by sorted key or frequency frequency.",
+    "time_complexity": "O(n * k log k)",
+    "space_complexity": "O(n * k)",
+    "problem_statement": "Standard LeetCode problem: Group Anagrams.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * k log k)",
+      "space": "O(n * k)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Categorizing strings by sorted key or frequency frequency."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Group Anagrams using first principles."
+      ],
+      "pattern_signals": [
+        "Categorizing strings by sorted key or frequency frequency."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 53,
+    "title": "Maximum Subarray",
+    "slug": "maximum-subarray",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Local vs Global maxima optimization (Kadane's).",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Maximum Subarray.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Local vs Global maxima optimization (Kadane's)."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Maximum Subarray using first principles."
+      ],
+      "pattern_signals": [
+        "Local vs Global maxima optimization (Kadane's)."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 55,
+    "title": "Jump Game",
+    "slug": "jump-game",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "Greedy",
+    "shortPatternReason": "Tracking maximum reachable index greedily.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Jump Game.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Greedy pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Greedy approach.",
+      "Tracking maximum reachable index greedily."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Jump Game using first principles."
+      ],
+      "pattern_signals": [
+        "Tracking maximum reachable index greedily."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 56,
+    "title": "Merge Intervals",
+    "slug": "merge-intervals",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Sorting and merging overlapping ranges.",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Merge Intervals.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n log n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Sorting and merging overlapping ranges."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Merge Intervals using first principles."
+      ],
+      "pattern_signals": [
+        "Sorting and merging overlapping ranges."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 70,
+    "title": "Climbing Stairs",
+    "slug": "climbing-stairs",
+    "difficulty": "Easy",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Optimal substructure using Fibonacci relation.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Climbing Stairs.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Optimal substructure using Fibonacci relation."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Climbing Stairs using first principles."
+      ],
+      "pattern_signals": [
+        "Optimal substructure using Fibonacci relation."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 74,
+    "title": "Search a 2D Matrix",
+    "slug": "search-a-2d-matrix",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "Binary Search",
+    "shortPatternReason": "Treating matrix as flattened sorted array.",
+    "time_complexity": "O(log(m*n))",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Search a 2D Matrix.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log(m*n))",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Binary Search approach.",
+      "Treating matrix as flattened sorted array."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Search a 2D Matrix using first principles."
+      ],
+      "pattern_signals": [
+        "Treating matrix as flattened sorted array."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 75,
+    "title": "Sort Colors",
+    "slug": "sort-colors",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Dutch National Flag 3-pointer partition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Sort Colors.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Dutch National Flag 3-pointer partition."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Sort Colors using first principles."
+      ],
+      "pattern_signals": [
+        "Dutch National Flag 3-pointer partition."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 76,
+    "title": "Minimum Window Substring",
+    "slug": "minimum-window-substring",
+    "difficulty": "Hard",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Dynamic window expansion and contraction for constraint.",
+    "time_complexity": "O(n+m)",
+    "space_complexity": "O(m)",
+    "problem_statement": "Standard LeetCode problem: Minimum Window Substring.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n+m)",
+      "space": "O(m)"
+    },
+    "patternSignals": [
+      "Requires Sliding Window approach.",
+      "Dynamic window expansion and contraction for constraint."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Minimum Window Substring using first principles."
+      ],
+      "pattern_signals": [
+        "Dynamic window expansion and contraction for constraint."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 78,
+    "title": "Subsets",
+    "slug": "subsets",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Power set generation via inclusion/exclusion.",
+    "time_complexity": "O(n * 2\u207f)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Subsets.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Backtracking pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * 2\u207f)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Backtracking approach.",
+      "Power set generation via inclusion/exclusion."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Subsets using first principles."
+      ],
+      "pattern_signals": [
+        "Power set generation via inclusion/exclusion."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 79,
+    "title": "Word Search",
+    "slug": "word-search",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "DFS traversal with state backtracking on grid.",
+    "time_complexity": "O(N * 3\u1d38)",
+    "space_complexity": "O(L)",
+    "problem_statement": "Standard LeetCode problem: Word Search.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Backtracking pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(N * 3\u1d38)",
+      "space": "O(L)"
+    },
+    "patternSignals": [
+      "Requires Backtracking approach.",
+      "DFS traversal with state backtracking on grid."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Word Search using first principles."
+      ],
+      "pattern_signals": [
+        "DFS traversal with state backtracking on grid."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 94,
+    "title": "Binary Tree Inorder Traversal",
+    "slug": "binary-tree-inorder-traversal",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Standard recursive visit order (Left, Root, Right).",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Binary Tree Inorder Traversal.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Standard recursive visit order (Left, Root, Right)."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Binary Tree Inorder Traversal using first principles."
+      ],
+      "pattern_signals": [
+        "Standard recursive visit order (Left, Root, Right)."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 98,
+    "title": "Validate Binary Search Tree",
+    "slug": "validate-binary-search-tree",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive range check for child nodes.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Validate Binary Search Tree.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive range check for child nodes."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Validate Binary Search Tree using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive range check for child nodes."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 102,
+    "title": "Binary Tree Level Order Traversal",
+    "slug": "binary-tree-level-order-traversal",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "Queue-based breadth-first visit.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Binary Tree Level Order Traversal.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Graph (BFS/DFS) approach.",
+      "Queue-based breadth-first visit."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Binary Tree Level Order Traversal using first principles."
+      ],
+      "pattern_signals": [
+        "Queue-based breadth-first visit."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 104,
+    "title": "Maximum Depth of Binary Tree",
+    "slug": "maximum-depth-of-binary-tree",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive height calculation (1 + max(L, R)).",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Maximum Depth of Binary Tree.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive height calculation (1 + max(L, R))."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Maximum Depth of Binary Tree using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive height calculation (1 + max(L, R))."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 105,
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive sub-tree construction from visit orders.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Construct Binary Tree from Preorder and Inorder Traversal.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive sub-tree construction from visit orders."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Construct Binary Tree from Preorder and Inorder Traversal using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive sub-tree construction from visit orders."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 121,
+    "title": "Best Time to Buy and Sell Stock",
+    "slug": "best-time-to-buy-and-sell-stock",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Tracking historical minimum for future profit.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Best Time to Buy and Sell Stock.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Tracking historical minimum for future profit."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Best Time to Buy and Sell Stock using first principles."
+      ],
+      "pattern_signals": [
+        "Tracking historical minimum for future profit."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 124,
+    "title": "Binary Tree Maximum Path Sum",
+    "slug": "binary-tree-maximum-path-sum",
+    "difficulty": "Hard",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive global max tracking with local contributions.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Binary Tree Maximum Path Sum.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive global max tracking with local contributions."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Binary Tree Maximum Path Sum using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive global max tracking with local contributions."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 128,
+    "title": "Longest Consecutive Sequence",
+    "slug": "longest-consecutive-sequence",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Unordered set lookup for sequence starts.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Longest Consecutive Sequence.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Unordered set lookup for sequence starts."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Longest Consecutive Sequence using first principles."
+      ],
+      "pattern_signals": [
+        "Unordered set lookup for sequence starts."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 133,
+    "title": "Clone Graph",
+    "slug": "clone-graph",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "Deep copy using traversal and map state.",
+    "time_complexity": "O(V+E)",
+    "space_complexity": "O(V)",
+    "problem_statement": "Standard LeetCode problem: Clone Graph.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(V+E)",
+      "space": "O(V)"
+    },
+    "patternSignals": [
+      "Requires Graph (BFS/DFS) approach.",
+      "Deep copy using traversal and map state."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Clone Graph using first principles."
+      ],
+      "pattern_signals": [
+        "Deep copy using traversal and map state."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 139,
+    "title": "Word Break",
+    "slug": "word-break",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Boolean DP tracking word segmentability.",
+    "time_complexity": "O(n\u00b3)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Word Break.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n\u00b3)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Boolean DP tracking word segmentability."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Word Break using first principles."
+      ],
+      "pattern_signals": [
+        "Boolean DP tracking word segmentability."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 141,
+    "title": "Linked List Cycle",
+    "slug": "linked-list-cycle",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Floyd's Tortoise and Hare detection.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Linked List Cycle.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Floyd's Tortoise and Hare detection."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Linked List Cycle using first principles."
+      ],
+      "pattern_signals": [
+        "Floyd's Tortoise and Hare detection."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 146,
+    "title": "LRU Cache",
+    "slug": "lru-cache",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "Queue",
+    "shortPatternReason": "Hash Map + Doubly Linked List for LIFO.",
+    "time_complexity": "O(1)",
+    "space_complexity": "O(capacity)",
+    "problem_statement": "Standard LeetCode problem: LRU Cache.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Queue pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(1)",
+      "space": "O(capacity)"
+    },
+    "patternSignals": [
+      "Requires Queue approach.",
+      "Hash Map + Doubly Linked List for LIFO."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve LRU Cache using first principles."
+      ],
+      "pattern_signals": [
+        "Hash Map + Doubly Linked List for LIFO."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 152,
+    "title": "Maximum Product Subarray",
+    "slug": "maximum-product-subarray",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Tracking current min/max to handle negatives.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Maximum Product Subarray.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Tracking current min/max to handle negatives."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Maximum Product Subarray using first principles."
+      ],
+      "pattern_signals": [
+        "Tracking current min/max to handle negatives."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 153,
+    "title": "Find Minimum in Rotated Sorted Array",
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "Binary Search",
+    "shortPatternReason": "Logarithmic search for inflection point.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Find Minimum in Rotated Sorted Array.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Binary Search approach.",
+      "Logarithmic search for inflection point."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Find Minimum in Rotated Sorted Array using first principles."
+      ],
+      "pattern_signals": [
+        "Logarithmic search for inflection point."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 155,
+    "title": "Min Stack",
+    "slug": "min-stack",
+    "difficulty": "Easy",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "Stack",
+    "shortPatternReason": "Auxiliary stack to track historical minima.",
+    "time_complexity": "O(1)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Min Stack.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(1)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Stack approach.",
+      "Auxiliary stack to track historical minima."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Min Stack using first principles."
+      ],
+      "pattern_signals": [
+        "Auxiliary stack to track historical minima."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 160,
+    "title": "Intersection of Two Linked Lists",
+    "slug": "intersection-of-two-linked-lists",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Synchronized traversal to find common node.",
+    "time_complexity": "O(m+n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Intersection of Two Linked Lists.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(m+n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Synchronized traversal to find common node."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Intersection of Two Linked Lists using first principles."
+      ],
+      "pattern_signals": [
+        "Synchronized traversal to find common node."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 169,
+    "title": "Majority Element",
+    "slug": "majority-element",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Boyer-Moore Voting Algorithm.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Majority Element.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Boyer-Moore Voting Algorithm."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Majority Element using first principles."
+      ],
+      "pattern_signals": [
+        "Boyer-Moore Voting Algorithm."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 198,
+    "title": "House Robber",
+    "slug": "house-robber",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Non-adjacent max sum recurrence.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: House Robber.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Non-adjacent max sum recurrence."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve House Robber using first principles."
+      ],
+      "pattern_signals": [
+        "Non-adjacent max sum recurrence."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 200,
+    "title": "Number of Islands",
+    "slug": "number-of-islands",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "Grid traversal to group connected components.",
+    "time_complexity": "O(M*N)",
+    "space_complexity": "O(M*N)",
+    "problem_statement": "Standard LeetCode problem: Number of Islands.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(M*N)",
+      "space": "O(M*N)"
+    },
+    "patternSignals": [
+      "Requires Graph (BFS/DFS) approach.",
+      "Grid traversal to group connected components."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Number of Islands using first principles."
+      ],
+      "pattern_signals": [
+        "Grid traversal to group connected components."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 206,
+    "title": "Reverse Linked List",
+    "slug": "reverse-linked-list",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "In-place pointer reversal logic.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Reverse Linked List.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "In-place pointer reversal logic."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Reverse Linked List using first principles."
+      ],
+      "pattern_signals": [
+        "In-place pointer reversal logic."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 207,
+    "title": "Course Schedule",
+    "slug": "course-schedule",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "Cycle detection in DAG (Topological Sort).",
+    "time_complexity": "O(V+E)",
+    "space_complexity": "O(V+E)",
+    "problem_statement": "Standard LeetCode problem: Course Schedule.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(V+E)",
+      "space": "O(V+E)"
+    },
+    "patternSignals": [
+      "Requires Graph (BFS/DFS) approach.",
+      "Cycle detection in DAG (Topological Sort)."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Course Schedule using first principles."
+      ],
+      "pattern_signals": [
+        "Cycle detection in DAG (Topological Sort)."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 208,
+    "title": "Implement Trie (Prefix Tree)",
+    "slug": "implement-trie",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Character-based path traversal logic.",
+    "time_complexity": "O(L)",
+    "space_complexity": "O(Words * L)",
+    "problem_statement": "Standard LeetCode problem: Implement Trie (Prefix Tree).",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(L)",
+      "space": "O(Words * L)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Character-based path traversal logic."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Implement Trie (Prefix Tree) using first principles."
+      ],
+      "pattern_signals": [
+        "Character-based path traversal logic."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 215,
+    "title": "Kth Largest Element in an Array",
+    "slug": "kth-largest-element-in-an-array",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "Heap / Priority Queue",
+    "shortPatternReason": "Min-heap for tracking top K elements.",
+    "time_complexity": "O(n log k)",
+    "space_complexity": "O(k)",
+    "problem_statement": "Standard LeetCode problem: Kth Largest Element in an Array.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n log k)",
+      "space": "O(k)"
+    },
+    "patternSignals": [
+      "Requires Heap / Priority Queue approach.",
+      "Min-heap for tracking top K elements."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Kth Largest Element in an Array using first principles."
+      ],
+      "pattern_signals": [
+        "Min-heap for tracking top K elements."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 217,
+    "title": "Contains Duplicate",
+    "slug": "contains-duplicate",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Uniqueness check using hash set.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Contains Duplicate.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Uniqueness check using hash set."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Contains Duplicate using first principles."
+      ],
+      "pattern_signals": [
+        "Uniqueness check using hash set."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 226,
+    "title": "Invert Binary Tree",
+    "slug": "invert-binary-tree",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive swap of left and right children.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Invert Binary Tree.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive swap of left and right children."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Invert Binary Tree using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive swap of left and right children."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 230,
+    "title": "Kth Smallest Element in a BST",
+    "slug": "kth-smallest-element-in-a-bst",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Inorder traversal property of BST.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Kth Smallest Element in a BST.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Inorder traversal property of BST."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Kth Smallest Element in a BST using first principles."
+      ],
+      "pattern_signals": [
+        "Inorder traversal property of BST."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 232,
+    "title": "Implement Queue using Stacks",
+    "slug": "implement-queue-using-stacks",
+    "difficulty": "Easy",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "Queue",
+    "shortPatternReason": "Simulating FIFO with two LIFO stacks.",
+    "time_complexity": "O(1) amortized",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Implement Queue using Stacks.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Queue pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(1) amortized",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Queue approach.",
+      "Simulating FIFO with two LIFO stacks."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Implement Queue using Stacks using first principles."
+      ],
+      "pattern_signals": [
+        "Simulating FIFO with two LIFO stacks."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 234,
+    "title": "Palindrome Linked List",
+    "slug": "palindrome-linked-list",
+    "difficulty": "Easy",
+    "algorithmType": "linked_list",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Reverse half or use two pointers with recursion.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Palindrome Linked List.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Reverse half or use two pointers with recursion."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Palindrome Linked List using first principles."
+      ],
+      "pattern_signals": [
+        "Reverse half or use two pointers with recursion."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 236,
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "difficulty": "Medium",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive parent search with split logic.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Lowest Common Ancestor of a Binary Tree.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive parent search with split logic."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Lowest Common Ancestor of a Binary Tree using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive parent search with split logic."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 238,
+    "title": "Product of Array Except Self",
+    "slug": "product-of-array-except-self",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "Prefix Sum",
+    "shortPatternReason": "Prefix and suffix product arrays.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Product of Array Except Self.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Prefix Sum pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Prefix Sum approach.",
+      "Prefix and suffix product arrays."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Product of Array Except Self using first principles."
+      ],
+      "pattern_signals": [
+        "Prefix and suffix product arrays."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 239,
+    "title": "Sliding Window Maximum",
+    "slug": "sliding-window-maximum",
+    "difficulty": "Hard",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Deque-based monotonic max tracking.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(k)",
+    "problem_statement": "Standard LeetCode problem: Sliding Window Maximum.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(k)"
+    },
+    "patternSignals": [
+      "Requires Sliding Window approach.",
+      "Deque-based monotonic max tracking."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Sliding Window Maximum using first principles."
+      ],
+      "pattern_signals": [
+        "Deque-based monotonic max tracking."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 240,
+    "title": "Search a 2D Matrix II",
+    "slug": "search-a-2d-matrix-ii",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Stepwise elimination from top-right corner.",
+    "time_complexity": "O(m+n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Search a 2D Matrix II.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(m+n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Stepwise elimination from top-right corner."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Search a 2D Matrix II using first principles."
+      ],
+      "pattern_signals": [
+        "Stepwise elimination from top-right corner."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 242,
+    "title": "Valid Anagram",
+    "slug": "valid-anagram",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Character frequency count check.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Valid Anagram.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Array approach.",
+      "Character frequency count check."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Valid Anagram using first principles."
+      ],
+      "pattern_signals": [
+        "Character frequency count check."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 283,
+    "title": "Move Zeroes",
+    "slug": "move-zeroes",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "In-place swapping to maintain order.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Move Zeroes.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "In-place swapping to maintain order."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Move Zeroes using first principles."
+      ],
+      "pattern_signals": [
+        "In-place swapping to maintain order."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 287,
+    "title": "Find the Duplicate Number",
+    "slug": "find-the-duplicate-number",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Cycle detection in array index mapping.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Find the Duplicate Number.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Two Pointer approach.",
+      "Cycle detection in array index mapping."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Find the Duplicate Number using first principles."
+      ],
+      "pattern_signals": [
+        "Cycle detection in array index mapping."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 295,
+    "title": "Find Median from Data Stream",
+    "slug": "find-median-from-data-stream",
+    "difficulty": "Hard",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "Heap / Priority Queue",
+    "shortPatternReason": "Dual heaps (min/max) for dynamic median tracking.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Find Median from Data Stream.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Heap / Priority Queue approach.",
+      "Dual heaps (min/max) for dynamic median tracking."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Find Median from Data Stream using first principles."
+      ],
+      "pattern_signals": [
+        "Dual heaps (min/max) for dynamic median tracking."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 300,
+    "title": "Longest Increasing Subsequence",
+    "slug": "longest-increasing-subsequence",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "DP relation or patience sorting logic.",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Longest Increasing Subsequence.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n log n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "DP relation or patience sorting logic."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Longest Increasing Subsequence using first principles."
+      ],
+      "pattern_signals": [
+        "DP relation or patience sorting logic."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 322,
+    "title": "Coin Change",
+    "slug": "coin-change",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Bottom-up min combination optimization.",
+    "time_complexity": "O(S*n)",
+    "space_complexity": "O(S)",
+    "problem_statement": "Standard LeetCode problem: Coin Change.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(S*n)",
+      "space": "O(S)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Bottom-up min combination optimization."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Coin Change using first principles."
+      ],
+      "pattern_signals": [
+        "Bottom-up min combination optimization."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 347,
+    "title": "Top K Frequent Elements",
+    "slug": "top-k-frequent-elements",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "Heap / Priority Queue",
+    "shortPatternReason": "Frequency map + bucket sort or heap.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Top K Frequent Elements.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Heap / Priority Queue approach.",
+      "Frequency map + bucket sort or heap."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Top K Frequent Elements using first principles."
+      ],
+      "pattern_signals": [
+        "Frequency map + bucket sort or heap."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 394,
+    "title": "Decode String",
+    "slug": "decode-string",
+    "difficulty": "Medium",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "Stack",
+    "shortPatternReason": "Nested expansion using count/string stacks.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Decode String.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Stack approach.",
+      "Nested expansion using count/string stacks."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Decode String using first principles."
+      ],
+      "pattern_signals": [
+        "Nested expansion using count/string stacks."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 416,
+    "title": "Partition Equal Subset Sum",
+    "slug": "partition-equal-subset-sum",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Subset sum variation (0/1 Knapsack).",
+    "time_complexity": "O(n * target)",
+    "space_complexity": "O(target)",
+    "problem_statement": "Standard LeetCode problem: Partition Equal Subset Sum.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n * target)",
+      "space": "O(target)"
+    },
+    "patternSignals": [
+      "Requires Dynamic Programming approach.",
+      "Subset sum variation (0/1 Knapsack)."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Partition Equal Subset Sum using first principles."
+      ],
+      "pattern_signals": [
+        "Subset sum variation (0/1 Knapsack)."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 438,
+    "title": "Find All Anagrams in a String",
+    "slug": "find-all-anagrams-in-a-string",
+    "difficulty": "Medium",
+    "algorithmType": "sliding_window",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Fixed-size window frequency check.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Find All Anagrams in a String.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Sliding Window approach.",
+      "Fixed-size window frequency check."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Find All Anagrams in a String using first principles."
+      ],
+      "pattern_signals": [
+        "Fixed-size window frequency check."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 543,
+    "title": "Diameter of Binary Tree",
+    "slug": "diameter-of-binary-tree",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Recursive max path tracking through root.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Diameter of Binary Tree.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Recursion approach.",
+      "Recursive max path tracking through root."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Diameter of Binary Tree using first principles."
+      ],
+      "pattern_signals": [
+        "Recursive max path tracking through root."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 560,
+    "title": "Subarray Sum Equals K",
+    "slug": "subarray-sum-equals-k",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "Prefix Sum",
+    "shortPatternReason": "Prefix sums + map of frequencies.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Subarray Sum Equals K.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Prefix Sum pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Prefix Sum approach.",
+      "Prefix sums + map of frequencies."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Subarray Sum Equals K using first principles."
+      ],
+      "pattern_signals": [
+        "Prefix sums + map of frequencies."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Sort",
+        "2. Two Pointers"
+      ]
+    }
+  },
+  {
+    "id": 704,
+    "title": "Binary Search",
+    "slug": "binary-search",
+    "difficulty": "Easy",
+    "algorithmType": "binary_search",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "Binary Search",
+    "shortPatternReason": "Standard logarithmic target lookup.",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Standard LeetCode problem: Binary Search.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(log n)",
+      "space": "O(1)"
+    },
+    "patternSignals": [
+      "Requires Binary Search approach.",
+      "Standard logarithmic target lookup."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Binary Search using first principles."
+      ],
+      "pattern_signals": [
+        "Standard logarithmic target lookup."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 739,
+    "title": "Daily Temperatures",
+    "slug": "daily-temperatures",
+    "difficulty": "Medium",
+    "algorithmType": "stack",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "Stack",
+    "shortPatternReason": "Monotonic stack for next-greater tracking.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "problem_statement": "Standard LeetCode problem: Daily Temperatures.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Requires Stack approach.",
+      "Monotonic stack for next-greater tracking."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Daily Temperatures using first principles."
+      ],
+      "pattern_signals": [
+        "Monotonic stack for next-greater tracking."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 994,
+    "title": "Rotting Oranges",
+    "slug": "rotting-oranges",
+    "difficulty": "Medium",
+    "algorithmType": "graph",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "BFS for shortest time level-by-level decay.",
+    "time_complexity": "O(m*n)",
+    "space_complexity": "O(m*n)",
+    "problem_statement": "Standard LeetCode problem: Rotting Oranges.",
+    "constraints": [
+      "N <= 10^5",
+      "Elements are integers."
+    ],
+    "examples": [],
+    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
+    "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(m*n)",
+      "space": "O(m*n)"
+    },
+    "patternSignals": [
+      "Requires Graph (BFS/DFS) approach.",
+      "BFS for shortest time level-by-level decay."
+    ],
+    "edgeCases": [
+      "Empty input",
+      "Small input",
+      "Large values"
+    ],
+    "thinking_guide": {
+      "first_principles": [
+        "Solve Rotting Oranges using first principles."
+      ],
+      "pattern_signals": [
+        "BFS for shortest time level-by-level decay."
+      ],
+      "naive_approach": [
+        "Iterative brute force."
+      ],
+      "approach_blueprint": [
+        "1. Traverse",
+        "2. Process"
+      ]
+    }
+  },
+  {
+    "id": 1067,
+    "title": "Pattern Drill 67",
+    "slug": "pattern-drill-67",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "Greedy",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1068,
+    "title": "Pattern Drill 68",
+    "slug": "pattern-drill-68",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "Prefix Sum",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1069,
+    "title": "Pattern Drill 69",
+    "slug": "pattern-drill-69",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1070,
+    "title": "Pattern Drill 70",
+    "slug": "pattern-drill-70",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1071,
+    "title": "Pattern Drill 71",
+    "slug": "pattern-drill-71",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1072,
+    "title": "Pattern Drill 72",
+    "slug": "pattern-drill-72",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1073,
+    "title": "Pattern Drill 73",
+    "slug": "pattern-drill-73",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "Binary Search",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1074,
+    "title": "Pattern Drill 74",
+    "slug": "pattern-drill-74",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1075,
+    "title": "Pattern Drill 75",
+    "slug": "pattern-drill-75",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1076,
+    "title": "Pattern Drill 76",
+    "slug": "pattern-drill-76",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "Stack",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1077,
+    "title": "Pattern Drill 77",
+    "slug": "pattern-drill-77",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "Queue",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1078,
+    "title": "Pattern Drill 78",
+    "slug": "pattern-drill-78",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "Linked List",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1079,
+    "title": "Pattern Drill 79",
+    "slug": "pattern-drill-79",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1080,
+    "title": "Pattern Drill 80",
+    "slug": "pattern-drill-80",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "Heap / Priority Queue",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1081,
+    "title": "Pattern Drill 81",
+    "slug": "pattern-drill-81",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "Greedy",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1082,
+    "title": "Pattern Drill 82",
+    "slug": "pattern-drill-82",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "Prefix Sum",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1083,
+    "title": "Pattern Drill 83",
+    "slug": "pattern-drill-83",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1084,
+    "title": "Pattern Drill 84",
+    "slug": "pattern-drill-84",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1085,
+    "title": "Pattern Drill 85",
+    "slug": "pattern-drill-85",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1086,
+    "title": "Pattern Drill 86",
+    "slug": "pattern-drill-86",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1087,
+    "title": "Pattern Drill 87",
+    "slug": "pattern-drill-87",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Binary Search"
+    ],
+    "primaryPattern": "Binary Search",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1088,
+    "title": "Pattern Drill 88",
+    "slug": "pattern-drill-88",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Recursion"
+    ],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1089,
+    "title": "Pattern Drill 89",
+    "slug": "pattern-drill-89",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Backtracking"
+    ],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1090,
+    "title": "Pattern Drill 90",
+    "slug": "pattern-drill-90",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Stack"
+    ],
+    "primaryPattern": "Stack",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1091,
+    "title": "Pattern Drill 91",
+    "slug": "pattern-drill-91",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Queue"
+    ],
+    "primaryPattern": "Queue",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1092,
+    "title": "Pattern Drill 92",
+    "slug": "pattern-drill-92",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Linked List"
+    ],
+    "primaryPattern": "Linked List",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1093,
+    "title": "Pattern Drill 93",
+    "slug": "pattern-drill-93",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Graph (BFS/DFS)"
+    ],
+    "primaryPattern": "Graph (BFS/DFS)",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1094,
+    "title": "Pattern Drill 94",
+    "slug": "pattern-drill-94",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Heap / Priority Queue"
+    ],
+    "primaryPattern": "Heap / Priority Queue",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1095,
+    "title": "Pattern Drill 95",
+    "slug": "pattern-drill-95",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Greedy"
+    ],
+    "primaryPattern": "Greedy",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1096,
+    "title": "Pattern Drill 96",
+    "slug": "pattern-drill-96",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Prefix Sum"
+    ],
+    "primaryPattern": "Prefix Sum",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1097,
+    "title": "Pattern Drill 97",
+    "slug": "pattern-drill-97",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Dynamic Programming"
+    ],
+    "primaryPattern": "Dynamic Programming",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1098,
+    "title": "Pattern Drill 98",
+    "slug": "pattern-drill-98",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Array"
+    ],
+    "primaryPattern": "Array",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1099,
+    "title": "Pattern Drill 99",
+    "slug": "pattern-drill-99",
+    "difficulty": "Easy",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Two Pointer"
+    ],
+    "primaryPattern": "Two Pointer",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  },
+  {
+    "id": 1100,
+    "title": "Pattern Drill 100",
+    "slug": "pattern-drill-100",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointer",
+    "status": "new",
+    "tags": [
+      "Sliding Window"
+    ],
+    "primaryPattern": "Sliding Window",
+    "shortPatternReason": "Practice drill for pattern recognition.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "problem_statement": "Practice identifying the pattern in this scenario.",
+    "constraints": [],
+    "examples": [],
+    "brute_force_explanation": "",
+    "optimal_explanation": "",
+    "brute_force_steps": [],
+    "optimal_steps": [],
+    "complexity": {
+      "brute": "O(n\u00b2)",
+      "optimal": "O(n)",
+      "space": "O(1)"
+    }
+  }
+]

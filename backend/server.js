@@ -12,13 +12,26 @@ app.use(cors());
 app.use(express.json());
 
 const problemsPath = path.join(__dirname, 'data', 'problems.json');
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/algoscope')
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.error('MongoDB Connection Error:', err));
+
+// Routes
+const progressRoutes = require('./routes/progress');
+app.use('/api/progress', progressRoutes);
 
 app.get('/api/problems', (req, res) => {
   fs.readFile(problemsPath, 'utf8', (err, data) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to read problems data' });
     }
-    res.json(JSON.parse(data));
+    const problems = JSON.parse(data);
+    // Strip heavy steps data for list view
+    const metadata = problems.map(({ brute_force_steps, optimal_steps, ...rest }) => rest);
+    res.json(metadata);
   });
 });
 
