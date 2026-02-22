@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Play,
@@ -64,7 +64,7 @@ export const FoundationVisualizer: React.FC<Props> = ({ type, moduleId }) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     // Dynamic limit based on type
-    const getLimit = () => {
+    const getLimit = useCallback(() => {
         switch (type) {
             case 'heap': return mockHeap.length;
             case 'array': return mockData.length;
@@ -74,7 +74,7 @@ export const FoundationVisualizer: React.FC<Props> = ({ type, moduleId }) => {
             case 'bit_manipulation': return 8;
             default: return 1;
         }
-    };
+    }, [type, mockHeap.length, mockData.length, mockNodes.length, mockTrie, mockGraph.nodes.length]);
 
     // Simple auto-step logic for demo
     useEffect(() => {
@@ -86,7 +86,7 @@ export const FoundationVisualizer: React.FC<Props> = ({ type, moduleId }) => {
             }, 1000 / speed);
             return () => clearInterval(interval);
         }
-    }, [isPlaying, speed, mockData.length, mockNodes.length, mockHeap.length, Object.keys(mockTrie).length, mockGraph.nodes.length, type]);
+    }, [isPlaying, speed, getLimit]);
 
     const handleStep = () => {
         const limit = getLimit();

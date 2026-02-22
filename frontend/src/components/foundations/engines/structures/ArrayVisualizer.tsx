@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowDown, Plus, Trash2, Search, ArrowRight, Layers, Maximize, Copy } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Plus, Trash2, Search, ArrowRight, Layers } from 'lucide-react'
 
 // Advanced Dynamic Array Visualizer
 // Demonstrates: Capacity vs Size, O(1) Access, O(N) Shift, Resizing
 
 const ArrayVisualizer: React.FC = () => {
     // Configuration
-    const INITIAL_CAPACITY = 4
 
     // State
     const [elements, setElements] = useState<(number | null)[]>([10, 20, null, null]) // Null represents empty memory slots

@@ -9,7 +9,6 @@ import {
     Zap,
     Copy,
     Search,
-    BookOpen,
     Trophy
 } from 'lucide-react';
 import { InterviewSim } from '../../types/foundation';
@@ -79,8 +78,8 @@ export const InterviewSimulator: React.FC<Props> = ({ simData, moduleId }) => {
                         <button
                             onClick={() => setIsActive(!isActive)}
                             className={`w-full py-4 rounded-2xl flex items-center justify-center gap-3 font-bold uppercase tracking-widest transition-all ${isActive
-                                    ? 'bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30'
-                                    : 'bg-accent-blue hover:bg-accent-blue/80 text-white shadow-lg shadow-accent-blue/20'
+                                ? 'bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30'
+                                : 'bg-accent-blue hover:bg-accent-blue/80 text-white shadow-lg shadow-accent-blue/20'
                                 }`}
                         >
                             {isActive ? <Timer size={20} /> : <Play size={20} fill="currentColor" />}
@@ -123,8 +122,8 @@ export const InterviewSimulator: React.FC<Props> = ({ simData, moduleId }) => {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id as any)}
                             className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${activeTab === tab.id
-                                    ? 'bg-white/10 text-white shadow-xl'
-                                    : 'text-white/40 hover:text-white/60'
+                                ? 'bg-white/10 text-white shadow-xl'
+                                : 'text-white/40 hover:text-white/60'
                                 }`}
                         >
                             <tab.icon size={14} />
@@ -210,8 +209,8 @@ export const InterviewSimulator: React.FC<Props> = ({ simData, moduleId }) => {
                                                 key={lang}
                                                 onClick={() => setSelectedLanguage(lang as any)}
                                                 className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${selectedLanguage === lang
-                                                        ? 'bg-accent-blue text-white shadow-lg shadow-accent-blue/20'
-                                                        : 'bg-white/5 text-white/40 hover:text-white/60'
+                                                    ? 'bg-accent-blue text-white shadow-lg shadow-accent-blue/20'
+                                                    : 'bg-white/5 text-white/40 hover:text-white/60'
                                                     }`}
                                             >
                                                 {lang}

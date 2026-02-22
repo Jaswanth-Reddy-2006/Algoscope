@@ -64,8 +64,8 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
         optimal: (input) => generateLongestPalindromeExpand(input)
     },
     "zigzag-conversion": {
-        brute: (input) => generateZigzagSteps(input, 3),
-        optimal: (input) => generateZigzagSteps(input, 3)
+        brute: (input) => generateZigzagSteps(input.s || input, parseInt(input.target || 3)),
+        optimal: (input) => generateZigzagSteps(input.s || input, parseInt(input.target || 3))
     },
     "reverse-integer": {
         brute: (input) => generateReverseInteger(Number(input)),

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowDown, ArrowRight } from 'lucide-react'
+import { motion } from 'framer-motion'
+
 
 const PrefixSumVisualizer: React.FC = () => {
-    const [nums, setNums] = useState<number[]>([1, 2, 3, 4, 5])
-    const [prefix, setPrefix] = useState<number[]>([0, 1, 3, 6, 10, 15])
+    const [nums] = useState<number[]>([1, 2, 3, 4, 5])
+    const [prefix] = useState<number[]>([0, 1, 3, 6, 10, 15])
     const [highlightIndex, setHighlightIndex] = useState<number | null>(null)
     const [range, setRange] = useState({ l: 1, r: 3 }) // 0-indexed for nums
 

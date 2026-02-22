@@ -12,7 +12,6 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) 
     const currentStepIndex = useStore(state => state.currentStepIndex)
     const isBruteForceStore = useStore(state => state.isBruteForce)
     const setPlaying = useStore(state => state.setPlaying)
-    const compareMode = useStore(state => state.compareMode)
 
     const effectiveIsBrute = isBrute !== undefined ? isBrute : isBruteForceStore
     const steps = currentProblem ? (effectiveIsBrute ? currentProblem.brute_force_steps : currentProblem.optimal_steps) : []

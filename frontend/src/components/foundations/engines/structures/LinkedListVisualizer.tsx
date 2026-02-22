@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Plus, Trash2, ArrowRightCircle, Repeat } from 'lucide-react'
+import { ArrowRight, Plus, Trash2, Repeat } from 'lucide-react'
 
 // Advanced Linked List Visualizer
 // Demonstrates: Node Structure, Pointer Rewiring, Traversal, Null Termination
@@ -89,7 +89,7 @@ const LinkedListVisualizer: React.FC = () => {
         } else {
             // Traverse to find tail
             let currentId = headId
-            while (true) {
+            while (currentId) {
                 setHighlightedNode(currentId)
                 await sleep(300)
                 const node = nodes.find(n => n.id === currentId)
@@ -179,9 +179,9 @@ const LinkedListVisualizer: React.FC = () => {
         }
 
         let currentId = headId
-        let prevId = null
+        let prevId: string | null = null
 
-        while (true) {
+        while (currentId) {
             setHighlightedNode(currentId)
             await sleep(300)
             const node = nodes.find(n => n.id === currentId)
@@ -205,8 +205,8 @@ const LinkedListVisualizer: React.FC = () => {
         setIsAnimating(true)
         setOperationMsg('Reversing List... O(N)')
 
-        let prev = null
-        let current = headId
+        let prev: string | null = null
+        let current: string | null = headId
 
         while (current) {
             setHighlightedNode(current)

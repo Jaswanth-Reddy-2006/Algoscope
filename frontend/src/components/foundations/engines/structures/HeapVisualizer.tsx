@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Minus, ArrowUp, ArrowDown } from 'lucide-react'
+import { Plus, Minus } from 'lucide-react'
 
 // Advanced Heap Visualizer
 // Demonstrates: Max Heap Property, Tree Structure (Array-based), Sift Up/Down Operations
@@ -115,9 +115,9 @@ const HeapVisualizer: React.FC = () => {
         let current = idx
         const n = arr.length
 
-        while (true) {
-            let left = 2 * current + 1
-            let right = 2 * current + 2
+        while (current < n) {
+            const left = 2 * current + 1
+            const right = 2 * current + 2
             let largest = current
 
             // Visualize comparison logic

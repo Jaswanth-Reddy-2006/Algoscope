@@ -23,6 +23,23 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+const parseInput = (input) => {
+  if (!input) return [];
+  try {
+    const cleaned = String(input).trim();
+    if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
+      return JSON.parse(cleaned);
+    }
+    // Fallback: comma separated
+    return cleaned.split(',').map(s => {
+      const val = s.trim();
+      return isNaN(Number(val)) ? (val === 'true' ? true : (val === 'false' ? false : val)) : Number(val);
+    });
+  } catch (e) {
+    return [];
+  }
+};
+
 const problemsPath = path.join(__dirname, 'data', 'problems.json');
 const mongoose = require('mongoose');
 
@@ -72,15 +89,15 @@ app.post('/api/problems/:id/steps', (req, res) => {
 
   try {
     if (id === 1) {
-      const nums = JSON.parse(input);
+      const nums = parseInput(input);
       const targetVal = parseInt(target);
       const { bruteForceSteps, optimalSteps } = generateTwoSumSteps(nums, targetVal);
       return res.json({ bruteForceSteps, optimalSteps });
     }
 
     if (id === 2) {
-      const l1 = JSON.parse(input);
-      const l2 = JSON.parse(target); // target used for l2 in this case
+      const l1 = parseInput(input);
+      const l2 = parseInput(target); // target used for l2 in this case
       const { bruteForceSteps, optimalSteps } = generateLinkedListSteps(l1, l2);
       return res.json({ bruteForceSteps, optimalSteps });
     }
@@ -92,8 +109,8 @@ app.post('/api/problems/:id/steps', (req, res) => {
     }
 
     if (id === 4) {
-      const nums1 = JSON.parse(input);
-      const nums2 = JSON.parse(target);
+      const nums1 = parseInput(input);
+      const nums2 = parseInput(target);
       const { bruteForceSteps, optimalSteps } = generateMedianSteps(nums1, nums2);
       return res.json({ bruteForceSteps, optimalSteps });
     }
@@ -137,7 +154,7 @@ app.post('/api/problems/:id/steps', (req, res) => {
     }
 
     if (id === 11) {
-      const heights = JSON.parse(input);
+      const heights = parseInput(input);
       const { bruteForceSteps, optimalSteps } = generateContainerSteps(heights);
       return res.json({ bruteForceSteps, optimalSteps });
     }

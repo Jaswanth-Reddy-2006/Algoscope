@@ -746,18 +746,29 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
             let parsedInput: any = {}
             const algorithm = currentProblem.algorithmType
+            const slug = currentProblem.slug
 
-            if (algorithm?.includes('two_pointer') || algorithm === 'array') {
-                parsedInput = {
-                    nums: parseArray(customInput),
-                    target: parseInt(customTarget || '9')
-                }
-            } else if (algorithm === 'sliding_window') {
-                parsedInput = customInput || "abcabcbb"
-            } else if (algorithm === 'linked_list') {
-                parsedInput = {
-                    l1: parseArray(customInput),
-                    l2: parseArray(customTarget)
+            // Comprehensive Parsing Logic
+            const nums = parseArray(customInput)
+            const target = isNaN(parseInt(customTarget)) ? customTarget : parseInt(customTarget || '0')
+
+            if (slug === 'median-of-two-sorted-arrays') {
+                parsedInput = { nums1: parseArray(customInput), nums2: parseArray(customTarget) }
+            } else if (slug === 'regular-expression-matching') {
+                parsedInput = { s: customInput, p: customTarget }
+            } else if (slug === 'add-two-numbers' || slug === 'merge-two-sorted-lists') {
+                parsedInput = { l1: parseArray(customInput), l2: parseArray(customTarget) }
+            } else if (slug === 'zigzag-conversion') {
+                parsedInput = { s: customInput, target }
+            } else if (slug === 'string-to-integer-atoi' || slug === 'palindrome-number' || slug === 'reverse-integer' || slug === 'valid-parentheses' || slug === 'valid-palindrome') {
+                // Primitive input problems
+                parsedInput = customInput
+            } else if (algorithm?.includes('two_pointer') || algorithm === 'array' || algorithm === 'binary_search' || algorithm === 'sliding_window') {
+                // Standard structure problems
+                if (algorithm === 'sliding_window' && !currentProblem.slug.includes('sum')) {
+                    parsedInput = customInput
+                } else {
+                    parsedInput = { nums, target }
                 }
             } else {
                 parsedInput = customInput || ""
@@ -805,8 +816,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             set({
                 currentProblem: {
                     ...currentProblem,
-                    brute_force_steps: data.brute || [],
-                    optimal_steps: data.optimal || []
+                    brute_force_steps: data.bruteForceSteps || data.brute || [],
+                    optimal_steps: data.optimalSteps || data.optimal || []
                 },
                 currentStepIndex: 0,
                 isPlaying: false,

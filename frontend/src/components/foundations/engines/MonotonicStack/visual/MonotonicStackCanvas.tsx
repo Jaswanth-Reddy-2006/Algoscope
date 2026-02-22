@@ -7,6 +7,13 @@ interface Props {
 }
 
 const MonotonicStackCanvas: React.FC<Props> = ({ state }) => {
+    // Guard 3: Max value safety
+    const maxVal = useMemo(() => {
+        const arr = state?.array || []
+        if (arr.length === 0) return 1
+        return Math.max(...arr, 1)
+    }, [state?.array])
+
     // Guard 1: Root state existence
     if (!state) return null
 
@@ -18,12 +25,6 @@ const MonotonicStackCanvas: React.FC<Props> = ({ state }) => {
     const phase = state.phase || "IDLE"
     const explanation = state.explanation || "Initializing..."
     const activeComparison = state.activeComparison
-
-    // Guard 3: Max value safety
-    const maxVal = useMemo(() => {
-        if (!array || array.length === 0) return 1
-        return Math.max(...array, 1)
-    }, [array])
 
     return (
         <div className="w-full h-full flex flex-col p-6 overflow-hidden bg-background/50 relative font-outfit">

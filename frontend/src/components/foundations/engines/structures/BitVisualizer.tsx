@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowDown, ArrowRight } from 'lucide-react'
 
 const BitVisualizer: React.FC = () => {
     const [num, setNum] = useState<number>(42)

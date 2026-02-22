@@ -97,7 +97,8 @@ function runPalindromeCheck(arr: number[]): TwoPointerState[] {
 }
 
 function runMoveZeroes(arr: number[]): TwoPointerState[] {
-    let slow = 0, states: TwoPointerState[] = []
+    let slow = 0
+    const states: TwoPointerState[] = []
     for (let fast = 0; fast < arr.length; fast++) {
         states.push({ left: slow, right: fast, array: [...arr], conditionMet: false, explanation: `Scanning ${arr[fast]}.` })
         if (arr[fast] !== 0) {
@@ -113,7 +114,8 @@ function runMoveZeroes(arr: number[]): TwoPointerState[] {
 
 function runRemoveDuplicates(arr: number[]): TwoPointerState[] {
     if (arr.length === 0) return []
-    let slow = 0, states: TwoPointerState[] = []
+    let slow = 0
+    const states: TwoPointerState[] = []
     for (let fast = 1; fast < arr.length; fast++) {
         states.push({ left: slow, right: fast, array: [...arr], conditionMet: arr[slow] === arr[fast], explanation: `Compare unique [${slow}] with current [${fast}].` })
         if (arr[fast] !== arr[slow]) {
@@ -125,7 +127,8 @@ function runRemoveDuplicates(arr: number[]): TwoPointerState[] {
 }
 
 function runPartition(arr: number[], k: number): TwoPointerState[] {
-    let slow = 0, states: TwoPointerState[] = []
+    let slow = 0
+    const states: TwoPointerState[] = []
     for (let fast = 0; fast < arr.length; fast++) {
         states.push({ left: slow, right: fast, array: [...arr], conditionMet: arr[fast] < k, explanation: `Compare ${arr[fast]} < ${k}.` })
         if (arr[fast] < k) {
@@ -138,7 +141,8 @@ function runPartition(arr: number[], k: number): TwoPointerState[] {
 }
 
 function runFastSlowCycle(arr: number[]): TwoPointerState[] {
-    let slow = 0, fast = 0, states: TwoPointerState[] = []
+    let slow = 0, fast = 0
+    const states: TwoPointerState[] = []
     for (let i = 0; i < 20; i++) {
         slow = (slow + 1) % arr.length
         fast = (fast + 2) % arr.length
@@ -150,7 +154,8 @@ function runFastSlowCycle(arr: number[]): TwoPointerState[] {
 }
 
 function runLinkedListMid(arr: number[]): TwoPointerState[] {
-    let slow = 0, fast = 0, states: TwoPointerState[] = []
+    let slow = 0, fast = 0
+    const states: TwoPointerState[] = []
     while (fast < arr.length - 1 && fast + 1 < arr.length - 1) {
         slow++; fast += 2
         states.push({ left: null, right: null, slow, fast, array: [...arr], conditionMet: false, explanation: `Slow at ${slow}, Fast at ${fast}.` })
@@ -161,7 +166,8 @@ function runLinkedListMid(arr: number[]): TwoPointerState[] {
 
 function runHappyNumber(n: number): TwoPointerState[] {
     const getNext = (m: number) => m.toString().split('').reduce((a, b) => a + Math.pow(parseInt(b), 2), 0)
-    let slow = n, fast = getNext(n), states: TwoPointerState[] = []
+    let slow = n, fast = getNext(n)
+    const states: TwoPointerState[] = []
     while (fast !== 1 && slow !== fast) {
         states.push({ left: null, right: null, slow: 0, fast: 0, array: [slow, fast], conditionMet: false, explanation: `Current: ${slow}, Fast: ${fast}` })
         slow = getNext(slow); fast = getNext(getNext(fast))
@@ -171,7 +177,8 @@ function runHappyNumber(n: number): TwoPointerState[] {
 }
 
 function runDNF(arr: number[]): TwoPointerState[] {
-    let l = 0, m = 0, r = arr.length - 1, states: TwoPointerState[] = []
+    let l = 0, m = 0, r = arr.length - 1
+    const states: TwoPointerState[] = []
     while (m <= r) {
         states.push({ left: l, right: r, mid: m, array: [...arr], conditionMet: false, explanation: `Evaluating arr[${m}] = ${arr[m]}` })
         if (arr[m] === 0) {

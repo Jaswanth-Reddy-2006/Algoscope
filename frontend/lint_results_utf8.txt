@@ -1,0 +1,70 @@
+
+> algoscope-frontend@0.0.0 lint
+> eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0
+
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\InterviewSimulator.tsx
+  12:5  error  'BookOpen' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\MonotonicStack\visual\MonotonicStackBruteForceCanvas.tsx
+  14:11  warning  The 'array' logical expression could make the dependencies of useMemo Hook (at line 25) change on every render. To fix this, wrap the initialization of 'array' in its own useMemo() Hook        react-hooks/exhaustive-deps
+  22:20  error    React Hook "React.useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\MonotonicStack\visual\MonotonicStackCanvas.tsx
+  14:11  warning  The 'array' logical expression could make the dependencies of useMemo Hook (at line 26) change on every render. To fix this, wrap the initialization of 'array' in its own useMemo() Hook  react-hooks/exhaustive-deps
+  23:20  error    React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\SearchEngine\visual\BinarySearchCanvas.tsx
+  15:11  warning  The 'array' logical expression could make the dependencies of useMemo Hook (at line 19) change on every render. To fix this, wrap the initialization of 'array' in its own useMemo() Hook  react-hooks/exhaustive-deps
+  16:20  error    React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\TwoPointers\core\twoPointerCore.ts
+  100:19  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  116:19  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  128:19  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  141:29  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  153:29  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  164:38  error  'states' is never reassigned. Use 'const' instead  prefer-const
+  174:43  error  'states' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\TwoPointers\visual\TwoPointerCanvas.tsx
+  23:20  error  React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render  react-hooks/rules-of-hooks
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\ArrayVisualizer.tsx
+   2:18  error  'AnimatePresence' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars
+   3:10  error  'ArrowDown' is defined but never used. Allowed unused vars must match /^_/u                  @typescript-eslint/no-unused-vars
+   3:63  error  'Maximize' is defined but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars
+   3:73  error  'Copy' is defined but never used. Allowed unused vars must match /^_/u                       @typescript-eslint/no-unused-vars
+  10:11  error  'INITIAL_CAPACITY' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\BitVisualizer.tsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^_/u      @typescript-eslint/no-unused-vars
+  3:10  error  'ArrowDown' is defined but never used. Allowed unused vars must match /^_/u   @typescript-eslint/no-unused-vars
+  3:21  error  'ArrowRight' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\HeapVisualizer.tsx
+    3:23  error  'ArrowUp' is defined but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars
+    3:32  error  'ArrowDown' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  118:16  error  Unexpected constant condition                                                no-constant-condition
+  119:17  error  'left' is never reassigned. Use 'const' instead                              prefer-const
+  120:17  error  'right' is never reassigned. Use 'const' instead                             prefer-const
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\LinkedListVisualizer.tsx
+    3:36  error  'ArrowRightCircle' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+   92:20  error  Unexpected constant condition                                                       no-constant-condition
+  184:16  error  Unexpected constant condition                                                       no-constant-condition
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\MatrixVisualizer.tsx
+   3:16  error  'RotateCcw' is defined but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars
+  14:20  error  'setMatrix' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\structures\PrefixSumVisualizer.tsx
+  2:18  error  'AnimatePresence' is defined but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+  3:10  error  'ArrowDown' is defined but never used. Allowed unused vars must match /^_/u           @typescript-eslint/no-unused-vars
+  3:21  error  'ArrowRight' is defined but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars
+  6:18  error  'setNums' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars
+  7:20  error  'setPrefix' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+✖ 38 problems (35 errors, 3 warnings)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+

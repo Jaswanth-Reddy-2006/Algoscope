@@ -572,7 +572,7 @@ export const generateZigzagSteps = (s: string, numRows: number): Step[] => {
 export const generateReverseInteger = (x: number): Step[] => {
     const steps: Step[] = []
     let rev = 0
-    let tempX = Math.abs(x)
+    const tempX = Math.abs(x)
     const sign = x < 0 ? -1 : 1
     const digits = tempX.toString().split('').map(Number)
 

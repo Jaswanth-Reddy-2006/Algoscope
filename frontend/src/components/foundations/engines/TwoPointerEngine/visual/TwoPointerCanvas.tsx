@@ -18,8 +18,13 @@ const TwoPointerCanvas: React.FC<Props> = ({ state, mode }) => {
         return "two_pointer"
     }
 
+    const maxVal = useMemo(() => {
+        const arr = state?.array || []
+        return Math.max(...arr, 1)
+    }, [state?.array])
+
+    if (!state) return null
     const array = state.array
-    const maxVal = useMemo(() => Math.max(...array, 1), [array])
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center p-8 relative overflow-hidden bg-background/50">

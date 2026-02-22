@@ -7,6 +7,13 @@ interface Props {
 }
 
 export const MonotonicStackBruteForceCanvas: React.FC<Props> = ({ state }) => {
+    // Guard 3: Max value safety
+    const maxVal = React.useMemo(() => {
+        const arr = state?.array || []
+        if (arr.length === 0) return 1
+        return Math.max(...arr, 1)
+    }, [state?.array])
+
     // Guard 1: Root state existence
     if (!state) return <div className="h-64 flex items-center justify-center text-white/20 font-mono text-xs italic">Waiting for simulation...</div>
 
@@ -17,12 +24,6 @@ export const MonotonicStackBruteForceCanvas: React.FC<Props> = ({ state }) => {
     const result = state.result || []
     const explanation = state.explanation || "Executing brute force..."
     const found = state.found || false
-
-    // Guard 3: Max value safety
-    const maxVal = React.useMemo(() => {
-        if (!array || array.length === 0) return 1
-        return Math.max(...array, 1)
-    }, [array])
 
     return (
         <div className="flex flex-col h-full bg-red-500/[0.02] rounded-3xl border border-red-500/10 p-6 relative overflow-hidden font-outfit">

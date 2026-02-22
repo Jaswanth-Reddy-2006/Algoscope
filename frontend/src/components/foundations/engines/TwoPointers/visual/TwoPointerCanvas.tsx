@@ -14,13 +14,16 @@ interface Props {
 }
 
 const TwoPointerCanvas: React.FC<Props> = ({ state, mode, stats, array, currentStep, totalSteps }) => {
+    const maxVal = useMemo(() => {
+        const arr = array || []
+        return Math.max(...arr, 1)
+    }, [array])
+
     if (!state) return (
         <div className="p-8 rounded-3xl bg-green-500/[0.05] border border-green-500/20 flex items-center justify-center h-full">
             <p className="text-white/40">Initialize simulation to begin</p>
         </div>
     )
-
-    const maxVal = useMemo(() => Math.max(...array, 1), [array])
 
     const getInvariantLabel = () => {
         const labels: Record<string, string> = {

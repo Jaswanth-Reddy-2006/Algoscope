@@ -8,15 +8,15 @@ interface Props {
 }
 
 const BinarySearchCanvas: React.FC<Props> = ({ state, mode: _mode }) => {
+    // Guard 2: Array stability
+    const maxVal = useMemo(() => {
+        const arr = state?.array || []
+        if (arr.length === 0) return 1
+        return Math.max(...arr, 1)
+    }, [state?.array])
+
     // Guard 1: Root state existence
     if (!state) return null
-
-    // Guard 2: Array stability
-    const array = state.array || []
-    const maxVal = useMemo(() => {
-        if (!array || array.length === 0) return 1
-        return Math.max(...array, 1)
-    }, [array])
 
     // Guard 3: Range stability
     const low = state.low ?? 0
@@ -24,6 +24,7 @@ const BinarySearchCanvas: React.FC<Props> = ({ state, mode: _mode }) => {
     const activeRange = state.activeRange || [0, 0]
     const mid = state.mid
     const explanation = state.explanation || "Initializing..."
+    const array = state.array || []
 
     return (
         <div className="p-6 rounded-2xl bg-emerald-500/[0.05] border border-emerald-500/20 flex flex-col h-full max-h-[600px] relative overflow-hidden font-outfit">

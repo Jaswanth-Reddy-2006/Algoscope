@@ -15,9 +15,10 @@ import { InterviewSimulator } from './InterviewSimulator';
 interface Props {
     module: FoundationModule;
     level: 'fundamentals' | 'patterns' | 'advanced';
+    onVisualize?: () => void;
 }
 
-export const ProgressionContent: React.FC<Props> = ({ module, level }) => {
+export const ProgressionContent: React.FC<Props> = ({ module, level, onVisualize }) => {
     const content: ProgressionLevel = module.progression[level];
     const [showVisualizer, setShowVisualizer] = React.useState(false);
 
@@ -34,7 +35,10 @@ export const ProgressionContent: React.FC<Props> = ({ module, level }) => {
                         </p>
                     </div>
                     <button
-                        onClick={() => setShowVisualizer(!showVisualizer)}
+                        onClick={() => {
+                            setShowVisualizer(!showVisualizer);
+                            onVisualize?.();
+                        }}
                         className="flex items-center gap-3 px-8 py-4 bg-accent-blue hover:bg-accent-blue/80 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(0,112,243,0.3)]"
                     >
                         {showVisualizer ? (

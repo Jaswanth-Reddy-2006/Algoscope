@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Play, RotateCcw, Search, Grid, ArrowRight, ArrowDown } from 'lucide-react'
+import { Play, Search, Grid, ArrowRight, ArrowDown } from 'lucide-react'
 
 // Advanced Matrix Visualizer
 // Demonstrates: 2D Grid Memory, Row-Major Traversal, Coordinate Access
@@ -11,7 +11,7 @@ const MatrixVisualizer: React.FC = () => {
     const COLS = 4
 
     // State
-    const [matrix, setMatrix] = useState<number[][]>(() =>
+    const [matrix] = useState<number[][]>(() =>
         Array.from({ length: ROWS }, () =>
             Array.from({ length: COLS }, () => Math.floor(Math.random() * 20))
         )

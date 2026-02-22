@@ -32,8 +32,8 @@ const ProblemInfo: React.FC = () => {
         }
     }
 
-    const brutePseudocode = currentProblem.pseudocode?.brute || ""
-    const optimalPseudocode = currentProblem.pseudocode?.optimal || ""
+    const brutePseudocode = currentProblem.pseudocode?.brute || currentProblem.thinking_guide?.naive_approach?.join('\n') || ""
+    const optimalPseudocode = currentProblem.pseudocode?.optimal || currentProblem.thinking_guide?.approach_blueprint?.join('\n') || ""
 
     return (
         <div className="flex flex-col gap-10 pb-20">
