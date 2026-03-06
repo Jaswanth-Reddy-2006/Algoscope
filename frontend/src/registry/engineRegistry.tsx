@@ -25,7 +25,10 @@ export const engineRegistry: Partial<Record<AlgorithmType, EngineEntry>> = {
         component: lazy(() => import('../visualization-engines/MatrixEngine'))
     },
     'recursion': {
-        component: lazy(() => import('../visualization-engines/TwoPointerEngine'))
+        component: lazy(() => import('../components/foundations/engines/RecursionEngine'))
+    },
+    'tree': {
+        component: lazy(() => import('../components/foundations/engines/RecursionEngine'))
     },
     'math': {
         component: lazy(() => import('../visualization-engines/TwoPointerEngine'))

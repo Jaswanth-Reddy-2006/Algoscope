@@ -175,10 +175,9 @@ const PatternProfile = () => {
                             <div>
                                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EC4186] mb-2 block">Global Confidence</span>
                                 <div className="flex items-baseline gap-3">
-                                    <h2 className="text-5xl font-black text-white">{globalStats.avg}%</h2>
-                                    <span className="text-xs font-bold text-[#10B981] flex items-center gap-1">
-                                        <ArrowRight size={12} className="-rotate-45" />
-                                        5%
+                                    <h2 className="text-5xl font-black text-white">0%</h2>
+                                    <span className="text-xs font-bold text-white/20 flex items-center gap-1">
+                                        Active
                                     </span>
                                 </div>
                             </div>
@@ -200,22 +199,22 @@ const PatternProfile = () => {
                         <div className="glass-card p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 min-h-[200px] flex flex-col justify-between group">
                             <div>
                                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#10B981] mb-2 block">Strongest Pattern</span>
-                                <h2 className="text-3xl font-black text-white capitalize">{globalStats.strongest}</h2>
+                                <h2 className="text-3xl font-black text-white capitalize">-</h2>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20">Mastered</span>
-                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">94% Accuracy</span>
+                                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-white/5 text-white/20 border border-white/10">Stable</span>
+                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">-</span>
                             </div>
                         </div>
 
                         <div className="glass-card p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 min-h-[200px] flex flex-col justify-between group">
                             <div>
                                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EE544A] mb-2 block">Priority Area</span>
-                                <h2 className="text-3xl font-black text-white capitalize">{globalStats.weakest}</h2>
+                                <h2 className="text-3xl font-black text-white capitalize">-</h2>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-[#EE544A]/10 text-[#EE544A] border border-[#EE544A]/20">Needs Focus</span>
-                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">32% Mastery</span>
+                                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-white/5 text-white/20 border border-white/10">Stable</span>
+                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">-</span>
                             </div>
                         </div>
                     </div>

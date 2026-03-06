@@ -1,15 +1,15 @@
 export type CodeTemplate = {
     python: string
     javascript: string
-    timeComplexity: string
-    spaceComplexity: string
+    timeefficiency: string
+    spaceefficiency: string
 }
 
 export const codeTemplates: Record<string, CodeTemplate> = {
     // --- Two Pointers ---
     'opposite_direction': {
-        timeComplexity: 'O(N)',
-        spaceComplexity: 'O(1)',
+        timeefficiency: 'O(N)',
+        spaceefficiency: 'O(1)',
         python: `def two_sum_sorted(arr, target):
     left, right = 0, len(arr) - 1
     
@@ -43,8 +43,8 @@ export const codeTemplates: Record<string, CodeTemplate> = {
 }`
     },
     'same_direction': {
-        timeComplexity: 'O(N)',
-        spaceComplexity: 'O(1)',
+        timeefficiency: 'O(N)',
+        spaceefficiency: 'O(1)',
         python: `def move_zeroes(arr):
     left = 0  # Position for non-zero
     
@@ -69,8 +69,8 @@ export const codeTemplates: Record<string, CodeTemplate> = {
 }`
     },
     'partition': {
-        timeComplexity: 'O(N)',
-        spaceComplexity: 'O(1)',
+        timeefficiency: 'O(N)',
+        spaceefficiency: 'O(1)',
         python: `def partition(arr, low, high):
     pivot = arr[high]
     i = low - 1  # Index of smaller element
@@ -101,8 +101,8 @@ export const codeTemplates: Record<string, CodeTemplate> = {
 
     // --- Binary Search ---
     'standard': {
-        timeComplexity: 'O(log N)',
-        spaceComplexity: 'O(1)',
+        timeefficiency: 'O(log N)',
+        spaceefficiency: 'O(1)',
         python: `def binary_search(arr, target):
     low, high = 0, len(arr) - 1
     
@@ -136,8 +136,8 @@ export const codeTemplates: Record<string, CodeTemplate> = {
 }`
     },
     'lower_bound': {
-        timeComplexity: 'O(log N)',
-        spaceComplexity: 'O(1)',
+        timeefficiency: 'O(log N)',
+        spaceefficiency: 'O(1)',
         python: `def lower_bound(arr, target):
     low, high = 0, len(arr)
     
@@ -167,8 +167,8 @@ export const codeTemplates: Record<string, CodeTemplate> = {
 }`
     },
     'upper_bound': {
-        timeComplexity: 'O(log N)',
-        spaceComplexity: 'O(1)',
+        timeefficiency: 'O(log N)',
+        spaceefficiency: 'O(1)',
         python: `def upper_bound(arr, target):
     low, high = 0, len(arr)
     

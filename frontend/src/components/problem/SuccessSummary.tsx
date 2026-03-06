@@ -55,7 +55,7 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
 
                 <h2 className="text-2xl font-bold tracking-tight mb-2 text-white">Pattern Internalized</h2>
                 <div className="flex items-center justify-center gap-4 mb-2">
-                    <span className="text-[10px] text-[#EC4186] font-bold tracking-[0.2em] uppercase">Confidence Gain: +7%</span>
+                    <span className="text-[10px] text-[#EC4186] font-bold tracking-[0.2em] uppercase">Confidence Gain: +0%</span>
                     <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
                         <motion.div
                             initial={{ width: 0 }}
@@ -87,13 +87,13 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
                         icon={Clock}
                         color="text-[#EE544A]"
                         label="Naive"
-                        value={problem.complexity.brute.time}
+                        value={problem.efficiency?.brute?.time || "O(N²)"}
                     />
                     <KPICard
                         icon={Database}
                         color="text-[#EC4186]"
                         label="Memory"
-                        value={problem.complexity.optimal.space}
+                        value={problem.efficiency?.optimal?.space || "O(1)"}
                     />
                 </div>
             </div>

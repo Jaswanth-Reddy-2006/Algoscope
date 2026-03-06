@@ -130,8 +130,8 @@ export const TwoPointersComparison: React.FC<Props> = ({ mode }) => {
             <div className="lg:col-span-2">
                 <GenericInsightCard
                     title={mode === 'two_sum_sorted' ? "Why Two Pointers?" : "Why Two Pointers?"}
-                    bruteForceComplexity="O(N²)"
-                    optimalComplexity="O(N)"
+                    bruteForceefficiency="O(N²)"
+                    optimalefficiency="O(N)"
                     keyPrinciples={[
                         "Reduce search space by moving based on condition",
                         "Avoid checking impossible pairs",

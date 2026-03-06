@@ -38,7 +38,7 @@ export const SlidingWindowPattern: PatternEngine<WindowState, SlidingWindowConfi
         return runSlidingWindow(input, config.mode, k)
     },
 
-    getComplexity: (_input, _config) => {
+    getefficiency: (_input, _config) => {
         return {
             time: 'O(N)',
             space: 'O(1)' // Simplified, technically O(K) for distinct

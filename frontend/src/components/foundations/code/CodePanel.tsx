@@ -49,20 +49,20 @@ const CodePanel: React.FC<Props> = ({ mode, language = 'javascript' }) => {
                 </pre>
             </div>
 
-            {/* Complexity Footer */}
+            {/* efficiency Footer */}
             <div className="p-6 border-t border-white/5 bg-white/5">
                 <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 text-white/40 text-[10px] font-bold uppercase tracking-widest">
                             <Clock size={12} /> Time
                         </div>
-                        <span className="text-emerald-400 font-mono font-bold text-lg">{template.timeComplexity}</span>
+                        <span className="text-emerald-400 font-mono font-bold text-lg">{template.timeefficiency}</span>
                     </div>
                     <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 text-white/40 text-[10px] font-bold uppercase tracking-widest">
                             <Database size={12} /> Space
                         </div>
-                        <span className="text-blue-400 font-mono font-bold text-lg">{template.spaceComplexity}</span>
+                        <span className="text-blue-400 font-mono font-bold text-lg">{template.spaceefficiency}</span>
                     </div>
                 </div>
             </div>

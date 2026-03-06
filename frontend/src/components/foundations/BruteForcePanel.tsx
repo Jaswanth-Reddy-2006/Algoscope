@@ -69,7 +69,7 @@ export const BruteForcePanel: React.FC<Props> = ({
                             </div>
                         </div>
                         <div>
-                            <div className="text-[9px] uppercase tracking-widest text-white/40 mb-1">Complexity</div>
+                            <div className="text-[9px] uppercase tracking-widest text-white/40 mb-1">efficiency</div>
                             <div className="text-sm font-bold text-white/60 font-mono">O(N×K)</div>
                         </div>
                     </div>

@@ -202,6 +202,14 @@ const PatternMastery = () => {
                         </span>
                     </div>
 
+                    <button
+                        onClick={() => navigate(`/foundations/core_patterns/${pattern === 'tree' ? 'recursion' : pattern}/visualizer`)}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent-blue/10 border border-accent-blue/20 text-accent-blue hover:bg-accent-blue/20 transition-all group"
+                    >
+                        <Activity size={14} className="group-hover:animate-pulse" />
+                        <span className="text-xs font-bold uppercase tracking-wider">Visualize</span>
+                    </button>
+
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5">
                         <Activity size={14} className="text-accent-blue" />
                         <span className="text-xs font-mono font-bold text-white">{currentConfidence}% Confidence</span>

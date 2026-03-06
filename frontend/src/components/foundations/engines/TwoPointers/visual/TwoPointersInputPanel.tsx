@@ -42,8 +42,8 @@ export const TwoPointersInputPanel: React.FC<Props> = ({
         if (mode === 'container_most_water') {
             return {
                 title: "Container With Most Water",
-                bruteForceComplexity: "O(N²)",
-                optimalComplexity: "O(N)",
+                bruteForceefficiency: "O(N²)",
+                optimalefficiency: "O(N)",
                 keyPrinciples: [
                     "Maximize Width vs Height trade-off",
                     "Shrink window from the shorter side",
@@ -57,8 +57,8 @@ export const TwoPointersInputPanel: React.FC<Props> = ({
         // Default to Two Sum Sorted
         return {
             title: "Two Sum (Sorted)",
-            bruteForceComplexity: "O(N²)",
-            optimalComplexity: "O(N)",
+            bruteForceefficiency: "O(N²)",
+            optimalefficiency: "O(N)",
             keyPrinciples: [
                 "Sorted array allows directional search",
                 "Sum < Target: Need larger number (Left++)",
@@ -101,7 +101,7 @@ export const TwoPointersInputPanel: React.FC<Props> = ({
                             onBlur={handleArraySubmit}
                             onKeyDown={(e) => e.key === 'Enter' && handleArraySubmit()}
                             className="w-full px-4 py-2 rounded-xl bg-black/40 border border-white/10 text-white font-mono focus:outline-none focus:border-accent-blue/50 transition-colors text-sm"
-                            placeholder="2, 7, 11, 15"
+                            placeholder="12, 4, 7, 1, 15, 8, 20"
                         />
                         <p className="text-xs text-white/40 mt-1">
                             Comma-separated numbers (max 20). Must be sorted for Two Sum.

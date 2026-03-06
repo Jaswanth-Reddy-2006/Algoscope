@@ -20,7 +20,7 @@ export interface MentalModel {
     }
 }
 
-export interface ComplexityRecord {
+export interface efficiencyRecord {
     operation: string
     time: string
     space: string
@@ -29,7 +29,7 @@ export interface ComplexityRecord {
 export interface Operation {
     name: string
     description: string
-    complexity: string
+    efficiency: string
 }
 
 export interface MicroDrill {
@@ -133,7 +133,7 @@ export interface FoundationModule {
         analogyImage?: string
         realWorldExample: string
         whenToUse: string[]
-        quickComplexity: ComplexityRecord[]
+        quickefficiency: efficiencyRecord[]
     }
 
     // Core content
@@ -173,7 +173,7 @@ export interface FoundationModule {
 
     // Legacy/Existing fields (refactoring slowly)
     mentalModel?: MentalModel
-    timeComplexity: ComplexityRecord[]
+    timeefficiency: efficiencyRecord[]
     recognitionSignals: string[]
     formulaPattern: string
     commonMistakes: string[]

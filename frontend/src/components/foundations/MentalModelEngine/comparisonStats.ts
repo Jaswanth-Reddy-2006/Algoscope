@@ -4,9 +4,9 @@ export interface ComparisonStats {
     optimalOps?: number
     savedOps: number
     efficiencyGain: number // percentage
-    bruteForceComplexity?: string
-    slidingWindowComplexity?: string
-    optimalComplexity?: string
+    bruteForceefficiency?: string
+    slidingWindowefficiency?: string
+    optimalefficiency?: string
     numWindows?: number
     bruteForceSteps?: number
     optimalSteps?: number
@@ -37,8 +37,8 @@ export function calculateComparison(
         slidingWindowOps,
         savedOps,
         efficiencyGain,
-        bruteForceComplexity: `O(N×K) = O(${n}×${k})`,
-        slidingWindowComplexity: `O(N) = O(${n})`,
+        bruteForceefficiency: `O(N×K) = O(${n}×${k})`,
+        slidingWindowefficiency: `O(N) = O(${n})`,
         numWindows
     }
 }

@@ -65,7 +65,7 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, stats }) => {
                         {confidence > 0 && (
                             <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-accent-blue/5 border border-white/5">
                                 <TrendingUp size={12} className="text-accent-blue" />
-                                <span className="text-[10px] font-mono font-bold text-white/60">{Math.round(confidence)}%</span>
+                                <span className="text-[10px] font-mono font-bold text-white/60">0%</span>
                             </div>
                         )}
                     </div>

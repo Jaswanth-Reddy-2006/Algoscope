@@ -21,7 +21,7 @@
             "Fixed-size collections",
             "Frequent iterations"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Access",
               "time": "O(1)",
@@ -318,7 +318,7 @@
         },
         "microDrills": [
           {
-            "question": "What is the time complexity to insert an element at the BEGINNING of an array of size N?",
+            "question": "What is the time efficiency to insert an element at the BEGINNING of an array of size N?",
             "options": [
               "O(1)",
               "O(log N)",
@@ -369,7 +369,7 @@
             "Search keywords",
             "Serialization (JSON/XML)"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Access",
               "time": "O(1)",
@@ -648,7 +648,7 @@
         },
         "microDrills": [
           {
-            "question": "In Python/Java, what is the time complexity of `s += c` inside a loop running N times?",
+            "question": "In Python/Java, what is the time efficiency of `s += c` inside a loop running N times?",
             "options": [
               "O(N)",
               "O(N^2)",
@@ -688,7 +688,7 @@
             "Undo/Redo logic",
             "Backtracking algorithms"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Push",
               "time": "O(1)",
@@ -985,7 +985,7 @@
             "Breadth-First Search",
             "Asynchronous messaging"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Enqueue",
               "time": "O(1)",
@@ -1218,7 +1218,7 @@
             "explanation": "FIFO: First In (A) is First Out."
           },
           {
-            "question": "What is the time complexity of `shift()` on a standard JavaScript Array?",
+            "question": "What is the time efficiency of `shift()` on a standard JavaScript Array?",
             "options": [
               "O(1)",
               "O(N)",
@@ -1247,7 +1247,7 @@
             "Frequency counting",
             "Database indexing"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Insert",
               "time": "O(1)*",
@@ -1497,7 +1497,7 @@
         },
         "microDrills": [
           {
-            "question": "What is the WORST case time complexity for a Hash Map lookup?",
+            "question": "What is the WORST case time efficiency for a Hash Map lookup?",
             "options": [
               "O(1)",
               "O(log N)",
@@ -1537,7 +1537,7 @@
             "Frequent insertions at head/tail",
             "Implementing stacks/queues"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Access",
               "time": "O(N)",
@@ -1821,7 +1821,7 @@
         },
         "microDrills": [
           {
-            "question": "What is the time complexity to access the Kth element in a Singly Linked List?",
+            "question": "What is the time efficiency to access the Kth element in a Singly Linked List?",
             "options": [
               "O(1)",
               "O(K) / O(N)",
@@ -1861,7 +1861,7 @@
             "Task scheduling",
             "Merging sorted streams"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Peek Max/Min",
               "time": "O(1)",
@@ -2011,7 +2011,7 @@
             }
           ],
           "constraints": [
-            "N log N complexity",
+            "N log N efficiency",
             "In-place heapify"
           ],
           "practiceProblems": [
@@ -2109,7 +2109,7 @@
         },
         "microDrills": [
           {
-            "question": "What is the time complexity to convert an unsorted array into a Heap (Heapify)?",
+            "question": "What is the time efficiency to convert an unsorted array into a Heap (Heapify)?",
             "options": [
               "O(N log N)",
               "O(N)",
@@ -2149,7 +2149,7 @@
             "Dynamic Programming tables",
             "Graph representation"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Access Cell",
               "time": "O(1)",
@@ -2342,7 +2342,7 @@
             "Subarray sum problems",
             "Image processing (Integral images)"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Build",
               "time": "O(N)",
@@ -2560,7 +2560,7 @@
             "State compression",
             "Mathematical optimizations"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Logical Gates",
               "time": "O(1)",
@@ -2807,7 +2807,7 @@
             "Existence checking",
             "Finding intersections/unions"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Add",
               "time": "O(1)*",
@@ -2951,7 +2951,7 @@
             "Implementing both Stack and Queue",
             "Efficient BFS"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Push Front/Back",
               "time": "O(1)",
@@ -3083,7 +3083,7 @@
             "Recursive searching",
             "Decision trees"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Traversal",
               "time": "O(N)",
@@ -3254,7 +3254,7 @@
             "Fast lookups in unpredictable data sets",
             "Range queries"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Search",
               "time": "O(log N)*",
@@ -3393,7 +3393,7 @@
             "Pathfinding",
             "Recommendation engines"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Adjacency List Space",
               "time": "O(V+E)",
@@ -3574,7 +3574,7 @@
             "Dictionary lookups",
             "IP routing tables"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Insert/Search",
               "time": "O(L)",
@@ -3701,7 +3701,7 @@
             "Cycle detection in undirected graphs",
             "Kruskal's algorithm"
           ],
-          "quickComplexity": [
+          "quickefficiency": [
             {
               "operation": "Union/Find",
               "time": "O(\u03b1(N))",
@@ -3838,7 +3838,7 @@
             "constraints": [
               "Input array is sorted",
               "Constant extra space O(1)",
-              "Linear time complexity O(N)"
+              "Linear time efficiency O(N)"
             ]
           },
           "efficiencyComparison": {
@@ -3849,7 +3849,7 @@
         },
         "whatItIs": "Using two pointers to iterate through a data structure, typically in sorted arrays or linked lists, to find elements satisfying a condition.",
         "coreInvariant": "Pointers maintain a relationship (e.g., L < R) that defines the valid search space, which shrinks monotonically.",
-        "timeComplexity": [
+        "timeefficiency": [
           {
             "operation": "Single Pass Traversal",
             "time": "O(N)",
@@ -4006,8 +4006,8 @@
             ],
             "drills": [
               {
-                "type": "complexity",
-                "question": "What is the space complexity of Floyd's Cycle Finding Algorithm?",
+                "type": "efficiency",
+                "question": "What is the space efficiency of Floyd's Cycle Finding Algorithm?",
                 "options": [
                   "O(N)",
                   "O(log N)",
@@ -4016,7 +4016,7 @@
                 ],
                 "correctAnswer": "O(1)",
                 "explanation": "It only uses two pointers regardless of the list size.",
-                "category": "complexity"
+                "category": "efficiency"
               }
             ],
             "templates": {
@@ -4128,8 +4128,8 @@
             ],
             "drills": [
               {
-                "type": "complexity",
-                "question": "What is the time complexity of the optimal 3Sum solution?",
+                "type": "efficiency",
+                "question": "What is the time efficiency of the optimal 3Sum solution?",
                 "options": [
                   "O(N)",
                   "O(N log N)",
@@ -4138,7 +4138,7 @@
                 ],
                 "correctAnswer": "O(N^2)",
                 "explanation": "Sorting takes O(N log N). The nested loop structure (anchor + 2-pointer sweep) takes O(N^2).",
-                "category": "complexity"
+                "category": "efficiency"
               }
             ],
             "templates": {
@@ -4351,7 +4351,7 @@
             "constraints": [
               "Subarray must be contiguous",
               "Fixed window size K",
-              "Linear time complexity O(N)"
+              "Linear time efficiency O(N)"
             ]
           },
           "efficiencyComparison": {
@@ -4362,7 +4362,7 @@
         },
         "whatItIs": "Optimizing subarray queries by maintaining a dynamic window state.",
         "coreInvariant": "The window represents a contiguous subarray. For fixed size, it is always length K. For variable size, it is the largest/smallest subarray satisfying the condition.",
-        "timeComplexity": [
+        "timeefficiency": [
           {
             "operation": "Fixed Window Scan",
             "time": "O(N)",
@@ -4437,8 +4437,8 @@
                 "category": "invariant"
               },
               {
-                "type": "complexity",
-                "question": "What is the time complexity of the Optimal Fixed Window approach?",
+                "type": "efficiency",
+                "question": "What is the time efficiency of the Optimal Fixed Window approach?",
                 "options": [
                   "O(N*K)",
                   "O(N^2)",
@@ -4447,7 +4447,7 @@
                 ],
                 "correctAnswer": "O(N)",
                 "explanation": "Each element is processed exactly once as it enters and leaves the window.",
-                "category": "complexity"
+                "category": "efficiency"
               }
             ],
             "templates": {
@@ -4726,8 +4726,8 @@
             ],
             "drills": [
               {
-                "type": "complexity",
-                "question": "What is the space complexity of Hard Minimum Window Substring using character frequencies?",
+                "type": "efficiency",
+                "question": "What is the space efficiency of Hard Minimum Window Substring using character frequencies?",
                 "options": [
                   "O(1) - alphabet size is fixed",
                   "O(N)",
@@ -4736,7 +4736,7 @@
                 ],
                 "correctAnswer": "O(1) - alphabet size is fixed",
                 "explanation": "Since there are a finite number of characters (e.g., 256 for ASCII), the frequency map size is bounded.",
-                "category": "complexity"
+                "category": "efficiency"
               }
             ],
             "templates": {
@@ -4789,7 +4789,7 @@
             "constraints": [
               "Input MUST be sorted",
               "Access must be O(1) (Random Access)",
-              "Time complexity O(log N)"
+              "Time efficiency O(log N)"
             ]
           },
           "efficiencyComparison": {
@@ -4800,7 +4800,7 @@
         },
         "whatItIs": "An elimination strategy that narrows a range [low, high] until the target is found or the range is empty.",
         "coreInvariant": "The target, if it exists, is always within the current [low, high] bounds.",
-        "timeComplexity": [
+        "timeefficiency": [
           {
             "operation": "Search",
             "time": "O(log N)",
@@ -4899,8 +4899,8 @@
             ],
             "drills": [
               {
-                "type": "complexity",
-                "question": "What is the space complexity of recursive binary search?",
+                "type": "efficiency",
+                "question": "What is the space efficiency of recursive binary search?",
                 "options": [
                   "O(1)",
                   "O(log N)",
@@ -4909,7 +4909,7 @@
                 ],
                 "correctAnswer": "O(log N)",
                 "explanation": "Each recursive call adds a frame to the stack. Depth is log N.",
-                "category": "complexity"
+                "category": "efficiency"
               }
             ],
             "templates": {
@@ -5066,7 +5066,7 @@
         ],
         "microDrills": [
           {
-            "question": "What is the time complexity of binary search on a sorted array of size N?",
+            "question": "What is the time efficiency of binary search on a sorted array of size N?",
             "options": [
               "O(1)",
               "O(log N)",
@@ -5093,9 +5093,9 @@
             "definition": "For each element in an array, find the first element to its right that is greater than it.",
             "returnValue": "An array of the same size with the next greater values or -1.",
             "constraints": [
-              "Linear time complexity O(N)",
+              "Linear time efficiency O(N)",
               "Each element pushed and popped at most once",
-              "Space complexity O(N)"
+              "Space efficiency O(N)"
             ]
           },
           "efficiencyComparison": {
@@ -5106,7 +5106,7 @@
         },
         "whatItIs": "A data structure pattern that keeps elements sorted (monotonically) to find nearest neighbors with specific properties.",
         "coreInvariant": "Stack is always sorted. For Monotonic Increasing: Stack[i] < Stack[i+1].",
-        "timeComplexity": [
+        "timeefficiency": [
           {
             "operation": "Single Pass Build",
             "time": "O(N)",
@@ -5403,31 +5403,102 @@
           "analogy": "The Russian Dolls",
           "analogyImage": "recursion_analogy",
           "realWorldExample": "Searching through a folder that contains subfolders; you search the folder by searching each of its subfolders in the same way.",
-          "coreInsight": "Build a base case (to stop) and a recursive step (to move toward the base case)."
+          "coreInsight": "Each call waits for the next. The stack builds up (Push) until it hits a base case, then unwinds (Pop) to build the final answer.",
+          "problemStatement": {
+            "definition": "Calculate the factorial of N or find the Nth Fibonacci number.",
+            "returnValue": "The result of the nested calls.",
+            "constraints": [
+              "Must have a base case (to stop)",
+              "Must have a recursive step (to progress)",
+              "Risk of Stack Overflow if too deep"
+            ]
+          }
         },
         "visualizerType": "recursion",
         "relatedProblems": [
-          94,
-          98
+          509,
+          70,
+          322
         ],
         "subPatterns": [
           {
-            "id": "tree_traversal",
-            "title": "Tree Traversal",
-            "description": "Visit all nodes in a tree using DFS logic.",
+            "id": "linear_recursion",
+            "title": "Linear Recursion",
+            "description": "A single recursive call at each step. Forms a direct chain.",
             "signals": [
-              "Tree structure",
-              "Exhaustive search"
-            ]
+              "One step depends on the previous",
+              "Factorial, Sum of N",
+              "Linked List traversal"
+            ],
+            "invariant": "f(n) = f(n-1) + C",
+            "templates": {
+              "python": "def solve(n):\n    if n <= 1: return 1\n    return n * solve(n - 1)"
+            }
+          },
+          {
+            "id": "binary_recursion",
+            "title": "Binary Recursion",
+            "description": "Two recursive calls at each step. Forms a tree-like expansion.",
+            "signals": [
+              "Splits into two subproblems",
+              "Fibonacci",
+              "Tree traversals (left & right)"
+            ],
+            "invariant": "f(n) = f(n-1) + f(n-2)",
+            "templates": {
+              "python": "def fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)"
+            }
           },
           {
             "id": "divide_and_conquer",
             "title": "Divide & Conquer",
-            "description": "Break problem into independent subproblems (e.g. Merge Sort).",
+            "description": "Split problem into independent halves, solve, and merge results.",
             "signals": [
-              "Independent halves",
-              "Recursive merge logic"
-            ]
+              "Independent subproblems",
+              "Recursive merge logic",
+              "Merge Sort, Quick Sort"
+            ],
+            "invariant": "Solve(Left) + Solve(Right) + Merge",
+            "templates": {
+              "python": "def merge_sort(arr):\n    if len(arr) <= 1: return arr\n    mid = len(arr) // 2\n    return merge(merge_sort(arr[:mid]), merge_sort(arr[mid:]))"
+            }
+          }
+        ],
+        "recognitionSignals": [
+          "Problem can be broken into smaller subproblems",
+          "Solution for N depends on N-1 or N/2",
+          "Depth-First exploration is natural",
+          "Recursive definition exists (e.g. tree, math formula)"
+        ],
+        "formulaPattern": "if (base_case) return; recursive_call(); post_processing();",
+        "commonMistakes": [
+          "Missing base case (Infinite recursion)",
+          "Not returning the result of a recursive call",
+          "Redundant work (use Memoization if needed)",
+          "Stack Overflow on deep inputs"
+        ],
+        "edgeCases": [
+          {
+            "title": "Base Case reached immediately",
+            "description": "Input is already at the simplest level (e.g. n=0).",
+            "howToFix": "Ensure base cases handle minimum possible inputs correctly."
+          },
+          {
+            "title": "Disconnected structure",
+            "description": "Recursive calls don't cover all subproblems.",
+            "howToFix": "Verify transition logic covers the entire search space."
+          }
+        ],
+        "microDrills": [
+          {
+            "question": "What happens to the Call Stack during a recursive call?",
+            "options": [
+              "A new frame is Pinned to the top",
+              "A new frame is PUSHED to the top",
+              "The current frame is overwritten",
+              "The stack stays the same"
+            ],
+            "correctAnswer": "A new frame is PUSHED to the top"
           }
         ]
       },
@@ -5448,7 +5519,10 @@
         "relatedProblems": [
           46,
           78,
-          79
+          79,
+          40,
+          47,
+          51
         ],
         "subPatterns": [
           {
@@ -5457,7 +5531,7 @@
             "description": "Generate all possible arrangements of a set.",
             "signals": [
               "All possible",
-              "N! complexity",
+              "N! efficiency",
               "Constraint choices"
             ],
             "templates": {

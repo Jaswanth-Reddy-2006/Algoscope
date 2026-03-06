@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Play, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react'
 
-interface Props {
-    moduleId: string
-}
+import { EngineProps } from '../engineRegistry'
 
-const FormulaEngine: React.FC<Props> = ({ moduleId }) => {
+const FormulaEngine: React.FC<EngineProps> = ({ moduleId }) => {
     const [step, setStep] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
 

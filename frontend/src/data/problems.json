@@ -13,9 +13,9 @@
     ],
     "primaryPattern": "Two Pointers",
     "shortPatternReason": "Requires finding a pair with a specific sum.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
-    "problem_statement": "Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to the specified `target` value.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. The challenge lies in optimizing the search from a naive quadratic approach to a linear-time complexity using space-time trade-offs.",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
+    "problem_statement": "Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to the specified `target` value.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. The challenge lies in optimizing the search from a naive quadratic approach to a linear-time efficiency using space-time trade-offs.",
     "constraints": [
       "2 <= nums.length <= 10^4",
       "-10^9 <= nums[i] <= 10^9",
@@ -24,9 +24,9 @@
     ],
     "examples": [
       {
-        "input": "nums = [2, 7, 11, 15], target = 9",
-        "output": "[0, 1]",
-        "explanation": "The target is 9. We check the numbers at indices 0 and 1: 2 + 7 = 9. Since they sum to the target, we return their indices [0, 1]. In the optimal solution, we only need a single pass to identify this match."
+        "input": "nums = [12, 4, 7, 1, 15, 8, 20], target = 19",
+        "output": "[1, 4]",
+        "explanation": "The target is 19. We identify that 4 (index 1) and 15 (index 4) sum to 19. The optimal solution identifies this in O(N) by storing seen values. In our laboratory, we can visualize how the pointers narrow down the search space or how the hash map builds up state."
       },
       {
         "input": "nums = [3, 2, 4], target = 6",
@@ -42,7 +42,7 @@
       "Budget allocation problems",
       "Target weight balancing"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N\u00b2)",
         "space": "O(1)"
@@ -86,11 +86,11 @@
     "input_settings": {
       "input1": {
         "label": "Custom Workspace (Array)",
-        "placeholder": "[2, 7, 11, 15]"
+        "placeholder": "[12, 4, 7, 1, 15, 8, 20]"
       },
       "input2": {
         "label": "Target Sum Constraint",
-        "placeholder": "9"
+        "placeholder": "19"
       }
     }
   },
@@ -108,8 +108,8 @@
     ],
     "primaryPattern": "Linked List",
     "shortPatternReason": "Simulating manual digit-by-digit addition with carry handling.",
-    "time_complexity": "O(max(m, n))",
-    "space_complexity": "O(max(m, n))",
+    "time_efficiency": "O(max(m, n))",
+    "space_efficiency": "O(max(m, n))",
     "problem_statement": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself. The core challenge is managing the 'carry' value that propagates from one digit to the next, much like manual elementary addition.",
     "constraints": [
       "The number of nodes in each linked list is in the range [1, 100].",
@@ -131,7 +131,7 @@
       "Arbitrary precision calculators",
       "Data stream merging"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N)",
         "space": "O(N)"
@@ -139,6 +139,19 @@
       "optimal": {
         "time": "O(N)",
         "space": "O(N)"
+      }
+    },
+    "external_links": {
+      "leetcode": "https://leetcode.com/problems/add-two-numbers/"
+    },
+    "input_settings": {
+      "input1": {
+        "label": "List 1 (Digits Reversed)",
+        "placeholder": "[2, 4, 3]"
+      },
+      "input2": {
+        "label": "List 2 (Digits Reversed)",
+        "placeholder": "[5, 6, 4]"
       }
     },
     "brute_force_steps": [
@@ -313,19 +326,6 @@
       "brute": "// Naive: Convert to int (Limited by precision)\nn1 = list_to_int(l1)\nn2 = list_to_int(l2)\nreturn int_to_list(n1 + n2)",
       "optimal": "carry = 0\nwhile l1 or l2 or carry:\n    v1 = l1.val if l1 else 0\n    v2 = l2.val if l2 else 0\n    sum = v1 + v2 + carry\n    carry = sum // 10\n    append(sum % 10) to result"
     },
-    "external_links": {
-      "leetcode": "https://leetcode.com/problems/add-two-numbers/"
-    },
-    "input_settings": {
-      "input1": {
-        "label": "List 1 (Digits Reversed)",
-        "placeholder": "[2, 4, 3]"
-      },
-      "input2": {
-        "label": "List 2 (Digits Reversed)",
-        "placeholder": "[5, 6, 4]"
-      }
-    },
     "efficiencyGain": "Direct traversal avoids integer overflow and scales to arbitrary lengths (O(N) vs O(N) but memory-safe).",
     "real_time_applications": [
       {
@@ -356,8 +356,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Finding the widest contiguous range meeting a uniqueness constraint.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(min(m, n))",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(min(m, n))",
     "problem_statement": "Given a string `s`, find the length of the longest substring without repeating characters.\n\nThe challenge is to efficiently track a moving 'window' of characters and shrink it immediately whenever a duplicate is encountered, ensuring we only ever check valid, unique substrings.",
     "constraints": [
       "0 <= s.length <= 5 * 10^4",
@@ -375,7 +375,7 @@
         "explanation": "The answer is 'b', with the length of 1."
       }
     ],
-    "brute_force_explanation": "A naive solution would check every possible substring ($O(N^2)$) and, for each one, verify if it has duplicate characters ($O(N)$). This results in a cubic $O(N^3)$ complexity, which is painfully slow for long strings. It repeats the same character checks over and over without 'remembering' what it already knows.",
+    "brute_force_explanation": "A naive solution would check every possible substring ($O(N^2)$) and, for each one, verify if it has duplicate characters ($O(N)$). This results in a cubic $O(N^3)$ efficiency, which is painfully slow for long strings. It repeats the same character checks over and over without 'remembering' what it already knows.",
     "optimal_explanation": "The Sliding Window pattern allows us to solve this in a single pass. We use two pointers (Left and Right) to define our window. As we move the Right pointer, we add characters to a Frequency Map. If we hit a duplicate, we shrink the window by moving the Left pointer until the duplicate is gone. This 'dynamic resizing' ensures we only visit each character twice at most.",
     "intuition": "SHRINK TO FIT. Think of the window like a flexible elastic band. It stretches as long as it finds new characters, but snaps back (shrinks) the moment it hits a constraint. This 'greedy expansion' with 'lazy shrinking' is the heart of the sliding window pattern.",
     "scenarios": [
@@ -383,9 +383,9 @@
       "Log analysis for unique events",
       "Genomic sequence matching"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
-        "time": "O(N²)",
+        "time": "O(N\u00b2)",
         "space": "O(N)"
       },
       "optimal": {
@@ -546,7 +546,7 @@
         "placeholder": "All ASCII"
       }
     },
-    "efficiencyGain": "Sliding Window reduces redundant checks, achieving O(N) linear time versus O(N³) cubic time.",
+    "efficiencyGain": "Sliding Window reduces redundant checks, achieving O(N) linear time versus O(N\u00b3) cubic time.",
     "real_time_applications": [
       {
         "title": "Network Congestion Control",
@@ -576,9 +576,9 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Partitioning search space to find the middle element in logarithmic time.",
-    "time_complexity": "O(log(min(m, n)))",
-    "space_complexity": "O(1)",
-    "problem_statement": "Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays. The overall run time complexity should be `O(log (m+n))`.",
+    "time_efficiency": "O(log(min(m, n)))",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays. The overall run time efficiency should be `O(log (m+n))`.",
     "constraints": [
       "nums1.length == m",
       "nums2.length == n",
@@ -601,7 +601,7 @@
       "High-frequency trade matching",
       "Real-time sensor data fusion"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(M+N)",
         "space": "O(M+N)"
@@ -628,7 +628,7 @@
         "placeholder": "[2]"
       }
     },
-    "efficiencyGain": "Logarithmic complexity scaling ensures high performance even with arrays containing millions of elements.",
+    "efficiencyGain": "Logarithmic efficiency scaling ensures high performance even with arrays containing millions of elements.",
     "real_time_applications": [
       {
         "title": "Adexchange Bid Sorting",
@@ -657,9 +657,9 @@
     ],
     "primaryPattern": "Expand Around Center",
     "shortPatternReason": "Exploiting palindromic symmetry by expanding outward from each character as a potential center.",
-    "time_complexity": "O(n²)",
-    "space_complexity": "O(1)",
-    "problem_statement": "Given a string `s`, return the longest palindromic substring in `s`. A palindrome reads the same forwards and backwards. The challenge is to identify the global maximum palindrome without checking every possible substring (O(N³)).",
+    "time_efficiency": "O(n\u00b2)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given a string `s`, return the longest palindromic substring in `s`. A palindrome reads the same forwards and backwards. The challenge is to identify the global maximum palindrome without checking every possible substring (O(N\u00b3)).",
     "constraints": [
       "1 <= s.length <= 1000",
       "s consists of only digits and English letters."
@@ -671,7 +671,7 @@
         "explanation": "'aba' is also a valid answer."
       }
     ],
-    "brute_force_explanation": "A naive approach checks every possible substring ($O(N^2)$) and, for each, verify if it is a palindrome ($O(N)$). This leads to an $O(N^3)$ complexity, which becomes unusable as the string length approaches 1,000.",
+    "brute_force_explanation": "A naive approach checks every possible substring ($O(N^2)$) and, for each, verify if it is a palindrome ($O(N)$). This leads to an $O(N^3)$ efficiency, which becomes unusable as the string length approaches 1,000.",
     "optimal_explanation": "The 'Expand Around Center' pattern treats each character (and each gap between characters) as a potential center of a palindrome. By expanding outward as long as characters match, we find the longest palindrome for each center in $O(N)$ time, totaling $O(N^2)$ for the whole string with zero extra space.",
     "intuition": "SYMMETRY IS THE KEY. Instead of building strings and checking them, we start from a single point and 'verify symmetry' in both directions simultaneously. This leverages the definition of a palindrome to prune millions of unnecessary checks.",
     "scenarios": [
@@ -679,13 +679,13 @@
       "Pattern matching in text editors",
       "Data compression algorithms"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
-        "time": "O(N³)",
+        "time": "O(N\u00b3)",
         "space": "O(1)"
       },
       "optimal": {
-        "time": "O(N²)",
+        "time": "O(N\u00b2)",
         "space": "O(1)"
       }
     },
@@ -734,8 +734,8 @@
     ],
     "primaryPattern": "Cyclic Traversal",
     "shortPatternReason": "Simulating the zigzag motion by iterating through string and rows in a bouncing cycle.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "The string \"PAYPALISHIRING\" is written in a zigzag pattern on a given number of rows. This problem asks you to simulate this layout and then read the result row by row.",
     "constraints": [
       "1 <= s.length <= 1000",
@@ -757,7 +757,7 @@
       "Data obfuscation/Transposition ciphers",
       "Waveform visualization"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N)",
         "space": "O(N * numRows)"
@@ -784,7 +784,7 @@
         "placeholder": "3"
       }
     },
-    "efficiencyGain": "Reducing space complexity from O(N*K) to O(N) by using row-level accumulation instead of a sparse 2D matrix.",
+    "efficiencyGain": "Reducing space efficiency from O(N*K) to O(N) by using row-level accumulation instead of a sparse 2D matrix.",
     "real_time_applications": [
       {
         "title": "Data Serialization",
@@ -812,8 +812,8 @@
     ],
     "primaryPattern": "Digit Manipulation",
     "shortPatternReason": "Using basic arithmetic (modulo/division) to reverse digits without using expensive string conversions.",
-    "time_complexity": "O(log(x))",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(log(x))",
+    "space_efficiency": "O(1)",
     "problem_statement": "Given a signed 32-bit integer `x`, return `x` with its digits reversed. If reversing `x` causes the value to go outside the signed 32-bit integer range, return 0.",
     "constraints": [
       "-2^31 <= x <= 2^31 - 1"
@@ -832,7 +832,7 @@
       "Bit-level field reversal",
       "Mathematical sequence analysis"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(log X)",
         "space": "O(log X)"
@@ -887,8 +887,8 @@
     ],
     "primaryPattern": "Deterministic Finite Automata",
     "shortPatternReason": "Handling complex edge case states (whitespace, signs, non-digits) using a linear scan.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Implement the `myAtoi(string s)` function, which converts a string to a 32-bit signed integer. It must handle leading whitespace, signs, and ignore non-digit characters following the number.",
     "constraints": [
       "0 <= s.length <= 200",
@@ -909,7 +909,7 @@
       "HTTP Header extraction",
       "Data ingestion from CSV/TXT"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N)",
         "space": "O(N)"
@@ -964,8 +964,8 @@
     ],
     "primaryPattern": "Half-Reversal",
     "shortPatternReason": "Reversing only half of the integer to compare against the first half, preventing overflow issues.",
-    "time_complexity": "O(log(n))",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(log(n))",
+    "space_efficiency": "O(1)",
     "problem_statement": "Given an integer `x`, return `true` if `x` is a palindrome, and `false` otherwise. A negative number is never a palindrome.",
     "constraints": [
       "-2^31 <= x <= 2^31 - 1"
@@ -988,7 +988,7 @@
       "Network ID verification",
       "Pattern discovery in large datasets"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(log N)",
         "space": "O(log N)"
@@ -1045,8 +1045,8 @@
     ],
     "primaryPattern": "Top-Down Memoization",
     "shortPatternReason": "Breaking down wildcard matching into overlapping subproblems solved recursively with caching.",
-    "time_complexity": "O(S*P)",
-    "space_complexity": "O(S*P)",
+    "time_efficiency": "O(S*P)",
+    "space_efficiency": "O(S*P)",
     "problem_statement": "Implement regular expression matching with support for '.' and '*' where '.' matches any single character and '*' matches zero or more of the preceding element.",
     "constraints": [
       "1 <= s.length <= 20",
@@ -1060,7 +1060,7 @@
         "output": "true"
       }
     ],
-    "brute_force_explanation": "A pure recursive approach without memoization explores the same sub-paths multiple times, exponential complexity that will hang on even slightly complex patterns.",
+    "brute_force_explanation": "A pure recursive approach without memoization explores the same sub-paths multiple times, exponential efficiency that will hang on even slightly complex patterns.",
     "optimal_explanation": "Use Dynamic Programming (Table) or Recursion with Memoization. For each pair (i, j), we check if the current characters match. If the next character in pattern is '*', we have two choices: skip the '*' or continue matching with the same '*' element.",
     "intuition": "DECISION BRANCHES. Wildcards are just choices. '*' means 'I can be empty' OR 'I can be one of my previous self'. We explore both branches and if either leads to a match, the whole thing matches.",
     "scenarios": [
@@ -1068,7 +1068,7 @@
       "Log filtering",
       "Security rule validation"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O((S+P)*2^(S+P/2))",
         "space": "O(S+P)"
@@ -1124,9 +1124,9 @@
     ],
     "primaryPattern": "Two Pointers",
     "shortPatternReason": "Searching for maximum area by narrowing the distance between the tallest possible vertical lines.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
-    "problem_statement": "You are given an integer array `height` of length `n`. There are n vertical lines drawn such that the two endpoints of the `ith` line are `(i, 0)` and `(i, height[i])`. Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store.",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the `ith` line are `(i, 0)` and `(i, height[i])`. Find two lines that together with the x-axis form a container, such that the container contains the most water.",
     "constraints": [
       "n == height.length",
       "2 <= n <= 10^5",
@@ -1139,17 +1139,17 @@
         "explanation": "The max area is found between indices 1 and 8 (heights 8 and 7), width = 7, area = 7 * 7 = 49."
       }
     ],
-    "brute_force_explanation": "Checking every possible pair of lines (i, j) to calculate the area and keeping track of the maximum. This requires O(n\u00b2) time which is too slow for large inputs.",
-    "optimal_explanation": "Use two pointers starting at both ends of the array. Calculate the current area and move the pointer that points to the shorter line inward. Since the width is already decreasing, the only way to potentially find a larger area is to find a taller line.",
+    "brute_force_explanation": "Calculate the area for every possible pair of lines. For each pair `(i, j)`, the area is `min(height[i], height[j]) * (j - i)`. This requires checking `O(N^2)` pairs.",
+    "optimal_explanation": "Start with two pointers at the extreme ends. The width is at its maximum. To find a larger area, we must move the pointer pointing to the shorter line inward, as it is the limiting factor for height.",
     "intuition": "GREEDY NARROWING. The area is limited by the shorter line. To find a larger area while the width decreases, we MUST find a taller line. Thus, we always move the pointer pointing to the shorter line.",
     "scenarios": [
       "Optimizing physical storage containers",
       "Resource allocation in networking",
       "Financial portfolio optimization"
     ],
-    "complexity": {
+    "efficiency": {
       "brute": {
-        "time": "O(N\u00b2)",
+        "time": "O(N^2)",
         "space": "O(1)"
       },
       "optimal": {
@@ -1158,35 +1158,33 @@
       }
     },
     "pseudocode": {
-      "brute": "maxArea = 0\nfor i in 0..n:\n    for j in i+1..n:\n        area = min(h[i], h[j]) * (j - i)\n        maxArea = max(maxArea, area)\nreturn maxArea",
-      "optimal": "l = 0, r = n-1, maxArea = 0\nwhile l < r:\n    area = min(h[l], h[r]) * (r - l)\n    maxArea = max(maxArea, area)\n    if h[l] < h[r]: l++\n    else: r--\nreturn maxArea"
+      "brute": "max_area = 0\nfor i from 0 to n-1:\n    for j from i+1 to n-1:\n        area = min(height[i], height[j]) * (j - i)\n        max_area = max(max_area, area)\nreturn max_area",
+      "optimal": "l = 0, r = n-1, max_area = 0\nwhile l < r:\n    area = min(height[l], height[r]) * (r - l)\n    max_area = max(max_area, area)\n    if height[l] < height[r]: l++\n    else: r--\nreturn max_area"
     },
     "external_links": {
-      "leetcode": "https://leetcode.com/problems/container-with-most-water/"
+      "leetcode": "https://leetcode.com/problems/container-with-most-water/",
+      "geeksforgeeks": "https://www.geeksforgeeks.org/container-with-most-water/"
     },
     "input_settings": {
       "input1": {
-        "label": "Line Heights Array",
-        "placeholder": "[1,8,6,2,5,4,8,3,7]"
-      },
-      "input2": {
-        "label": "Goal Area",
-        "placeholder": "Maximize"
+        "label": "Line Heights",
+        "placeholder": "[1,8,6,2,5,4,8,3,7]",
+        "type": "array"
       }
     },
     "efficiencyGain": "Reducing search space from O(N\u00b2) pairs to O(N) by eliminating pairs that can't possibly exceed the current maximum.",
     "real_time_applications": [
       {
-        "title": "Logistics & Warehousing",
-        "description": "Optimizing the placement of partitions in bulk storage units to maximize volumetric capacity."
+        "title": "Fluid Dynamics Simulation",
+        "description": "Calculating potential volume capacity in irregular terrain or containers."
       },
       {
-        "title": "Bandwidth Throttling",
-        "description": "Calculating peak data throughput between two time points in a fluctuating network signal."
+        "title": "Stock Market Analysis",
+        "description": "Finding the largest 'spread' or gap between two data points over a time interval."
       },
       {
-        "title": "Supply Chain Fluidity",
-        "description": "Determining the limiting factor in a multi-stage manufacturing pipeline by finding the 'shortest' resource line."
+        "title": "Network Bandwidth",
+        "description": "Optimizing packet burst size between two fluctuating signal peaks."
       }
     ],
     "thinking_guide": {
@@ -1219,21 +1217,21 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Sorted array traversal with fixed element and two pointers.",
-    "time_complexity": "O(n\u00b2)",
-    "space_complexity": "O(log n) to O(n)",
-    "problem_statement": "Given an integer array `nums`, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, and `j != k`, and `nums[i] + nums[j] + nums[k] == 0`. The solution set must not contain duplicate triplets.",
-    "brute_force_explanation": "Use three nested loops to check every unique triplet. This results in O(N^3) time complexity, which is acceptable only for very small N (e.g., N < 500).",
-    "optimal_explanation": "Sort the array first. Iterate through the array with a fixed pointer `i`, and use the Two Pointers pattern (`left` and `right`) for the remaining part to find pairs that sum to `-nums[i]`. This reduces the complexity to O(N^2).",
+    "time_efficiency": "O(n\u00b2)",
+    "space_efficiency": "O(log n) to O(n)",
+    "problem_statement": "Given an integer array `nums`, return all unique triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, `j != k`, and `nums[i] + nums[j] + nums[k] == 0`.",
+    "brute_force_explanation": "Use three nested loops to verify every possible triplet. If the sum equals the target and the triplet is unique, add it to the result.",
+    "optimal_explanation": "Sort the array and iterate through each element. For each element `nums[i]`, treat the remaining problem as a 'Two Sum' variations using two pointers on the sorted sub-array `[i+1, n-1]`.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N^3)",
         "space": "O(1)"
       },
       "optimal": {
         "time": "O(N^2)",
-        "space": "O(log N)"
+        "space": "O(log N) or O(N)"
       }
     },
     "patternSignals": [
@@ -1270,7 +1268,45 @@
         "      ii. If `sum < 0`, `low++`. If `sum > 0`, `high--`.",
         "      iii. If `sum == 0`, add triplet, `low++`, `high--`, then skip internal duplicates."
       ]
-    }
+    },
+    "constraints": [
+      "3 <= nums.length <= 3000",
+      "-10^5 <= nums[i] <= 10^5"
+    ],
+    "input_settings": {
+      "input1": {
+        "label": "Integer Array",
+        "placeholder": "[-1,0,1,2,-1,-4]",
+        "type": "array"
+      },
+      "input2": {
+        "label": "Target Sum",
+        "placeholder": "0",
+        "type": "number"
+      }
+    },
+    "pseudocode": {
+      "brute": "for i in 0..n-3:\n    for j in i+1..n-2:\n        for k in j+1..n-1:\n            if nums[i]+nums[j]+nums[k] == 0:\n                store_unique_triplet()",
+      "optimal": "sort(nums)\nfor i in 0..n-2:\n    if i > 0 and nums[i] == nums[i-1]: continue\n    l, r = i+1, n-1\n    while l < r:\n        s = nums[i] + nums[l] + nums[r]\n        if s == 0: save_triplet(); l++; r++\n        elif s < 0: l++\n        else: r--"
+    },
+    "external_links": {
+      "leetcode": "https://leetcode.com/problems/3sum/",
+      "visualgo": "https://visualgo.net/en/sorting"
+    },
+    "real_time_applications": [
+      {
+        "title": "Triangulation in Graphics",
+        "description": "Finding triplets of points that satisfy geometric constraints for mesh generation."
+      },
+      {
+        "title": "Financial Balancing",
+        "description": "Identifying three transactions that cancel each other out in auditing systems."
+      },
+      {
+        "title": "Gene Sequence Analysis",
+        "description": "Finding triples of DNA markers that indicate specific genetic properties."
+      }
+    ]
   },
   {
     "id": 20,
@@ -1284,14 +1320,14 @@
     ],
     "primaryPattern": "Stack",
     "shortPatternReason": "LIFO behavior for matching brackets.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.",
     "brute_force_explanation": "We could try to repeatedly find matching adjacent pairs '()', '[]', '{}' and remove them until the string is empty or no pairs are left. This is inefficient (O(N^2)).",
     "optimal_explanation": "Use a Stack. Iterate through the string; push open brackets onto the stack. When a closing bracket is encountered, check if it matches the top of the stack. If so, pop. If not (or stack is empty), it's invalid. At end, stack must be empty.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N^2)",
         "space": "O(N)"
@@ -1348,14 +1384,14 @@
     ],
     "primaryPattern": "Linked List",
     "shortPatternReason": "Pointer manipulation in sorted sequences.",
-    "time_complexity": "O(n+m)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n+m)",
+    "space_efficiency": "O(1)",
     "problem_statement": "You are given the heads of two sorted linked lists `list1` and `list2`. Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.",
     "brute_force_explanation": "Copy all values from both lists into an array, sort the array, and then create a new linked list from the sorted values. Inefficient space usage.",
     "optimal_explanation": "Use the Two Pointer pattern (or Iterative Merge). Maintain a 'dummy' head and a 'current' pointer. Compare the heads of `list1` and `list2`. Attach the smaller node to 'current', and move the pointer forward. Repeat until one list is exhausted, then attach the remainder.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O((N+M) log (N+M))",
         "space": "O(N+M)"
@@ -1413,14 +1449,14 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Logarithmic search in modified sorted space.",
-    "time_complexity": "O(log n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(log n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Given a sorted array of distinct integers `nums` that is rotated at some unknown pivot index, and an integer `target`, return the index of `target` if it is in simple `nums`, or `-1` if it is not.\n\nExample: `nums` = `[4,5,6,7,0,1,2]` (rotated at index 3) and `target` = `0`, return `4`.",
     "brute_force_explanation": "Scan the entire array linearly to find the target. This ignores the sorted property and takes O(N) time.",
     "optimal_explanation": "Use a modified Binary Search. Even though the array is rotated, at least one half (left or right) is always sorted. Determine which half is sorted, check if the target lies within that range, and discard the other half. This achieves O(log N).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N)",
         "space": "O(1)"
@@ -1432,7 +1468,7 @@
     },
     "patternSignals": [
       "Sorted array that has been rotated.",
-      "Requirement for O(log N) time complexity.",
+      "Requirement for O(log N) time efficiency.",
       "Searching for a specific target value."
     ],
     "edgeCases": [
@@ -1473,21 +1509,21 @@
     "title": "Permutations",
     "slug": "permutations",
     "difficulty": "Medium",
-    "algorithmType": "recursion",
+    "algorithmType": "backtracking",
     "status": "complete",
     "tags": [
       "Backtracking"
     ],
     "primaryPattern": "Backtracking",
     "shortPatternReason": "Generating all possible orderings recursively.",
-    "time_complexity": "O(n * n!)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n * n!)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Given an array `nums` of distinct integers, return all the possible permutations. You can return the answer in any order.",
     "brute_force_explanation": "The 'brute force' is essentially the recursive backtracking solution itself, as generating all permutations requires visiting every leaf of the decision tree.",
     "optimal_explanation": "Use Backtracking to build permutations incrementally. Maintain a 'used' set or swap elements in-place to ensure each number is used once per permutation. Backtrack (undo choice) to explore other branches.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N * N!)",
         "space": "O(N!)"
@@ -1543,14 +1579,14 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Layer-by-layer matrix transformation.",
-    "time_complexity": "O(n\u00b2)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n\u00b2)",
+    "space_efficiency": "O(1)",
     "problem_statement": "You are given an `n x n` 2D matrix representing an image, rotate the image by 90 degrees (clockwise).\n\nYou have to rotate the image **in-place**, which means you have to modify the input 2D matrix directly.",
-    "brute_force_explanation": "Create a new N x N matrix. Copy elements such that `new_matrix[j][n-1-i] = matrix[i][j]`. Space complexity is O(N^2).",
+    "brute_force_explanation": "Create a new N x N matrix. Copy elements such that `new_matrix[j][n-1-i] = matrix[i][j]`. Space efficiency is O(N^2).",
     "optimal_explanation": "Perform the rotation in two steps: a Transpose (swap `matrix[i][j]` with `matrix[j][i]`) followed by a Horizontal Reflection (reverse each row). This achieves the rotation in-place using O(1) extra space.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N^2)",
         "space": "O(N^2)"
@@ -1602,14 +1638,14 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Categorizing strings by sorted key or frequency frequency.",
-    "time_complexity": "O(n * k log k)",
-    "space_complexity": "O(n * k)",
+    "time_efficiency": "O(n * k log k)",
+    "space_efficiency": "O(n * k)",
     "problem_statement": "Given an array of strings `strs`, group the anagrams together. You can return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.",
     "brute_force_explanation": "Compare every string with every other string to check if they are anagrams. O(N^2 * L log L). Very slow.",
     "optimal_explanation": "Use a Hash Map where the key is the sorted version of the string (or a character count signature) and the value is a list of original strings. Iterate once through the input.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N^2 * L)",
         "space": "O(N)"
@@ -1663,8 +1699,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Local vs Global maxima optimization (Kadane's).",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Maximum Subarray.",
     "constraints": [
       "N <= 10^5",
@@ -1675,7 +1711,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N\u00b2)",
         "space": "O(1)"
@@ -1722,8 +1758,8 @@
     ],
     "primaryPattern": "Greedy",
     "shortPatternReason": "Tracking maximum reachable index greedily.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Jump Game.",
     "constraints": [
       "N <= 10^5",
@@ -1734,7 +1770,7 @@
     "optimal_explanation": "Use the Greedy pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(2^N)",
         "space": "O(N)"
@@ -1781,8 +1817,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Sorting and merging overlapping ranges.",
-    "time_complexity": "O(n log n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n log n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Merge Intervals.",
     "constraints": [
       "N <= 10^5",
@@ -1793,7 +1829,7 @@
     "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N\u00b2)",
         "space": "O(N)"
@@ -1840,8 +1876,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Optimal substructure using Fibonacci relation.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Climbing Stairs.",
     "constraints": [
       "N <= 10^5",
@@ -1852,7 +1888,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(2^N)",
         "space": "O(N)"
@@ -1899,8 +1935,8 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Treating matrix as flattened sorted array.",
-    "time_complexity": "O(log(m*n))",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(log(m*n))",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Search a 2D Matrix.",
     "constraints": [
       "N <= 10^5",
@@ -1911,7 +1947,7 @@
     "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N*M)",
         "space": "O(1)"
@@ -1958,22 +1994,28 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Dutch National Flag 3-pointer partition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
-    "problem_statement": "Standard LeetCode problem: Sort Colors.",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given an array `nums` with `n` objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue (0, 1, and 2).",
     "constraints": [
-      "N <= 10^5",
-      "Elements are integers."
+      "n == nums.length",
+      "1 <= n <= 300",
+      "nums[i] is 0, 1, or 2."
     ],
     "examples": [],
-    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
-    "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+    "brute_force_explanation": "Use any standard sorting algorithm like QuickSort or MergeSort. Alternatively, perform a two-pass counting sort: count occurrences of 0, 1, and 2, then overwrite the original array.",
+    "optimal_explanation": "The 'Dutch National Flag' algorithm uses three pointers: `low` for 0s, `high` for 2s, and `curr` for the current element. We partition the array in a single pass by swapping elements into their respective regions.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
-      "brute": "O(n\u00b2)",
-      "optimal": "O(n)",
-      "space": "O(1)"
+    "efficiency": {
+      "brute": {
+        "time": "O(N)",
+        "space": "O(1)"
+      },
+      "optimal": {
+        "time": "O(N)",
+        "space": "O(1)"
+      }
     },
     "patternSignals": [
       "Requires Two Pointer approach.",
@@ -1998,7 +2040,36 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "input_settings": {
+      "input1": {
+        "label": "Color Array (0,1,2)",
+        "placeholder": "[2,0,2,1,1,0]",
+        "type": "array"
+      }
+    },
+    "pseudocode": {
+      "brute": "counts = [0, 0, 0]\nfor x in nums: counts[x]++\nidx = 0\nfor color in 0..2:\n    for i in 0..counts[color]:\n        nums[idx++] = color",
+      "optimal": "low = 0, curr = 0, high = n-1\nwhile curr <= high:\n    if nums[curr] == 0: swap(curr, low); curr++; low++\n    elif nums[curr] == 2: swap(curr, high); high--\n    else: curr++"
+    },
+    "external_links": {
+      "leetcode": "https://leetcode.com/problems/sort-colors/",
+      "wikipedia": "https://en.wikipedia.org/wiki/Dutch_national_flag_problem"
+    },
+    "real_time_applications": [
+      {
+        "title": "Memory Management",
+        "description": "Partitioning memory blocks into categories like 'Allocated', 'Free', and 'System' in a single pass."
+      },
+      {
+        "title": "Data Sharding",
+        "description": "Sorting data packets into priority queues (High, Medium, Low) in real-time networking."
+      },
+      {
+        "title": "Image Processing",
+        "description": "Color quantization where pixels are grouped into a limited set of primary colors."
+      }
+    ]
   },
   {
     "id": 76,
@@ -2012,8 +2083,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Dynamic window expansion and contraction for constraint.",
-    "time_complexity": "O(n+m)",
-    "space_complexity": "O(m)",
+    "time_efficiency": "O(n+m)",
+    "space_efficiency": "O(m)",
     "problem_statement": "Standard LeetCode problem: Minimum Window Substring.",
     "constraints": [
       "N <= 10^5",
@@ -2024,7 +2095,7 @@
     "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n+m)",
       "space": "O(m)"
@@ -2059,15 +2130,15 @@
     "title": "Subsets",
     "slug": "subsets",
     "difficulty": "Medium",
-    "algorithmType": "recursion",
+    "algorithmType": "backtracking",
     "status": "complete",
     "tags": [
       "Backtracking"
     ],
     "primaryPattern": "Backtracking",
     "shortPatternReason": "Power set generation via inclusion/exclusion.",
-    "time_complexity": "O(n * 2\u207f)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n * 2\u207f)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Subsets.",
     "constraints": [
       "N <= 10^5",
@@ -2078,7 +2149,7 @@
     "optimal_explanation": "Use the Backtracking pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n * 2\u207f)",
       "space": "O(n)"
@@ -2120,8 +2191,8 @@
     ],
     "primaryPattern": "Backtracking",
     "shortPatternReason": "DFS traversal with state backtracking on grid.",
-    "time_complexity": "O(N * 3\u1d38)",
-    "space_complexity": "O(L)",
+    "time_efficiency": "O(N * 3\u1d38)",
+    "space_efficiency": "O(L)",
     "problem_statement": "Standard LeetCode problem: Word Search.",
     "constraints": [
       "N <= 10^5",
@@ -2132,7 +2203,7 @@
     "optimal_explanation": "Use the Backtracking pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(N * 3\u1d38)",
       "space": "O(L)"
@@ -2170,49 +2241,229 @@
     "algorithmType": "tree",
     "status": "complete",
     "tags": [
+      "Trees",
       "Recursion"
     ],
-    "primaryPattern": "Recursion",
+    "primaryPattern": "Trees",
     "shortPatternReason": "Standard recursive visit order (Left, Root, Right).",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
-    "problem_statement": "Standard LeetCode problem: Binary Tree Inorder Traversal.",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
+    "problem_statement": "Given the `root` of a binary tree, return *the inorder traversal of its nodes' values*.",
     "constraints": [
-      "N <= 10^5",
-      "Elements are integers."
+      "The number of nodes in the tree is in the range [0, 100].",
+      "-100 <= Node.val <= 100"
     ],
-    "examples": [],
-    "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
-    "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
-    "brute_force_steps": [],
-    "optimal_steps": [],
-    "complexity": {
-      "brute": "O(n\u00b2)",
-      "optimal": "O(n)",
-      "space": "O(n)"
+    "examples": [
+      {
+        "input": "root = [1,null,2,3]",
+        "output": "[1,3,2]"
+      }
+    ],
+    "brute_force_explanation": "Iterative approach using an explicit stack to mimic the recursive process.",
+    "optimal_explanation": "Recursive traversal visiting nodes in the sequence: Left Subtree, Current Node, Right Subtree. This is the most natural way to express the problem logic.",
+    "brute_force_steps": [
+      {
+        "step": 1,
+        "description": "Initialize an empty stack and an empty result list."
+      },
+      {
+        "step": 2,
+        "description": "Initialize 'current' pointer to the root."
+      },
+      {
+        "step": 3,
+        "description": "While 'current' is not null or stack is not empty:"
+      },
+      {
+        "step": 4,
+        "description": "Travel to the leftmost node, pushing each node onto the stack."
+      },
+      {
+        "step": 5,
+        "description": "Pop from stack, add value to result."
+      },
+      {
+        "step": 6,
+        "description": "Set 'current' to the right child of the popped node."
+      }
+    ],
+    "optimal_steps": [
+      {
+        "step": 1,
+        "description": "Base Case: If the current node is null, return (end this branch of recursion)."
+      },
+      {
+        "step": 2,
+        "description": "Recursive Call: Invoke `inorder(node.left)` to process the entire left subtree."
+      },
+      {
+        "step": 3,
+        "description": "Process: Visit the current node (e.g., add `node.val` to the result list)."
+      },
+      {
+        "step": 4,
+        "description": "Recursive Call: Invoke `inorder(node.right)` to process the entire right subtree."
+      }
+    ],
+    "efficiency": {
+      "time": "O(n) - Every node is visited exactly once.",
+      "space": "O(n) - In the worst case (skewed tree), the recursion stack depth equals the number of nodes."
     },
     "patternSignals": [
-      "Requires Recursion approach.",
-      "Standard recursive visit order (Left, Root, Right)."
+      "Processing binary trees in a specific order.",
+      "Recursive problem structure (sub-problem is also a tree).",
+      "Symmetric work on left and right branches."
     ],
     "edgeCases": [
-      "Empty input",
-      "Small input",
-      "Large values"
+      "Empty tree (root is null).",
+      "Single node tree.",
+      "Skewed tree (degenerated to a linked list)."
     ],
     "thinking_guide": {
       "first_principles": [
-        "Solve Binary Tree Inorder Traversal using first principles."
+        "Inorder traversal means 'In-between': visit the root between the left and right subtrees.",
+        "To visit a tree, you must visit its components.",
+        "The components of a tree are the root, the left subtree, and the right subtree."
       ],
       "pattern_signals": [
-        "Standard recursive visit order (Left, Root, Right)."
+        "Left -> Root -> Right ordering.",
+        "Recursive DFS (Depth First Search)."
       ],
       "naive_approach": [
-        "Iterative brute force."
+        "Store all nodes, then sort (incorrect for tree structure).",
+        "Level order traversal (wrong visit order)."
       ],
       "approach_blueprint": [
-        "1. Traverse",
-        "2. Process"
+        "1. Define the recursive function `traverse(node)`.",
+        "2. Handle the `null` node base case.",
+        "3. Recurse left, process root, recurse right."
+      ]
+    },
+    "patternMastery": {
+      "concept": "Recursive Depth-First Search (DFS)",
+      "internalTheory": "Time Converged Theory: The execution time O(n) is bounded by the total number of edges and nodes visited. Since each edge is traversed twice (once down, once up) and each node is processed once, the efficiency is linear.",
+      "optimization": "Tail recursion is difficult here because of the two recursive calls, but iterative solutions using an explicit stack can avoid stack overflow for extremely deep trees."
+    }
+  },
+  {
+    "id": 95,
+    "title": "Binary Tree Preorder Traversal",
+    "slug": "binary-tree-preorder-traversal",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "complete",
+    "tags": [
+      "Trees",
+      "Recursion"
+    ],
+    "primaryPattern": "Trees",
+    "shortPatternReason": "Standard recursive visit order (Root, Left, Right).",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
+    "problem_statement": "Given the `root` of a binary tree, return *the preorder traversal of its nodes' values*.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 100].",
+      "-100 <= Node.val <= 100"
+    ],
+    "examples": [
+      {
+        "input": "root = [1,null,2,3]",
+        "output": "[1,2,3]"
+      }
+    ],
+    "brute_force_explanation": "Iterative approach using an explicit stack to mimic the recursive process.",
+    "optimal_explanation": "Recursive traversal visiting nodes in the sequence: Current Node, Left Subtree, Right Subtree.",
+    "optimal_steps": [
+      {
+        "step": 1,
+        "description": "Base Case: If the current node is null, return."
+      },
+      {
+        "step": 2,
+        "description": "Process: Visit the current node (Root)."
+      },
+      {
+        "step": 3,
+        "description": "Recursive Call: Invoke `preorder(node.left)` for the left subtree."
+      },
+      {
+        "step": 4,
+        "description": "Recursive Call: Invoke `preorder(node.right)` for the right subtree."
+      }
+    ],
+    "efficiency": {
+      "time": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Root -> Left -> Right ordering."
+    ],
+    "thinking_guide": {
+      "approach_blueprint": [
+        "1. Visit Root",
+        "2. Recurse Left",
+        "3. Recurse Right"
+      ]
+    }
+  },
+  {
+    "id": 96,
+    "title": "Binary Tree Postorder Traversal",
+    "slug": "binary-tree-postorder-traversal",
+    "difficulty": "Easy",
+    "algorithmType": "tree",
+    "status": "complete",
+    "tags": [
+      "Trees",
+      "Recursion"
+    ],
+    "primaryPattern": "Trees",
+    "shortPatternReason": "Standard recursive visit order (Left, Right, Root).",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
+    "problem_statement": "Given the `root` of a binary tree, return *the postorder traversal of its nodes' values*.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 100].",
+      "-100 <= Node.val <= 100"
+    ],
+    "examples": [
+      {
+        "input": "root = [1,null,2,3]",
+        "output": "[3,2,1]"
+      }
+    ],
+    "brute_force_explanation": "Iterative approach using two stacks or reversing a preorder-like traversal.",
+    "optimal_explanation": "Recursive traversal visiting nodes in the sequence: Left Subtree, Right Subtree, Current Node.",
+    "optimal_steps": [
+      {
+        "step": 1,
+        "description": "Base Case: If the current node is null, return."
+      },
+      {
+        "step": 2,
+        "description": "Recursive Call: Invoke `postorder(node.left)` for the left subtree."
+      },
+      {
+        "step": 3,
+        "description": "Recursive Call: Invoke `postorder(node.right)` for the right subtree."
+      },
+      {
+        "step": 4,
+        "description": "Process: Visit the current node (Root)."
+      }
+    ],
+    "efficiency": {
+      "time": "O(n)",
+      "space": "O(n)"
+    },
+    "patternSignals": [
+      "Left -> Right -> Root ordering."
+    ],
+    "thinking_guide": {
+      "approach_blueprint": [
+        "1. Recurse Left",
+        "2. Recurse Right",
+        "3. Visit Root"
       ]
     }
   },
@@ -2224,12 +2475,13 @@
     "algorithmType": "tree",
     "status": "complete",
     "tags": [
+      "Trees",
       "Recursion"
     ],
-    "primaryPattern": "Recursion",
+    "primaryPattern": "Trees",
     "shortPatternReason": "Recursive range check for child nodes.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Validate Binary Search Tree.",
     "constraints": [
       "N <= 10^5",
@@ -2240,7 +2492,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -2282,8 +2534,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "Queue-based breadth-first visit.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Binary Tree Level Order Traversal.",
     "constraints": [
       "N <= 10^5",
@@ -2294,7 +2546,7 @@
     "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -2336,8 +2588,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Recursive height calculation (1 + max(L, R)).",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Maximum Depth of Binary Tree.",
     "constraints": [
       "N <= 10^5",
@@ -2348,7 +2600,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -2390,8 +2642,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Recursive sub-tree construction from visit orders.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Construct Binary Tree from Preorder and Inorder Traversal.",
     "constraints": [
       "N <= 10^5",
@@ -2402,7 +2654,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -2444,8 +2696,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Tracking historical minimum for future profit.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Best Time to Buy and Sell Stock.",
     "constraints": [
       "N <= 10^5",
@@ -2456,7 +2708,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -2498,8 +2750,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Recursive global max tracking with local contributions.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Binary Tree Maximum Path Sum.",
     "constraints": [
       "N <= 10^5",
@@ -2510,7 +2762,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -2553,9 +2805,9 @@
     ],
     "primaryPattern": "Two Pointers",
     "shortPatternReason": "Comparing characters from both ends moving inward.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
-    "problem_statement": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.\n\nGiven a string `s`, return `true` if it is a palindrome, or `false` otherwise.",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given a string `s`, return `true` if it is a palindrome, or `false` otherwise, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters.",
     "constraints": [
       "1 <= s.length <= 2 * 10^5",
       "s consists only of printable ASCII characters."
@@ -2567,11 +2819,11 @@
         "explanation": "\"amanaplanacanalpanama\" is a palindrome."
       }
     ],
-    "brute_force_explanation": "Filter the string to keep only alphanumeric characters, reverse it, and compare with the original filtered string. This requires O(N) extra space.",
-    "optimal_explanation": "Use Two Pointers. Initialize one pointer at the start and one at the end. Move them towards each other, skipping non-alphanumeric characters. If characters at pointers don't match, return false. If they meet, return true. O(1) space.",
+    "brute_force_explanation": "Clean the string first by removing non-alphanumeric characters and lowercasing it. Create a reversed copy of the cleaned string and compare it with the original.",
+    "optimal_explanation": "Use two pointers starting at the beginning and end of the string. Move them inward, skipping non-alphanumeric characters. Compare the characters at each step without allocating extra memory for a cleaned string.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N)",
         "space": "O(N)"
@@ -2613,7 +2865,35 @@
         "   d. `left++`, `right--`.",
         "3. Return True."
       ]
-    }
+    },
+    "input_settings": {
+      "input1": {
+        "label": "Input String",
+        "placeholder": "A man, a plan, a canal: Panama",
+        "type": "string"
+      }
+    },
+    "pseudocode": {
+      "brute": "s_clean = filter_and_lower(s)\nreturn s_clean == reverse(s_clean)",
+      "optimal": "l = 0, r = n-1\nwhile l < r:\n    while l < r and not isAlphanum(s[l]): l++\n    while l < r and not isAlphanum(s[r]): r--\n    if lower(s[l]) != lower(s[r]): return False\n    l++; r--\nreturn True"
+    },
+    "external_links": {
+      "leetcode": "https://leetcode.com/problems/valid-palindrome/"
+    },
+    "real_time_applications": [
+      {
+        "title": "Data Sanitization",
+        "description": "Cleaning and verifying user-provided strings in form fields or search queries."
+      },
+      {
+        "title": "DNA Sequence Verification",
+        "description": "Identifying palindromic sequences in genetic data which often signal enzyme binding sites."
+      },
+      {
+        "title": "Network Packet Validation",
+        "description": "Fast symmetry checks for packet headers in low-latency communication protocols."
+      }
+    ]
   },
   {
     "id": 128,
@@ -2627,8 +2907,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Unordered set lookup for sequence starts.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Longest Consecutive Sequence.",
     "constraints": [
       "N <= 10^5",
@@ -2639,7 +2919,7 @@
     "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -2681,8 +2961,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "Deep copy using traversal and map state.",
-    "time_complexity": "O(V+E)",
-    "space_complexity": "O(V)",
+    "time_efficiency": "O(V+E)",
+    "space_efficiency": "O(V)",
     "problem_statement": "Standard LeetCode problem: Clone Graph.",
     "constraints": [
       "N <= 10^5",
@@ -2693,7 +2973,7 @@
     "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(V+E)",
       "space": "O(V)"
@@ -2735,8 +3015,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Boolean DP tracking word segmentability.",
-    "time_complexity": "O(n\u00b3)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n\u00b3)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Word Break.",
     "constraints": [
       "N <= 10^5",
@@ -2747,7 +3027,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n\u00b3)",
       "space": "O(n)"
@@ -2789,8 +3069,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Floyd's Tortoise and Hare detection.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Linked List Cycle.",
     "constraints": [
       "N <= 10^5",
@@ -2801,7 +3081,7 @@
     "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -2843,8 +3123,8 @@
     ],
     "primaryPattern": "Queue",
     "shortPatternReason": "Hash Map + Doubly Linked List for LIFO.",
-    "time_complexity": "O(1)",
-    "space_complexity": "O(capacity)",
+    "time_efficiency": "O(1)",
+    "space_efficiency": "O(capacity)",
     "problem_statement": "Standard LeetCode problem: LRU Cache.",
     "constraints": [
       "N <= 10^5",
@@ -2855,7 +3135,7 @@
     "optimal_explanation": "Use the Queue pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(1)",
       "space": "O(capacity)"
@@ -2897,8 +3177,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Tracking current min/max to handle negatives.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Maximum Product Subarray.",
     "constraints": [
       "N <= 10^5",
@@ -2909,7 +3189,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -2951,8 +3231,8 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Logarithmic search for inflection point.",
-    "time_complexity": "O(log n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(log n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Find Minimum in Rotated Sorted Array.",
     "constraints": [
       "N <= 10^5",
@@ -2963,7 +3243,7 @@
     "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(log n)",
       "space": "O(1)"
@@ -3005,8 +3285,8 @@
     ],
     "primaryPattern": "Stack",
     "shortPatternReason": "Auxiliary stack to track historical minima.",
-    "time_complexity": "O(1)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(1)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Min Stack.",
     "constraints": [
       "N <= 10^5",
@@ -3017,7 +3297,7 @@
     "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(1)",
       "space": "O(n)"
@@ -3059,8 +3339,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Synchronized traversal to find common node.",
-    "time_complexity": "O(m+n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(m+n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Intersection of Two Linked Lists.",
     "constraints": [
       "N <= 10^5",
@@ -3071,7 +3351,7 @@
     "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(m+n)",
       "space": "O(1)"
@@ -3113,8 +3393,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Boyer-Moore Voting Algorithm.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Majority Element.",
     "constraints": [
       "N <= 10^5",
@@ -3125,7 +3405,7 @@
     "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -3167,8 +3447,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Non-adjacent max sum recurrence.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: House Robber.",
     "constraints": [
       "N <= 10^5",
@@ -3179,7 +3459,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -3221,8 +3501,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "Grid traversal to group connected components.",
-    "time_complexity": "O(M*N)",
-    "space_complexity": "O(M*N)",
+    "time_efficiency": "O(M*N)",
+    "space_efficiency": "O(M*N)",
     "problem_statement": "Standard LeetCode problem: Number of Islands.",
     "constraints": [
       "N <= 10^5",
@@ -3233,7 +3513,7 @@
     "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(M*N)",
       "space": "O(M*N)"
@@ -3275,8 +3555,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "In-place pointer reversal logic.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Reverse Linked List.",
     "constraints": [
       "N <= 10^5",
@@ -3287,7 +3567,7 @@
     "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -3329,8 +3609,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "Cycle detection in DAG (Topological Sort).",
-    "time_complexity": "O(V+E)",
-    "space_complexity": "O(V+E)",
+    "time_efficiency": "O(V+E)",
+    "space_efficiency": "O(V+E)",
     "problem_statement": "Standard LeetCode problem: Course Schedule.",
     "constraints": [
       "N <= 10^5",
@@ -3341,7 +3621,7 @@
     "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(V+E)",
       "space": "O(V+E)"
@@ -3383,8 +3663,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Character-based path traversal logic.",
-    "time_complexity": "O(L)",
-    "space_complexity": "O(Words * L)",
+    "time_efficiency": "O(L)",
+    "space_efficiency": "O(Words * L)",
     "problem_statement": "Standard LeetCode problem: Implement Trie (Prefix Tree).",
     "constraints": [
       "N <= 10^5",
@@ -3395,7 +3675,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(L)",
       "space": "O(Words * L)"
@@ -3437,8 +3717,8 @@
     ],
     "primaryPattern": "Heap / Priority Queue",
     "shortPatternReason": "Min-heap for tracking top K elements.",
-    "time_complexity": "O(n log k)",
-    "space_complexity": "O(k)",
+    "time_efficiency": "O(n log k)",
+    "space_efficiency": "O(k)",
     "problem_statement": "Standard LeetCode problem: Kth Largest Element in an Array.",
     "constraints": [
       "N <= 10^5",
@@ -3449,7 +3729,7 @@
     "optimal_explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n log k)",
       "space": "O(k)"
@@ -3491,8 +3771,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Uniqueness check using hash set.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Contains Duplicate.",
     "constraints": [
       "N <= 10^5",
@@ -3503,7 +3783,7 @@
     "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -3541,12 +3821,13 @@
     "algorithmType": "tree",
     "status": "complete",
     "tags": [
+      "Trees",
       "Recursion"
     ],
-    "primaryPattern": "Recursion",
+    "primaryPattern": "Trees",
     "shortPatternReason": "Recursive swap of left and right children.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Invert Binary Tree.",
     "constraints": [
       "N <= 10^5",
@@ -3557,7 +3838,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -3595,12 +3876,13 @@
     "algorithmType": "tree",
     "status": "complete",
     "tags": [
+      "Trees",
       "Recursion"
     ],
-    "primaryPattern": "Recursion",
+    "primaryPattern": "Trees",
     "shortPatternReason": "Inorder traversal property of BST.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Kth Smallest Element in a BST.",
     "constraints": [
       "N <= 10^5",
@@ -3611,7 +3893,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -3653,8 +3935,8 @@
     ],
     "primaryPattern": "Queue",
     "shortPatternReason": "Simulating FIFO with two LIFO stacks.",
-    "time_complexity": "O(1) amortized",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(1) amortized",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Implement Queue using Stacks.",
     "constraints": [
       "N <= 10^5",
@@ -3665,7 +3947,7 @@
     "optimal_explanation": "Use the Queue pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(1) amortized",
       "space": "O(n)"
@@ -3707,8 +3989,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Reverse half or use two pointers with recursion.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Palindrome Linked List.",
     "constraints": [
       "N <= 10^5",
@@ -3719,7 +4001,7 @@
     "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -3757,12 +4039,13 @@
     "algorithmType": "tree",
     "status": "complete",
     "tags": [
+      "Trees",
       "Recursion"
     ],
-    "primaryPattern": "Recursion",
+    "primaryPattern": "Trees",
     "shortPatternReason": "Recursive parent search with split logic.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Lowest Common Ancestor of a Binary Tree.",
     "constraints": [
       "N <= 10^5",
@@ -3773,7 +4056,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -3815,8 +4098,8 @@
     ],
     "primaryPattern": "Prefix Sum",
     "shortPatternReason": "Prefix and suffix product arrays.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Product of Array Except Self.",
     "constraints": [
       "N <= 10^5",
@@ -3827,7 +4110,7 @@
     "optimal_explanation": "Use the Prefix Sum pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -3869,8 +4152,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Deque-based monotonic max tracking.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(k)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(k)",
     "problem_statement": "Standard LeetCode problem: Sliding Window Maximum.",
     "constraints": [
       "N <= 10^5",
@@ -3881,7 +4164,7 @@
     "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(k)"
@@ -3923,8 +4206,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Stepwise elimination from top-right corner.",
-    "time_complexity": "O(m+n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(m+n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Search a 2D Matrix II.",
     "constraints": [
       "N <= 10^5",
@@ -3935,7 +4218,7 @@
     "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(m+n)",
       "space": "O(1)"
@@ -3977,8 +4260,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Character frequency count check.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Valid Anagram.",
     "constraints": [
       "N <= 10^5",
@@ -3989,7 +4272,7 @@
     "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4031,14 +4314,14 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "In-place swapping to maintain order.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
-    "problem_statement": "Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.\n\nNote that you must do this in-place without making a copy of the array.",
-    "brute_force_explanation": "Create a new array, copy all non-zero elements first, then fill the rest with zeros. This violates the 'in-place' constraint (O(N) space).",
-    "optimal_explanation": "Use a 'Writer' pointer (or 'Last Non-Zero Found At' index). Iterate through the array with a 'Reader' pointer. If `nums[reader]` is non-zero, swap it with `nums[writer]` and increment `writer`. All zeros will naturally be pushed to the end.",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements. You must do this in-place.",
+    "brute_force_explanation": "Initialize a new array of the same size. Iterate through the input and add all non-zero elements to the new array. Fill the remaining spots with zero. Finally, copy it back.",
+    "optimal_explanation": "Maintain a `lastNonZeroFoundAt` pointer. Iterate through the array; whenever a non-zero element is found, swap it with the element at the `lastNonZeroFoundAt` index and increment the pointer.",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": {
         "time": "O(N)",
         "space": "O(N)"
@@ -4078,7 +4361,39 @@
         "      i. Swap `nums[writer]` and `nums[reader]`.",
         "      ii. `writer++`."
       ]
-    }
+    },
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-2^31 <= nums[i] <= 2^31 - 1"
+    ],
+    "input_settings": {
+      "input1": {
+        "label": "Integer Array",
+        "placeholder": "[0,1,0,3,12]",
+        "type": "array"
+      }
+    },
+    "pseudocode": {
+      "brute": "res = [0]*n, idx = 0\nfor x in nums: \n    if x != 0: res[idx++] = x\nnums = res",
+      "optimal": "lastNonZero = 0\nfor curr in 0..n-1:\n    if nums[curr] != 0:\n        swap(nums[lastNonZero], nums[curr])\n        lastNonZero++"
+    },
+    "external_links": {
+      "leetcode": "https://leetcode.com/problems/move-zeroes/"
+    },
+    "real_time_applications": [
+      {
+        "title": "Memory Defragmentation",
+        "description": "Grouping active memory blocks together and pushing 'holes' (zeros) to the end for compaction."
+      },
+      {
+        "title": "Real-time Data Streaming",
+        "description": "Filtering out null or missing data points in a high-frequency stream without extra buffers."
+      },
+      {
+        "title": "Game Physics",
+        "description": "Managing active vs inactive objects in a scene graph by partitioning the entity list."
+      }
+    ]
   },
   {
     "id": 287,
@@ -4092,8 +4407,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Cycle detection in array index mapping.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Find the Duplicate Number.",
     "constraints": [
       "N <= 10^5",
@@ -4104,7 +4419,7 @@
     "optimal_explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4146,8 +4461,8 @@
     ],
     "primaryPattern": "Heap / Priority Queue",
     "shortPatternReason": "Dual heaps (min/max) for dynamic median tracking.",
-    "time_complexity": "O(log n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(log n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Find Median from Data Stream.",
     "constraints": [
       "N <= 10^5",
@@ -4158,7 +4473,7 @@
     "optimal_explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(log n)",
       "space": "O(n)"
@@ -4200,8 +4515,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "DP relation or patience sorting logic.",
-    "time_complexity": "O(n log n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n log n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Longest Increasing Subsequence.",
     "constraints": [
       "N <= 10^5",
@@ -4212,7 +4527,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n log n)",
       "space": "O(n)"
@@ -4254,8 +4569,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Bottom-up min combination optimization.",
-    "time_complexity": "O(S*n)",
-    "space_complexity": "O(S)",
+    "time_efficiency": "O(S*n)",
+    "space_efficiency": "O(S)",
     "problem_statement": "Standard LeetCode problem: Coin Change.",
     "constraints": [
       "N <= 10^5",
@@ -4266,7 +4581,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(S*n)",
       "space": "O(S)"
@@ -4308,8 +4623,8 @@
     ],
     "primaryPattern": "Heap / Priority Queue",
     "shortPatternReason": "Frequency map + bucket sort or heap.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Top K Frequent Elements.",
     "constraints": [
       "N <= 10^5",
@@ -4320,7 +4635,7 @@
     "optimal_explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -4362,8 +4677,8 @@
     ],
     "primaryPattern": "Stack",
     "shortPatternReason": "Nested expansion using count/string stacks.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Decode String.",
     "constraints": [
       "N <= 10^5",
@@ -4374,7 +4689,7 @@
     "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -4416,8 +4731,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Subset sum variation (0/1 Knapsack).",
-    "time_complexity": "O(n * target)",
-    "space_complexity": "O(target)",
+    "time_efficiency": "O(n * target)",
+    "space_efficiency": "O(target)",
     "problem_statement": "Standard LeetCode problem: Partition Equal Subset Sum.",
     "constraints": [
       "N <= 10^5",
@@ -4428,7 +4743,7 @@
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n * target)",
       "space": "O(target)"
@@ -4470,8 +4785,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Fixed-size window frequency check.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Find All Anagrams in a String.",
     "constraints": [
       "N <= 10^5",
@@ -4482,7 +4797,7 @@
     "optimal_explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4524,8 +4839,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Recursive max path tracking through root.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Diameter of Binary Tree.",
     "constraints": [
       "N <= 10^5",
@@ -4536,7 +4851,7 @@
     "optimal_explanation": "Use the Recursion pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -4578,8 +4893,8 @@
     ],
     "primaryPattern": "Prefix Sum",
     "shortPatternReason": "Prefix sums + map of frequencies.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Subarray Sum Equals K.",
     "constraints": [
       "N <= 10^5",
@@ -4590,7 +4905,7 @@
     "optimal_explanation": "Use the Prefix Sum pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -4632,8 +4947,8 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Standard logarithmic target lookup.",
-    "time_complexity": "O(log n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(log n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Binary Search.",
     "constraints": [
       "N <= 10^5",
@@ -4644,7 +4959,7 @@
     "optimal_explanation": "Use the Binary Search pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(log n)",
       "space": "O(1)"
@@ -4686,8 +5001,8 @@
     ],
     "primaryPattern": "Stack",
     "shortPatternReason": "Monotonic stack for next-greater tracking.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(n)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Daily Temperatures.",
     "constraints": [
       "N <= 10^5",
@@ -4698,7 +5013,7 @@
     "optimal_explanation": "Use the Stack pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(n)"
@@ -4740,8 +5055,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "BFS for shortest time level-by-level decay.",
-    "time_complexity": "O(m*n)",
-    "space_complexity": "O(m*n)",
+    "time_efficiency": "O(m*n)",
+    "space_efficiency": "O(m*n)",
     "problem_statement": "Standard LeetCode problem: Rotting Oranges.",
     "constraints": [
       "N <= 10^5",
@@ -4752,7 +5067,7 @@
     "optimal_explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(m*n)",
       "space": "O(m*n)"
@@ -4794,8 +5109,8 @@
     ],
     "primaryPattern": "Greedy",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4803,7 +5118,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4821,8 +5136,8 @@
     ],
     "primaryPattern": "Prefix Sum",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4830,7 +5145,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4848,8 +5163,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4857,7 +5172,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4875,8 +5190,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4884,7 +5199,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4902,8 +5217,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4911,7 +5226,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4929,8 +5244,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4938,7 +5253,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4956,8 +5271,8 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4965,7 +5280,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -4983,8 +5298,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -4992,7 +5307,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5010,8 +5325,8 @@
     ],
     "primaryPattern": "Backtracking",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5019,7 +5334,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5037,8 +5352,8 @@
     ],
     "primaryPattern": "Stack",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5046,7 +5361,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5064,8 +5379,8 @@
     ],
     "primaryPattern": "Queue",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5073,7 +5388,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5091,8 +5406,8 @@
     ],
     "primaryPattern": "Linked List",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5100,7 +5415,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5118,8 +5433,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5127,7 +5442,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5145,8 +5460,8 @@
     ],
     "primaryPattern": "Heap / Priority Queue",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5154,7 +5469,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5172,8 +5487,8 @@
     ],
     "primaryPattern": "Greedy",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5181,7 +5496,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5199,8 +5514,8 @@
     ],
     "primaryPattern": "Prefix Sum",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5208,7 +5523,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5226,8 +5541,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5235,7 +5550,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5253,8 +5568,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5262,7 +5577,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5280,8 +5595,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5289,7 +5604,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5307,8 +5622,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5316,7 +5631,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5334,8 +5649,8 @@
     ],
     "primaryPattern": "Binary Search",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5343,7 +5658,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5361,8 +5676,8 @@
     ],
     "primaryPattern": "Recursion",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5370,7 +5685,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5388,8 +5703,8 @@
     ],
     "primaryPattern": "Backtracking",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5397,7 +5712,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5415,8 +5730,8 @@
     ],
     "primaryPattern": "Stack",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5424,7 +5739,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5442,8 +5757,8 @@
     ],
     "primaryPattern": "Queue",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5451,7 +5766,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5469,8 +5784,8 @@
     ],
     "primaryPattern": "Linked List",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5478,7 +5793,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5496,8 +5811,8 @@
     ],
     "primaryPattern": "Graph (BFS/DFS)",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5505,7 +5820,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5523,8 +5838,8 @@
     ],
     "primaryPattern": "Heap / Priority Queue",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5532,7 +5847,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5550,8 +5865,8 @@
     ],
     "primaryPattern": "Greedy",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5559,7 +5874,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5577,8 +5892,8 @@
     ],
     "primaryPattern": "Prefix Sum",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5586,7 +5901,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5604,8 +5919,8 @@
     ],
     "primaryPattern": "Dynamic Programming",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5613,7 +5928,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5631,8 +5946,8 @@
     ],
     "primaryPattern": "Array",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5640,7 +5955,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5658,8 +5973,8 @@
     ],
     "primaryPattern": "Two Pointer",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5667,7 +5982,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
@@ -5685,8 +6000,8 @@
     ],
     "primaryPattern": "Sliding Window",
     "shortPatternReason": "Practice drill for pattern recognition.",
-    "time_complexity": "O(n)",
-    "space_complexity": "O(1)",
+    "time_efficiency": "O(n)",
+    "space_efficiency": "O(1)",
     "problem_statement": "Practice identifying the pattern in this scenario.",
     "constraints": [],
     "examples": [],
@@ -5694,7 +6009,7 @@
     "optimal_explanation": "",
     "brute_force_steps": [],
     "optimal_steps": [],
-    "complexity": {
+    "efficiency": {
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"

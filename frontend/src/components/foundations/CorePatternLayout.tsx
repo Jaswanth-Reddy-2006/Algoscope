@@ -7,10 +7,12 @@ import {
     AlertTriangle,
     Trophy,
     Box,
-    ArrowLeft
+    ArrowLeft,
+    Activity
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { FoundationModule } from '../../types/foundation'
+import { FoundationVisualizer } from './visualizer/FoundationVisualizer'
 import { MentalModelTab } from './MentalModelTab'
 import { SubPatternTab } from './SubPatternTab'
 import { EnhancedCodeTemplateTab } from './EnhancedCodeTemplateTab'
@@ -28,6 +30,7 @@ interface Props {
 
 const TABS = [
     { id: 'mental_model', label: 'Mental Model', icon: Target },
+    { id: 'visualizer', label: 'Visualizer', icon: Activity },
     { id: 'sub_patterns', label: 'Sub-Patterns', icon: Layers },
     { id: 'code', label: 'Code Templates', icon: Code },
     { id: 'edge_cases', label: 'Edge Cases', icon: AlertTriangle },
@@ -90,6 +93,23 @@ export const CorePatternLayout: React.FC<Props> = ({
         switch (activeTab) {
             case 'mental_model':
                 return <MentalModelTab {...commonProps} />
+            case 'visualizer':
+                return (
+                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="p-8 rounded-3xl bg-accent-blue/5 border border-accent-blue/10 backdrop-blur-xl">
+                            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                <Activity size={20} className="text-accent-blue" />
+                                Interactive Engine
+                            </h3>
+                            <p className="text-white/60 mb-8 max-w-2xl">
+                                Detailed algorithmic execution for {module.title}. Explore base cases, stack frames, and state transitions in real-time.
+                            </p>
+                            <div className="rounded-2xl border border-white/5 bg-black/40 overflow-hidden shadow-2xl min-h-[600px]">
+                                <FoundationVisualizer type={module.visualizerType} moduleId={patternId} />
+                            </div>
+                        </div>
+                    </div>
+                )
             case 'sub_patterns':
                 return <SubPatternTab {...commonProps} />
             case 'code':

@@ -205,8 +205,8 @@ export const BinarySearchInputPanel: React.FC<Props> = ({
                 <div className="col-span-2 h-full">
                     <GenericInsightCard
                         title="Why Binary Search?"
-                        bruteForceComplexity="O(N)"
-                        optimalComplexity="O(log N)"
+                        bruteForceefficiency="O(N)"
+                        optimalefficiency="O(log N)"
                         keyPrinciples={[
                             "Halve the search space every step",
                             "Data MUST be sorted",

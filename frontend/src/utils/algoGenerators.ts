@@ -132,7 +132,8 @@ export const generateTwoSumHashMap = (nums: number[], target: number): Step[] =>
                     : `Complement ${complement} not in map. Adding ${val} to map.`,
                 phase: isMatch ? 'found' : 'searching',
                 highlightIndices: isMatch ? [complementIdx, i] : [i],
-                finalAnswer: isMatch ? [complementIdx, i] : undefined
+                finalAnswer: isMatch ? [complementIdx, i] : undefined,
+                customState: { complement, target }
             }
         })
 
@@ -1380,6 +1381,158 @@ export const generateRegExpMatching = (s: string, p: string): Step[] => {
     return steps
 }
 
+
+/**
+ * SORT COLORS: DUTCH NATIONAL FLAG (O(N))
+ */
+export const generateSortColors = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    const currentNums = [...nums]
+    let low = 0
+    let curr = 0
+    let high = currentNums.length - 1
+
+    steps.push({
+        step: 0,
+        description: "Starting Sort Colors (Dutch National Flag).",
+        state: {
+            array: [...currentNums],
+            pointers: { low, curr, high },
+            explanation: "Initializing three pointers: low (0s boundary), curr (iteration), and high (2s boundary).",
+            phase: 'init'
+        }
+    })
+
+    while (curr <= high) {
+        const val = currentNums[curr]
+        let action = ""
+
+        if (val === 0) {
+            action = `Value at curr is 0. Swapping with low index ${low}.`
+            // Swap curr and low
+            const temp = currentNums[curr]
+            currentNums[curr] = currentNums[low]
+            currentNums[low] = temp
+
+            steps.push({
+                step: steps.length,
+                description: `Found 0 at index ${curr}. Swapping with low (${low}).`,
+                state: {
+                    array: [...currentNums],
+                    pointers: { low, curr, high },
+                    highlightIndices: [low, curr],
+                    explanation: action,
+                    phase: 'searching'
+                }
+            })
+            low++
+            curr++
+        } else if (val === 2) {
+            action = `Value at curr is 2. Swapping with high index ${high}.`
+            // Swap curr and high
+            const temp = currentNums[curr]
+            currentNums[curr] = currentNums[high]
+            currentNums[high] = temp
+
+            steps.push({
+                step: steps.length,
+                description: `Found 2 at index ${curr}. Swapping with high (${high}).`,
+                state: {
+                    array: [...currentNums],
+                    pointers: { low, curr, high },
+                    highlightIndices: [curr, high],
+                    explanation: action,
+                    phase: 'searching'
+                }
+            })
+            high--
+        } else {
+            action = "Value at curr is 1. Correct position for white, moving curr."
+            steps.push({
+                step: steps.length,
+                description: `Found 1 at index ${curr}.`,
+                state: {
+                    array: [...currentNums],
+                    pointers: { low, curr, high },
+                    highlightIndices: [curr],
+                    explanation: action,
+                    phase: 'searching'
+                }
+            })
+            curr++
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Sort Colors complete.",
+        state: {
+            array: [...currentNums],
+            phase: 'found',
+            explanation: "Array is now partitioned into Red (0), White (1), and Blue (2) regions."
+        }
+    })
+
+    return steps
+}
+
+/**
+ * SORT COLORS: BRUTE FORCE (COUNTING SORT)
+ */
+export const generateSortColorsBrute = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    const currentNums = [...nums]
+    const counts = [0, 0, 0]
+
+    // Step 1: Count
+    for (let i = 0; i < currentNums.length; i++) {
+        counts[currentNums[i]]++
+        steps.push({
+            step: steps.length,
+            description: `Counting color ${currentNums[i]}.`,
+            state: {
+                array: [...currentNums],
+                pointers: { i },
+                customState: { counts: [...counts] },
+                explanation: `Detected one ${currentNums[i] === 0 ? "Red" : (currentNums[i] === 1 ? "White" : "Blue")}.`,
+                phase: 'searching'
+            }
+        })
+    }
+
+    // Step 2: Overwrite
+    let idx = 0
+    for (let color = 0; color < 3; color++) {
+        for (let j = 0; j < counts[color]; j++) {
+            currentNums[idx] = color
+            steps.push({
+                step: steps.length,
+                description: `Writing color ${color} back to index ${idx}.`,
+                state: {
+                    array: [...currentNums],
+                    pointers: { idx },
+                    customState: { counts: [...counts] },
+                    explanation: `Placing ${color === 0 ? "Red" : (color === 1 ? "White" : "Blue")} based on count.`,
+                    phase: 'searching'
+                }
+            })
+            idx++
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Counting sort complete.",
+        state: {
+            array: [...currentNums],
+            phase: 'found',
+            explanation: "Array sorted using two passes (Count and Write)."
+        }
+    })
+
+    return steps
+}
+
 export const generateFallbackSteps = (items: any[]): Step[] => {
     return items.map((_, i) => ({
         step: i,
@@ -1391,3 +1544,4 @@ export const generateFallbackSteps = (items: any[]): Step[] => {
         }
     }))
 }
+

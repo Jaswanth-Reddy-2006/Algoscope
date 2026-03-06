@@ -187,7 +187,7 @@ export const PatternDependencyGraph: React.FC<Props> = ({ graph, moduleId }) => 
                                 <p className="text-sm text-white/60 max-w-xl">
                                     {selectedNode.type === 'root'
                                         ? `The foundational structure for the ${moduleId} module. Click on patterns to see how it transforms.`
-                                        : `This pattern leverages the internal memory layout of ${moduleId} to achieve optimal time complexity.`}
+                                        : `This pattern leverages the internal memory layout of ${moduleId} to achieve optimal time efficiency.`}
                                 </p>
                                 <button className="flex items-center gap-2 text-[#EC4186] text-xs font-bold uppercase tracking-widest hover:underline pt-2">
                                     Learn Pattern Strategy <ArrowRight size={14} />

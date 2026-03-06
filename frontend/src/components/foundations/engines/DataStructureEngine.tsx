@@ -98,7 +98,7 @@ const DataStructureEngineLegacy: React.FC<{ type: 'stack' | 'queue' | 'array' | 
 
                 <div className="grid grid-cols-2 gap-4 w-full text-[10px] font-mono text-white/20 uppercase tracking-widest text-center mt-4">
                     <div className="p-3 rounded-lg border border-white/5 bg-white/[0.02]">
-                        <div className="mb-1">Time Complexity</div>
+                        <div className="mb-1">Time efficiency</div>
                         <div className="text-emerald-400 font-bold">O(1)</div>
                     </div>
                     <div className="p-3 rounded-lg border border-white/5 bg-white/[0.02]">
@@ -111,13 +111,13 @@ const DataStructureEngineLegacy: React.FC<{ type: 'stack' | 'queue' | 'array' | 
     )
 }
 
+import { EngineProps } from '../engineRegistry'
+
 // ----------------------------------------------------------------------
 // Main Dispatcher
 // ----------------------------------------------------------------------
-interface Props {
+interface Props extends EngineProps {
     type: 'stack' | 'queue' | 'array' | 'hash_map' | 'linked_list'
-    moduleId: string
-    mode?: string | null
 }
 
 const DataStructureEngine: React.FC<Props> = ({ type }) => {

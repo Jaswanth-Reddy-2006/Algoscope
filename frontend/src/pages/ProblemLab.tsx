@@ -17,9 +17,9 @@ import { cn } from '../utils/cn'
 
 // Lazy loaded heavy components
 const VizPanel = lazy(() => import('../components/layout/VizPanel'))
-const StateTracker = lazy(() => import('../components/problem/StateTracker'))
 const SuccessSummary = lazy(() => import('../components/problem/SuccessSummary'))
 const ComparisonSummary = lazy(() => import('../components/problem/ComparisonSummary'))
+const InspectorPanel = lazy(() => import('../components/layout/InspectorPanel'))
 
 const ProblemLab: React.FC = () => {
     const { slug } = useParams<{ slug: string }>()
@@ -39,6 +39,7 @@ const ProblemLab: React.FC = () => {
     const error = useStore(state => state.error)
     const playbackSpeed = useStore(state => state.playbackSpeed)
     const setSpeed = useStore(state => state.setSpeed)
+    const globalTotalSteps = useStore(state => state.totalSteps)
     const [showSummary, setShowSummary] = React.useState(false)
 
     useEffect(() => {
@@ -50,8 +51,8 @@ const ProblemLab: React.FC = () => {
     }, [slug, fetchProblemBySlug, resetState])
 
     const steps = isBruteForce ? currentProblem?.brute_force_steps : currentProblem?.optimal_steps
-    const totalSteps = steps?.length || 0
-    const isSuccess = steps && currentStepIndex === steps.length - 1 && steps[currentStepIndex]?.state?.found
+    const totalSteps = globalTotalSteps > 0 ? globalTotalSteps : (steps?.length || 0)
+    const isSuccess = steps && currentStepIndex === totalSteps - 1 && (steps[currentStepIndex]?.state?.found || currentProblem?.algorithmType === 'tree')
 
     // PLAYBACK LOGIC
     useEffect(() => {
@@ -167,7 +168,7 @@ const ProblemLab: React.FC = () => {
             {/* 🧱 GLOBAL LAYOUT (Middle Section) */}
             <div className={cn(
                 "flex-1 overflow-hidden grid min-h-0",
-                compareMode ? "grid-cols-[30%_70%]" : "grid-cols-[35%_50%_15%]"
+                compareMode ? "grid-cols-[25%_55%_20%]" : "grid-cols-[30%_50%_20%]"
             )}>
                 {/* 2️⃣ LEFT PANEL (Shown only in non-compare mode) */}
                 <aside className="flex flex-col h-full bg-[#240b33] border-r border-white/5 overflow-y-auto custom-scrollbar shadow-2xl z-10">
@@ -192,8 +193,8 @@ const ProblemLab: React.FC = () => {
 
                 {/* 3️⃣ CENTER PANEL – VISUALIZATION CANVAS */}
                 <main className={cn(
-                    "flex flex-col bg-[#1b062b] relative border-r border-white/5 pattern-grid overflow-hidden",
-                    compareMode ? "col-span-1" : ""
+                    "flex flex-col bg-[#1b062b] relative pattern-grid overflow-hidden",
+                    compareMode ? "col-span-1" : "col-span-1"
                 )}>
                     <Suspense fallback={<LabSkeleton />}>
                         <ErrorBoundary>
@@ -239,16 +240,14 @@ const ProblemLab: React.FC = () => {
                     </AnimatePresence>
                 </main>
 
-                {/* 4️⃣ RIGHT PANEL – STATE TRACKER */}
-                {!compareMode && (
-                    <aside className="h-full flex flex-col bg-[#240b33] shadow-2xl z-10">
-                        <Suspense fallback={null}>
-                            <ErrorBoundary>
-                                <StateTracker />
-                            </ErrorBoundary>
+                {/* 4️⃣ RIGHT PANEL – STATE INSPECTOR */}
+                <aside className="flex flex-col h-full bg-[#240b33] border-l border-white/5 overflow-y-auto custom-scrollbar shadow-2xl z-10">
+                    <ErrorBoundary>
+                        <Suspense fallback={<div className="h-full flex items-center justify-center"><span className="text-white/20 animate-pulse font-black uppercase tracking-widest text-xs">Syncing State...</span></div>}>
+                            <InspectorPanel />
                         </Suspense>
-                    </aside>
-                )}
+                    </ErrorBoundary>
+                </aside>
             </div>
         </div>
     )

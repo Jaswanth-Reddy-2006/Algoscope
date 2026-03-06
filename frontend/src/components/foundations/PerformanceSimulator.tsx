@@ -3,7 +3,7 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceL
 import { AlertTriangle, Clock, Zap } from 'lucide-react'
 
 interface PerformanceData {
-    complexityGraph: { inputSize: number, time: number }[]
+    efficiencyGraph: { inputSize: number, time: number }[]
     bestCase: string
     averageCase: string
     worstCase: string
@@ -20,7 +20,7 @@ const PerformanceSimulator = ({ data }: { data: PerformanceData }) => {
     // This is a rough estimation for visualization
     const estimatedTime = useMemo(() => {
         // Find closest data points
-        const graph = data.complexityGraph
+        const graph = data.efficiencyGraph
         if (!graph || graph.length === 0) return 0
 
         // Simple linear interpolation for demo (in reality, curve fitting is better)
@@ -51,7 +51,7 @@ const PerformanceSimulator = ({ data }: { data: PerformanceData }) => {
         const percentage = (n - lower.inputSize) / range
         return lower.time + (percentage * (upper.time - lower.time))
 
-    }, [n, data.complexityGraph])
+    }, [n, data.efficiencyGraph])
 
     const isTLE = estimatedTime > 1000 // > 1 second (approx) or whatever the scale is. 
     // Let's assume the 'time' in JSON is "operations" or "microseconds". 
@@ -66,7 +66,7 @@ const PerformanceSimulator = ({ data }: { data: PerformanceData }) => {
     }, [estimatedTime])
 
     // Normalize Graph Data for Recharts
-    const chartData = data.complexityGraph.map(p => ({
+    const chartData = data.efficiencyGraph.map(p => ({
         n: p.inputSize,
         ops: p.time,
         logN: Math.log10(p.inputSize)

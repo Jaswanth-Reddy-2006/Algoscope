@@ -14,7 +14,7 @@ type DrillType =
     | 'fill_missing'
     | 'brute_vs_optimal'
     | 'detect_bug'
-    | 'complexity'
+    | 'efficiency'
     | 'count_contribution'
     | 'edge_case_trap'
     | 'pattern_conversion'
@@ -27,7 +27,7 @@ interface DrillQuestion {
     correctAnswer: string | number
     explanation: string
     difficulty: 1 | 2 | 3
-    category: 'invariant' | 'movement' | 'complexity' | 'edge_case' | 'code'
+    category: 'invariant' | 'movement' | 'efficiency' | 'edge_case' | 'code'
 }
 
 interface Props {
@@ -83,7 +83,7 @@ const FIXED_WINDOW_DRILLS: DrillQuestion[] = [
         correctAnswer: 'Brute Force O(N×K)',
         explanation: 'Brute force: 100,000 × 500 = 50 million operations. Sliding window: 100,000 operations. Brute force will TLE.',
         difficulty: 1,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'detect_bug',
@@ -100,13 +100,13 @@ const FIXED_WINDOW_DRILLS: DrillQuestion[] = [
         category: 'code'
     },
     {
-        type: 'complexity',
-        question: 'What is the time complexity of fixed window sliding window?',
+        type: 'efficiency',
+        question: 'What is the time efficiency of fixed window sliding window?',
         options: ['O(N²)', 'O(N×K)', 'O(N)', 'O(K)'],
         correctAnswer: 'O(N)',
         explanation: 'Each element is added once and removed once. Total: O(N) operations.',
         difficulty: 1,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'edge_case_trap',
@@ -164,7 +164,7 @@ const FIXED_WINDOW_DRILLS: DrillQuestion[] = [
         category: 'edge_case'
     },
     {
-        type: 'complexity',
+        type: 'efficiency',
         question: 'Why is sliding window O(N) and not O(N×K)?',
         options: [
             'We use a hash map',
@@ -175,7 +175,7 @@ const FIXED_WINDOW_DRILLS: DrillQuestion[] = [
         correctAnswer: 'Each element added/removed exactly once',
         explanation: 'Each element enters window once (when right moves) and exits once (when left moves). Total: 2N operations = O(N).',
         difficulty: 2,
-        category: 'complexity'
+        category: 'efficiency'
     }
 ]
 
@@ -233,13 +233,13 @@ const VARIABLE_WINDOW_DRILLS: DrillQuestion[] = [
         category: 'edge_case'
     },
     {
-        type: 'complexity',
-        question: 'Time complexity of variable window with while loop?',
+        type: 'efficiency',
+        question: 'Time efficiency of variable window with while loop?',
         options: ['O(N²)', 'O(N)', 'O(N log N)', 'O(K)'],
         correctAnswer: 'O(N)',
         explanation: 'Both left and right move at most N times total. Amortized O(N).',
         difficulty: 2,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'detect_bug',
@@ -293,7 +293,7 @@ const VARIABLE_WINDOW_DRILLS: DrillQuestion[] = [
         category: 'movement'
     },
     {
-        type: 'complexity',
+        type: 'efficiency',
         question: 'Why doesn\'t the while loop make it O(N²)?',
         options: [
             'While loop rarely executes',
@@ -304,7 +304,7 @@ const VARIABLE_WINDOW_DRILLS: DrillQuestion[] = [
         correctAnswer: 'Each element removed at most once',
         explanation: 'Left pointer moves at most N times total across ALL iterations. Amortized O(1) per outer loop.',
         difficulty: 3,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'fill_missing',
@@ -394,13 +394,13 @@ const AT_MOST_K_DRILLS: DrillQuestion[] = [
         category: 'edge_case'
     },
     {
-        type: 'complexity',
-        question: 'Time complexity of At Most K pattern?',
+        type: 'efficiency',
+        question: 'Time efficiency of At Most K pattern?',
         options: ['O(N²)', 'O(N×K)', 'O(N)', 'O(N log N)'],
         correctAnswer: 'O(N)',
         explanation: 'Each element added/removed once. HashMap operations are O(1). Total: O(N).',
         difficulty: 1,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'count_contribution',
@@ -440,13 +440,13 @@ const AT_MOST_K_DRILLS: DrillQuestion[] = [
         category: 'code'
     },
     {
-        type: 'complexity',
-        question: 'Space complexity of At Most K?',
+        type: 'efficiency',
+        question: 'Space efficiency of At Most K?',
         options: ['O(1)', 'O(K)', 'O(N)', 'O(N×K)'],
         correctAnswer: 'O(K)',
         explanation: 'HashMap stores at most K distinct elements. Space: O(K).',
         difficulty: 2,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'movement_prediction',
@@ -527,13 +527,13 @@ const EXACT_K_DRILLS: DrillQuestion[] = [
         category: 'edge_case'
     },
     {
-        type: 'complexity',
-        question: 'Time complexity of Exact K?',
+        type: 'efficiency',
+        question: 'Time efficiency of Exact K?',
         options: ['O(N)', 'O(N²)', 'O(2N) = O(N)', 'O(N log N)'],
         correctAnswer: 'O(2N) = O(N)',
         explanation: 'Calls at_most() twice, each O(N). Total: O(2N) = O(N).',
         difficulty: 2,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'fill_missing',
@@ -578,13 +578,13 @@ const EXACT_K_DRILLS: DrillQuestion[] = [
         category: 'invariant'
     },
     {
-        type: 'complexity',
-        question: 'Space complexity of Exact K?',
+        type: 'efficiency',
+        question: 'Space efficiency of Exact K?',
         options: ['O(1)', 'O(K)', 'O(2K) = O(K)', 'O(N)'],
         correctAnswer: 'O(2K) = O(K)',
         explanation: 'Two at_most() calls, each using O(K) space for HashMap. Total: O(2K) = O(K).',
         difficulty: 2,
-        category: 'complexity'
+        category: 'efficiency'
     },
     {
         type: 'detect_bug',
@@ -790,7 +790,7 @@ export const EnhancedMicroDrillsTab: React.FC<Props> = ({ moduleId, module, acti
                 <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
                     <h3 className="text-lg font-bold text-white mb-4">Pattern Mastery Breakdown</h3>
                     <div className="space-y-3">
-                        {['invariant', 'movement', 'complexity', 'edge_case', 'code'].map(cat => {
+                        {['invariant', 'movement', 'efficiency', 'edge_case', 'code'].map(cat => {
                             const wrong = drillState.wrongByCategory[cat] || 0
                             const total = drills.filter((d: DrillQuestion) => d.category === cat).length
                             const correct = total - wrong

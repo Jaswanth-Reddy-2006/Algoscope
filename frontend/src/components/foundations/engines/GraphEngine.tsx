@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import GraphVisualizer from '../../visualizers/GraphVisualizer'
 import { Play, RotateCcw, Zap } from 'lucide-react'
 
-interface Props {
-    moduleId: string
-}
+import { EngineProps } from '../engineRegistry'
 
-const GraphEngine: React.FC<Props> = ({ moduleId }) => {
+const GraphEngine: React.FC<EngineProps> = ({ moduleId }) => {
     const [status, setStatus] = useState<'idle' | 'running' | 'finished'>('idle')
     const [step, setStep] = useState(0)
 

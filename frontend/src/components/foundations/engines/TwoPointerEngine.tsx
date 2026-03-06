@@ -136,9 +136,8 @@ const TwoPointerEngine: React.FC<Props> = ({ mode: initialMode }) => {
                     <div className="flex flex-col gap-1 ml-4 border-l border-white/5 pl-4">
                         <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest">Presets</span>
                         <div className="flex gap-1">
-                            <button onClick={() => { setArray([2, 7, 11, 15, 18, 22]); handleReset() }} className="text-[10px] px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-white/60">Std</button>
-                            <button onClick={() => { setArray([0]); handleReset() }} className="text-[10px] px-2 py-1 bg-[#EE544A]/10 hover:bg-[#EE544A]/20 rounded text-[#EE544A] font-bold">1</button>
-                            <button onClick={() => { setArray([5, 5, 5, 5]); handleReset() }} className="text-[10px] px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-white/60">Dup</button>
+                            <button onClick={() => { setArray([1, 4, 7, 8, 12, 15, 20]); setTarget(19); handleReset() }} className="text-[10px] px-2 py-1 bg-[#EC4186]/10 hover:bg-[#EC4186]/20 rounded text-[#EC4186] font-bold">Hard</button>
+                            <button onClick={() => { setArray([0, 0, 0, 1, 1, 1]); handleReset() }} className="text-[10px] px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-white/60">Dup</button>
                         </div>
                     </div>
                 </div>

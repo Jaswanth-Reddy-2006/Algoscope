@@ -3,6 +3,101 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { GraduationCap, Trophy, Briefcase, Play, Network, Cpu, Database, ChevronDown } from 'lucide-react'
 
+const SlidingWindowVisual = () => {
+    const [index, setIndex] = React.useState(0)
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setIndex(prev => (prev + 1) % 9)
+        }, 1500)
+        return () => clearInterval(timer)
+    }, [])
+
+    return (
+        <div className="w-full h-full flex flex-col justify-center gap-8 p-10">
+            <div className="relative h-32 flex items-end gap-3 px-2">
+                {[...Array(12)].map((_, i) => {
+                    const isActive = i >= index && i < index + 3;
+                    return (
+                        <div key={i} className="flex-1 relative h-full flex flex-col justify-end">
+                            <motion.div
+                                animate={{
+                                    height: isActive ? '90%' : '40%',
+                                    backgroundColor: isActive ? '#EC4186' : 'rgba(255,255,255,0.05)',
+                                    boxShadow: isActive ? '0 0 20px rgba(236,65,134,0.4)' : 'none'
+                                }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                                className="w-full rounded-t-lg"
+                            />
+                            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-mono text-white/20">{[12, 45, 23, 67, 34, 89, 45, 12, 56, 78, 90, 43][i]}</div>
+                        </div>
+                    )
+                })}
+
+            </div>
+
+        </div>
+    )
+}
+
+const RecursiveTreeVisual = () => {
+    const [step, setStep] = React.useState(0);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setStep(prev => (prev + 1) % 8);
+        }, 800);
+        return () => clearInterval(timer);
+    }, []);
+
+    const nodes = [
+        { id: 0, cx: 100, cy: 30, r: 8, label: 'F(3)', color: '#EC4186' },
+        { id: 1, cx: 60, cy: 80, r: 6, label: 'F(2)', pid: 0 },
+        { id: 2, cx: 140, cy: 80, r: 6, label: 'F(1)', pid: 0 },
+        { id: 3, cx: 40, cy: 130, r: 5, label: 'F(1)', pid: 1 },
+        { id: 4, cx: 80, cy: 130, r: 5, label: 'F(0)', pid: 1 },
+        { id: 5, cx: 120, cy: 130, r: 5, label: 'F(0)', pid: 2 },
+        { id: 6, cx: 160, cy: 130, r: 5, label: 'F(-1)', pid: 2 },
+    ];
+
+    return (
+        <div className="w-full h-full flex items-center justify-center p-4">
+            <svg width="100%" height="100%" viewBox="0 0 200 180">
+                {nodes.map((node, i) => (
+                    <React.Fragment key={node.id}>
+                        {node.pid !== undefined && i <= step && (
+                            <motion.line
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                animate={{ pathLength: 1, opacity: 0.3 }}
+                                x1={nodes[node.pid].cx} y1={nodes[node.pid].cy}
+                                x2={node.cx} y2={node.cy}
+                                stroke="#EC4186" strokeWidth="1.5"
+                            />
+                        )}
+                        {i <= step && (
+                            <motion.g
+                                initial={{ scale: 0, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                            >
+                                <circle cx={node.cx} cy={node.cy} r={node.r} fill={node.color || '#EC4186'} fillOpacity={i === step ? 1 : 0.4} />
+                                <text x={node.cx} y={node.cy + 20} textAnchor="middle" fill="white" fontSize="8" className="font-mono opacity-40">{node.label}</text>
+                                {i === step && (
+                                    <motion.circle
+                                        animate={{ scale: [1, 2], opacity: [0.5, 0] }}
+                                        transition={{ duration: 1, repeat: Infinity }}
+                                        cx={node.cx} cy={node.cy} r={node.r} fill="none" stroke="#EC4186" strokeWidth="1"
+                                    />
+                                )}
+                            </motion.g>
+                        )}
+                    </React.Fragment>
+                ))}
+            </svg>
+        </div>
+    )
+}
+
+
 const Home: React.FC = () => {
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id)
@@ -54,8 +149,9 @@ const Home: React.FC = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="flex-1 text-left"
+                        className="flex-1 text-left relative"
                     >
+
                         <div className="text-[#EC4186] text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
                             The Future of Algorithm Design
                         </div>
@@ -86,38 +182,18 @@ const Home: React.FC = () => {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="flex-1 w-full relative"
                     >
-                        <div className="bg-[#2b0d38] border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] relative">
+                        <div className="bg-[#2b0d38] border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] relative group">
                             {/* Browser-like Header */}
                             <div className="h-10 border-b border-white/10 flex items-center px-4 gap-2 bg-[#21092b]">
                                 <div className="w-3 h-3 rounded-full bg-[#EC4186]" />
                                 <div className="w-3 h-3 rounded-full bg-[#EE544A]" />
                                 <div className="w-3 h-3 rounded-full bg-white/20" />
+                                <div className="ml-4 h-4 w-32 bg-white/5 rounded" />
                             </div>
 
-                            {/* Mock Code & Visualization Area */}
-                            <div className="p-6 h-[350px] flex flex-col gap-4 relative">
-                                <div className="h-8 w-1/3 bg-white/10 rounded-md mb-2" />
-                                <div className="h-4 w-2/3 bg-white/5 rounded-md" />
-                                <div className="h-4 w-1/2 bg-white/5 rounded-md" />
-                                <div className="h-4 w-3/4 bg-white/5 rounded-md" />
-
-                                <div className="mt-auto h-32 flex items-end gap-3 opacity-80">
-                                    <div className="flex-1 h-full bg-[#EC4186]/20 border border-[#EC4186]/30 rounded-lg flex items-end p-2">
-                                        <div className="w-full h-[60%] bg-[#EC4186]/50 rounded animate-pulse" />
-                                    </div>
-                                    <div className="flex-1 h-[80%] bg-[#EE544A]/20 border border-[#EE544A]/30 rounded-lg flex items-end p-2">
-                                        <div className="w-full h-[80%] bg-[#EE544A]/50 rounded animate-pulse delay-75" />
-                                    </div>
-                                    <div className="flex-1 h-[60%] bg-white/10 border border-white/20 rounded-lg flex items-end p-2">
-                                        <div className="w-full h-[40%] bg-white/30 rounded animate-pulse delay-150" />
-                                    </div>
-                                </div>
-
-                                {/* Status Indicator Layer */}
-                                <div className="absolute bottom-4 left-4 bg-[#14051E]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-[#EC4186] shadow-[0_0_8px_rgba(236,65,134,1)] animate-pulse" />
-                                    <span className="text-[10px] uppercase font-bold tracking-wider text-white">System Online: Live Processing</span>
-                                </div>
+                            {/* Sliding Window Visualization */}
+                            <div className="relative h-[350px]">
+                                <SlidingWindowVisual />
                             </div>
                         </div>
                     </motion.div>
@@ -135,8 +211,8 @@ const Home: React.FC = () => {
                             <CurriculumCard
                                 icon={GraduationCap}
                                 title="Academic Layer"
-                                desc="Deep dive into foundational theory, mathematical proofs, and Big O complexity analysis. The 'Why' behind every bit."
-                                features={['Data Structures', 'Complexity Proofs']}
+                                desc="Deep dive into foundational theory, mathematical proofs, and Big O efficiency analysis. The 'Why' behind every bit."
+                                features={['Data Structures', 'Efficiency Proofs']}
                             />
                             <CurriculumCard
                                 icon={Trophy}
@@ -158,29 +234,9 @@ const Home: React.FC = () => {
                 {/* Real-Time Visualization Engine */}
                 <div id="engine" className="py-24">
                     <div className="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row items-center gap-16">
-                        {/* Left: Minimal Graphic */}
-                        <div className="flex-1 w-full bg-[#2b0d38] border border-[#EC4186]/30 rounded-3xl p-8 shadow-[0_20px_40px_-10px_rgba(236,65,134,0.15)] h-[400px] flex items-center justify-center relative">
-                            {/* Simple Visual Abstract */}
-                            <div className="w-full max-w-[300px] space-y-4">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-[#EC4186] shadow-lg flex items-center justify-center text-white font-bold">1</div>
-                                    <div className="h-2 flex-1 bg-white/10 rounded-full">
-                                        <div className="h-full w-[80%] bg-[#EC4186] rounded-full" />
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-[#EE544A] shadow-lg flex items-center justify-center text-white font-bold">2</div>
-                                    <div className="h-2 flex-1 bg-white/10 rounded-full">
-                                        <div className="h-full w-[50%] bg-[#EE544A] rounded-full" />
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-white/20 shadow-lg flex items-center justify-center text-white font-bold">3</div>
-                                    <div className="h-2 flex-1 bg-white/10 rounded-full">
-                                        <div className="h-full w-[30%] bg-white/30 rounded-full" />
-                                    </div>
-                                </div>
-                            </div>
+                        {/* Left: Recursive Tree Graphic */}
+                        <div className="flex-1 w-full bg-[#2b0d38] border border-[#EC4186]/30 rounded-3xl p-8 shadow-[0_20px_40px_-10px_rgba(236,65,134,0.15)] h-[450px] flex items-center justify-center relative overflow-hidden">
+                            <RecursiveTreeVisual />
                         </div>
 
                         {/* Right: Content */}
@@ -199,6 +255,7 @@ const Home: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
 
                 {/* Cognitive Map */}
                 <div id="map" className="py-24 bg-[#2b0d38]/30">

@@ -2,11 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, RotateCcw, Zap } from 'lucide-react'
 
-interface Props {
-    moduleId: string
-}
+import { EngineProps } from '../engineRegistry'
 
-const SortingEngine: React.FC<Props> = ({ moduleId }) => {
+const SortingEngine: React.FC<EngineProps> = ({ moduleId }) => {
     const [array, setArray] = useState<number[]>([])
     const [pointers, setPointers] = useState<{ [key: string]: number }>({})
     const [status, setStatus] = useState<'idle' | 'running' | 'paused' | 'finished'>('idle')

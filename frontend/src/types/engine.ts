@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface Complexity {
+export interface efficiency {
     time: string
     space: string
 }
@@ -28,9 +28,9 @@ export interface PatternEngine<TState = any, TConfig = any> {
     generateSteps: (input: any, config: TConfig) => TState[]
 
     /**
-     * Returns the Time & Space complexity for the given configuration.
+     * Returns the Time & Space efficiency for the given configuration.
      */
-    getComplexity: (input: any, config: TConfig) => Complexity
+    getefficiency: (input: any, config: TConfig) => efficiency
 
     /**
      * The React Component that renders the visualization.

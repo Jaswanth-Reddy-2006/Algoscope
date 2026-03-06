@@ -3,8 +3,8 @@ import { Sparkles, Zap } from 'lucide-react'
 
 interface InsightProps {
     title: string
-    bruteForceComplexity: string
-    optimalComplexity: string
+    bruteForceefficiency: string
+    optimalefficiency: string
     keyPrinciples: string[]
     invariant: string
     invariantLabel?: string
@@ -13,8 +13,8 @@ interface InsightProps {
 
 export const GenericInsightCard: React.FC<InsightProps> = ({
     title,
-    bruteForceComplexity,
-    optimalComplexity,
+    bruteForceefficiency,
+    optimalefficiency,
     keyPrinciples,
     invariant,
     invariantLabel = "Core Invariant",
@@ -28,15 +28,15 @@ export const GenericInsightCard: React.FC<InsightProps> = ({
             </h3>
 
             <div className="space-y-4 flex-1">
-                {/* Complexity Comparison */}
+                {/* efficiency Comparison */}
                 <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
                         <div className="text-[10px] uppercase text-white/40 mb-1">Brute Force</div>
-                        <div className="text-lg font-bold text-red-400 font-mono">{bruteForceComplexity}</div>
+                        <div className="text-lg font-bold text-red-400 font-mono">{bruteForceefficiency}</div>
                     </div>
                     <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
                         <div className="text-[10px] uppercase text-white/40 mb-1">Optimal</div>
-                        <div className="text-lg font-bold text-green-400 font-mono">{optimalComplexity}</div>
+                        <div className="text-lg font-bold text-green-400 font-mono">{optimalefficiency}</div>
                     </div>
                 </div>
 

@@ -1,0 +1,13 @@
+﻿
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\Recursion\MetricsDisplay.tsx
+  15:13  error  'currentStack' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\Recursion\RecursionTreeEngine.tsx
+  79:8  warning  React Hook useEffect has missing dependencies: 'getStackFrames' and 'onStepChange'. Either include them or remove the dependency array. If 'onStepChange' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+C:\Users\Jaswanth Reddy\OneDrive\Desktop\Projects\Algoscope\frontend\src\components\foundations\engines\Recursion\TimelineController.tsx
+  79:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+✖ 3 problems (1 error, 2 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

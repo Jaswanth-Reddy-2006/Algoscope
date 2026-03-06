@@ -18,9 +18,10 @@ const legacyRegistry: Record<string, any> = {
 }
 
 export interface EngineProps {
-    moduleId: string
+    moduleId?: string
     mode?: string
     edgeCase?: string
+    isBrute?: boolean
 }
 
 export const foundationEngineRegistry: Record<string, PatternEngine<any, any> | React.FC<EngineProps>> = {
@@ -40,6 +41,7 @@ export const foundationEngineRegistry: Record<string, PatternEngine<any, any> | 
     hash_map: (props) => <DataStructureEngine {...props} type="hash_map" />,
     linked_list: (props) => <DataStructureEngine {...props} type="linked_list" />,
     recursion: (props) => <RecursionEngine {...props} />,
+    trees: (props) => <RecursionEngine {...props} />,
     graph: (props) => <GraphEngine {...props} />,
     sorting: (props) => <SortingEngine {...props} />,
     formula: (props) => <FormulaEngine {...props} />,

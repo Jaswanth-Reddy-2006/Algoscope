@@ -41,7 +41,7 @@ export interface Problem {
     optimal_explanation: string
     brute_force_steps: Step[]
     optimal_steps: Step[]
-    complexity: {
+    efficiency: {
         brute: {
             time: string
             space: string
@@ -65,8 +65,8 @@ export interface Problem {
     shortPatternReason?: string
     patternSignals?: string[]
     edgeCases?: string[]
-    time_complexity?: string
-    space_complexity?: string
+    time_efficiency?: string
+    space_efficiency?: string
     strategyShift?: string
     naiveApproach?: string
     optimalApproach?: string
@@ -89,4 +89,6 @@ export interface Problem {
         input1: { label: string; placeholder: string }
         input2: { label: string; placeholder: string }
     }
+    target?: any
+    input?: any
 }

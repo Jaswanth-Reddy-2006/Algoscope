@@ -9,7 +9,7 @@ export const PatternBreakdownPanel: React.FC = () => {
                 <h3 className="text-lg font-bold text-white">Why This Pattern Exists</h3>
             </div>
 
-            {/* Complexity Comparison */}
+            {/* efficiency Comparison */}
             <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
                     <div className="flex items-center gap-2 mb-2">

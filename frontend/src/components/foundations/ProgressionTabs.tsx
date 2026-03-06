@@ -35,7 +35,7 @@ const levels = [
         icon: ShieldCheck,
         color: 'text-purple-400',
         bg: 'bg-purple-400/10',
-        description: 'Expert Tricks & Complexity'
+        description: 'Expert Tricks & efficiency'
     },
 ] as const;
 

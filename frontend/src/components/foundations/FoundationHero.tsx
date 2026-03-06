@@ -60,7 +60,7 @@ export const FoundationHero: React.FC<Props> = ({ module }) => {
                     </div>
                 </div>
 
-                {/* Complexity Card */}
+                {/* efficiency Card */}
                 <div className="w-full lg:w-80 space-y-4">
                     <div className="p-6 rounded-2xl bg-white/[0.05] border border-white/10 backdrop-blur-md">
                         <h3 className="text-sm font-bold text-white/40 uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -69,7 +69,7 @@ export const FoundationHero: React.FC<Props> = ({ module }) => {
                         </h3>
 
                         <div className="space-y-6">
-                            {hero?.quickComplexity.map((metric, idx) => (
+                            {hero?.quickefficiency.map((metric, idx) => (
                                 <div key={idx} className="flex justify-between items-center group">
                                     <div className="space-y-1">
                                         <span className="text-xs text-white/30 uppercase font-bold tracking-tighter">{metric.operation}</span>

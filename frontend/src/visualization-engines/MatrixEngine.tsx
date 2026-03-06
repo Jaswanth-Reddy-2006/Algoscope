@@ -24,7 +24,7 @@ const MatrixEngine: React.FC<MatrixEngineProps> = ({ isBrute = false }) => {
     const state = safeStep?.state
     const matrix = state?.matrix || []
     const highlightIndices = state?.highlightIndices || [] // Array of [r, c] or flat index
-    const complexity = effectiveIsBrute ? currentProblem?.complexity?.brute : currentProblem?.complexity?.optimal
+    const efficiency = effectiveIsBrute ? currentProblem?.efficiency?.brute : currentProblem?.efficiency?.optimal
 
     if (!currentProblem) return null
 
@@ -89,7 +89,7 @@ const MatrixEngine: React.FC<MatrixEngineProps> = ({ isBrute = false }) => {
                         <div className="px-3 py-1 rounded bg-accent-blue/5 border border-accent-blue/10 flex items-center gap-2">
                             <Clock size={10} className="text-accent-blue" />
                             <span className="text-[9px] font-bold text-accent-blue uppercase tracking-widest">
-                                {typeof complexity === 'object' ? complexity.time : complexity}
+                                {typeof efficiency === 'object' ? efficiency.time : efficiency}
                             </span>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
     const s = customInput != null ? String(customInput).replace(/^"|"$/g, '') : "abcabcbb"
     const chars = s.split('')
     const [winL, winR] = state?.windowRange || [null, null]
-    const complexity = isBrute ? currentProblem?.complexity?.brute : currentProblem?.complexity?.optimal
+    const efficiency = isBrute ? currentProblem?.efficiency?.brute : currentProblem?.efficiency?.optimal
 
     if (!currentProblem) return null
 
@@ -92,7 +92,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                         <div className="px-3 py-1 rounded bg-accent-blue/5 border border-accent-blue/10 flex items-center gap-2">
                             <Clock size={10} className="text-accent-blue" />
                             <span className="text-[9px] font-bold text-accent-blue uppercase tracking-widest">
-                                {typeof complexity === 'object' ? complexity.time : complexity}
+                                {typeof efficiency === 'object' ? efficiency.time : efficiency}
                             </span>
                         </div>
                     </div>

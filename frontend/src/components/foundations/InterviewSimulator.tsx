@@ -43,10 +43,10 @@ export const InterviewSimulator: React.FC<Props> = ({ simData, moduleId }) => {
     };
 
     const getConstraintLabel = (constraint: string) => {
-        if (constraint.includes('10^5')) return { complexity: 'O(N) / O(N log N)', color: 'text-green-400' };
-        if (constraint.includes('10^8')) return { complexity: 'O(log N)', color: 'text-accent-blue' };
-        if (constraint.includes('2^N')) return { complexity: 'O(2^N) / Backtracking', color: 'text-red-400' };
-        return { complexity: 'O(1)', color: 'text-white' };
+        if (constraint.includes('10^5')) return { efficiency: 'O(N) / O(N log N)', color: 'text-green-400' };
+        if (constraint.includes('10^8')) return { efficiency: 'O(log N)', color: 'text-accent-blue' };
+        if (constraint.includes('2^N')) return { efficiency: 'O(2^N) / Backtracking', color: 'text-red-400' };
+        return { efficiency: 'O(1)', color: 'text-white' };
     };
 
     return (
@@ -173,7 +173,7 @@ export const InterviewSimulator: React.FC<Props> = ({ simData, moduleId }) => {
                                 <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 space-y-6">
                                     <div className="flex items-center gap-3 text-xl font-bold italic">
                                         <Zap className="text-yellow-400" />
-                                        Complexity Decoder
+                                        efficiency Decoder
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {simData.constraints.map((c, idx) => {
@@ -184,7 +184,7 @@ export const InterviewSimulator: React.FC<Props> = ({ simData, moduleId }) => {
                                                     <div className="text-lg font-mono text-white">{c}</div>
                                                     <div className={`text-xs font-bold uppercase tracking-widest pt-2 flex items-center gap-2 ${analysis.color}`}>
                                                         <div className="w-1 h-1 rounded-full bg-current" />
-                                                        REQUIRES {analysis.complexity}
+                                                        REQUIRES {analysis.efficiency}
                                                     </div>
                                                 </div>
                                             );
@@ -247,12 +247,12 @@ class ${moduleId.charAt(0).toUpperCase() + moduleId.slice(1)}Structure:
         self.capacity = capacity
         
     def execute_core_operation(self, value):
-        # Time Complexity: O(1)
-        # Space Complexity: O(1)
+        # Time efficiency: O(1)
+        # Space efficiency: O(1)
         pass
 
 # PRO-TIP: During interviews, always mention 
-# amortized time complexity if the structure
+# amortized time efficiency if the structure
 # resizes dynamically.`}
                                     </pre>
                                 </div>

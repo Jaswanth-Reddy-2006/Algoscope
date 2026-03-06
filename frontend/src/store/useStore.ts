@@ -101,6 +101,12 @@ interface AlgoScopeState {
     saveDrillProgress: (moduleId: string, subPatternId: string, answeredId: string, isCorrect: boolean) => void
     initializeStore: () => Promise<void>
     setSimulationMode: (mode: 'brute' | 'optimal' | 'compare') => void
+    activePseudoLine: number | null
+    observationText: string | null
+    setActivePseudoLine: (line: number | null) => void
+    setObservationText: (text: string | null) => void
+    totalSteps: number
+    setTotalSteps: (steps: number) => void
 }
 
 interface AdaptiveBehavior {
@@ -140,6 +146,9 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     currentPage: 1,
     itemsPerPage: 12,
     drillProgress: JSON.parse(localStorage.getItem('algoScope_drillProgress') || '{}'),
+    activePseudoLine: null,
+    observationText: null,
+    totalSteps: 0,
 
     trackActivity: (pattern: string, metric: keyof Omit<PatternStats, 'confidence'>, value = 1) => {
         set((state) => {
@@ -184,11 +193,11 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             // factors: engagement (checklist/guide), efficiency (time), discipline (bruteFirst)
             const engagementScore = (newStats.checklistCompletionRate + newStats.guideSectionCompletionRate) / 2
             const disciplinePenalty = (newStats.bruteFirstCount / Math.max(1, newStats.attempts)) * 30
-            const complexityPenalty = (newStats.replayCount / Math.max(1, newStats.attempts)) * 15
+            const efficiencyPenalty = (newStats.replayCount / Math.max(1, newStats.attempts)) * 15
             const familiarityBonus = Math.min(25, newStats.attempts * 5)
 
             newStats.confidence = Math.min(100, Math.max(0,
-                40 + engagementScore * 0.4 + familiarityBonus - disciplinePenalty - complexityPenalty
+                40 + engagementScore * 0.4 + familiarityBonus - disciplinePenalty - efficiencyPenalty
             ))
 
             const updatedPatternStats = { ...state.patternStats, [pattern]: { ...newStats, lastPracticed: Date.now() } }
@@ -203,7 +212,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
         isPlaying: false,
         compareMode: false,
         isBruteForce: false,
-        error: null
+        error: null,
+        totalSteps: 0
     }),
 
     finalizeThinkingTime: (slug: string) => {
@@ -554,7 +564,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             compareMode: false,
             isPlaying: false,
             customInput: defaultInput,
-            customTarget: defaultTarget
+            customTarget: defaultTarget,
+            totalSteps: 0
         })
 
         // Track Attempt & Session
@@ -701,7 +712,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             isBruteForce: mode === 'brute',
             compareMode: mode === 'compare',
             currentStepIndex: 0,
-            isPlaying: false
+            isPlaying: false,
+            totalSteps: 0
         })
 
         // Ensure engine is re-initialized if needed (already handled by currentStepIndex: 0 and re-render)
@@ -711,6 +723,9 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     setCustomInput: (input: string) => set({ customInput: input }),
     setCustomTarget: (target: string) => set({ customTarget: target }),
     setSidebarCollapsed: (collapsed: boolean) => set({ isSidebarCollapsed: collapsed }),
+    setActivePseudoLine: (line: number | null) => set({ activePseudoLine: line }),
+    setObservationText: (text: string | null) => set({ observationText: text }),
+    setTotalSteps: (steps: number) => set({ totalSteps: steps }),
 
     setCurrentPage: (page: number) => set({ currentPage: page }),
     nextPage: () => set((state) => ({ currentPage: state.currentPage + 1 })),

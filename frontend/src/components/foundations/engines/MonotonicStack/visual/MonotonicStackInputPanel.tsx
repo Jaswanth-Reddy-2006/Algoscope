@@ -75,8 +75,8 @@ export const MonotonicStackInputPanel: React.FC<Props> = ({
             <div className="col-span-2 h-full">
                 <GenericInsightCard
                     title="Why Monotonic Stack?"
-                    bruteForceComplexity="O(N²)"
-                    optimalComplexity="O(N)"
+                    bruteForceefficiency="O(N²)"
+                    optimalefficiency="O(N)"
                     keyPrinciples={[
                         "Process each element exactly once (push/pop)",
                         "Maintain invariant (increasing/decreasing order)",

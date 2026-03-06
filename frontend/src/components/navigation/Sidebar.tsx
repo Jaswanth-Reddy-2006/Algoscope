@@ -5,7 +5,8 @@ import {
     Menu,
     Boxes,
     Brain,
-    Layers
+    Layers,
+    ChevronLeft
 } from 'lucide-react'
 import { cn } from '../../utils/cn'
 import { useStore } from '../../store/useStore'
@@ -17,19 +18,11 @@ const Sidebar: React.FC = () => {
     const location = useLocation()
     const [isHovered, setIsHovered] = React.useState(false)
 
-    // Auto-collapse logic
+    // Auto-collapse only for individual question pages (to give focus)
+    // Foundations and main library remain manually controlled
     React.useEffect(() => {
-        if (
-            (location.pathname.startsWith('/problems/') && location.pathname !== '/problems') ||
-            location.pathname.startsWith('/foundations')
-        ) {
+        if (location.pathname.startsWith('/problems/') && location.pathname !== '/problems') {
             setSidebarCollapsed(true)
-        } else if (
-            location.pathname === '/problems' ||
-            location.pathname === '/' ||
-            location.pathname === '/pattern-profile'
-        ) {
-            setSidebarCollapsed(false)
         }
     }, [location.pathname, setSidebarCollapsed])
 
@@ -48,7 +41,10 @@ const Sidebar: React.FC = () => {
                         ? "bg-[#EC4186]/20 text-[#EC4186] shadow-inner"
                         : "text-white/50 hover:text-white hover:bg-white/[0.03]"
                 )}
-                onClick={() => setIsMobileOpen(false)}
+                onClick={() => {
+                    setIsMobileOpen(false)
+                    setSidebarCollapsed(false) // Click to lock/open
+                }}
             >
                 <Icon size={20} className={cn("shrink-0", isActive ? "text-[#EC4186]" : "text-inherit")} />
                 <div className={cn(
@@ -105,7 +101,7 @@ const Sidebar: React.FC = () => {
                 className={cn(
                     "fixed inset-y-0 left-0 z-50 bg-[#38124A]/50 backdrop-blur-2xl border-r border-white/5 flex flex-col transition-all duration-300 ease-in-out font-outfit",
                     "lg:relative lg:translate-x-0 h-screen overflow-hidden",
-                    isExpanded ? "w-[240px]" : "w-[72px]", // User specified 72px and 240px
+                    isExpanded ? "w-[240px]" : "w-[72px]",
                     isMobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
                     isHovered && isSidebarCollapsed && "bg-[#38124A]/95 shadow-2xl"
                 )}
@@ -121,10 +117,25 @@ const Sidebar: React.FC = () => {
                             isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
                         )}>
                             <span className="font-bold tracking-tight text-sm leading-tight text-white uppercase tracking-widest whitespace-nowrap">Algoscope</span>
-                            <span className="text-[9px] text-[#EC4186] font-bold tracking-[0.2em] uppercase whitespace-nowrap">Intelligence</span>
                         </div>
                     </Link>
+
+                    {/* Manual Collapse Button */}
+                    {isExpanded && (
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setSidebarCollapsed(true); // Collapse manually
+                            }}
+                            className="p-2.5 rounded-xl hover:bg-white/5 text-white/30 hover:text-[#EC4186] transition-all duration-300"
+                            title="Collapse Sidebar"
+                        >
+                            <ChevronLeft size={20} />
+                        </button>
+                    )}
                 </div>
+
+
 
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-8 custom-scrollbar flex flex-col gap-10">

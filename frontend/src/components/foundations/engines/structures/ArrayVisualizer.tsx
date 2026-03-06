@@ -309,7 +309,7 @@ const ArrayVisualizer: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Complexity Legend */}
+                {/* efficiency Legend */}
                 <div className="grid grid-cols-4 gap-4 pt-4 border-t border-white/5 text-center">
                     <div>
                         <div className="text-[9px] uppercase text-white/30 font-bold mb-1">Access</div>

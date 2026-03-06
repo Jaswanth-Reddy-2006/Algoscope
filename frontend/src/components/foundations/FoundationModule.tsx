@@ -1,4 +1,4 @@
-﻿import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -66,7 +66,7 @@ const FoundationModule = () => {
     }, [resolvedId, navigate])
 
     // Core Pattern Logic - Redirect to default tab if missing
-    const CORE_PATTERN_IDS = ['sliding_window', 'two_pointers', 'binary_search', 'monotonic_stack', 'fast_slow_pointers', 'cyclic_sort']
+    const CORE_PATTERN_IDS = ['sliding_window', 'two_pointers', 'binary_search', 'monotonic_stack', 'fast_slow_pointers', 'cyclic_sort', 'recursion', 'backtracking']
     const isCorePattern = module?.family === 'Core Patterns' || (resolvedId && CORE_PATTERN_IDS.includes(resolvedId))
 
     useEffect(() => {

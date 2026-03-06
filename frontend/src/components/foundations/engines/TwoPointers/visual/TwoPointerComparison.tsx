@@ -12,8 +12,8 @@ interface Props {
 
 export const TwoPointerComparison: React.FC<Props> = ({ subPatternId }) => {
     // 1. Inputs
-    const [array, setArray] = useState<number[]>([2, 7, 11, 15])
-    const [target, setTarget] = useState<number>(9)
+    const [array, setArray] = useState<number[]>([1, 4, 7, 8, 12, 15, 20])
+    const [target, setTarget] = useState<number>(19)
 
     // 2. Control State
     const [currentStep, setCurrentStep] = useState(0)

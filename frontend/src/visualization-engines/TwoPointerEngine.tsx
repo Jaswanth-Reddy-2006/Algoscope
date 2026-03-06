@@ -173,18 +173,19 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) 
                             <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] self-start ml-10">Array 1</span>
                             <div className="flex flex-wrap justify-center gap-4">
                                 {array1.map((val: any, idx: number) => {
-                                    const isI = pointers.i === idx || pointers.l === idx
+                                    const activePointersAtIdx = Object.entries(pointers).filter(([pName, pIdx]) => pIdx === idx && (pName === 'i' || pName === 'l'));
+                                    const isPointerHere = activePointersAtIdx.length > 0;
                                     return (
-                                        <div key={`a1-${idx}`} className="relative">
+                                        <div key={`a1-${idx}`} className="relative pt-10">
                                             <AnimatePresence>
-                                                {isI && (
-                                                    <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                                                        <span className="text-[10px] font-bold text-accent-blue bg-black px-2 py-0.5 rounded border border-accent-blue/30 uppercase">i</span>
-                                                        <div className="text-accent-blue font-bold text-xl">↓</div>
+                                                {activePointersAtIdx.map(([id, _], pOffset) => (
+                                                    <motion.div key={id} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center z-20" style={{ top: `${pOffset * 30}px` }}>
+                                                        <span className="text-[9px] font-black text-accent-blue bg-black px-1.5 py-0.5 rounded border border-accent-blue/30 uppercase">{id}</span>
+                                                        <div className="text-accent-blue font-bold text-xl leading-none">↓</div>
                                                     </motion.div>
-                                                )}
+                                                ))}
                                             </AnimatePresence>
-                                            <div className={cn("w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 flex items-center justify-center font-bold text-lg", isI ? "border-accent-blue bg-accent-blue/20 text-accent-blue shadow-glow-sm" : "border-white/5 bg-white/5 text-white/30")}>
+                                            <div className={cn("w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 flex items-center justify-center font-bold text-lg", isPointerHere ? "border-accent-blue bg-accent-blue/20 text-accent-blue shadow-glow-sm" : "border-white/5 bg-white/5 text-white/30")}>
                                                 {val}
                                             </div>
                                         </div>
@@ -196,18 +197,19 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) 
                             <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] self-start ml-10">Array 2</span>
                             <div className="flex flex-wrap justify-center gap-4">
                                 {array2.map((val: any, idx: number) => {
-                                    const isJ = pointers.j === idx || pointers.r === idx
+                                    const activePointersAtIdx = Object.entries(pointers).filter(([pName, pIdx]) => pIdx === idx && (pName === 'j' || pName === 'r'));
+                                    const isPointerHere = activePointersAtIdx.length > 0;
                                     return (
-                                        <div key={`a2-${idx}`} className="relative">
+                                        <div key={`a2-${idx}`} className="relative pt-10">
                                             <AnimatePresence>
-                                                {isJ && (
-                                                    <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                                                        <span className="text-[10px] font-bold text-purple-500 bg-black px-2 py-0.5 rounded border border-purple-500/30 uppercase">j</span>
-                                                        <div className="text-purple-500 font-bold text-xl">↓</div>
+                                                {activePointersAtIdx.map(([id, _], pOffset) => (
+                                                    <motion.div key={id} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center z-20" style={{ top: `${pOffset * 30}px` }}>
+                                                        <span className="text-[9px] font-black text-purple-500 bg-black px-2 py-0.5 rounded border border-purple-500/30 uppercase">{id}</span>
+                                                        <div className="text-purple-500 font-bold text-xl leading-none">↓</div>
                                                     </motion.div>
-                                                )}
+                                                ))}
                                             </AnimatePresence>
-                                            <div className={cn("w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 flex items-center justify-center font-bold text-lg", isJ ? "border-purple-500 bg-purple-500/20 text-purple-500 shadow-glow-sm" : "border-white/5 bg-white/5 text-white/30")}>
+                                            <div className={cn("w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 flex items-center justify-center font-bold text-lg", isPointerHere ? "border-purple-500 bg-purple-500/20 text-purple-500 shadow-glow-sm" : "border-white/5 bg-white/5 text-white/30")}>
                                                 {val}
                                             </div>
                                         </div>
@@ -223,8 +225,7 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) 
                     <div className="flex-shrink-0 flex flex-col justify-center items-center py-8">
                         <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
                             {items.map((num: any, idx: number) => {
-                                const isI = pointers.i === idx || pointers.l === idx
-                                const isJ = pointers.j === idx || pointers.r === idx
+                                const activePointersAtIdx = Object.entries(pointers).filter(([_, pIdx]) => pIdx === idx);
                                 const isHighlighted = highlightIndices.includes(idx)
                                 let status: 'neutral' | 'active' | 'discarded' | 'visited' | 'match' = 'neutral'
                                 if (isFound && isHighlighted) status = 'match'
@@ -232,20 +233,29 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) 
                                 else if (pointers.l !== undefined && pointers.l !== null && pointers.r !== undefined && pointers.r !== null && (idx < (pointers.l as number) || idx > (pointers.r as number))) status = 'discarded'
 
                                 return (
-                                    <div key={idx} className="relative pt-10 pb-6">
+                                    <div key={idx} className="relative pt-24 pb-6 px-1">
                                         <AnimatePresence>
-                                            {isI && (
-                                                <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="absolute -top-4 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-                                                    <span className="text-[9px] font-black text-accent-blue mb-1 bg-black px-1.5 py-0.5 rounded border border-accent-blue/40 uppercase">i</span>
-                                                    <div className="text-accent-blue text-xl">↓</div>
-                                                </motion.div>
-                                            )}
-                                            {isJ && (
-                                                <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="absolute -top-4 left-1/2 -translate-x-1/2 flex flex-col items-center z-20">
-                                                    <span className="text-[9px] font-black text-purple-500 mb-1 bg-black px-1.5 py-0.5 rounded border border-purple-500/40 uppercase">j</span>
-                                                    <div className="text-purple-500 text-xl">↓</div>
-                                                </motion.div>
-                                            )}
+                                            {activePointersAtIdx.map(([id, _], pOffset) => {
+                                                const isPurple = id === 'j' || id === 'r' || id === 'right' || id === 'high';
+                                                return (
+                                                    <motion.div
+                                                        key={id}
+                                                        initial={{ y: -20, opacity: 0 }}
+                                                        animate={{ y: 0, opacity: 1 }}
+                                                        exit={{ y: 20, opacity: 0 }}
+                                                        className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center z-20"
+                                                        style={{ top: `${(pOffset * 32)}px` }}
+                                                    >
+                                                        <span className={cn(
+                                                            "text-[8px] font-black px-1.5 py-0.5 rounded border uppercase shadow-2xl",
+                                                            isPurple ? "bg-purple-900/40 text-purple-400 border-purple-500/40" : "bg-blue-900/40 text-accent-blue border-accent-blue/40"
+                                                        )}>
+                                                            {id}
+                                                        </span>
+                                                        <div className={cn("text-lg font-bold leading-tight", isPurple ? "text-purple-500" : "text-accent-blue")}>↓</div>
+                                                    </motion.div>
+                                                )
+                                            })}
                                         </AnimatePresence>
                                         <motion.div
                                             layout

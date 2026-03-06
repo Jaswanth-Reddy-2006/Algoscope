@@ -14,7 +14,7 @@ const ProblemInput: React.FC = () => {
                     value={customInput}
                     onChange={(e) => setCustomInput(e.target.value)}
                     className="bg-black/40 border border-white/10 rounded px-3 py-2 text-sm font-mono focus:border-accent-blue outline-none transition-colors"
-                    placeholder="[2, 7, 11, 15]"
+                    placeholder="[12, 4, 7, 1, 15, 8, 20]"
                 />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -24,7 +24,7 @@ const ProblemInput: React.FC = () => {
                     value={customTarget}
                     onChange={(e) => setCustomTarget(e.target.value)}
                     className="bg-black/40 border border-white/10 rounded px-3 py-2 text-sm font-mono focus:border-accent-blue outline-none transition-colors"
-                    placeholder="9"
+                    placeholder="19"
                 />
             </div>
             <button

@@ -12,6 +12,49 @@ import {
     RefreshCw
 } from 'lucide-react'
 import { cn } from '../../utils/cn'
+import ProblemTreePreview from '../foundations/engines/Recursion/AdvancedBST/ProblemTreePreview'
+
+// LeetCode style array to Tree parser
+const parseLeetCodeTree = (input: string): any | null => {
+    try {
+        const arr = JSON.parse(input.replace(/none/gi, 'null'));
+        if (!Array.isArray(arr) || arr.length === 0 || arr[0] === null) return null;
+
+        const root: any = { val: arr[0] };
+        const queue: (any | null)[] = [root];
+        let i = 1;
+
+        while (i < arr.length && queue.length > 0) {
+            const curr = queue.shift();
+            if (!curr) continue;
+
+            // Left child
+            if (i < arr.length) {
+                if (arr[i] !== null) {
+                    curr.left = { val: arr[i] };
+                    queue.push(curr.left);
+                } else {
+                    queue.push(null);
+                }
+                i++;
+            }
+
+            // Right child
+            if (i < arr.length) {
+                if (arr[i] !== null) {
+                    curr.right = { val: arr[i] };
+                    queue.push(curr.right);
+                } else {
+                    queue.push(null);
+                }
+                i++;
+            }
+        }
+        return root;
+    } catch (e) {
+        return null;
+    }
+};
 
 const ProblemInfo: React.FC = () => {
     const currentProblem = useStore(state => state.currentProblem)
@@ -23,6 +66,12 @@ const ProblemInfo: React.FC = () => {
     const setCustomInput = useStore(state => state.setCustomInput)
     const setCustomTarget = useStore(state => state.setCustomTarget)
     const refreshSteps = useStore(state => state.refreshSteps)
+    const activePseudoLine = useStore(state => state.activePseudoLine)
+    const observationText = useStore(state => state.observationText)
+
+    const treeData = React.useMemo(() =>
+        currentProblem?.algorithmType === 'tree' ? parseLeetCodeTree(customInput) : null
+        , [customInput, currentProblem?.algorithmType]);
 
     if (!currentProblem) return null
 
@@ -32,15 +81,55 @@ const ProblemInfo: React.FC = () => {
         }
     }
 
-    const brutePseudocode = currentProblem.pseudocode?.brute || currentProblem.thinking_guide?.naive_approach?.join('\n') || ""
-    const optimalPseudocode = currentProblem.pseudocode?.optimal || currentProblem.thinking_guide?.approach_blueprint?.join('\n') || ""
+    // Simple active node extraction for preview
+    const activeNodeVal = null; // Could be synced if needed
+
+    const getTreePseudocode = (mode: string) => {
+        const visitLabel = mode === 'inorder' ? 'Visit Root' : mode === 'preorder' ? 'Visit Root (High-Level)' : 'Visit Root (Post-Process)';
+        return `void ${mode}(Node root) {
+  // 1. Base Case
+  if (root == null) return;
+
+  ${mode === 'preorder' ? 'visit(root.val); // ' + visitLabel : mode === 'inorder' ? mode + '(root.left);' : mode + '(root.left);'}
+  ${mode === 'preorder' ? mode + '(root.left);' : mode === 'inorder' ? 'visit(root.val); // ' + visitLabel : mode + '(root.right);'}
+  ${mode === 'preorder' ? mode + '(root.right);' : mode === 'inorder' ? mode + '(root.right);' : 'visit(root.val); // ' + visitLabel}
+}`;
+    };
+
+    const brutePseudocode = currentProblem.algorithmType === 'tree' ?
+        `// Iterative Tree Traversal using Stack
+void iterative(Node root) {
+  Stack stack = new Stack();
+  Node curr = root;
+  while (curr != null || !stack.isEmpty()) {
+    while (curr != null) {
+      stack.push(curr);
+      curr = curr.left;
+    }
+    curr = stack.pop();
+    visit(curr.val);
+    curr = curr.right;
+  }
+}` : (currentProblem.pseudocode?.brute ||
+            currentProblem.thinking_guide?.naive_approach?.join('\n') ||
+            (currentProblem.brute_force_steps as any[])?.map(s => s.description).join('\n') ||
+            "")
+    const optimalPseudocode = currentProblem.algorithmType === 'tree' ?
+        getTreePseudocode(currentProblem.slug?.includes('preorder') ? 'preorder' : currentProblem.slug?.includes('postorder') ? 'postorder' : 'inorder') :
+        (currentProblem.pseudocode?.optimal ||
+            currentProblem.thinking_guide?.approach_blueprint?.join('\n') ||
+            (currentProblem.optimal_steps as any[])?.map(s => s.description).join('\n') ||
+            "")
 
     return (
-        <div className="flex flex-col gap-10 pb-20">
-            {/* 1️⃣ Expanded Problem Statement */}
-            <section className="space-y-4">
+        <div className="flex flex-col gap-8 pb-32 px-1">
+            {/* 1️⃣ Problem & Data context */}
+            <section className="space-y-6">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-black">Problem Context</h3>
+                    <div className="flex items-center gap-2">
+                        <Target size={14} className="text-accent-blue" />
+                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-black">Problem Context</h3>
+                    </div>
                     <span className={`badge-premium font-bold tracking-[0.2em] py-1 px-3 text-[8px]
                         ${currentProblem.difficulty === 'Easy' ? 'text-[#EE544A] border-[#EE544A]/20 bg-[#EE544A]/10' :
                             currentProblem.difficulty === 'Medium' ? 'text-[#EC4186] border-[#EC4186]/20 bg-[#EC4186]/10' :
@@ -49,57 +138,80 @@ const ProblemInfo: React.FC = () => {
                         {currentProblem.difficulty}
                     </span>
                 </div>
-                <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 relative overflow-hidden group hover:border-white/20 transition-all font-sans">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-accent-blue/40 transition-opacity" />
-                    <p className="text-[13px] text-white/90 leading-relaxed font-medium mb-4 whitespace-pre-wrap">
+
+                <div className="p-6 rounded-[24px] bg-white/[0.03] border border-white/10 relative overflow-hidden group hover:border-white/20 transition-all">
+                    <p className="text-[13px] text-white/90 font-medium leading-[1.6] mb-2 whitespace-pre-wrap">
                         {currentProblem.problem_statement}
                     </p>
                 </div>
-            </section>
 
-            {/* 2️⃣ Structured Examples */}
-            <section className="space-y-4">
-                <div className="flex items-center gap-2">
-                    <Eye size={14} className="text-accent-blue" />
-                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Examples & Use Cases</h3>
-                </div>
-                <div className="space-y-4">
-                    {currentProblem.examples?.map((ex, idx) => (
-                        <div key={idx} className="p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3 hover:bg-white/[0.04] transition-all">
-                            <div className="flex items-center gap-2">
-                                <span className="text-[9px] font-black text-accent-blue uppercase tracking-widest">Example {idx + 1}</span>
-                            </div>
-                            <div className="space-y-2">
-                                <div className="flex gap-2 text-xs">
-                                    <span className="text-white/20 font-mono">Input:</span>
-                                    <span className="text-white/60 font-mono">{ex.input}</span>
-                                </div>
-                                <div className="flex gap-2 text-xs">
-                                    <span className="text-white/20 font-mono">Output:</span>
-                                    <span className="text-accent-blue font-mono font-bold">{ex.output}</span>
-                                </div>
-                                <p className="text-[11px] text-white/40 italic leading-relaxed pt-1">
-                                    "{ex.explanation}"
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* 3️⃣ Strategy Selector Focus */}
-            <section className="space-y-4 pt-10 border-t border-white/10">
-                <div className="flex items-center justify-between">
+                {/* Lab Configuration (Data Structure Input) */}
+                <div className="p-6 rounded-[24px] bg-white/[0.02] border border-white/5 space-y-5">
                     <div className="flex items-center gap-2">
-                        <Target size={14} className="text-accent-blue" />
-                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Strategy Selection</h3>
+                        <Sliders size={12} className="text-[#EC4186]" />
+                        <span className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Lab Parameters</span>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] pl-1">
+                                {currentProblem.algorithmType === 'tree' ? "Binary Tree Array" : (currentProblem.input_settings?.input1.label || "Dataset")}
+                            </label>
+                            <input
+                                type="text"
+                                value={customInput}
+                                onChange={(e) => setCustomInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-xs font-mono text-white focus:border-[#EC4186]/40 outline-none transition-all placeholder:text-white/10"
+                                placeholder={currentProblem.input_settings?.input1.placeholder || "[1,2,3,null,4,5]"}
+                            />
+                        </div>
+
+                        {currentProblem.algorithmType === 'tree' && treeData && (
+                            <div className="pt-2">
+                                <ProblemTreePreview treeData={treeData} activeNodeVal={activeNodeVal} />
+                            </div>
+                        )}
+
+                        {currentProblem.algorithmType !== 'tree' && (
+                            <div className="space-y-2">
+                                <label className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] pl-1">
+                                    {currentProblem.input_settings?.input2.label || "Constraint Variable"}
+                                </label>
+                                <input
+                                    type="text"
+                                    value={customTarget}
+                                    onChange={(e) => setCustomTarget(e.target.value)}
+                                    onKeyDown={handleKeyDown}
+                                    className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-xs font-mono text-white focus:border-[#EC4186]/40 outline-none transition-all"
+                                    placeholder={currentProblem.input_settings?.input2.placeholder || ""}
+                                />
+                            </div>
+                        )}
+
+                        <button
+                            onClick={refreshSteps}
+                            className="w-full py-4 bg-[#EC4186] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_5px_15px_rgba(236,65,134,0.3)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                        >
+                            <RefreshCw size={14} />
+                            Sync Simulation
+                        </button>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 bg-black/40 p-1.5 rounded-2xl border border-white/10 w-full">
+            </section>
+
+            {/* 2️⃣ Strategy Selector */}
+            <section className="space-y-4 pt-4 border-t border-white/10">
+                <div className="flex items-center gap-2">
+                    <Layout size={14} className="text-accent-blue" />
+                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Strategical Section</h3>
+                </div>
+
+                <div className="flex items-center gap-2 bg-black/40 p-1.5 rounded-[20px] border border-white/10 w-full font-sans">
                     <button
                         onClick={() => setSimulationMode('brute')}
                         className={cn(
-                            "flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
+                            "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all",
                             isBruteForce && !compareMode ? "bg-[#EE544A] text-white shadow-[0_0_15px_rgba(238,84,74,0.4)]" : "text-white/30 hover:text-white/60"
                         )}
                     >
@@ -108,7 +220,7 @@ const ProblemInfo: React.FC = () => {
                     <button
                         onClick={() => setSimulationMode('optimal')}
                         className={cn(
-                            "flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
+                            "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all",
                             !isBruteForce && !compareMode ? "bg-[#EC4186] text-white shadow-[0_0_15px_rgba(236,65,134,0.4)]" : "text-white/30 hover:text-white/60"
                         )}
                     >
@@ -117,7 +229,7 @@ const ProblemInfo: React.FC = () => {
                     <button
                         onClick={() => setSimulationMode('compare')}
                         className={cn(
-                            "flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
+                            "flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all",
                             compareMode ? "bg-white text-black font-black" : "text-white/30 hover:text-white/60"
                         )}
                     >
@@ -125,180 +237,230 @@ const ProblemInfo: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Dynamic Detailed Explanation */}
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={compareMode ? 'compare' : isBruteForce ? 'brute' : 'optimal'}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
                         className={cn(
-                            "p-5 rounded-2xl border transition-all duration-500",
+                            "p-6 rounded-[28px] border transition-all duration-500",
                             compareMode ? "bg-purple-500/5 border-purple-500/20" :
-                                isBruteForce ? "bg-red-500/5 border-red-500/20" : "bg-accent-blue/5 border-accent-blue/20"
+                                isBruteForce ? "bg-red-500/5 border-red-500/20" : "bg-[#EC4186]/5 border-[#EC4186]/20"
                         )}
                     >
-                        <div className="flex items-center gap-2 mb-3">
-                            <Zap size={12} className={compareMode ? "text-white" : isBruteForce ? "text-[#EE544A]" : "text-[#EC4186]"} />
+                        <div className="flex items-center gap-2 mb-4">
+                            <Zap size={14} className={compareMode ? "text-white" : isBruteForce ? "text-[#EE544A]" : "text-[#EC4186]"} />
                             <span className={cn(
-                                "text-[10px] uppercase font-black tracking-widest",
+                                "text-[11px] uppercase font-black tracking-[0.2em]",
                                 compareMode ? "text-white" : isBruteForce ? "text-[#EE544A]" : "text-[#EC4186]"
                             )}>
-                                {compareMode ? "Efficiency Gain Engine" : isBruteForce ? "Naive Analysis" : "Optimal Strategy"}
+                                {compareMode ? "Performance Delta" : isBruteForce ? "Naive Mechanism" : "Optimal Strategy"}
                             </span>
                         </div>
-                        <p className="text-[12px] text-white/70 leading-relaxed font-medium">
+                        <p className="text-[12px] text-white/60 leading-relaxed font-bold uppercase tracking-wider">
                             {compareMode
-                                ? (currentProblem.efficiencyGain || "")
+                                ? "Analyzing efficiency gains. Adaptive strategies typically reduce redundant work by leveraging problem-specific properties."
                                 : isBruteForce
-                                    ? (currentProblem.brute_force_explanation || "")
-                                    : (currentProblem.optimal_explanation || "")
+                                    ? (currentProblem.brute_force_explanation || "Focuses on explicit state management, often sacrificing performance for algorithmic simplicity.")
+                                    : (currentProblem.optimal_explanation || "Leverages recursive structures or dynamic data patterns to minimize computational overhead.")
                             }
                         </p>
                     </motion.div>
                 </AnimatePresence>
             </section>
 
-            {/* 4️⃣ Algorithm Visualization (Pseudocode) */}
-            <section className="space-y-4 pt-10 border-t border-white/10">
+            {/* 3️⃣ Abstract Logic (Pseudocode) */}
+            <section className="space-y-4 pt-4 border-t border-white/10">
                 <div className="flex items-center gap-2">
                     <Code2 size={14} className="text-accent-blue" />
                     <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Abstract Logic</h3>
                 </div>
-                <div className="space-y-4">
-                    {(isBruteForce || compareMode) && brutePseudocode && (
-                        <div className="space-y-2">
-                            <span className="text-[8px] font-black text-[#EE544A]/60 uppercase tracking-widest pl-1">Brute-Force Ops</span>
-                            <pre className="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-[10px] leading-relaxed text-white/40 overflow-x-auto">
-                                {brutePseudocode}
-                            </pre>
-                        </div>
+
+                <AnimatePresence>
+                    {observationText && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className="p-4 rounded-2xl bg-[#EC4186]/10 border border-[#EC4186]/20 mb-4 shadow-lg"
+                        >
+                            <div className="flex items-center gap-2 mb-2">
+                                <RefreshCw size={10} className="text-[#EC4186] animate-spin" />
+                                <span className="text-[8px] font-black text-[#EC4186] uppercase tracking-[0.2em]">Live Sync</span>
+                            </div>
+                            <p className="text-[11px] text-white font-bold italic">
+                                "{observationText}"
+                            </p>
+                        </motion.div>
                     )}
-                    {(!isBruteForce || compareMode) && optimalPseudocode && (
-                        <div className="space-y-2">
-                            <span className="text-[8px] font-black text-accent-blue/60 uppercase tracking-widest pl-1">Optimal-Strategy Ops</span>
-                            <pre className="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-[10px] leading-relaxed text-white/60 overflow-x-auto">
-                                {optimalPseudocode}
-                            </pre>
-                        </div>
-                    )}
+                </AnimatePresence>
+
+                <div className="space-y-2">
+                    <AnimatePresence mode="wait">
+                        {isBruteForce && brutePseudocode && (
+                            <motion.div
+                                key="brute"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="rounded-2xl bg-black/60 border border-white/10 overflow-hidden shadow-2xl"
+                            >
+                                {brutePseudocode.split('\n').filter(l => l.trim()).map((line, idx) => {
+                                    const lineNum = idx + 1;
+                                    const isActive = activePseudoLine === lineNum && isBruteForce;
+                                    return (
+                                        <div
+                                            key={idx}
+                                            className={cn(
+                                                "px-6 py-3 flex gap-4 font-mono text-[10px] transition-all border-l-4",
+                                                isActive ? "bg-[#EE544A]/30 text-white border-[#EE544A]" : "text-white/30 border-transparent hover:text-white/50 hover:bg-white/[0.02]"
+                                            )}
+                                        >
+                                            <span className="w-4 opacity-20 text-right">{lineNum}</span>
+                                            <span className="whitespace-pre-wrap">{line}</span>
+                                        </div>
+                                    );
+                                })}
+                            </motion.div>
+                        )}
+                        {!isBruteForce && optimalPseudocode && (
+                            <motion.div
+                                key="optimal"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="rounded-2xl bg-black/60 border border-white/10 overflow-hidden shadow-2xl"
+                            >
+                                {optimalPseudocode.split('\n').filter(l => l.trim()).map((line, idx) => {
+                                    const lineNum = idx + 1;
+                                    const isActive = activePseudoLine === lineNum && !isBruteForce;
+                                    return (
+                                        <div
+                                            key={idx}
+                                            className={cn(
+                                                "px-6 py-3 flex gap-4 font-mono text-[10px] transition-all border-l-4",
+                                                isActive ? "bg-[#EC4186]/30 text-white border-[#EC4186]" : "text-white/30 border-transparent hover:text-white/50 hover:bg-white/[0.02]"
+                                            )}
+                                        >
+                                            <span className="w-4 opacity-20 text-right">{lineNum}</span>
+                                            <span className="whitespace-pre-wrap">{line}</span>
+                                        </div>
+                                    );
+                                })}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </section>
 
-            {/* 5️⃣ Lab Settings */}
-            <section className="space-y-4 pt-10 border-t border-white/10">
+            {/* 4️⃣ Examples */}
+            <section className="space-y-4 pt-4 border-t border-white/10">
                 <div className="flex items-center gap-2">
-                    <Sliders size={14} className="text-accent-blue" />
-                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Simulation Tuning</h3>
+                    <Eye size={14} className="text-accent-blue" />
+                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Examples</h3>
                 </div>
-                <div className="grid grid-cols-1 gap-5">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] pl-1">
-                            {currentProblem.input_settings?.input1.label || "Custom Workspace"}
-                        </label>
-                        <input
-                            type="text"
-                            value={customInput}
-                            onChange={(e) => setCustomInput(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            className="w-full bg-black/60 border border-white/10 rounded-xl px-5 py-4 text-xs font-mono text-white/90 focus:border-accent-blue/40 outline-none transition-all"
-                            placeholder={currentProblem.input_settings?.input1.placeholder || ""}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] pl-1">
-                            {currentProblem.input_settings?.input2.label || "Target Constraint"}
-                        </label>
-                        <input
-                            type="text"
-                            value={customTarget}
-                            onChange={(e) => setCustomTarget(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            className="w-full bg-black/60 border border-white/10 rounded-xl px-5 py-4 text-xs font-mono text-white/90 focus:border-accent-blue/40 outline-none transition-all"
-                            placeholder={currentProblem.input_settings?.input2.placeholder || ""}
-                        />
-                    </div>
-                    <button
-                        onClick={refreshSteps}
-                        className="w-full py-4 bg-[#EC4186] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_5px_15px_rgba(236,65,134,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                    >
-                        <RefreshCw size={14} />
-                        Sync Lab Parameters
-                    </button>
+                <div className="space-y-4">
+                    {currentProblem.examples?.map((ex, idx) => (
+                        <div key={idx} className="p-5 rounded-[24px] bg-white/[0.02] border border-white/5 space-y-3 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-accent-blue/5 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="flex items-center gap-2">
+                                <span className="text-[9px] font-black text-[#EC4186] mb-1">EXAMPLE_ID #{idx + 1}</span>
+                            </div>
+                            <div className="space-y-2 relative">
+                                <div className="flex gap-2 text-xs">
+                                    <span className="text-white/20 font-mono">INPUT:</span>
+                                    <span className="text-white/60 font-mono italic">{ex.input}</span>
+                                </div>
+                                <div className="flex gap-2 text-xs">
+                                    <span className="text-white/20 font-mono">OUTPUT:</span>
+                                    <span className="text-[#EC4186] font-mono font-bold tracking-widest">{ex.output}</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
 
-            {/* MOVED: Constraints after Tuning */}
-            {currentProblem.constraints && (
-                <section className="space-y-4 pt-4">
-                    <div className="flex flex-wrap gap-2">
-                        {currentProblem.constraints.map((c, i) => (
-                            <span key={i} className="text-[9px] text-white/40 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 font-medium tracking-tight">
-                                {c}
-                            </span>
+            {/* 5️⃣ Comparative Metrics */}
+            <section className="space-y-6 pt-4 border-t border-white/10">
+                <div className="flex items-center gap-2">
+                    <Clock size={14} className="text-accent-blue" />
+                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Comparative Analysis</h3>
+                </div>
+
+                <div className="rounded-[28px] bg-[#0A0A0A] border border-white/10 overflow-hidden shadow-2xl">
+                    <div className="grid grid-cols-3 bg-white/[0.04] text-[10px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/10 border-t-0 border-l-0 border-r-0">
+                        <div className="px-6 py-5 border-r border-white/10">Logic</div>
+                        <div className="px-6 py-5 border-r border-white/10 text-center text-[#EE544A]/60">Naive</div>
+                        <div className="px-6 py-5 text-center text-[#EC4186]/60">Optimal</div>
+                    </div>
+                    <div className="divide-y divide-white/[0.05]">
+                        <div className="grid grid-cols-3 items-center">
+                            <div className="px-6 py-5 border-r border-white/10 bg-white/[0.01]">
+                                <span className="text-[9px] font-black uppercase text-white/40 tracking-widest">Time</span>
+                            </div>
+                            <div className="px-6 py-5 border-r border-white/10 text-center">
+                                <span className="text-[#EE544A] font-mono text-xs font-black">{currentProblem.efficiency?.brute?.time || currentProblem.time_efficiency || 'O(N)'}</span>
+                            </div>
+                            <div className="px-6 py-5 text-center">
+                                <span className="text-[#EC4186] font-mono text-xs font-black">{currentProblem.efficiency?.optimal?.time || currentProblem.time_efficiency || 'O(N)'}</span>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-3 items-center">
+                            <div className="px-6 py-5 border-r border-white/10 bg-white/[0.01]">
+                                <span className="text-[9px] font-black uppercase text-white/40 tracking-widest">Space</span>
+                            </div>
+                            <div className="px-6 py-5 border-r border-white/10 text-center">
+                                <span className="text-white/40 font-mono text-[10px] uppercase">{currentProblem.efficiency?.brute?.space || currentProblem.space_efficiency || 'O(N)'}</span>
+                            </div>
+                            <div className="px-6 py-5 text-center">
+                                <span className="text-accent-blue font-mono text-xs font-black">{currentProblem.efficiency?.optimal?.space || currentProblem.space_efficiency || 'O(H)'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 7️⃣ Resources */}
+            {currentProblem.external_links && (
+                <section className="space-y-4 pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-2">
+                        <Code2 size={14} className="text-accent-blue" />
+                        <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Resources</h3>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3">
+                        {Object.entries(currentProblem.external_links).map(([key, url]) => (
+                            <a
+                                key={key}
+                                href={url as string}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-[#EC4186]/40 transition-all flex items-center justify-between group"
+                            >
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] font-black text-white/90 uppercase tracking-widest">{key}</span>
+                                    <span className="text-[9px] text-white/30 truncate max-w-[200px]">{url as string}</span>
+                                </div>
+                                <Zap size={14} className="text-white/20 group-hover:text-[#EC4186] transition-colors" />
+                            </a>
                         ))}
                     </div>
                 </section>
             )}
 
-            {/* 6️⃣ Performance & Efficiency Refined */}
-            <section className="pt-10 border-t border-white/10">
-                <div className="flex items-center gap-2 mb-6">
-                    <Layout size={14} className="text-accent-blue" />
-                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Comparative Metrics</h3>
-                </div>
-
-                <div className="space-y-6">
-                    <div className="rounded-2xl bg-white/[0.02] border border-white/10 overflow-hidden shadow-2xl">
-                        <div className="grid grid-cols-3 gap-2 px-5 py-4 bg-white/[0.05] text-[9px] font-black text-white/40 uppercase tracking-[0.2em] border-b border-white/10">
-                            <span>Complexity</span>
-                            <span className="text-[#EE544A]/60">Brute Force</span>
-                            <span className="text-[#EC4186]/60">Optimal</span>
-                        </div>
-                        <div className="p-6 space-y-5">
-                            <div className="grid grid-cols-3 gap-2 text-[12px] items-center">
-                                <div className="flex items-center gap-2 text-white/60">
-                                    <Clock size={12} className="text-white/20" />
-                                    <span className="font-bold">Time</span>
-                                </div>
-                                <span className="text-[#EE544A] font-mono font-black">{currentProblem.complexity?.brute?.time || ''}</span>
-                                <span className="text-[#EC4186] font-mono font-black">{currentProblem.complexity?.optimal?.time || ''}</span>
-                            </div>
-                            <div className="grid grid-cols-3 gap-2 text-[12px] items-center">
-                                <div className="flex items-center gap-2 text-white/60">
-                                    <Layout size={12} className="text-white/20" />
-                                    <span className="font-bold">Space</span>
-                                </div>
-                                <span className="text-white/60 font-mono">{currentProblem.complexity?.brute?.space || ''}</span>
-                                <span className="text-accent-blue font-mono font-black">{currentProblem.complexity?.optimal?.space || ''}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="p-6 rounded-2xl bg-gradient-to-br from-[#EC4186]/10 to-transparent border border-[#EC4186]/20 shadow-[0_10px_30px_rgba(236,65,134,0.1)]">
-                        <div className="flex items-center gap-2 mb-3">
-                            <Zap size={14} className="text-[#EC4186]" />
-                            <h4 className="text-[10px] font-black text-[#EC4186] uppercase tracking-[0.2em]">Platform Insight</h4>
-                        </div>
-                        <p className="text-[12px] text-white/80 leading-relaxed font-medium">
-                            {currentProblem.efficiencyGain || ""}
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* 7️⃣ Real-World Architecture Context */}
+            {/* industrial context (Optional/Extra) */}
             {currentProblem.real_time_applications && (
-                <section className="pt-10 border-t border-white/10">
-                    <div className="flex items-center gap-2 mb-6">
+                <section className="space-y-4 pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-2">
                         <Zap size={14} className="text-accent-blue" />
                         <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Industrial Context</h3>
                     </div>
-                    <div className="grid grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-3">
                         {currentProblem.real_time_applications.map((app, i) => (
-                            <div key={i} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all">
-                                <h4 className="text-xs font-bold text-white mb-2">{app.title}</h4>
-                                <p className="text-[11px] text-white/40 leading-relaxed font-medium">
+                            <div key={i} className="p-5 rounded-[24px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all">
+                                <h4 className="text-[11px] font-bold text-white mb-2 uppercase tracking-tight">{app.title}</h4>
+                                <p className="text-[11px] text-white/40 font-serif leading-relaxed italic">
                                     {app.description}
                                 </p>
                             </div>
@@ -306,86 +468,6 @@ const ProblemInfo: React.FC = () => {
                     </div>
                 </section>
             )}
-
-            {/* 8️⃣ Educational Resources */}
-            <section className="pt-10 border-t border-white/10 space-y-4">
-                <div className="flex items-center gap-2 mb-2">
-                    <Target size={14} className="text-accent-blue" />
-                    <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-black">Pattern Mastery</h3>
-                </div>
-                <div className="grid grid-cols-1 gap-3">
-                    {/* Pattern Library Bridge */}
-                    {currentProblem.primaryPattern && (
-                        <button
-                            onClick={() => {
-                                const patternIdMap: Record<string, string> = {
-                                    "Two Pointers": "two_pointers",
-                                    "Linked List": "linked_lists",
-                                    "Sliding Window": "sliding_window",
-                                    "Binary Search": "binary_search",
-                                    "Expand Around Center": "two_pointers",
-                                    "Cyclic Traversal": "matrices",
-                                    "Digit Manipulation": "arrays",
-                                    "Backtracking": "backtracking",
-                                    "Stack": "stacks",
-                                    "Hash Table": "hash_maps",
-                                    "Recursion": "recursion",
-                                    "Top-Down Memoization": "dp_strings",
-                                    "Array": "arrays",
-                                    "Greedy": "greedy",
-                                    "Merge Intervals": "merge_intervals",
-                                    "Dynamic Programming": "dp_1d",
-                                    "Two Pointer": "two_pointers",
-                                    "Matrix": "matrices",
-                                    "Graph (BFS/DFS)": "bfs"
-                                }
-                                const pName = currentProblem.primaryPattern;
-                                if (!pName) return;
-
-                                const pId = patternIdMap[pName] || pName.toLowerCase().replace(/\s+/g, '_')
-                                // Determine family based on ID or data
-                                const corePatterns = ['two_pointers', 'sliding_window', 'binary_search', 'monotonic_stack', 'fast_slow_pointers', 'cyclic_sort', 'merge_intervals', 'greedy', 'recursion', 'backtracking', 'bfs', 'dfs', 'topological_sort', 'union_find']
-                                const advancedPatterns = ['dp_1d', 'dp_2d', 'dp_strings', 'trie', 'segment_tree', 'graph_advanced', 'string_matching']
-                                const dataStructures = ['arrays', 'strings', 'linked_lists', 'stacks', 'queues', 'hash_maps', 'matrices', 'heaps', 'bit_manipulation']
-
-                                let route = `/foundations/basics/${pId}`
-                                if (corePatterns.includes(pId)) route = `/foundations/core_patterns/${pId}/mental`
-                                if (advancedPatterns.includes(pId)) route = `/foundations/advanced_patterns/${pId}`
-                                if (dataStructures.includes(pId)) route = `/foundations/data_structures/${pId}`
-
-                                window.location.href = route
-                            }}
-                            className="flex items-center justify-between p-4 rounded-xl bg-accent-blue/5 border border-accent-blue/20 hover:bg-accent-blue/10 hover:border-accent-blue/40 transition-all group text-left"
-                        >
-                            <div className="flex flex-col">
-                                <span className="text-[10px] font-black text-accent-blue uppercase">Discover Pattern</span>
-                                <span className="text-[11px] text-white/80 font-bold uppercase tracking-tight">
-                                    The {currentProblem.primaryPattern} Blueprint
-                                </span>
-                            </div>
-                            <Layout size={14} className="text-accent-blue group-hover:scale-110 transition-transform" />
-                        </button>
-                    )}
-
-                    {currentProblem.external_links?.leetcode && (
-                        <a href={currentProblem.external_links.leetcode} target="_blank" className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-accent-blue/30 transition-all group">
-                            <div className="flex flex-col">
-                                <span className="text-[10px] font-black text-white/80 uppercase">Practice Arena</span>
-                                <span className="text-[8px] text-white/30 uppercase tracking-tighter">Official LeetCode Problem #{currentProblem.id}</span>
-                            </div>
-                            <Layout size={12} className="text-white/20 group-hover:text-accent-blue transition-colors" />
-                        </a>
-                    )}
-                    <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                        <span className="text-[10px] font-black text-white/80 uppercase mb-1 block">Concept Tags</span>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            {currentProblem.tags?.map(tag => (
-                                <span key={tag} className="text-[8px] font-bold text-accent-blue/60 bg-accent-blue/5 px-2 py-0.5 rounded border border-accent-blue/10 uppercase">{tag}</span>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
     )
 }

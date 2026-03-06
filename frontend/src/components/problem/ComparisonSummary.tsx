@@ -96,7 +96,7 @@ const ComparisonSummary: React.FC<ComparisonSummaryProps> = ({ problem, onReset,
                     <p className="text-sm text-white/70 leading-relaxed font-medium">
                         The optimal strategy saved <span className="text-purple-400 font-bold">{stepsSaved} operations</span>.
                         By leveraging {problem.algorithmType === 'two_pointers' ? 'Two Pointers' : 'Sliding Window'} techniques,
-                        we achieved <span className="text-accent-blue font-bold">{problem.complexity.optimal.time}</span> time complexity versus the naive <span className="text-red-400 font-bold">{problem.complexity.brute.time}</span>.
+                        we achieved <span className="text-accent-blue font-bold">{problem.efficiency?.optimal?.time || "O(N)"}</span> time versus the naive <span className="text-red-400 font-bold">{problem.efficiency?.brute?.time || "O(N²)"}</span>.
                     </p>
                     <div className="flex items-center gap-2 pt-2 text-[10px] font-black text-purple-400/60 uppercase tracking-widest">
                         <Maximize2 size={12} />

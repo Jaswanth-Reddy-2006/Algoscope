@@ -62,7 +62,7 @@ const VizPanel: React.FC = () => {
                             }
                         </p>
                         <div className="px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-white/30 uppercase tracking-widest">
-                            {currentProblem.complexity?.optimal?.time} vs {currentProblem.complexity?.brute?.time}
+                            {currentProblem.efficiency?.optimal?.time} vs {currentProblem.efficiency?.brute?.time}
                         </div>
                     </div>
 

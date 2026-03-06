@@ -9,12 +9,12 @@ const MetricsPanel: React.FC = () => {
 
     if (!currentProblem) return null
 
-    const bruteComplexity = currentProblem.complexity.brute
-    const optimalComplexity = currentProblem.complexity.optimal
+    const bruteefficiency = currentProblem.efficiency.brute
+    const optimalefficiency = currentProblem.efficiency.optimal
 
     const metrics = [
-        { label: 'Time Complexity', brute: bruteComplexity.time, optimal: optimalComplexity.time, type: 'time' },
-        { label: 'Space Complexity', brute: bruteComplexity.space, optimal: optimalComplexity.space, type: 'space' },
+        { label: 'Time', brute: bruteefficiency.time, optimal: optimalefficiency.time, type: 'time' },
+        { label: 'Space', brute: bruteefficiency.space, optimal: optimalefficiency.space, type: 'space' },
     ]
 
     return (
@@ -23,7 +23,7 @@ const MetricsPanel: React.FC = () => {
             <div className="flex-1 p-6 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                     <Activity size={12} className="text-accent-blue" />
-                    <h3 className="text-[10px] uppercase font-bold text-white/40 tracking-widest">Performance Metrics</h3>
+                    <h3 className="text-[10px] uppercase font-bold text-white/40 tracking-widest">Performance</h3>
                 </div>
                 <div className="flex-1 grid grid-cols-4 gap-4 items-center">
                     <div className="col-span-1 border-r border-white/5 pr-4">
@@ -57,8 +57,8 @@ const MetricsPanel: React.FC = () => {
                         </div>
                         <p className="text-[10px] text-white/50 leading-relaxed font-light">
                             {isBruteForce
-                                ? "Selecting 'Optimal' will reduce complexity to " + optimalComplexity.time
-                                : "Reduced search space from " + bruteComplexity.time + " to " + optimalComplexity.time + "."}
+                                ? "Selecting 'Optimal' will improve performance to " + optimalefficiency.time
+                                : "Reduced search space from " + bruteefficiency.time + " to " + optimalefficiency.time + "."}
                         </p>
                     </div>
                 </div>

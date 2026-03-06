@@ -107,7 +107,7 @@ export const TwoPointerBruteForceCanvas: React.FC<Props> = ({ state, mode }) => 
                             </div>
                         </div>
                         <div>
-                            <div className="text-[9px] uppercase tracking-widest text-white/40 mb-1">Complexity</div>
+                            <div className="text-[9px] uppercase tracking-widest text-white/40 mb-1">efficiency</div>
                             <div className="text-sm font-bold text-white/60 font-mono">O(N²)</div>
                         </div>
                     </div>
