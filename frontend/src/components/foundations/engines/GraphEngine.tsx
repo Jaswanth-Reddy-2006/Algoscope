@@ -82,7 +82,7 @@ const GraphEngine: React.FC<EngineProps> = ({ moduleId }) => {
                 </div>
                 <div className="flex-1 px-12 text-center">
                     <p className="text-sm text-white/80 font-light italic">
-                        {status === 'idle' ? `Visualize ${moduleId.replace(/_/g, ' ').toUpperCase()} on a sample graph.` :
+                        {status === 'idle' ? `Visualize ${(moduleId || 'graph').replace(/_/g, ' ').toUpperCase()} on a sample graph.` :
                             status === 'running' ? `Traversing nodes (Step ${step}/5)...` : 'Traversal complete.'}
                     </p>
                 </div>

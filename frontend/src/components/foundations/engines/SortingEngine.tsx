@@ -85,7 +85,7 @@ const SortingEngine: React.FC<EngineProps> = ({ moduleId }) => {
                 newPointers = { sorted: n }
             }
         } else {
-            setExplanation(`${moduleId.replace('_', ' ')} visualization engine initializing. Select a different sorting pattern for active analysis.`)
+            setExplanation(`${(moduleId || 'sorting').replace('_', ' ')} visualization engine initializing. Select a different sorting pattern for active analysis.`)
             setStatus('paused')
         }
 
