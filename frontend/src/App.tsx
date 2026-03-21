@@ -88,7 +88,8 @@ const App: React.FC = () => {
     React.useEffect(() => {
         problems.forEach(problem => {
             if (!problemStrategyRegistry[problem.slug] && !problem.slug.startsWith('pattern-drill-')) {
-                console.warn(`[Stabilization] Missing visualization strategy for: ${problem.title} (${problem.slug})`)
+                // Changing to debug to reduce noise in production, as fallback visualization is used
+                console.debug(`[Stabilization] Missing visualization strategy for: ${problem.title} (${problem.slug})`)
             }
         });
     }, [problems])

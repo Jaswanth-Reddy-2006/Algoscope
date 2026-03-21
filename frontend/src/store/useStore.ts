@@ -3,7 +3,8 @@ import { Problem, AlgorithmType } from '../types'
 import { generateFallbackSteps } from '../utils/algoGenerators'
 import { getStrategyForProblem } from '../registry/problemStrategyRegistry'
 import fallbackProblems from '../data/problems.json'
-import { progressService } from '../services/api'
+import { progressService, problemService } from '../services/api'
+import api from '../services/api'
 
 
 interface PatternStats {
@@ -648,18 +649,16 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     fetchAllProblems: async () => {
         if (get().problems.length > 0) return
         try {
-            const response = await fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000'}/api/problems`)
-            if (!response.ok) throw new Error('API Unavailable')
-            let data: Problem[] = await response.json()
+            let data = await problemService.getProblems()
 
             // Validation Logic: Ensure IDs 1-100 exist and find duplicates
-            const ids = data.map(p => p.id)
-            const duplicates = ids.filter((item, index) => ids.indexOf(item) !== index)
+            const ids = data.map((p: any) => p.id)
+            const duplicates = ids.filter((item: any, index: number) => ids.indexOf(item) !== index)
 
             if (duplicates.length > 0) {
                 console.error(`[Data Correction] Duplicate IDs found: ${Array.from(new Set(duplicates)).join(', ')}. Filtering duplicates.`)
                 const seen = new Set()
-                data = data.filter(p => {
+                data = data.filter((p: any) => {
                     const duplicate = seen.has(p.id)
                     seen.add(p.id)
                     return !duplicate
@@ -675,10 +674,10 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             }
 
             // Default Sort: ID Ascending
-            data.sort((a, b) => a.id - b.id)
+            data.sort((a: any, b: any) => a.id - b.id)
 
             // Normalize algorithmType and parse JSON fields for consistency
-            const normalizedData = data.map(p => {
+            const normalizedData = data.map((p: any) => {
                 const parseJSON = (val: any) => {
                     if (!val || typeof val !== 'string') return val;
                     try { return JSON.parse(val); } catch { return val; }
@@ -1010,14 +1009,11 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
             // Priority 2: Backend Attempt (if local returned nothing or dummy)
             set({ isLoading: true })
-            const response = await fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000'}/api/problems/${currentProblem.id}/steps`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ input: customInput, target: customTarget })
-            })
-
-            if (!response.ok) throw new Error('Backend failure or missing implementation')
-            const data = await response.json()
+            const response = await api.post(`/problems/${currentProblem.id}/steps`, {
+                input: customInput,
+                target: customTarget
+            });
+            const data = response.data;
 
             set({
                 currentProblem: {

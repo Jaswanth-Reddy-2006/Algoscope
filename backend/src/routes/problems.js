@@ -38,8 +38,11 @@ router.get('/', async (req, res) => {
         
         res.json(parsed);
     } catch (err) {
-        console.error("Fetch problems error:", err);
-        res.status(500).json({ error: 'Failed to fetch problems' });
+        console.error("Fetch problems error:", err.name, err.message);
+        res.status(500).json({ 
+            error: 'Failed to fetch problems', 
+            details: process.env.NODE_ENV === 'development' ? err.message : undefined 
+        });
     }
 });
 
