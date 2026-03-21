@@ -9,10 +9,22 @@ const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'algoscope_secret_key_change_me';
 
 // Google OAuth
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', (req, res, next) => {
+    if (!passport._strategy('google')) {
+        return res.status(400).json({ 
+            error: 'Google OAuth is not configured on this server.',
+            details: 'Please ensure GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are set in the environment variables.'
+        });
+    }
+    passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+});
 
-router.get('/google/callback', 
-  passport.authenticate('google', { session: false, failureRedirect: '/login' }),
+router.get('/google/callback', (req, res, next) => {
+    if (!passport._strategy('google')) {
+        return res.redirect('/login?error=oauth_not_configured');
+    }
+    passport.authenticate('google', { session: false, failureRedirect: '/login' })(req, res, next);
+},
   async (req, res) => {
     let user = req.user;
     
