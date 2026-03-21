@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, User, Mail, Lock, Sparkles, Database, Eye, EyeOff, Code, Gauge, Binary, Layers } from 'lucide-react';
-import { authService } from '../../services/api';
+import { authService, API_BASE_URL } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
@@ -272,7 +272,7 @@ const Login: React.FC = () => {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = `${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000/api'}/auth/google`;
+        window.location.href = `${API_BASE_URL}/auth/google`;
     };
 
     const handleAuth = async (e: React.FormEvent) => {
