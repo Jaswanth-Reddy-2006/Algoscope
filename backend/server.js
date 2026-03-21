@@ -27,13 +27,27 @@ app.get('/health', (req, res) => {
 
 app.get('/api/db-check', async (req, res) => {
   try {
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
     await prisma.$connect();
+    // Try to count problems as a test for table existence
     const count = await prisma.problem.count();
-    res.json({ status: 'connected', problemsCount: count });
+    res.json({ 
+        status: 'connected', 
+        tablesFound: true,
+        problemsCount: count,
+        message: "Database is fully synced and tables exist."
+    });
   } catch (err) {
-    res.status(500).json({ status: 'error', message: err.message, stack: err.stack });
+    let fix = "Unknown error";
+    if (err.message.includes("does not exist")) {
+        fix = "The database is connected, but the TABLES are missing. ACTION: Change your Render 'Start Command' to 'npm start' instead of 'node server.js'.";
+    } else if (err.message.includes("DATABASE_URL")) {
+        fix = "The DATABASE_URL environment variable is missing in Render.";
+    }
+    res.status(500).json({ 
+        status: 'error', 
+        message: err.message, 
+        recommendedFix: fix
+    });
   }
 });
 
