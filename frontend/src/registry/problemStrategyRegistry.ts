@@ -33,7 +33,9 @@ import {
     generateMinWindowSubstring,
     generateSubsets,
     generateSortColors,
-    generateSortColorsBrute
+    generateSortColorsBrute,
+    generatePalindromeLinkedList,
+    generateProductExceptSelf
 } from '../utils/algoGenerators'
 
 export type StrategyFunction = (input: any, target?: any) => Step[]
@@ -169,6 +171,14 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
     "subsets": {
         brute: (input) => generateSubsets(input.nums || []),
         optimal: (input) => generateSubsets(input.nums || [])
+    },
+    "palindrome-linked-list": {
+        brute: (input) => generatePalindromeLinkedList(input.nums || input || []),
+        optimal: (input) => generatePalindromeLinkedList(input.nums || input || [])
+    },
+    "product-of-array-except-self": {
+        brute: (input) => generateProductExceptSelf(input.nums || input || []),
+        optimal: (input) => generateProductExceptSelf(input.nums || input || [])
     }
 }
 

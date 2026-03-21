@@ -1871,3 +1871,124 @@ export const generateFallbackSteps = (items: any[]): Step[] => {
     }))
 }
 
+
+/**
+ * PALINDROME LINKED LIST: TWO POINTERS (O(N))
+ */
+export const generatePalindromeLinkedList = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    
+    steps.push({
+        step: 0,
+        description: "Initializing Palindrome Linked List check.",
+        state: {
+            array: nums,
+            pointers: { slow: 0, fast: 0 },
+            explanation: "To check if a linked list is a palindrome in O(N), we find the middle using slow/fast pointers, reverse the second half, and compare.",
+            phase: 'init'
+        }
+    })
+
+    // Simulated visualization
+    let left = 0, right = nums.length - 1
+    while(left < right) {
+        const match = nums[left] === nums[right]
+        steps.push({
+            step: steps.length,
+            description: `Comparing values: Node(${nums[left]}) vs Node(${nums[right]})`,
+            state: {
+                array: nums,
+                pointers: { l: left, r: right },
+                highlightIndices: [left, right],
+                explanation: match ? "Values match! Proceeding to next pair." : "Mismatch detected! Not a palindrome.",
+                phase: match ? 'searching' : 'not_found'
+            }
+        })
+        if(!match) return steps
+        left++
+        right--
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Confirmed: Linked List is a palindrome.",
+        state: {
+            array: nums,
+            phase: 'found',
+            explanation: "All compared nodes matched successfully."
+        }
+    })
+
+    return steps
+}
+
+/**
+ * PRODUCT OF ARRAY EXCEPT SELF: O(N)
+ */
+export const generateProductExceptSelf = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    const n = nums.length
+    const res = new Array(n).fill(1)
+    
+    steps.push({
+        step: 0,
+        description: "Initializing Product of Array Except Self.",
+        state: {
+            array: nums,
+            explanation: "We'll use prefix and suffix products to calculate the result without using division.",
+            phase: 'init'
+        }
+    })
+
+    // Prefix pass
+    let prefix = 1
+    for(let i = 0; i < n; i++) {
+        res[i] = prefix
+        prefix *= nums[i]
+        steps.push({
+            step: steps.length,
+            description: `Calculating prefix product for index ${i}.`,
+            state: {
+                array: nums,
+                pointers: { i },
+                highlightIndices: [i],
+                customState: { currentPrefix: prefix, res: [...res] },
+                explanation: `Setting res[${i}] to product of all elements before it: ${res[i]}. Update prefix to ${prefix}.`,
+                phase: 'searching'
+            }
+        })
+    }
+
+    // Suffix pass
+    let suffix = 1
+    for(let i = n - 1; i >= 0; i--) {
+        const oldRes = res[i]
+        res[i] *= suffix
+        suffix *= nums[i]
+        steps.push({
+            step: steps.length,
+            description: `Calculating suffix product for index ${i}.`,
+            state: {
+                array: nums,
+                pointers: { i },
+                highlightIndices: [i],
+                customState: { currentSuffix: suffix, res: [...res] },
+                explanation: `Multiplying res[${i}] (${oldRes}) by suffix product ${suffix/nums[i]}: Result is ${res[i]}.`,
+                phase: 'searching'
+            }
+        })
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Calculation complete.",
+        state: {
+            array: nums,
+            finalAnswer: res,
+            phase: 'found',
+            explanation: "Successfully computed products for all positions."
+        }
+    })
+
+    return steps
+}

@@ -6,6 +6,10 @@ const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 
 const app = express();
+if (!process.env.DATABASE_URL) {
+    console.error("CRITICAL ERROR: DATABASE_URL environment variable is missing!");
+}
+
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 5000;
 
