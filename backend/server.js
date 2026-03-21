@@ -18,7 +18,19 @@ app.use(passport.initialize());
 
 // Basic health check
 app.get('/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date() });
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/db-check', async (req, res) => {
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+    await prisma.$connect();
+    const count = await prisma.problem.count();
+    res.json({ status: 'connected', problemsCount: count });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message, stack: err.stack });
+  }
 });
 
 // Routes
