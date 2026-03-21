@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String           @id @default(uuid())
+  email           String?          @unique
+  googleId        String?          @unique
+  createdAt       DateTime         @default(now())
+  username        String?          @unique
+  password        String?
+  experience      String?
+  language        String?
+  leetcodeAccount LeetcodeAccount?
+  solvedProblems  SolvedProblem[]
+  progress        UserProgress[]
+}
+
+model UserProgress {
+  id                   String   @id @default(uuid())
+  userId               String
+  moduleId             String
+  drillScore           Float    @default(0)
+  visualizerScore      Float    @default(0)
+  templateScore        Float    @default(0)
+  recognitionScore     Float    @default(0)
+  edgeCaseScore        Float    @default(0)
+  confidence           Float    @default(0)
+  lastPracticed        DateTime @default(now())
+  subPatternConfidence String?
+  user                 User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, moduleId])
+}
+
+model LeetcodeAccount {
+  id         String    @id @default(uuid())
+  userId     String    @unique
+  username   String    @unique
+  lastSynced DateTime?
+  user       User      @relation(fields: [userId], references: [id])
+}
+
+model Problem {
+  id                      Int     @id @default(autoincrement())
+  slug                    String  @unique
+  title                   String
+  difficulty              String
+  algorithmType           String?
+  brute_force_explanation String?
+  brute_force_steps       String?
+  complexity              String?
+  constraints             String?
+  edgeCases               String?
+  examples                String?
+  optimal_explanation     String?
+  optimal_steps           String?
+  patternSignals          String?
+  primaryPattern          String?
+  problem_statement       String?
+  secondaryPatterns       String?
+  shortPatternReason      String?
+  space_complexity        String?
+  status                  String?
+  tags                    String?
+  thinking_guide          String?
+  time_complexity         String?
+  companyTags             String?
+  codeSnippets            String?
+  labConfig               String?
+  structuredExamples      String?
+  optimal_variants        String?
+}
+
+model SolvedProblem {
+  id          String   @id @default(uuid())
+  userId      String
+  problemSlug String
+  solvedAt    DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([problemSlug])
+}

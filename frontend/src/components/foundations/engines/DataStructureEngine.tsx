@@ -5,6 +5,7 @@ import LinkedListVisualizer from './structures/LinkedListVisualizer'
 import ArrayVisualizer from './structures/ArrayVisualizer'
 import StackQueueVisualizer from './structures/StackQueueVisualizer'
 import HashMapVisualizer from './structures/HashMapVisualizer'
+import TrieVisualizer from './structures/TrieVisualizer'
 
 // ----------------------------------------------------------------------
 // Legacy Logic (Preserved inline until fully split)
@@ -52,7 +53,7 @@ const DataStructureEngineLegacy: React.FC<{ type: 'stack' | 'queue' | 'array' | 
                                 scale: 1,
                                 y: 0,
                                 x: 0,
-                                backgroundColor: highlightedIndex === i ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.05)',
+                                backgroundColor: highlightedIndex === i ? 'rgba(238, 84, 74, 0.5)' : 'rgba(255, 255, 255, 0.05)',
                                 borderColor: highlightedIndex === i ? '#EE544A' : 'rgba(255, 255, 255, 0.1)'
                             }}
                             exit={{ opacity: 0, scale: 0, y: type === 'stack' ? 50 : 0, x: type === 'queue' ? 50 : 0 }}
@@ -117,7 +118,7 @@ import { EngineProps } from '../engineRegistry'
 // Main Dispatcher
 // ----------------------------------------------------------------------
 interface Props extends EngineProps {
-    type: 'stack' | 'queue' | 'array' | 'hash_map' | 'linked_list'
+    type: 'stack' | 'queue' | 'array' | 'hash_map' | 'linked_list' | 'trie'
 }
 
 const DataStructureEngine: React.FC<Props> = ({ type }) => {
@@ -132,6 +133,9 @@ const DataStructureEngine: React.FC<Props> = ({ type }) => {
     }
     if (type === 'hash_map') {
         return <HashMapVisualizer />
+    }
+    if (type === 'trie') {
+        return <TrieVisualizer />
     }
 
     // Temporary Fallback to the legacy engine until strict replacement

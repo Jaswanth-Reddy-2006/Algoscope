@@ -54,7 +54,7 @@ const MonotonicStackCanvas: React.FC<Props> = ({ state }) => {
                         // Guarded stack position for gradient color
                         const stackPos = stack.indexOf(idx)
                         const stackColor = stackPos !== -1
-                            ? `rgba(168, 85, 247, ${0.4 + (stackPos / Math.max(stack.length, 1)) * 0.6})`
+                            ? `rgba(236, 65, 134, ${0.4 + (stackPos / Math.max(stack.length, 1)) * 0.6})`
                             : undefined
 
                         return (
@@ -64,7 +64,7 @@ const MonotonicStackCanvas: React.FC<Props> = ({ state }) => {
                                     animate={{
                                         height: `${(val / maxVal) * 80 + 20}%`,
                                         backgroundColor: isCurrent
-                                            ? 'rgba(59, 130, 246, 0.6)'
+                                            ? 'rgba(238, 84, 74, 0.6)'
                                             : isBeingCompared
                                                 ? 'rgba(239, 68, 68, 0.6)'
                                                 : inStack

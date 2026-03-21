@@ -2,21 +2,28 @@ import React, { Suspense } from 'react'
 import { useStore } from '../../store/useStore'
 import { getEngine } from '../../registry/engineRegistry'
 import ErrorBoundary from '../common/ErrorBoundary'
+import { cn } from '../../utils/cn'
 
 const VizPanel: React.FC = () => {
     const currentProblem = useStore(state => state.currentProblem)
     const compareMode = useStore(state => state.compareMode)
     const isBruteForce = useStore(state => state.isBruteForce)
+    const compareLeft = useStore(state => state.compareLeft)
+    const compareRight = useStore(state => state.compareRight)
+    const compareLeftSteps = useStore(state => state.compareLeftSteps)
+    const compareRightSteps = useStore(state => state.compareRightSteps)
+    const setCompareSide = useStore(state => state.setCompareSide)
 
     if (!currentProblem) return null
 
-    const renderEngine = (isBrute: boolean) => {
+    const renderEngine = (mode: 'brute' | 'optimal', steps?: any[]) => {
         const Engine = getEngine(currentProblem.algorithmType)
 
         if (!Engine) {
             return (
-                <div className="flex items-center justify-center h-full text-white/20 italic text-sm">
-                    Visualization engine for {currentProblem.algorithmType} is under construction...
+                <div className="flex flex-col items-center justify-center h-full text-white/20 italic text-sm space-y-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-50">Visualization Pending</span>
+                    <span className="font-medium">The dynamic generator for {currentProblem.algorithmType.replace('_', ' ')} is being synchronized.</span>
                 </div>
             )
         }
@@ -34,7 +41,7 @@ const VizPanel: React.FC = () => {
                         <div className="w-8 h-8 border-2 border-[#EC4186]/20 border-t-[#EC4186] rounded-full animate-spin" />
                     </div>
                 }>
-                    <Engine isBrute={isBrute} />
+                    <Engine isBrute={mode === 'brute'} steps={steps} />
                 </Suspense>
             </ErrorBoundary>
         )
@@ -67,22 +74,63 @@ const VizPanel: React.FC = () => {
                     </div>
 
                     <div className="flex-1 flex divide-x divide-white/5 relative h-full">
-                        {/* Brute/Naive Column */}
+                        {/* LEFT Column */}
                         <div className="flex-1 flex flex-col h-full">
-                            <div className="h-10 border-b border-white/5 flex items-center justify-center bg-[#EE544A]/5 shrink-0">
-                                <span className="text-[10px] font-bold text-[#EE544A]/60 uppercase tracking-widest">Brute Force Exploration</span>
+                            <div className="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-white/[0.02] shrink-0">
+                                <div className="flex items-center gap-4">
+                                    <div className="flex bg-black/40 p-1 rounded-xl border border-white/5">
+                                        <button
+                                            onClick={() => setCompareSide('left', { mode: 'brute' })}
+                                            className={cn("px-3 py-1.5 rounded-lg text-[9px] font-black uppercase transition-all", compareLeft.mode === 'brute' ? "bg-[#EE544A] text-white shadow-lg shadow-red-500/20" : "text-white/20 hover:text-white/40")}
+                                        >Brute</button>
+                                        <button
+                                            onClick={() => setCompareSide('left', { mode: 'optimal' })}
+                                            className={cn("px-3 py-1.5 rounded-lg text-[9px] font-black uppercase transition-all", compareLeft.mode === 'optimal' ? "bg-[#EC4186] text-white shadow-lg shadow-pink-500/20" : "text-white/20 hover:text-white/40")}
+                                        >Optimal</button>
+                                    </div>
+                                    {compareLeft.mode === 'optimal' && currentProblem.optimal_variants && currentProblem.optimal_variants.length > 1 && (
+                                        <select
+                                            value={compareLeft.variantIndex}
+                                            onChange={(e) => setCompareSide('left', { variantIndex: parseInt(e.target.value) })}
+                                            className="bg-white/5 border border-white/10 rounded-xl text-[9px] font-black text-white/60 px-3 py-1.5 outline-none hover:border-white/20 transition-all cursor-pointer uppercase tracking-tighter"
+                                        >
+                                            {currentProblem.optimal_variants.map((v: any, i: number) => <option key={i} value={i} className="bg-[#1b062b] text-white">{v.name}</option>)}
+                                        </select>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex-1 relative overflow-hidden h-full">
-                                {renderEngine(true)}
+                                {renderEngine(compareLeft.mode, compareLeftSteps)}
                             </div>
                         </div>
-                        {/* Optimal/Refined Column */}
+
+                        {/* RIGHT Column */}
                         <div className="flex-1 flex flex-col h-full">
-                            <div className="h-10 border-b border-white/5 flex items-center justify-center bg-[#EC4186]/5 shrink-0">
-                                <span className="text-[10px] font-bold text-[#EC4186] uppercase tracking-widest">Optimal Execution</span>
+                            <div className="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-white/[0.02] shrink-0">
+                                <div className="flex items-center gap-4">
+                                    <div className="flex bg-black/40 p-1 rounded-xl border border-white/5">
+                                        <button
+                                            onClick={() => setCompareSide('right', { mode: 'brute' })}
+                                            className={cn("px-3 py-1.5 rounded-lg text-[9px] font-black uppercase transition-all", compareRight.mode === 'brute' ? "bg-[#EE544A] text-white shadow-lg shadow-red-500/20" : "text-white/20 hover:text-white/40")}
+                                        >Brute</button>
+                                        <button
+                                            onClick={() => setCompareSide('right', { mode: 'optimal' })}
+                                            className={cn("px-3 py-1.5 rounded-lg text-[9px] font-black uppercase transition-all", compareRight.mode === 'optimal' ? "bg-[#EC4186] text-white shadow-lg shadow-pink-500/20" : "text-white/20 hover:text-white/40")}
+                                        >Optimal</button>
+                                    </div>
+                                    {compareRight.mode === 'optimal' && currentProblem.optimal_variants && currentProblem.optimal_variants.length > 1 && (
+                                        <select
+                                            value={compareRight.variantIndex}
+                                            onChange={(e) => setCompareSide('right', { variantIndex: parseInt(e.target.value) })}
+                                            className="bg-white/5 border border-white/10 rounded-xl text-[9px] font-black text-white/60 px-3 py-1.5 outline-none hover:border-white/20 transition-all cursor-pointer uppercase tracking-tighter"
+                                        >
+                                            {currentProblem.optimal_variants.map((v: any, i: number) => <option key={i} value={i} className="bg-[#1b062b] text-white">{v.name}</option>)}
+                                        </select>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex-1 relative overflow-hidden h-full">
-                                {renderEngine(false)}
+                                {renderEngine(compareRight.mode, compareRightSteps)}
                             </div>
                         </div>
                     </div>
@@ -91,7 +139,7 @@ const VizPanel: React.FC = () => {
                 <div className="flex-1 flex flex-col relative z-10 w-full h-full min-h-0">
                     {/* No header here since engine has its own 10% explanation bar */}
                     <div className="flex-1 relative overflow-hidden h-full">
-                        {renderEngine(isBruteForce)}
+                        {renderEngine(isBruteForce ? 'brute' : 'optimal')}
                     </div>
                 </div>
             )}

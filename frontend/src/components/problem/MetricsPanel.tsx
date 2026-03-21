@@ -9,8 +9,8 @@ const MetricsPanel: React.FC = () => {
 
     if (!currentProblem) return null
 
-    const bruteefficiency = currentProblem.efficiency.brute
-    const optimalefficiency = currentProblem.efficiency.optimal
+    const bruteefficiency = currentProblem.efficiency?.brute || { time: 'O(N²)', space: 'O(N)' }
+    const optimalefficiency = currentProblem.efficiency?.optimal || { time: 'O(N)', space: 'O(1)' }
 
     const metrics = [
         { label: 'Time', brute: bruteefficiency.time, optimal: optimalefficiency.time, type: 'time' },

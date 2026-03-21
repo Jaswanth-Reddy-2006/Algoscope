@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Algoscope Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        body {
+            width: 320px;
+            margin: 0;
+            padding: 0;
+            background: #0f0314;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 20px;
+            background: radial-gradient(circle at top right, #38124A, transparent);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: #EC4186;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 0 15px rgba(236, 65, 134, 0.3);
+        }
+
+        .title {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .status-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-dot.online { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
+        .status-dot.offline { background: #666; }
+
+        .status-text {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .history-title {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 12px;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .history-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .item-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 180px;
+        }
+
+        .item-meta {
+            font-size: 9px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 500;
+        }
+
+        .item-status {
+            font-size: 9px;
+            font-weight: 900;
+            color: #22c55e;
+            text-transform: uppercase;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.2);
+            font-style: italic;
+        }
+
+        .footer {
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.2);
+            text-align: center;
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.1);
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">A</div>
+            <div class="title">Algoscope <span style="color: #EC4186;">Tracker</span></div>
+        </div>
+
+        <div class="status-card">
+            <div id="connection-status">
+                <span class="status-dot offline"></span>
+                <span class="status-text">Scanning Neural Link...</span>
+            </div>
+        </div>
+
+        <div id="sync-container" style="display: none; margin-top: 10px;">
+            <button id="btn-sync-dash" style="width: 100%; padding: 12px; border-radius: 12px; background: #EC4186; border: none; color: white; font-weight: 900; font-size: 11px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(236, 65, 134, 0.2);">Sync with Dashboard</button>
+            <p style="font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 8px; text-align: center; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em;">Open Algoscope to sync automatically</p>
+        </div>
+
+        <div class="history-title">Sync History</div>
+        <div class="history-list" id="history-container">
+            <div class="empty-state">No recent transmissions detected.</div>
+        </div>
+    </div>
+    <div class="footer">Algoscope Intelligence Pipeline Active</div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

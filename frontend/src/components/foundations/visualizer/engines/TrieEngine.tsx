@@ -90,7 +90,7 @@ export const TrieEngine: React.FC<Props> = ({
                                         x={`${(parentPos.x + childPos.x) / 2}%`}
                                         y={(parentPos.y + childPos.y) / 2 - 5}
                                         textAnchor="middle"
-                                        fill="rgba(0,112,243,0.6)"
+                                        fill="rgba(236, 65, 134,0.6)"
                                         fontSize="10"
                                         fontWeight="bold"
                                         className="font-mono"
@@ -118,7 +118,7 @@ export const TrieEngine: React.FC<Props> = ({
                             className={`
                 absolute -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-xl border flex items-center justify-center font-bold font-mono transition-all duration-300
                 ${isActive
-                                    ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_15px_rgba(0,112,243,0.4)] scale-110 z-10 text-white'
+                                    ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_15px_rgba(236, 65, 134,0.4)] scale-110 z-10 text-white'
                                     : node.isEndOfWord
                                         ? 'bg-green-500/10 border-green-500/40 text-green-400'
                                         : 'bg-white/5 border-white/10 text-white/40'

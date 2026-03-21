@@ -28,7 +28,7 @@ const TimelineControls: React.FC = () => {
             {/* Progress Bar */}
             <div className="relative h-1 bg-white/5 rounded-full overflow-hidden group">
                 <motion.div
-                    className="absolute inset-y-0 left-0 bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]"
+                    className="absolute inset-y-0 left-0 bg-[#EE544A] shadow-[0_0_10px_#EE544A]"
                     animate={{ width: `${progress}%` }}
                 />
             </div>
@@ -82,7 +82,7 @@ const ControlButton: React.FC<{ onClick: () => void; icon: any; variant?: 'prima
         className={`
             p-2 rounded-lg transition-all
             ${variant === 'primary'
-                ? 'bg-[#3B82F6] text-white shadow-lg shadow-[#3B82F6]/20'
+                ? 'bg-[#EE544A] text-white shadow-lg shadow-[#EE544A]/20'
                 : 'text-white/40 hover:text-white hover:bg-white/5'}
         `}
     >

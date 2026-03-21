@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -15,11 +15,33 @@ import {
 import { PATTERN_HIERARCHY } from '../data/patternHierarchy'
 import { useStore } from '../store/useStore'
 import CognitiveTransferMatrix from '../components/profile/CognitiveTransferMatrix'
+import { analyticsService } from '../services/api'
 
 const PatternProfile = () => {
     const navigate = useNavigate()
     const problems = useStore(state => state.problems)
     const patternStats = useStore(state => state.patternStats)
+    
+    // Backend Stats State
+    const [summary, setSummary] = useState<any>(null)
+    const [proficiency, setProficiency] = useState<any>(null)
+
+    useEffect(() => {
+        const fetchAnalytics = async () => {
+            try {
+                const [sum, profData] = await Promise.all([
+                    analyticsService.getSummary(),
+                    analyticsService.getProficiency(),
+                ]);
+                
+                setSummary(sum)
+                setProficiency(profData)
+            } catch (err) {
+                console.error("Failed to fetch analytics", err)
+            }
+        }
+        fetchAnalytics()
+    }, [])
 
     // Comprehensive Pattern Data (Includes all patterns from hierarchy)
     const patternData = useMemo(() => {
@@ -92,18 +114,6 @@ const PatternProfile = () => {
         return allPatterns.sort((a, b) => b.confidence - a.confidence)
     }, [problems, patternStats])
 
-    // Global Stats
-    const globalStats = useMemo(() => {
-        const practiced = patternData.filter(p => p.confidence > 0)
-        if (practiced.length === 0) return { avg: 0, strongest: 'None', weakest: 'None' }
-        const avg = Math.round(practiced.reduce((acc, p) => acc + p.confidence, 0) / practiced.length)
-        return {
-            avg,
-            strongest: practiced[0].title,
-            weakest: practiced[practiced.length - 1].title
-        }
-    }, [patternData])
-
     // Insights
     const insights = useMemo(() => {
         const allInsights: string[] = []
@@ -126,7 +136,7 @@ const PatternProfile = () => {
     return (
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative font-outfit bg-[#0f0314]">
             {/* Header (Screenshot Style) */}
-            <div className="h-20 px-8 flex items-center justify-between border-b border-white/5 bg-black/20 backdrop-blur-xl z-20 shrink-0">
+            <div className="h-20 px-8 pt-8 flex items-center justify-between border-b border-white/5 bg-black/20 backdrop-blur-xl z-20 shrink-0">
                 <div className="relative w-96">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
                     <input
@@ -142,7 +152,7 @@ const PatternProfile = () => {
                     <div className="flex items-center gap-3 pl-6 border-l border-white/10">
                         <div className="text-right">
                             <p className="text-xs font-bold text-white uppercase tracking-wider">Jaswanth Reddy</p>
-                            <p className="text-[10px] text-[#EC4186] font-bold uppercase tracking-tight">Pro Member</p>
+                            <p className="text-[10px] text-white/10 font-black uppercase tracking-[0.2em]">ALGO_MODE: ACTIVE</p>
                         </div>
                         <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#EC4186] to-[#EE544A]" />
                     </div>
@@ -154,77 +164,132 @@ const PatternProfile = () => {
                     {/* Header Row */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div>
-                            <h1 className="text-4xl font-black text-white tracking-tight mb-2">Pattern Profile</h1>
-                            <p className="text-white/40 text-sm font-medium italic">Real-time visualization of your algorithmic mastery and problem-solving DNA.</p>
+                            <h1 className="text-4xl font-black text-white tracking-tight mb-2">Pattern Library</h1>
+                            <p className="text-white/40 text-sm font-medium">Track your progress and analyze your problem-solving patterns.</p>
                         </div>
                         <div className="flex items-center gap-3">
                             <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-white/60 hover:text-white transition-all uppercase tracking-widest">
                                 <History size={14} />
                                 View History
                             </button>
-                            <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#EC4186] text-xs font-bold text-white shadow-[0_10px_20px_rgba(236,65,134,0.3)] hover:scale-105 transition-all uppercase tracking-widest">
-                                <Zap size={14} className="fill-current" />
-                                Daily Challenge
+                        </div>
+                    </div>
+ 
+                    {/* Top Stats Section */}
+                    {problems.length === 0 ? (
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="p-12 rounded-[40px] bg-white/[0.02] border border-white/5 flex flex-col items-center justify-center text-center py-20 relative overflow-hidden"
+                        >
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#EC4186] to-[#EE544A]" />
+                            <div className="absolute -right-24 -top-24 w-64 h-64 bg-[#EC4186]/5 rounded-full blur-[100px]" />
+                            <div className="absolute -left-24 -bottom-24 w-64 h-64 bg-[#EE544A]/5 rounded-full blur-[100px]" />
+ 
+                            <div className="w-20 h-20 rounded-3xl bg-[#EC4186]/10 flex items-center justify-center mb-8 border border-[#EC4186]/20 relative z-10 shadow-glow">
+                                <ShieldAlert size={40} className="text-[#EC4186]" />
+                            </div>
+ 
+                            <h2 className="text-3xl font-black text-white tracking-tighter mb-4 uppercase relative z-10">Archive Connection Inactive</h2>
+                            <p className="text-white/40 text-base max-w-sm mx-auto mb-10 leading-relaxed relative z-10">
+                                Connect your LeetCode account to synchronize your historical performance and unlock pattern mastery.
+                            </p>
+ 
+                            <button 
+                                onClick={() => navigate('/settings?tab=leetcode&hub=true')}
+                                className="px-10 py-5 bg-[#EC4186] text-white rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all shadow-glow relative z-10 uppercase tracking-widest text-xs"
+                            >
+                                <Zap size={18} className="fill-current" />
+                                <span>Initialize Archive</span>
                             </button>
-                        </div>
-                    </div>
-
-                    {/* Top: Global Cognitive Metrics (Step 586 Style) */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="glass-card p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 min-h-[200px] flex flex-col justify-between relative overflow-hidden">
-                            <div>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EC4186] mb-2 block">Global Confidence</span>
-                                <div className="flex items-baseline gap-3">
-                                    <h2 className="text-5xl font-black text-white">0%</h2>
-                                    <span className="text-xs font-bold text-white/20 flex items-center gap-1">
-                                        Active
-                                    </span>
+                        </motion.div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="glass-card p-6 rounded-[32px] bg-white/[0.02] border border-white/5 flex flex-col justify-between relative overflow-hidden h-[180px]"
+                            >
+                                <div>
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-[#EC4186] mb-3 block">Total Mastery</span>
+                                    <div className="flex items-baseline gap-2">
+                                        <h2 className="text-4xl font-black text-white">
+                                            {proficiency?.score || 0}
+                                        </h2>
+                                        <span className="text-[10px] font-bold text-white/20 uppercase">Units</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="space-y-3">
-                                <div className="flex justify-between text-[10px] font-bold text-white/20 uppercase tracking-widest">
-                                    <span>To Elite Status</span>
-                                    <span>12% to go</span>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between text-[10px] font-black text-white/20 uppercase tracking-widest">
+                                        <span>Level {proficiency?.level || 1} • {proficiency?.title || 'Explorer'}</span>
+                                        <span>{Math.round(proficiency?.progress || 0)}% Sync</span>
+                                    </div>
+                                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${proficiency?.progress || 0}%` }}
+                                            transition={{ duration: 1, ease: 'easeOut' }}
+                                            className="h-full bg-gradient-to-r from-[#EC4186] to-[#EE544A]"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${globalStats.avg}%` }}
-                                        className="h-full bg-gradient-to-r from-[#EC4186] to-[#EE544A]"
-                                    />
+                            </motion.div>
+ 
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="glass-card p-6 rounded-[32px] bg-white/[0.02] border border-white/5 flex flex-col justify-between h-[180px]"
+                            >
+                                <span className="text-[10px] font-black uppercase tracking-widest text-[#FFFFFF] mb-3 block">Solve Matrix</span>
+                                <div className="flex gap-3 items-end flex-1 mb-2">
+                                    {[
+                                        { label: 'Easy', count: summary?.Easy || 0, color: 'emerald-500' },
+                                        { label: 'Medium', count: summary?.Medium || 0, color: '[#EC4186]' },
+                                        { label: 'Hard', count: summary?.Hard || 0, color: '[#EE544A]' }
+                                    ].map(item => (
+                                        <div key={item.label} className="flex-1 space-y-2">
+                                            <div className="h-[60px] w-full bg-white/5 rounded-xl relative overflow-hidden">
+                                                <motion.div 
+                                                    initial={{ height: 0 }}
+                                                    animate={{ height: `${Math.min((item.count * 10), 100)}%` }}
+                                                    transition={{ duration: 1.5, ease: 'backOut' }}
+                                                    className={`absolute bottom-0 w-full bg-${item.color}/40`} 
+                                                />
+                                                <div className="absolute inset-0 flex items-center justify-center text-xs font-black text-white/40">
+                                                    {item.count}
+                                                </div>
+                                            </div>
+                                            <div className="text-[8px] text-white/20 uppercase font-black text-center">{item.label}</div>
+                                        </div>
+                                    ))}
                                 </div>
-                            </div>
+                            </motion.div>
+ 
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="glass-card p-6 rounded-[32px] bg-white/[0.02] border border-white/5 flex flex-col justify-between h-[180px]"
+                            >
+                                <div>
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-[#EE544A] mb-3 block">Neural Bridge</span>
+                                    <h2 className="text-4xl font-black text-white">{problems.length} <span className="text-sm font-bold text-white/20 uppercase">Problems</span></h2>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="px-2 py-1 rounded bg-blue-500/10 text-blue-400 text-[9px] font-black uppercase tracking-widest border border-blue-500/20">Sync Optimal</span>
+                                    <span className="text-[9px] font-bold text-white/20 uppercase tracking-widest">v2.0 Connected</span>
+                                </div>
+                            </motion.div>
                         </div>
-
-                        <div className="glass-card p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 min-h-[200px] flex flex-col justify-between group">
-                            <div>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#10B981] mb-2 block">Strongest Pattern</span>
-                                <h2 className="text-3xl font-black text-white capitalize">-</h2>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-white/5 text-white/20 border border-white/10">Stable</span>
-                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">-</span>
-                            </div>
-                        </div>
-
-                        <div className="glass-card p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 min-h-[200px] flex flex-col justify-between group">
-                            <div>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#EE544A] mb-2 block">Priority Area</span>
-                                <h2 className="text-3xl font-black text-white capitalize">-</h2>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-white/5 text-white/20 border border-white/10">Stable</span>
-                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">-</span>
-                            </div>
-                        </div>
-                    </div>
+                    )}
 
                     {/* Middle: Pattern Inventory (Comprehensive Matrix) */}
                     <section>
                         <div className="flex items-center justify-between mb-10">
                             <div className="flex items-center gap-4">
-                                <h2 className="text-2xl font-black text-white tracking-tight">Pattern Inventory</h2>
-                                <span className="px-2.5 py-0.5 rounded-lg bg-[#EC4186]/10 text-[#EC4186] text-[10px] font-bold uppercase tracking-widest border border-[#EC4186]/20">
+                                <h2 className="text-2xl font-black text-white tracking-tight">Main Patterns</h2>
+                                <span className="px-2.5 py-0.5 rounded-lg bg-[#EC4186]/10 text-[#EC4186] text-[11px] font-bold uppercase tracking-widest border border-[#EC4186]/20">
                                     {patternData.length} Patterns
                                 </span>
                             </div>
@@ -237,58 +302,61 @@ const PatternProfile = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: idx * 0.05 }}
-                                    className={`glass-card p-6 border rounded-[2.5rem] group hover:border-[#EC4186]/30 transition-all relative overflow-hidden bg-white/[0.02] ${pattern.needsRefresh ? 'border-[#EE544A]/30' : 'border-white/5'}`}
+                                    className={`glass-card p-5 border rounded-[32px] group hover:border-[#EC4186]/30 transition-all relative overflow-hidden bg-white/[0.02] ${pattern.needsRefresh ? 'border-[#EE544A]/30' : 'border-white/5'}`}
                                 >
                                     {pattern.needsRefresh && (
-                                        <div className="absolute top-6 right-6">
-                                            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#EE544A]/20 text-[#EE544A] border border-[#EE544A]/20">
-                                                <Clock size={10} />
-                                                <span className="text-[8px] font-bold uppercase tracking-tighter">Refresh Required</span>
+                                        <div className="absolute top-5 right-5">
+                                            <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#EE544A]/20 text-[#EE544A] border border-[#EE544A]/20">
+                                                <Clock size={8} />
+                                                <span className="text-[9px] font-black uppercase tracking-tighter">Review</span>
                                             </div>
                                         </div>
                                     )}
 
-                                    <div className="mb-8">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${pattern.levelBg} ${pattern.levelColor} border border-white/5`}>
+                                    <div className="mb-6">
+                                        <div className="flex justify-between items-start mb-3">
+                                            <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${pattern.levelBg} ${pattern.levelColor} border border-white/5`}>
                                                 {pattern.level}
                                             </span>
                                             <span className="text-[9px] font-bold text-white/20 uppercase tracking-widest">{pattern.groupTitle}</span>
                                         </div>
-                                        <h3 className="text-xl font-black text-white capitalize mb-1 group-hover:text-[#EC4186] transition-colors">
+                                        <h3 className="text-lg font-black text-white capitalize mb-1 group-hover:text-[#EC4186] transition-colors">
                                             {pattern.title}
                                         </h3>
-                                        <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">{pattern.problemCount} Problems Solved</p>
+                                        <p className="text-[9px] text-white/40 uppercase tracking-widest font-black">{pattern.problemCount} Analyzed</p>
                                     </div>
 
-                                    <div className="space-y-4">
+                                    <div className="space-y-3">
                                         <div className="flex justify-between items-end">
-                                            <span className="text-[10px] font-mono font-bold text-white/20 uppercase tracking-widest">Confidence</span>
-                                            <span className="text-sm font-mono font-bold text-white">{pattern.confidence}%</span>
+                                            <span className="text-[9px] font-bold text-white/20 uppercase tracking-widest">Mastery</span>
+                                            <span className="text-xs font-black text-white">{pattern.confidence}%</span>
                                         </div>
-                                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                            <div
-                                                className={`h-full rounded-full transition-all duration-1000 ${pattern.confidence >= 80 ? 'bg-gradient-to-r from-emerald-500 to-emerald-400' : pattern.confidence >= 40 ? 'bg-gradient-to-r from-[#EC4186] to-[#EE544A]' : 'bg-white/10'}`}
-                                                style={{ width: `${pattern.confidence}%` }}
+                                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${pattern.confidence}%` }}
+                                                transition={{ duration: 1.5, ease: 'circOut' }}
+                                                className={`h-full rounded-full ${pattern.confidence >= 80 ? 'bg-emerald-500' : pattern.confidence >= 40 ? 'bg-[#EC4186]' : 'bg-white/10'}`}
                                             />
                                         </div>
                                     </div>
 
-                                    {/* Sub-Pattern Mastery (Step 575 Design requirement) */}
+                                    {/* Sub-Pattern Mastery */}
                                     {pattern.subPatterns.length > 0 && (
-                                        <div className="mt-8 pt-6 border-t border-white/5 space-y-4">
-                                            <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Sub-Pattern Exploration</h4>
-                                            <div className="grid grid-cols-1 gap-3">
-                                                {pattern.subPatterns.map((sp: any) => (
-                                                    <div key={sp.id} className="space-y-2">
-                                                        <div className="flex justify-between items-center text-[10px]">
-                                                            <span className="text-white/60 capitalize font-medium">{sp.id.replace(/_/g, ' ')}</span>
-                                                            <span className="text-white/30 font-mono italic">{Math.round(sp.confidence)}%</span>
+                                        <div className="mt-6 pt-5 border-t border-white/5 space-y-3">
+                                            <div className="grid grid-cols-1 gap-2">
+                                                {pattern.subPatterns.slice(0, 3).map((sp: any) => (
+                                                    <div key={sp.id} className="space-y-1.5">
+                                                        <div className="flex justify-between items-center text-[9px]">
+                                                            <span className="text-white/40 capitalize font-bold tracking-tight">{sp.id.replace(/_/g, ' ')}</span>
+                                                            <span className="text-white/20 font-black">{Math.round(sp.confidence)}%</span>
                                                         </div>
-                                                        <div className="w-full h-1 bg-white/[0.03] rounded-full overflow-hidden">
-                                                            <div
-                                                                className={`h-full rounded-full transition-all duration-1000 ${sp.confidence > 0 ? 'bg-[#EC4186]/50' : 'bg-transparent'}`}
-                                                                style={{ width: `${sp.confidence}%` }}
+                                                        <div className="w-full h-0.5 bg-white/[0.02] rounded-full overflow-hidden">
+                                                            <motion.div
+                                                                initial={{ width: 0 }}
+                                                                animate={{ width: `${sp.confidence}%` }}
+                                                                transition={{ duration: 2, ease: 'circOut' }}
+                                                                className={`h-full rounded-full ${sp.confidence > 0 ? 'bg-[#EC4186]/40' : 'bg-transparent'}`}
                                                             />
                                                         </div>
                                                     </div>
@@ -299,10 +367,10 @@ const PatternProfile = () => {
 
                                     <button
                                         onClick={() => navigate(`/mastery/${pattern.type}`)}
-                                        className="w-full mt-8 py-3.5 rounded-2xl bg-white/5 hover:bg-[#EC4186] border border-white/5 text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-all flex items-center justify-center gap-2 group/btn"
+                                        className="w-full mt-6 py-3 rounded-xl bg-white/5 hover:bg-[#EC4186]/20 border border-white/5 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-all flex items-center justify-center gap-2 group/btn"
                                     >
-                                        Mastery Analytics
-                                        <ArrowRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
+                                        Neural Analysis
+                                        <ArrowRight size={10} className="group-hover/btn:translate-x-1 transition-transform" />
                                     </button>
                                 </motion.div>
                             ))}
@@ -314,7 +382,7 @@ const PatternProfile = () => {
                         <div className="lg:col-span-2">
                             <div className="flex items-center gap-3 mb-8">
                                 <Activity size={18} className="text-[#EC4186]" />
-                                <h2 className="text-xl font-bold text-white tracking-tight">Cognitive Transfer Matrix</h2>
+                                <h2 className="text-xl font-bold text-white tracking-tight">Correlation Matrix</h2>
                             </div>
                             <CognitiveTransferMatrix />
                         </div>
@@ -323,11 +391,11 @@ const PatternProfile = () => {
                                 <section>
                                     <div className="flex items-center gap-3 mb-8">
                                         <Target size={18} className="text-[#EE544A]" />
-                                        <h2 className="text-sm font-bold uppercase tracking-widest text-white/60">Next Objective</h2>
+                                        <h2 className="text-sm font-bold uppercase tracking-widest text-white/60">Next Goal</h2>
                                     </div>
-                                    <div className="glass-card p-8 border border-[#EC4186]/30 bg-[#EC4186]/5 rounded-[2.5rem] relative overflow-hidden group hover:border-[#EC4186]/50 transition-all flex flex-col justify-between min-h-[240px]">
+                                    <div className="glass-card p-8 border border-[#EC4186]/30 bg-[#EC4186]/5 rounded-[40px] relative overflow-hidden group hover:border-[#EC4186]/50 transition-all flex flex-col justify-between min-h-[240px]">
                                         <div>
-                                            <span className="text-[10px] font-bold uppercase tracking-widest text-[#EC4186] mb-3 block">Strategy Suggestion</span>
+                                            <span className="text-[11px] font-bold uppercase tracking-widest text-[#EC4186] mb-3 block">Recommendation</span>
                                             <h3 className="text-2xl font-black text-white leading-tight mb-4">{recommendation.message}</h3>
                                         </div>
                                         <button
@@ -344,12 +412,12 @@ const PatternProfile = () => {
                             <section>
                                 <div className="flex items-center gap-3 mb-8">
                                     <ShieldAlert size={18} className="text-purple-400" />
-                                    <h2 className="text-sm font-bold uppercase tracking-widest text-white/60">Neural Feedback</h2>
+                                    <h2 className="text-sm font-bold uppercase tracking-widest text-white/60">AI Insights</h2>
                                 </div>
-                                <div className="glass-card border border-white/5 bg-purple-500/5 rounded-[2.5rem] p-8 space-y-6">
+                                <div className="glass-card border border-white/5 bg-purple-500/5 rounded-[40px] p-8 space-y-6">
                                     {insights.length > 0 ? insights.map((insight, i) => (
                                         <div key={i} className="flex gap-4 items-start">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(236, 65, 134,0.5)]" />
                                             <p className="text-xs text-white/60 leading-relaxed font-medium">"{insight}"</p>
                                         </div>
                                     )) : (
@@ -364,7 +432,7 @@ const PatternProfile = () => {
 
             {/* Footer Information */}
             <div className="h-12 border-t border-white/5 flex items-center justify-center px-8 text-[9px] text-white/10 uppercase tracking-[0.4em] font-black shrink-0">
-                Algoscope Intelligence Systems • V2.5.0-STABLE • Pattern Mastery Engine Active
+                Algoscope Intelligence Systems • Pattern Mastery Engine Active
             </div>
         </div>
     )

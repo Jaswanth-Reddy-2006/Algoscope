@@ -32,7 +32,7 @@ const IterativeView: React.FC<{ algorithmId: string }> = ({ algorithmId }) => {
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="w-full h-full bg-[#0a0118] border border-amber-500/20 rounded-3xl p-8 flex flex-col gap-6"
+            className="w-full h-full bg-[#2b0d38] border border-amber-500/20 rounded-3xl p-8 flex flex-col gap-6"
         >
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

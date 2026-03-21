@@ -50,6 +50,7 @@ const ThinkingGuide: React.FC<ThinkingGuideProps> = ({ problem, onChecklistCompl
         { id: 'core_invariant', title: 'Core Invariant', icon: Info, content: problem.thinking_guide.first_principles },
         { id: 'edge_cases', title: 'Edge Cases', icon: HelpCircle, content: problem.constraints },
         { id: 'strategy_shift', title: 'Strategy Shift', icon: ListChecks, content: problem.thinking_guide.approach_blueprint },
+        { id: 'hints', title: 'Progressive Hints', icon: HelpCircle, content: problem.thinking_guide.hints },
     ]
 
     return (
@@ -127,7 +128,7 @@ const ThinkingGuide: React.FC<ThinkingGuideProps> = ({ problem, onChecklistCompl
                                                 className="overflow-hidden"
                                             >
                                                 <div className="pb-4 pt-1 px-14 space-y-3">
-                                                    {section.content.map((point, idx) => (
+                                                    {(section.content || []).map((point: string, idx: number) => (
                                                         <div key={idx} className="flex gap-3">
                                                             <div className="w-1 h-1 rounded-full bg-accent-blue/40 mt-1.5 shrink-0" />
                                                             <p className="text-[13px] text-white/40 leading-relaxed font-light">

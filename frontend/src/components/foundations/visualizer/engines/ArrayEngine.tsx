@@ -31,9 +31,9 @@ export const ArrayEngine: React.FC<Props> = ({ data, activeIndex, highlightIndic
                             className={`
                 relative w-12 h-12 lg:w-16 lg:h-16 flex items-center justify-center rounded-xl border-2 transition-all duration-300
                 ${isActive
-                                    ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_20px_rgba(0,112,243,0.4)] scale-110 z-10'
+                                    ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_20px_rgba(236, 65, 134,0.4)] scale-110 z-10'
                                     : isHighlighted
-                                        ? 'bg-purple-500/20 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
+                                        ? 'bg-purple-500/20 border-purple-500 shadow-[0_0_15px_rgba(236, 65, 134,0.3)]'
                                         : 'bg-white/5 border-white/10'
                                 }
               `}

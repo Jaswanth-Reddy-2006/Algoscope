@@ -65,12 +65,12 @@ const InspectorPanel: React.FC = () => {
                     <div className="grid grid-cols-1 gap-2">
                         <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl flex justify-between items-center group hover:border-purple-500/30 transition-all">
                             <span className="text-[10px] font-bold text-white/40 uppercase">Target Value</span>
-                            <span className="text-sm font-mono font-black text-purple-400">{customTarget || currentProblem.target || '-'}</span>
+                             <span className="text-sm font-mono font-black text-purple-400">{customTarget || '-'}</span>
                         </div>
                         {customState.currentSum !== undefined && (
                             <div className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl flex justify-between items-center group hover:border-green-500/30 transition-all">
                                 <span className="text-[10px] font-bold text-white/40 uppercase">Current Sum</span>
-                                <span className={cn("text-sm font-mono font-black", customState.currentSum === (customTarget || currentProblem.target) ? "text-green-400" : "text-white/80")}>
+                                <span className={cn("text-sm font-mono font-black", customState.currentSum === (customTarget || '') ? "text-green-400" : "text-white/80")}>
                                     {customState.currentSum}
                                 </span>
                             </div>

@@ -29,10 +29,10 @@ export const BitManipulationEngine: React.FC<Props> = ({ value, highlightBits = 
                                 className={`
                   w-12 h-16 rounded-xl border-2 flex items-center justify-center text-2xl font-mono font-bold transition-all duration-300
                   ${bit === 1
-                                        ? 'bg-accent-blue/20 border-accent-blue text-accent-blue shadow-[0_0_15px_rgba(0,112,243,0.3)]'
+                                        ? 'bg-accent-blue/20 border-accent-blue text-accent-blue shadow-[0_0_15px_rgba(236, 65, 134,0.3)]'
                                         : 'bg-white/5 border-white/10 text-white/20'
                                     }
-                  ${isHighlighted ? 'scale-110 !border-purple-500 !shadow-[0_0_20px_rgba(168,85,247,0.5)]' : ''}
+                  ${isHighlighted ? 'scale-110 !border-purple-500 !shadow-[0_0_20px_rgba(236, 65, 134,0.5)]' : ''}
                 `}
                             >
                                 {bit}

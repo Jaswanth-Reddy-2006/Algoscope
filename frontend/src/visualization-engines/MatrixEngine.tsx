@@ -115,8 +115,8 @@ const MatrixEngine: React.FC<MatrixEngineProps> = ({ isBrute = false }) => {
                                         initial={false}
                                         animate={{
                                             scale: active ? 1.05 : 1,
-                                            backgroundColor: active ? "rgba(59, 130, 246, 0.2)" : "rgba(255, 255, 255, 0.05)",
-                                            borderColor: active ? "rgba(59, 130, 246, 0.5)" : "rgba(255, 255, 255, 0.1)"
+                                            backgroundColor: active ? "rgba(238, 84, 74, 0.2)" : "rgba(255, 255, 255, 0.05)",
+                                            borderColor: active ? "rgba(238, 84, 74, 0.5)" : "rgba(255, 255, 255, 0.1)"
                                         }}
                                         className={cn(
                                             "w-10 h-10 sm:w-14 sm:h-14 rounded-xl border flex items-center justify-center font-bold text-sm sm:text-lg transition-all relative",

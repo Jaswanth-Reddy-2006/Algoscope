@@ -4,6 +4,7 @@ import { foundationEngineRegistry } from './engineRegistry'
 import { PatternHypothesisOverlay } from './PatternHypothesisOverlay'
 import { Play, Pause, RotateCcw, SkipBack, SkipForward } from 'lucide-react'
 import { useStore } from '../../store/useStore'
+import { PatternEngine } from '../../types/engine'
 
 interface Props {
     type: VisualizerType
@@ -25,7 +26,7 @@ const FoundationVisualizer: React.FC<Props> = ({ type, moduleId, mode, edgeCase,
     const REQUIRES_HYPOTHESIS = ['sliding_window', 'two_pointer', 'binary_search']
     const shouldVerify = REQUIRES_HYPOTHESIS.includes(moduleId) && !isMastered
 
-    const [isVerified, setIsVerified] = React.useState(!shouldVerify)
+    const [isVerified, setIsVerified] = useState(!shouldVerify)
 
     // Reset verification when switching modules
     useEffect(() => {
@@ -42,16 +43,13 @@ const FoundationVisualizer: React.FC<Props> = ({ type, moduleId, mode, edgeCase,
 
     const isLegacy = typeof EngineOrComponent === 'function'
 
-    useEffect(() => {
-        setIsVerified(!shouldVerify)
-    }, [moduleId, shouldVerify])
-
     // Initialize Engine
     useEffect(() => {
-        if (!isLegacy && EngineOrComponent) {
+        if (!isLegacy && EngineOrComponent && 'generateInput' in EngineOrComponent) {
+            const engine = EngineOrComponent as PatternEngine<any, any>
             const config = { mode: mode || 'fixed_window', edgeCase: edgeCase || undefined }
-            const newInput = EngineOrComponent.generateInput(config)
-            const newSteps = EngineOrComponent.generateSteps(newInput, config)
+            const newInput = engine.generateInput(config)
+            const newSteps = engine.generateSteps(newInput, config)
 
             setInput(newInput)
             setSteps(newSteps)
@@ -63,7 +61,7 @@ const FoundationVisualizer: React.FC<Props> = ({ type, moduleId, mode, edgeCase,
     // Playback Loop
     useEffect(() => {
         if (isPlaying) {
-            timerRef.current = setInterval(() => {
+            timerRef.current = window.setInterval(() => {
                 setCurrentIndex(prev => {
                     if (prev >= steps.length - 1) {
                         setIsPlaying(false)
@@ -75,7 +73,7 @@ const FoundationVisualizer: React.FC<Props> = ({ type, moduleId, mode, edgeCase,
             }, 1000 / speed)
         }
         return () => {
-            if (timerRef.current) clearInterval(timerRef.current)
+            if (timerRef.current) clearInterval(timerRef.current as number)
         }
     }, [isPlaying, steps.length, speed, onInteract])
 
@@ -94,9 +92,10 @@ const FoundationVisualizer: React.FC<Props> = ({ type, moduleId, mode, edgeCase,
 
     // Render Legacy Component
     if (isLegacy && EngineOrComponent) {
+        const Component = EngineOrComponent as React.FC<any>
         return (
             <div className="flex-1 w-full h-full p-8 flex items-center justify-center overflow-hidden relative text-white">
-                <EngineOrComponent moduleId={moduleId} mode={mode || undefined} edgeCase={edgeCase || undefined} />
+                <Component moduleId={moduleId} mode={mode || undefined} edgeCase={edgeCase || undefined} />
             </div>
         )
     }
@@ -108,92 +107,97 @@ const FoundationVisualizer: React.FC<Props> = ({ type, moduleId, mode, edgeCase,
         </div>
     )
 
-    const Visualizer = EngineOrComponent.VisualizerComponent
-    const currentState = steps[currentIndex]
+    if (!isLegacy && 'VisualizerComponent' in EngineOrComponent) {
+        const engine = EngineOrComponent as PatternEngine<any, any>
+        const Visualizer = engine.VisualizerComponent
+        const currentState = steps[currentIndex]
+
+        return (
+            <div className="flex-1 w-full h-full p-8 flex flex-col overflow-hidden relative">
+                {!isVerified && shouldVerify && (
+                    <PatternHypothesisOverlay
+                        correctPattern={moduleId}
+                        onComplete={() => {
+                            setIsVerified(true)
+                            if (onInteract) onInteract()
+                        }}
+                    />
+                )}
+
+                {(isVerified || !shouldVerify) && currentState && (
+                    <>
+                        <div className="flex-1 relative rounded-3xl overflow-hidden bg-black/20 border border-white/5 shadow-inner">
+                            <Visualizer
+                                state={currentState}
+                                config={{ mode: mode || 'fixed_window', edgeCase }}
+                                input={input}
+                            />
+                        </div>
+
+                        <div className="h-20 mt-6 flex items-center justify-between px-8 bg-[#2b0d38] border border-white/5 rounded-2xl">
+                            <div className="flex items-center gap-4">
+                                <button onClick={handleReset} className="p-3 rounded-xl hover:bg-white/5 text-white/40 hover:text-white transition-colors">
+                                    <RotateCcw size={18} />
+                                </button>
+                                <div className="h-8 w-px bg-white/5" />
+                                <button onClick={() => handleStep('back')} className="p-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-colors">
+                                    <SkipBack size={20} />
+                                </button>
+                                <button
+                                    onClick={handlePlayPause}
+                                    className="w-12 h-12 flex items-center justify-center rounded-xl bg-[#EC4186] text-white hover:scale-105 transition-transform shadow-[0_0_20px_rgba(236,65,134,0.3)]"
+                                >
+                                    {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-0.5" />}
+                                </button>
+                                <button onClick={() => handleStep('forward')} className="p-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-colors">
+                                    <SkipForward size={20} />
+                                </button>
+                            </div>
+
+                            <div className="flex-1 mx-8">
+                                <div className="flex justify-between text-[10px] text-white/30 font-mono uppercase tracking-widest mb-2">
+                                    <span>Step {currentIndex + 1} / {steps.length}</span>
+                                    <span>{Math.round(((currentIndex + 1) / (steps.length || 1)) * 100)}% Complete</span>
+                                </div>
+                                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden cursor-pointer" onClick={(e) => {
+                                    const rect = e.currentTarget.getBoundingClientRect()
+                                    const x = e.clientX - rect.left
+                                    const pct = x / rect.width
+                                    setCurrentIndex(Math.floor(pct * steps.length))
+                                }}>
+                                    <div
+                                        className="h-full bg-[#EC4186] transition-all duration-100 ease-linear"
+                                        style={{ width: `${((currentIndex + 1) / (steps.length || 1)) * 100}%` }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <span className="text-[10px] text-white/30 font-mono uppercase">Speed</span>
+                                <div className="flex bg-white/5 rounded-lg p-1">
+                                    {[0.5, 1, 2].map(s => (
+                                        <button
+                                            key={s}
+                                            onClick={() => setSpeed(s)}
+                                            className={`px-2 py-1 rounded-md text-[10px] font-bold transition-all ${speed === s ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/60'}`}
+                                        >
+                                            {s}x
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+        )
+    }
 
     return (
-        <div className="flex-1 w-full h-full p-8 flex flex-col overflow-hidden relative">
-            {!isVerified && shouldVerify && (
-                <PatternHypothesisOverlay
-                    correctPattern={moduleId}
-                    onComplete={() => {
-                        setIsVerified(true)
-                        if (onInteract) onInteract()
-                    }}
-                />
-            )}
-
-            {(isVerified || !shouldVerify) && currentState && (
-                <>
-                    {/* Visualizer Area */}
-                    <div className="flex-1 relative rounded-3xl overflow-hidden bg-black/20 border border-white/5 shadow-inner">
-                        <Visualizer
-                            state={currentState}
-                            config={{ mode: mode || 'fixed_window', edgeCase }}
-                            input={input}
-                        />
-                    </div>
-
-                    {/* Universal Controls */}
-                    <div className="h-20 mt-6 flex items-center justify-between px-8 bg-[#2b0d38] border border-white/5 rounded-2xl">
-                        <div className="flex items-center gap-4">
-                            <button onClick={handleReset} className="p-3 rounded-xl hover:bg-white/5 text-white/40 hover:text-white transition-colors">
-                                <RotateCcw size={18} />
-                            </button>
-                            <div className="h-8 w-px bg-white/5" />
-                            <button onClick={() => handleStep('back')} className="p-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-colors">
-                                <SkipBack size={20} />
-                            </button>
-                            <button
-                                onClick={handlePlayPause}
-                                className="w-12 h-12 flex items-center justify-center rounded-xl bg-accent-blue text-black hover:scale-105 transition-transform shadow-glow-blue"
-                            >
-                                {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-0.5" />}
-                            </button>
-                            <button onClick={() => handleStep('forward')} className="p-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-colors">
-                                <SkipForward size={20} />
-                            </button>
-                        </div>
-
-                        {/* Scrubber / Progress */}
-                        <div className="flex-1 mx-8">
-                            <div className="flex justify-between text-[10px] text-white/30 font-mono uppercase tracking-widest mb-2">
-                                <span>Step {currentIndex + 1} / {steps.length}</span>
-                                <span>{Math.round(((currentIndex + 1) / steps.length) * 100)}% Complete</span>
-                            </div>
-                            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden cursor-pointer" onClick={(e) => {
-                                const rect = e.currentTarget.getBoundingClientRect()
-                                const x = e.clientX - rect.left
-                                const pct = x / rect.width
-                                setCurrentIndex(Math.floor(pct * steps.length))
-                            }}>
-                                <div
-                                    className="h-full bg-accent-blue transition-all duration-100 ease-linear"
-                                    style={{ width: `${((currentIndex + 1) / steps.length) * 100}%` }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <span className="text-[10px] text-white/30 font-mono uppercase">Speed</span>
-                            <div className="flex bg-white/5 rounded-lg p-1">
-                                {[0.5, 1, 2].map(s => (
-                                    <button
-                                        key={s}
-                                        onClick={() => setSpeed(s)}
-                                        className={`px-2 py-1 rounded-md text-[10px] font-bold transition-all ${speed === s ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white/60'}`}
-                                    >
-                                        {s}x
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
+        <div className="p-12 text-center text-white/20 font-mono italic">
+            Visual Model Engine for {type} ({moduleId}) under construction...
         </div>
     )
 }
-
 
 export default FoundationVisualizer

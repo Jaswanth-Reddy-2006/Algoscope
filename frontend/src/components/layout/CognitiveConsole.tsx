@@ -62,8 +62,8 @@ const CognitiveConsole: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <MetricCard label="Attempts" value={stats.attempts} />
                         <MetricCard label="Optimality" value={stats.confidence > 70 ? 'High' : 'Scaling'} />
-                        <MetricCard label="Space Load" value={currentProblem.efficiency.optimal.space} />
-                        <MetricCard label="Efficiency" value={currentProblem.efficiency.optimal.time} />
+                        <MetricCard label="Space Load" value={currentProblem.efficiency?.optimal.space || '—'} />
+                        <MetricCard label="Efficiency" value={currentProblem.efficiency?.optimal.time || '—'} />
                     </div>
                 </section>
 

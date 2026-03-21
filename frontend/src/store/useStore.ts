@@ -3,6 +3,7 @@ import { Problem, AlgorithmType } from '../types'
 import { generateFallbackSteps } from '../utils/algoGenerators'
 import { getStrategyForProblem } from '../registry/problemStrategyRegistry'
 import fallbackProblems from '../data/problems.json'
+import { progressService } from '../services/api'
 
 
 interface PatternStats {
@@ -45,6 +46,11 @@ interface PatternStats {
     drillScore?: number      // "Drills"
 }
 
+interface ComparisonState {
+    mode: 'brute' | 'optimal'
+    variantIndex: number
+}
+
 interface AlgoScopeState {
     currentProblem: Problem | null
     currentStepIndex: number
@@ -54,9 +60,11 @@ interface AlgoScopeState {
     playbackSpeed: number
     customInput: string
     customTarget: string
+    labInputs: Record<string, any>
     isLoading: boolean
     error: string | null
     isSidebarCollapsed: boolean
+    isHubOpen: boolean
     problems: Problem[]
     isEngineInitialized: boolean
     patternStats: Record<string, PatternStats>
@@ -81,7 +89,9 @@ interface AlgoScopeState {
     setSpeed: (speed: number) => void
     setCustomInput: (input: string) => void
     setCustomTarget: (target: string) => void
+    setLabInput: (name: string, value: any) => void
     setSidebarCollapsed: (collapsed: boolean) => void
+    setHubOpen: (open: boolean) => void
     refreshSteps: () => Promise<void>
     nextStep: () => void
     prevStep: () => void
@@ -107,6 +117,13 @@ interface AlgoScopeState {
     setObservationText: (text: string | null) => void
     totalSteps: number
     setTotalSteps: (steps: number) => void
+    selectedVariantIndex: number
+    setVariantIndex: (index: number) => void
+    compareLeft: ComparisonState
+    compareRight: ComparisonState
+    compareLeftSteps: any[]
+    compareRightSteps: any[]
+    setCompareSide: (side: 'left' | 'right', config: Partial<ComparisonState>) => void
 }
 
 interface AdaptiveBehavior {
@@ -136,9 +153,11 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     playbackSpeed: 500,
     customInput: '',
     customTarget: '',
+    labInputs: {},
     isLoading: false,
     error: null,
     isSidebarCollapsed: false,
+    isHubOpen: false,
     problems: [],
     patternStats: JSON.parse(localStorage.getItem('algoScope_patternStats') || '{}'),
     isEngineInitialized: false,
@@ -149,6 +168,11 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     activePseudoLine: null,
     observationText: null,
     totalSteps: 0,
+    selectedVariantIndex: 0,
+    compareLeft: { mode: 'brute', variantIndex: 0 },
+    compareRight: { mode: 'optimal', variantIndex: 0 },
+    compareLeftSteps: [],
+    compareRightSteps: [],
 
     trackActivity: (pattern: string, metric: keyof Omit<PatternStats, 'confidence'>, value = 1) => {
         set((state) => {
@@ -213,7 +237,10 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
         compareMode: false,
         isBruteForce: false,
         error: null,
-        totalSteps: 0
+        totalSteps: 0,
+        selectedVariantIndex: 0,
+        compareLeft: { mode: 'brute', variantIndex: 0 },
+        compareRight: { mode: 'optimal', variantIndex: 0 }
     }),
 
     finalizeThinkingTime: (slug: string) => {
@@ -347,16 +374,12 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             const userId = localStorage.getItem('algoScope_userId') || 'guest_' + Date.now()
             if (!localStorage.getItem('algoScope_userId')) localStorage.setItem('algoScope_userId', userId)
 
-            fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000'}/api/progress/update`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId,
-                    moduleId: algorithmType,
-                    scores: scoresToUpdate,
-                    confidence: newStats.confidence,
-                    subPattern: subPatternData
-                })
+            progressService.updateProgress({
+                userId,
+                moduleId: algorithmType,
+                scores: scoresToUpdate,
+                confidence: newStats.confidence,
+                subPattern: subPatternData
             }).catch(err => console.warn("Sync failed (possibly offline/preview):", err))
 
             localStorage.setItem('algoScope_patternStats', JSON.stringify(updatedStats))
@@ -554,8 +577,52 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     },
 
     setProblem: (problem: Problem) => {
-        const defaultInput = problem.input_settings?.input1.placeholder || ''
-        const defaultTarget = problem.input_settings?.input2.placeholder || ''
+        let defaultInput = problem.input_settings?.input1?.placeholder || ''
+        let defaultTarget = problem.input_settings?.input2?.placeholder || ''
+
+        // Intelligent Lab Input Parsing natively from LeetCode examples
+        if (!problem.input_settings && problem.examples && problem.examples.length > 0) {
+            const exInput = problem.examples[0].input || '';
+            
+            // Extract the first array or string mapping for the primary Custom Input
+            const arrMatch = exInput.match(/\[.*?\]/);
+            const strMatch = exInput.match(/"(.*?)"/);
+            
+            if (arrMatch) {
+                defaultInput = arrMatch[0];
+            } else if (strMatch) {
+                defaultInput = strMatch[0]; // e.g. "abc"
+            } else {
+                // Fallback: Just grab whatever is after the first '='
+                const parts = exInput.split('=');
+                if (parts.length > 1) {
+                    defaultInput = parts[1].split(',')[0].trim();
+                } else {
+                    defaultInput = exInput;
+                }
+            }
+        }
+
+        // Initialize Lab Inputs from labConfig or fallback
+        const initialLabInputs: Record<string, any> = {}
+        if (problem.labConfig) {
+            try {
+                const config = typeof problem.labConfig === 'string' ? JSON.parse(problem.labConfig) : problem.labConfig
+                if (config.parameters) {
+                    config.parameters.forEach((param: any) => {
+                        initialLabInputs[param.name] = param.defaultValue
+                    })
+                }
+            } catch (e) {
+                console.warn("Failed to parse labConfig:", e)
+            }
+        }
+
+        // Backwards compatibility for customInput/customTarget if labInputs is empty
+        if (Object.keys(initialLabInputs).length === 0) {
+            initialLabInputs['input1'] = defaultInput
+            initialLabInputs['input2'] = defaultTarget
+        }
 
         set({
             currentProblem: problem,
@@ -565,7 +632,11 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             isPlaying: false,
             customInput: defaultInput,
             customTarget: defaultTarget,
-            totalSteps: 0
+            labInputs: initialLabInputs,
+            totalSteps: 0,
+            selectedVariantIndex: 0,
+            compareLeft: { mode: 'brute', variantIndex: 0 },
+            compareRight: { mode: 'optimal', variantIndex: 0 }
         })
 
         // Track Attempt & Session
@@ -606,11 +677,29 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             // Default Sort: ID Ascending
             data.sort((a, b) => a.id - b.id)
 
-            // Normalize algorithmType for consistency
-            const normalizedData = data.map(p => ({
-                ...p,
-                algorithmType: (p.algorithmType === 'two_pointer' ? 'two_pointers' : p.algorithmType) as AlgorithmType
-            }))
+            // Normalize algorithmType and parse JSON fields for consistency
+            const normalizedData = data.map(p => {
+                const parseJSON = (val: any) => {
+                    if (!val || typeof val !== 'string') return val;
+                    try { return JSON.parse(val); } catch { return val; }
+                };
+
+                return {
+                    ...p,
+                    algorithmType: (p.algorithmType === 'two_pointer' ? 'two_pointers' : p.algorithmType) as AlgorithmType,
+                    brute_force_steps: parseJSON(p.brute_force_steps),
+                    optimal_steps: parseJSON(p.optimal_steps),
+                    thinking_guide: parseJSON(p.thinking_guide),
+                    complexity: parseJSON(p.complexity),
+                    labConfig: parseJSON(p.labConfig),
+                    structuredExamples: parseJSON(p.structuredExamples),
+                    optimal_variants: parseJSON(p.optimal_variants),
+                    constraints: parseJSON(p.constraints),
+                    edgeCases: parseJSON(p.edgeCases),
+                    patternSignals: parseJSON(p.patternSignals),
+                    secondaryPatterns: parseJSON(p.secondaryPatterns),
+                };
+            });
 
             set({ problems: normalizedData as Problem[] })
         } catch (err) {
@@ -630,12 +719,10 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
         try {
             // Fetch User Progress
-            const response = await fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000'}/api/progress/${userId}`)
-            if (response.ok) {
-                const progressData = await response.json()
-                const newPatternStats = { ...get().patternStats }
+            const progressData = await progressService.getProgress(userId)
+            const newPatternStats = { ...get().patternStats }
 
-                progressData.forEach((p: any) => {
+            progressData.forEach((p: any) => {
                     newPatternStats[p.moduleId] = {
                         ...newPatternStats[p.moduleId],
                         // Granular scores
@@ -653,8 +740,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                     } as PatternStats
                 })
 
-                set({ patternStats: newPatternStats })
-            }
+            set({ patternStats: newPatternStats })
         } catch (e) {
             console.error("Failed to load user progress:", e)
         }
@@ -679,7 +765,28 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                 data = await response.json()
             }
 
-            get().setProblem(data!)
+            // Ensure JSON fields are parsed if they come as strings
+            const parseJSON = (val: any) => {
+                if (!val || typeof val !== 'string') return val;
+                try { return JSON.parse(val); } catch { return val; }
+            };
+
+            const parsedData = {
+                ...data,
+                brute_force_steps: parseJSON(data?.brute_force_steps),
+                optimal_steps: parseJSON(data?.optimal_steps),
+                thinking_guide: parseJSON(data?.thinking_guide),
+                complexity: parseJSON(data?.complexity),
+                labConfig: parseJSON(data?.labConfig),
+                structuredExamples: parseJSON(data?.structuredExamples),
+                optimal_variants: parseJSON(data?.optimal_variants),
+                constraints: parseJSON(data?.constraints),
+                edgeCases: parseJSON(data?.edgeCases),
+                patternSignals: parseJSON(data?.patternSignals),
+                secondaryPatterns: parseJSON(data?.secondaryPatterns),
+            } as Problem;
+
+            get().setProblem(parsedData)
 
             if (data?.status === 'complete' || slug === 'add-two-numbers' || slug === 'longest-substring-without-repeating-characters') {
                 await get().refreshSteps()
@@ -713,19 +820,52 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             compareMode: mode === 'compare',
             currentStepIndex: 0,
             isPlaying: false,
-            totalSteps: 0
+            totalSteps: 0,
+            selectedVariantIndex: 0,
+            compareLeft: { mode: 'brute', variantIndex: 0 },
+            compareRight: { mode: 'optimal', variantIndex: 0 }
         })
 
         // Ensure engine is re-initialized if needed (already handled by currentStepIndex: 0 and re-render)
     },
     setPlaying: (playing: boolean) => set({ isPlaying: playing }),
     setSpeed: (speed: number) => set({ playbackSpeed: speed }),
-    setCustomInput: (input: string) => set({ customInput: input }),
-    setCustomTarget: (target: string) => set({ customTarget: target }),
+    setCustomInput: (input: string) => set((state) => ({ 
+        customInput: input, 
+        labInputs: { ...state.labInputs, input1: input } 
+    })),
+    setCustomTarget: (target: string) => set((state) => ({ 
+        customTarget: target, 
+        labInputs: { ...state.labInputs, input2: target } 
+    })),
+    setLabInput: (name: string, value: any) => set((state) => ({ 
+        labInputs: { ...state.labInputs, [name]: value },
+        // Backwards compatibility sync
+        customInput: name === 'input1' || name === 'nums' || name === 's' || name === 'l1' ? 
+            (typeof value === 'object' ? JSON.stringify(value) : String(value)) : state.customInput,
+        customTarget: name === 'input2' || name === 'target' || name === 'p' || name === 'l2' || name === 'nums2' ? 
+            (typeof value === 'object' ? JSON.stringify(value) : String(value)) : state.customTarget
+    })),
     setSidebarCollapsed: (collapsed: boolean) => set({ isSidebarCollapsed: collapsed }),
+    setHubOpen: (open: boolean) => set({ isHubOpen: open }),
     setActivePseudoLine: (line: number | null) => set({ activePseudoLine: line }),
     setObservationText: (text: string | null) => set({ observationText: text }),
     setTotalSteps: (steps: number) => set({ totalSteps: steps }),
+    setVariantIndex: (index: number) => {
+        set({ selectedVariantIndex: index, currentStepIndex: 0, isPlaying: false })
+        get().refreshSteps()
+    },
+    setCompareSide: (side: 'left' | 'right', config: Partial<ComparisonState>) => {
+        set((state) => ({
+            [side === 'left' ? 'compareLeft' : 'compareRight']: {
+                ...state[side === 'left' ? 'compareLeft' : 'compareRight'],
+                ...config
+            },
+            currentStepIndex: 0,
+            isPlaying: false
+        }))
+        get().refreshSteps()
+    },
 
     setCurrentPage: (page: number) => set({ currentPage: page }),
     nextPage: () => set((state) => ({ currentPage: state.currentPage + 1 })),
@@ -762,35 +902,84 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             let parsedInput: any = {}
             const algorithm = currentProblem.algorithmType
             const slug = currentProblem.slug
-
-            // Comprehensive Parsing Logic
-            const nums = parseArray(customInput)
-            const target = isNaN(parseInt(customTarget)) ? customTarget : parseInt(customTarget || '0')
-
-            if (slug === 'median-of-two-sorted-arrays') {
-                parsedInput = { nums1: parseArray(customInput), nums2: parseArray(customTarget) }
-            } else if (slug === 'regular-expression-matching') {
-                parsedInput = { s: customInput, p: customTarget }
-            } else if (slug === 'add-two-numbers' || slug === 'merge-two-sorted-lists') {
-                parsedInput = { l1: parseArray(customInput), l2: parseArray(customTarget) }
-            } else if (slug === 'zigzag-conversion') {
-                parsedInput = { s: customInput, target }
-            } else if (slug === 'string-to-integer-atoi' || slug === 'palindrome-number' || slug === 'reverse-integer' || slug === 'valid-parentheses' || slug === 'valid-palindrome') {
-                // Primitive input problems
-                parsedInput = customInput
-            } else if (algorithm?.includes('two_pointer') || algorithm === 'array' || algorithm === 'binary_search' || algorithm === 'sliding_window') {
-                // Standard structure problems
-                if (algorithm === 'sliding_window' && !currentProblem.slug.includes('sum')) {
-                    parsedInput = customInput
-                } else {
-                    parsedInput = { nums, target }
+            const { labInputs } = get()
+            
+            // Priority 0: Dynamic Lab Config Mapping
+            if (currentProblem.labConfig) {
+                try {
+                    const config = typeof currentProblem.labConfig === 'string' ? JSON.parse(currentProblem.labConfig) : currentProblem.labConfig
+                    if (config.parameters && config.parameters.length > 0) {
+                        const dynamicInput: any = {}
+                        config.parameters.forEach((param: any) => {
+                            const rawVal = labInputs[param.name]
+                            if (param.type === 'array') {
+                                dynamicInput[param.name] = typeof rawVal === 'string' ? parseArray(rawVal) : rawVal
+                            } else if (param.type === 'number') {
+                                dynamicInput[param.name] = Number(rawVal)
+                            } else {
+                                dynamicInput[param.name] = rawVal
+                            }
+                        })
+                        
+                        // Default to the full object for multi-param
+                        parsedInput = dynamicInput
+                    }
+                } catch (e) {
+                    console.warn("Dynamic parsing failed, falling back to legacy:", e)
                 }
-            } else {
-                parsedInput = customInput || ""
+            }
+
+            // Priority 1: Legacy Comprehensive Parsing Logic (Overrides if needed)
+            if (Object.keys(parsedInput).length === 0) {
+                // Comprehensive Parsing Logic
+                const nums = parseArray(customInput)
+                const target = isNaN(parseInt(customTarget)) ? customTarget : parseInt(customTarget || '0')
+
+                if (slug === 'median-of-two-sorted-arrays') {
+                    parsedInput = { nums1: parseArray(customInput), nums2: parseArray(customTarget) }
+                } else if (slug === 'regular-expression-matching') {
+                    parsedInput = { s: customInput, p: customTarget }
+                } else if (slug === 'add-two-numbers' || slug === 'merge-two-sorted-lists') {
+                    parsedInput = { l1: parseArray(customInput), l2: parseArray(customTarget) }
+                } else if (slug === 'zigzag-conversion') {
+                    parsedInput = { s: customInput, target }
+                } else if (slug === 'string-to-integer-atoi' || slug === 'palindrome-number' || slug === 'reverse-integer' || slug === 'valid-parentheses' || slug === 'valid-palindrome') {
+                    // Primitive input problems
+                    parsedInput = customInput
+                } else if (algorithm?.includes('two_pointer') || algorithm === 'array' || algorithm === 'binary_search' || algorithm === 'sliding_window') {
+                    // Standard structure problems
+                    if (algorithm === 'sliding_window' && !currentProblem.slug.includes('sum')) {
+                        parsedInput = customInput
+                    } else {
+                        parsedInput = { nums, target }
+                    }
+                } else {
+                    parsedInput = customInput || ""
+                }
             }
 
             const bruteSteps = strategyPair.brute(parsedInput)
-            const optimalSteps = strategyPair.optimal(parsedInput)
+            let optimalSteps = strategyPair.optimal(parsedInput)
+
+            // Override with variant if selected and available
+            const selectedVariantIndex = get().selectedVariantIndex
+            if (strategyPair.variants && strategyPair.variants[selectedVariantIndex]) {
+                optimalSteps = strategyPair.variants[selectedVariantIndex].generate(parsedInput)
+            }
+
+            // Comparison Step Generation
+            let compareLeftSteps: any[] = []
+            let compareRightSteps: any[] = []
+
+            if (get().compareMode) {
+                const { compareLeft, compareRight } = get()
+
+                compareLeftSteps = compareLeft.mode === 'brute' ? strategyPair.brute(parsedInput) :
+                    (strategyPair.variants?.[compareLeft.variantIndex]?.generate(parsedInput) || strategyPair.optimal(parsedInput))
+
+                compareRightSteps = compareRight.mode === 'brute' ? strategyPair.brute(parsedInput) :
+                    (strategyPair.variants?.[compareRight.variantIndex]?.generate(parsedInput) || strategyPair.optimal(parsedInput))
+            }
 
             // Debug Logging (Phase 2 Master Fix)
             if (window.location.search.includes('debug=true')) {
@@ -809,6 +998,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                         brute_force_steps: bruteSteps,
                         optimal_steps: optimalSteps
                     },
+                    compareLeftSteps,
+                    compareRightSteps,
                     currentStepIndex: 0,
                     isPlaying: false,
                     isEngineInitialized: true,

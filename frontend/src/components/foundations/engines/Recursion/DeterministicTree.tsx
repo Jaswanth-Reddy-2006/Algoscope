@@ -16,7 +16,7 @@ const DeterministicTree: React.FC = () => {
                         refY="3.5"
                         orient="auto"
                     >
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#3B82F6" opacity="0.5" />
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#EE544A" opacity="0.5" />
                     </marker>
                 </defs>
                 <Connections parentId={undefined} />
@@ -86,7 +86,7 @@ const ConnectionLine: React.FC<{ parentId?: string; childId: string }> = ({ pare
             y1={points.y1}
             x2={points.x2}
             y2={points.y2}
-            stroke={isReturned ? "#10B981" : "#3B82F6"}
+            stroke={isReturned ? "#FFFFFF" : "#EE544A"}
             strokeWidth="2"
             strokeDasharray="4 4"
         />
@@ -135,8 +135,8 @@ const TreeNodeComponent: React.FC<{ id: string; node: CallFrame; isActive: boole
             animate={{ scale: 1, opacity: 1 }}
             className={`
                 relative w-14 h-14 rounded-2xl flex flex-col items-center justify-center border-2 transition-all duration-500
-                ${isActive ? 'bg-[#3B82F6]/20 border-[#3B82F6] shadow-[0_0_20px_#3B82F6]' :
-                    isReturned ? 'bg-[#10B981]/10 border-[#10B981]/40 text-emerald-400' :
+                ${isActive ? 'bg-[#EE544A]/20 border-[#EE544A] shadow-[0_0_20px_#EE544A]' :
+                    isReturned ? 'bg-[#FFFFFF]/10 border-[#FFFFFF]/40 text-emerald-400' :
                         'bg-white/5 border-white/10 text-white/40'}
             `}
         >
@@ -160,7 +160,7 @@ const TreeNodeComponent: React.FC<{ id: string; node: CallFrame; isActive: boole
             {isActive && (
                 <motion.div
                     layoutId="active-ring"
-                    className="absolute -inset-2 rounded-[22px] border border-[#3B82F6]/50 animate-pulse"
+                    className="absolute -inset-2 rounded-[22px] border border-[#EE544A]/50 animate-pulse"
                 />
             )}
 

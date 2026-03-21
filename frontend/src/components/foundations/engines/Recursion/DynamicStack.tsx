@@ -24,10 +24,10 @@ const DynamicStack: React.FC = () => {
     const activeStep = steps[currentIndex];
 
     return (
-        <div className="w-full h-full flex flex-col bg-[#0a0118]/40 border-l border-white/5 overflow-hidden">
+        <div className="w-full h-full flex flex-col bg-[#2b0d38]/40 border-l border-white/5 overflow-hidden">
             <div className="p-4 border-b border-white/5 flex items-center justify-between">
                 <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-widest flex items-center gap-2">
-                    <Database size={12} className="text-[#3B82F6]" />
+                    <Database size={12} className="text-[#EE544A]" />
                     Memory Stack Registry
                 </h3>
                 <span className="px-2 py-0.5 rounded-full bg-white/5 text-[10px] text-white/40 font-mono">
@@ -48,13 +48,13 @@ const DynamicStack: React.FC = () => {
                                 className={`
                   relative p-4 rounded-xl border transition-all duration-300
                   ${isActive
-                                        ? 'bg-[#3B82F6]/10 border-[#3B82F6]/40 shadow-[0_0_20px_rgba(59,130,246,0.1)]'
+                                        ? 'bg-[#EE544A]/10 border-[#EE544A]/40 shadow-[0_0_20px_rgba(238, 84, 74,0.1)]'
                                         : 'bg-white/[0.02] border-white/10 opacity-60'}
                 `}
                             >
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
-                                        <Terminal size={12} className={isActive ? 'text-[#3B82F6]' : 'text-white/20'} />
+                                        <Terminal size={12} className={isActive ? 'text-[#EE544A]' : 'text-white/20'} />
                                         <span className="text-xs font-bold text-white font-mono">{frame.functionName}</span>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@ const DynamicStack: React.FC = () => {
                                 {isActive && (
                                     <motion.div
                                         layoutId="stack-pointer"
-                                        className="absolute -left-1 top-1/2 -translate-y-1/2 w-0.5 h-8 bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]"
+                                        className="absolute -left-1 top-1/2 -translate-y-1/2 w-0.5 h-8 bg-[#EE544A] shadow-[0_0_10px_#EE544A]"
                                     />
                                 )}
                             </motion.div>
@@ -96,7 +96,7 @@ const DynamicStack: React.FC = () => {
                 </div>
                 <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
                     <motion.div
-                        className="h-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]"
+                        className="h-full bg-gradient-to-r from-[#EE544A] to-[#60A5FA]"
                         animate={{ width: `${Math.min((stackFrames.length / 10) * 100, 100)}%` }}
                     />
                 </div>

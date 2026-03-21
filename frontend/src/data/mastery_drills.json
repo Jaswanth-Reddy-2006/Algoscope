@@ -1,5 +1,5 @@
 {
-    "two_pointer": [
+    "two_pointers": [
         {
             "id": "tp_1",
             "type": "signal_recognition",
@@ -118,7 +118,7 @@
             "explanation": "When shrinking, we must remove the character at the `left` pointer to resolve the conflict, not the new character at `right`."
         }
     ],
-    "linked_list": [
+    "linked_lists": [
         {
             "id": "ll_1",
             "type": "signal_recognition",
@@ -147,6 +147,66 @@
             ],
             "correctAnswer": "Reference to the next node is lost before moving.",
             "explanation": "By setting `curr.next = prev`, we lose the link to the rest of the list. We must save `next = curr.next` first."
+        }
+    ],
+    "dfs": [
+        {
+            "id": "tr_1",
+            "type": "signal_recognition",
+            "scenario": "Finding the maximum depth of a binary tree.",
+            "question": "Which traversal method is most naturally recursive for this?",
+            "options": [
+                "Pre-order",
+                "In-order",
+                "Post-order (Depth First)",
+                "Level-order (Breadth First)"
+            ],
+            "correctAnswer": "Post-order (Depth First)",
+            "explanation": "To know the depth of a node, you first need to know the depth of its left and right subtrees, then add 1. This is a post-order dependency."
+        },
+        {
+            "id": "tr_2",
+            "type": "invariant_identification",
+            "scenario": "Validating a Binary Search Tree (BST).",
+            "question": "What invariant must hold for every node in a BST during traversal?",
+            "options": [
+                "Left child > Node > Right child",
+                "Left subtree max < Node < Right subtree min",
+                "Node is always greater than both children",
+                "Tree must be balanced"
+            ],
+            "correctAnswer": "Left subtree max < Node < Right subtree min",
+            "explanation": "Every node in the left subtree must be less than the node, and every node in the right subtree must be greater."
+        }
+    ],
+    "dp_1d": [
+        {
+            "id": "dp_1",
+            "type": "signal_recognition",
+            "scenario": "Calculating the nth Fibonacci number efficiently.",
+            "question": "Why is DP preferred over simple recursion here?",
+            "options": [
+                "Recursion causes stack overflow.",
+                "Recursion repeats calculations for the same subproblems (O(2^n)).",
+                "DP uses less memory.",
+                "Recursion is not possible for Fibonacci."
+            ],
+            "correctAnswer": "Recursion repeats calculations for the same subproblems (O(2^n)).",
+            "explanation": "DP stores results of subproblems (memoization) to ensure each is calculated only once, reducing complexity to O(n)."
+        },
+        {
+            "id": "dp_2",
+            "type": "invariant_identification",
+            "scenario": "Coin Change Problem: finding minimum coins for a target amount.",
+            "question": "What is the standard state definition for this DP?",
+            "options": [
+                "dp[i] = total coins using the i-th coin.",
+                "dp[i] = minimum coins to make amount i.",
+                "dp[i] = maximum amount possible with i coins.",
+                "dp[i] = number of ways to pick coins."
+            ],
+            "correctAnswer": "dp[i] = minimum coins to make amount i.",
+            "explanation": "The state focuses on the target amount 'i' and finding the optimal (minimum) value for it."
         }
     ]
 }

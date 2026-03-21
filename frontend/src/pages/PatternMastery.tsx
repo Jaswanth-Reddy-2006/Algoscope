@@ -106,16 +106,33 @@ const PatternMastery = () => {
 
     if (!pattern || drills.length === 0) {
         return (
-            <div className="flex-1 flex items-center justify-center mesh-bg font-outfit">
-                <div className="text-center">
-                    <h2 className="text-xl font-bold text-white mb-2">No Drills Found</h2>
-                    <p className="text-white/40 mb-6">Drill modules for {(pattern || 'this pattern').replace('_', ' ')} are being synchronized. Focus on foundation problems to build base mastery.</p>
-                    <button
-                        onClick={() => navigate('/pattern-profile')}
-                        className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-white font-bold transition-colors"
-                    >
-                        Return to Profile
-                    </button>
+            <div className="flex-1 flex items-center justify-center bg-[#0f0314] font-outfit relative overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-[#EC4186]/5 blur-[120px] rounded-full" />
+                </div>
+                <div className="text-center glass-card p-12 rounded-[40px] border border-white/5 bg-white/[0.02] max-w-lg z-10 relative">
+                    <div className="w-20 h-20 rounded-3xl bg-[#EC4186]/10 flex items-center justify-center mx-auto mb-6 border border-[#EC4186]/20 shadow-glow">
+                        <Target size={40} className="text-[#EC4186]" />
+                    </div>
+                    <h2 className="text-3xl font-black text-white mb-3 uppercase tracking-tight">Neural Drills Inactive</h2>
+                    <p className="text-white/40 mb-8 max-w-md mx-auto leading-relaxed">
+                        Precision drills for <span className="text-white font-bold capitalize">{(pattern || 'this pattern').replace('_', ' ')}</span> are currently being calibrated. Please focus on standard foundation problems to build base mastery.
+                    </p>
+                    <div className="flex items-center justify-center gap-4">
+                        <button
+                            onClick={() => navigate(`/problems?pattern=${pattern}`)}
+                            className="px-8 py-4 bg-[#EC4186] text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#EC4186]/90 transition-all shadow-glow flex items-center gap-2"
+                        >
+                            Explore Platform Problems
+                            <ArrowRight size={16} />
+                        </button>
+                        <button
+                            onClick={() => navigate('/pattern-profile')}
+                            className="px-8 py-4 bg-white/5 hover:bg-white/10 rounded-xl text-white/60 font-bold transition-colors uppercase tracking-widest text-xs border border-white/10"
+                        >
+                            Back
+                        </button>
+                    </div>
                 </div>
             </div>
         )

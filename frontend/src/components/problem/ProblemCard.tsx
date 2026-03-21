@@ -10,7 +10,7 @@ interface ProblemCardProps {
 }
 
 const ProblemCard: React.FC<ProblemCardProps> = ({ problem, stats }) => {
-    const formattedId = String(problem.id).padStart(3, '0')
+    const formattedId = `LE${problem.id}`
     const confidence = stats?.confidence || 0
     const isNew = !stats || stats.attempts === 0
     const isStrong = confidence >= 80

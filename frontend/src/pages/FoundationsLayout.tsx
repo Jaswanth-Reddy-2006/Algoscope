@@ -50,9 +50,9 @@ const FoundationsLayout = () => {
     }
 
     return (
-        <div className="flex-1 flex flex-col min-w-0 bg-background font-outfit overflow-hidden">
+        <div className="flex-1 flex flex-col min-w-0 bg-[#0f0314] font-outfit overflow-hidden">
             {/* Minimal Header */}
-            <div className="h-20 px-8 flex items-center justify-between border-b border-white/5 bg-background/50 backdrop-blur-md z-10 shrink-0">
+            <div className="h-20 px-8 pt-8 flex items-center justify-between border-b border-white/5 bg-[#0f0314]/50 backdrop-blur-md z-10 shrink-0">
                 <div className="flex items-center gap-4">
                     {selectedCategory && (
                         <button

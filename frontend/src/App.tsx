@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import { AnimatePresence } from 'framer-motion'
 import { useStore } from './store/useStore'
@@ -13,7 +13,21 @@ const PatternProfile = lazy(() => import('./pages/PatternProfile'))
 const PatternMastery = lazy(() => import('./pages/PatternMastery'))
 const FoundationsLayout = lazy(() => import('./pages/FoundationsLayout'))
 const FoundationModule = lazy(() => import('./components/foundations/FoundationModule'))
+const Login = lazy(() => import('./pages/auth/Login'))
+const AuthSuccess = lazy(() => import('./pages/auth/AuthSuccess'))
+const LeetCodeConnect = lazy(() => import('./pages/LeetCodeConnect'))
+const Analysis = lazy(() => import('./pages/Analysis'))
+const Settings = lazy(() => import('./pages/Settings'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+    const token = localStorage.getItem('algoscope_token');
+
+    if (!token) {
+        return <Navigate to="/login" replace />;
+    }
+    return <>{children}</>;
+};
 
 const PageLoader = () => (
     <div className="flex-1 flex items-center justify-center mesh-bg">
@@ -28,22 +42,29 @@ const AnimatedRoutes = () => {
             <Suspense fallback={<PageLoader />}>
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/auth-success" element={<AuthSuccess />} />
+                    
+                    {/* Public Routes */}
                     <Route path="/problems" element={<ProblemList />} />
-                    <Route path="/problems/:slug" element={<ProblemLab />} />
-                    <Route path="/pattern-profile" element={<PatternProfile />} />
-                    <Route path="/mastery/:pattern" element={<PatternMastery />} />
-
-                    {/* Foundations - Standard Redirect */}
                     <Route path="/foundations" element={<FoundationsLayout />} />
-
-                    {/* Core Patterns - Strict Nesting */}
-                    <Route path="/foundations/core_patterns/:patternId" element={<FoundationModule />} />
-                    <Route path="/foundations/core_patterns/:patternId/:activeTab" element={<FoundationModule />} />
-                    <Route path="/foundations/core_patterns/:patternId/:activeTab/:subPatternId" element={<FoundationModule />} />
-
-                    {/* Basic Patterns / Legacy Fallback */}
                     <Route path="/foundations/:category" element={<FoundationsLayout />} />
-                    <Route path="/foundations/:category/:moduleId" element={<FoundationModule />} />
+
+                    {/* Protected Routes */}
+                    <Route path="/problems/:slug" element={<ProtectedRoute><ProblemLab /></ProtectedRoute>} />
+                    <Route path="/pattern-profile" element={<ProtectedRoute><PatternProfile /></ProtectedRoute>} />
+                    <Route path="/mastery/:pattern" element={<ProtectedRoute><PatternMastery /></ProtectedRoute>} />
+                    <Route path="/connect-leetcode" element={<ProtectedRoute><LeetCodeConnect /></ProtectedRoute>} />
+                    <Route path="/analysis" element={<ProtectedRoute><Analysis /></ProtectedRoute>} />
+                    <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+
+                    {/* Core Patterns - Strict Nesting (Protected) */}
+                    <Route path="/foundations/core_patterns/:patternId" element={<ProtectedRoute><FoundationModule /></ProtectedRoute>} />
+                    <Route path="/foundations/core_patterns/:patternId/:activeTab" element={<ProtectedRoute><FoundationModule /></ProtectedRoute>} />
+                    <Route path="/foundations/core_patterns/:patternId/:activeTab/:subPatternId" element={<ProtectedRoute><FoundationModule /></ProtectedRoute>} />
+
+                    {/* Basic Patterns / Legacy Fallback (Protected) */}
+                    <Route path="/foundations/:category/:moduleId" element={<ProtectedRoute><FoundationModule /></ProtectedRoute>} />
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>
@@ -66,7 +87,7 @@ const App: React.FC = () => {
     // Strict Strategy Validation (Master Fix)
     React.useEffect(() => {
         problems.forEach(problem => {
-            if (!problemStrategyRegistry[problem.slug]) {
+            if (!problemStrategyRegistry[problem.slug] && !problem.slug.startsWith('pattern-drill-')) {
                 console.warn(`[Stabilization] Missing visualization strategy for: ${problem.title} (${problem.slug})`)
             }
         });

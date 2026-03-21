@@ -146,7 +146,7 @@ const StackQueueVisualizer: React.FC<Props> = ({ type }) => {
                                     y: 0,
                                     x: 0,
                                     backgroundColor: highlightedIndex === i
-                                        ? (type === 'stack' ? 'rgba(168, 85, 247, 0.4)' : 'rgba(16, 185, 129, 0.4)')
+                                        ? (type === 'stack' ? 'rgba(236, 65, 134, 0.4)' : 'rgba(16, 185, 129, 0.4)')
                                         : 'rgba(255,255,255,0.05)',
                                     borderColor: highlightedIndex === i
                                         ? (type === 'stack' ? '#EC4186' : '#FFFFFF')

@@ -17,7 +17,7 @@ interface Props {
 
 const StackPanel: React.FC<Props> = ({ frames, activeFrameId }) => {
     return (
-        <div className="w-full h-full flex flex-col bg-[#0a0118]/40 border-l border-white/5 overflow-hidden">
+        <div className="w-full h-full flex flex-col bg-[#2b0d38]/40 border-l border-white/5 overflow-hidden">
             <div className="p-4 border-b border-white/5 flex items-center justify-between">
                 <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-widest flex items-center gap-2">
                     <Cpu size={12} className="text-[#EC4186]" />

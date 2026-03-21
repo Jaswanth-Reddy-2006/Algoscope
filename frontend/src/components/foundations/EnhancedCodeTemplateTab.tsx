@@ -54,7 +54,7 @@ export const EnhancedCodeTemplateTab: React.FC<Props> = ({ module, activeSubPatt
                             className={`
                                 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300
                                 ${activeSub?.id === pattern.id
-                                    ? 'bg-accent-blue/10 text-accent-blue border border-accent-blue/30 shadow-[0_0_20px_rgba(59,130,246,0.1)]'
+                                    ? 'bg-accent-blue/10 text-accent-blue border border-accent-blue/30 shadow-[0_0_20px_rgba(238, 84, 74,0.1)]'
                                     : 'bg-white/5 text-white/30 border border-white/5 hover:bg-white/10 hover:text-white/60'
                                 }
                             `}

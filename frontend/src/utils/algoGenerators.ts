@@ -1382,6 +1382,7 @@ export const generateRegExpMatching = (s: string, p: string): Step[] => {
 }
 
 
+
 /**
  * SORT COLORS: DUTCH NATIONAL FLAG (O(N))
  */
@@ -1528,6 +1529,331 @@ export const generateSortColorsBrute = (nums: number[]): Step[] => {
             phase: 'found',
             explanation: "Array sorted using two passes (Count and Write)."
         }
+    })
+
+    return steps
+}
+/**
+ * JUMP GAME: GREEDY (O(N))
+ */
+export const generateJumpGame = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    let maxReach = 0
+
+    steps.push({
+        step: 0,
+        description: "Starting Jump Game. Can we reach the last index?",
+        state: { array: nums, pointers: { i: 0 }, customState: { maxReach: 0 }, explanation: "Initializing maximum reachable distance to 0.", phase: 'init' }
+    })
+
+    for (let i = 0; i < nums.length; i++) {
+        if (i > maxReach) {
+            steps.push({
+                step: steps.length,
+                description: `Stopped at index ${i}. Max reach ${maxReach} is less than current index.`,
+                state: { array: nums, pointers: { i }, customState: { maxReach }, explanation: "Game Over: Cannot jump further.", phase: 'not_found' }
+            })
+            return steps
+        }
+
+        const currentReach = i + nums[i]
+        const oldMax = maxReach
+        maxReach = Math.max(maxReach, currentReach)
+
+        steps.push({
+            step: steps.length,
+            description: `At index ${i} (value ${nums[i]}). New potential reach: ${currentReach}`,
+            state: {
+                array: nums,
+                pointers: { i },
+                customState: { maxReach, currentReach },
+                highlightIndices: [i],
+                explanation: currentReach > oldMax 
+                    ? `Expanded max reach from ${oldMax} to ${maxReach}!` 
+                    : `Current jump doesn't exceed existing max reach of ${maxReach}.`,
+                phase: 'searching'
+            }
+        })
+
+        if (maxReach >= nums.length - 1) {
+            steps.push({
+                step: steps.length,
+                description: `Success! Max reach ${maxReach} covers the end of the array.`,
+                state: { array: nums, customState: { maxReach }, phase: 'found', explanation: "Reached the goal index." }
+            })
+            return steps
+        }
+    }
+
+    return steps
+}
+
+/**
+ * MERGE INTERVALS: SORT + SCAN (O(N log N))
+ */
+export const generateMergeIntervals = (intervals: number[][]): Step[] => {
+    const steps: Step[] = []
+    if (intervals.length === 0) return []
+
+    const sorted = [...intervals].sort((a, b) => a[0] - b[0])
+    const merged: number[][] = []
+
+    steps.push({
+        step: 0,
+        description: "Starting Merge Intervals. Sorting intervals by start time.",
+        state: { intervals: sorted, result: [], explanation: "Sorted intervals to process them chronologically.", phase: 'init' }
+    })
+
+    let current = sorted[0]
+    merged.push(current)
+
+    for (let i = 1; i < sorted.length; i++) {
+        const next = sorted[i]
+        const last = merged[merged.length - 1]
+        const overlaps = next[0] <= last[1]
+
+        steps.push({
+            step: steps.length,
+            description: `Comparing [${last}] and [${next}].`,
+            state: {
+                intervals: sorted,
+                pointers: { i },
+                result: JSON.parse(JSON.stringify(merged)),
+                highlightIndices: [i, merged.length - 1],
+                explanation: overlaps 
+                    ? `Overlapping detected (${next[0]} <= ${last[1]}). Merging...` 
+                    : `No overlap. Appending [${next}] as a new interval.`,
+                phase: 'searching'
+            }
+        })
+
+        if (overlaps) {
+            last[1] = Math.max(last[1], next[1])
+        } else {
+            merged.push(next)
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Merge process complete.",
+        state: { result: merged, phase: 'found', explanation: `Consolidated into ${merged.length} intervals.` }
+    })
+
+    return steps
+}
+
+/**
+ * CLIMBING STAIRS: DP (O(N))
+ */
+export const generateClimbingStairs = (n: number): Step[] => {
+    const steps: Step[] = []
+    if (n <= 2) return [{ step: 0, description: `For n=${n}, ways = ${n}`, state: { phase: 'found', explanation: "" } }]
+
+    const dp = new Array(n + 1).fill(0)
+    dp[1] = 1
+    dp[2] = 2
+
+    steps.push({
+        step: 0,
+        description: "Starting Climbing Stairs DP.",
+        state: { array: dp, explanation: "Base cases: dp[1]=1, dp[2]=2.", phase: 'init' }
+    })
+
+    for (let i = 3; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2]
+        steps.push({
+            step: steps.length,
+            description: `Calculating ways for step ${i}.`,
+            state: {
+                array: [...dp],
+                pointers: { i },
+                highlightIndices: [i - 1, i - 2],
+                explanation: `Ways for step ${i} = dp[${i-1}] + dp[${i-2}] = ${dp[i-1]} + ${dp[i-2]} = ${dp[i]}.`,
+                phase: 'searching'
+            }
+        })
+    }
+
+    steps.push({
+        step: steps.length,
+        description: `Total ways to climb ${n} stairs: ${dp[n]}`,
+        state: { array: dp, phase: 'found', explanation: "Completed Fibonacci-based DP traversal." }
+    })
+
+    return steps
+}
+
+/**
+ * SEARCH A 2D MATRIX: FLATTENED BINARY SEARCH (O(log(m*n)))
+ */
+export const generateSearch2DMatrix = (matrix: number[][], target: number): Step[] => {
+    const steps: Step[] = []
+    const m = matrix.length
+    if (m === 0) return []
+    const n = matrix[0].length
+    let left = 0
+    let right = m * n - 1
+
+    steps.push({
+        step: 0,
+        description: "Starting Binary Search on 2D Matrix.",
+        state: { matrix, pointers: { l: 0, r: m * n - 1 }, explanation: "Treating the 2D matrix as a sorted 1D array.", phase: 'init' }
+    })
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2)
+        const r = Math.floor(mid / n)
+        const c = mid % n
+        const val = matrix[r][c]
+
+        steps.push({
+            step: steps.length,
+            description: `Checking middle index ${mid} (Matrix: [${r}][${c}], Value: ${val}).`,
+            state: {
+                matrix,
+                pointers: { l: left, r: right, mid },
+                highlightIndices: [[r, c]],
+                explanation: val === target 
+                    ? `Found target ${target}!` 
+                    : (val < target ? `${val} < ${target}, searching right half.` : `${val} > ${target}, searching left half.`),
+                phase: val === target ? 'found' : 'searching'
+            }
+        })
+
+        if (val === target) return steps
+        if (val < target) left = mid + 1; else right = mid - 1
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Target not found in matrix.",
+        state: { matrix, phase: 'not_found', explanation: "Search space exhausted." }
+    })
+
+    return steps
+}
+
+/**
+ * MINIMUM WINDOW SUBSTRING: SLIDING WINDOW (O(N))
+ */
+export const generateMinWindowSubstring = (s: string, t: string): Step[] => {
+    const steps: Step[] = []
+    const chars = s.split('')
+    const targetMap: Record<string, number> = {}
+    for (const char of t) targetMap[char] = (targetMap[char] || 0) + 1
+
+    let left = 0, right = 0, required = Object.keys(targetMap).length, formed = 0
+    const windowMap: Record<string, number> = {}
+    let ans = [-1, 0, 0] // length, left, right
+
+    steps.push({
+        step: 0,
+        description: `Starting Sliding Window for Minimum Window Substring of "${t}".`,
+        state: { array: chars as any, pointers: { l: 0, r: 0 }, customState: { targetMap, windowMap: {} }, explanation: "Initializing window and target frequencies.", phase: 'init' }
+    })
+
+    while (right < s.length) {
+        const c = s[right]
+        windowMap[c] = (windowMap[c] || 0) + 1
+        if (targetMap[c] && windowMap[c] === targetMap[c]) formed++
+
+        steps.push({
+            step: steps.length,
+            description: `Expanding window: Added "${c}" at index ${right}.`,
+            state: {
+                array: chars as any,
+                pointers: { l: left, r: right },
+                customState: { formed, required, windowMap: { ...windowMap } },
+                highlightIndices: Array.from({ length: right - left + 1 }, (_, k) => left + k),
+                explanation: formed === required ? "All characters found! Shrinking window..." : `Need ${required - formed} more unique characters.`,
+                phase: 'searching'
+            }
+        })
+
+        while (left <= right && formed === required) {
+            const d = s[left]
+            if (ans[0] === -1 || right - left + 1 < ans[0]) {
+                ans = [right - left + 1, left, right]
+            }
+
+            windowMap[d]--
+            if (targetMap[d] && windowMap[d] < targetMap[d]) formed--
+
+            steps.push({
+                step: steps.length,
+                description: `Shrinking window: Removed "${d}" at index ${left}.`,
+                state: {
+                    array: chars as any,
+                    pointers: { l: left, r: right },
+                    customState: { formed, required, windowMap: { ...windowMap }, bestSoFar: s.substring(ans[1], ans[2] + 1) },
+                    highlightIndices: Array.from({ length: right - left + 1 }, (_, k) => left + k),
+                    explanation: formed < required ? `Lost character "${d}". Looking for replacement.` : "Window still valid. Continuing to shrink...",
+                    phase: 'searching'
+                }
+            })
+            left++
+        }
+        right++
+    }
+
+    const finalResult = ans[0] === -1 ? "" : s.substring(ans[1], ans[2] + 1)
+    steps.push({
+        step: steps.length,
+        description: finalResult ? `Minimum Window identified: "${finalResult}"` : "No valid window found.",
+        state: { array: chars as any, phase: finalResult ? 'found' : 'not_found', explanation: "Sliding window scan complete." }
+    })
+
+    return steps
+}
+
+/**
+ * SUBSETS: BACKTRACKING (O(N * 2^N))
+ */
+export const generateSubsets = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    const results: number[][] = []
+
+    steps.push({
+        step: 0,
+        description: "Starting Backtracking for Subsets.",
+        state: { array: nums, explanation: "Exploring all possible combinations using a choice tree.", phase: 'init' }
+    })
+
+    const backtrack = (start: number, curr: number[]) => {
+        steps.push({
+            step: steps.length,
+            description: `Found subset: [${curr.join(',')}]`,
+            state: {
+                array: nums,
+                customState: { curr, start },
+                explanation: `Adding [${curr.join(',')}] to results. Processing next elements starting from ${start}.`,
+                phase: 'found'
+            }
+        })
+        results.push([...curr])
+
+        for (let i = start; i < nums.length; i++) {
+            backtrack(i + 1, [...curr, nums[i]])
+            steps.push({
+                step: steps.length,
+                description: `Backtracking: Removed ${nums[i]} from subset.`,
+                state: {
+                    array: nums,
+                    customState: { curr, nextIndex: i + 1 },
+                    explanation: "Returning to parent state to explore other branches.",
+                    phase: 'searching'
+                }
+            })
+        }
+    }
+
+    backtrack(0, [])
+
+    steps.push({
+        step: steps.length,
+        description: "All subsets generated.",
+        state: { array: nums, finalAnswer: results, phase: 'found', explanation: `Total Subsets: ${results.length}` }
     })
 
     return steps

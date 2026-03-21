@@ -27,6 +27,14 @@ const replaceTheme = (dir) => {
             content = content.replace(/#0070f3/gi, '#EC4186'); // Dark Blue -> Pink
             content = content.replace(/#10b981/gi, '#FFFFFF'); // Emerald -> White
 
+            // RGBA counterparts
+            content = content.replace(/0, 112, 243/g, '236, 65, 134'); // 0070f3 -> Pink
+            content = content.replace(/0,112,243/g, '236, 65, 134');   // No spaces
+            content = content.replace(/59, 130, 246/g, '238, 84, 74'); // 3b82f6 -> Orange
+            content = content.replace(/59,130,246/g, '238, 84, 74');
+            content = content.replace(/168, 85, 247/g, '236, 65, 134'); // a855f7 -> Pink
+            content = content.replace(/168,85,247/g, '236, 65, 134');
+
             if (content !== originalContent) {
                 fs.writeFileSync(fullPath, content);
             }

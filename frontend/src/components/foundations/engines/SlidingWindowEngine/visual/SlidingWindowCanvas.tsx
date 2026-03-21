@@ -122,7 +122,7 @@ const SlidingWindowCanvas: React.FC<SlidingWindowCanvasProps> = ({
                                         height: isDistinctMode ? '60%' : `${(val / maxVal) * 100}%`,
                                         opacity: isInWindow ? 1 : 0.2,
                                         backgroundColor: isInWindow
-                                            ? (state.conditionMet ? (isDistinctMode ? color : 'rgba(59, 130, 246, 0.4)') : (isDistinctMode ? color : 'rgba(239, 68, 68, 0.4)'))
+                                            ? (state.conditionMet ? (isDistinctMode ? color : 'rgba(238, 84, 74, 0.4)') : (isDistinctMode ? color : 'rgba(239, 68, 68, 0.4)'))
                                             : isLeaving ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
                                         borderColor: isInWindow
                                             ? (state.conditionMet ? (isDistinctMode ? color : '#EE544A') : '#ef4444')

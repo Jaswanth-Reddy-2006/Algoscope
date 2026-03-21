@@ -293,7 +293,7 @@ const LinkedListVisualizer: React.FC = () => {
                                         scale: 1,
                                         x: 0,
                                         borderColor: highlightedNode === node.id ? '#EE544A' : 'rgba(255,255,255,0.1)',
-                                        backgroundColor: highlightedNode === node.id ? 'rgba(59, 130, 246, 0.1)' : 'rgba(255,255,255,0.02)'
+                                        backgroundColor: highlightedNode === node.id ? 'rgba(238, 84, 74, 0.1)' : 'rgba(255,255,255,0.02)'
                                     }}
                                     exit={{ opacity: 0, scale: 0.8, y: 20 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 25 }}

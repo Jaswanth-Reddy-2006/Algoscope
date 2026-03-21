@@ -141,7 +141,7 @@ const RecursionEngineContent: React.FC<{
     }
 
     return (
-        <div className="w-full h-full flex flex-col bg-[#0a0118] overflow-hidden">
+        <div className="w-full h-full flex flex-col bg-[#2b0d38] overflow-hidden">
             <DemoOverlay isRunning={isDemoRunning} onComplete={() => setIsDemoRunning(false)} />
 
             {/* Header */}
@@ -202,7 +202,7 @@ const RecursionEngineContent: React.FC<{
                                     initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
                                     animate={{ opacity: 1, backdropFilter: 'blur(20px)' }}
                                     exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-                                    className="absolute inset-0 z-40 p-12 bg-[#0a0118]/60"
+                                    className="absolute inset-0 z-40 p-12 bg-[#2b0d38]/60"
                                 >
                                     <IterativeView algorithmId={selectedAlgo.id} />
                                 </motion.div>
@@ -316,7 +316,7 @@ const RecursionEngine: React.FC<EngineProps> = ({ moduleId, isBrute }) => {
 
     // Otherwise, render the Pattern Library list of recursion problems
     return (
-        <div className="w-full h-full flex flex-col bg-[#0a0118] overflow-hidden text-white font-sans">
+        <div className="w-full h-full flex flex-col bg-[#2b0d38] overflow-hidden text-white font-sans">
             {/* Top Bar Navigation */}
             <div className="h-16 px-8 border-b border-white/5 flex items-center justify-between bg-black/20">
                 {/* Breadcrumbs */}

@@ -8,38 +8,56 @@ const StateTracker: React.FC = () => {
     const currentProblem = useStore(state => state.currentProblem)
     const currentStepIndex = useStore(state => state.currentStepIndex)
     const isBruteForce = useStore(state => state.isBruteForce)
-    // const compareMode = useStore(state => state.compareMode)
+    const compareMode = useStore(state => state.compareMode)
+    const compareRightSteps = useStore(state => state.compareRightSteps)
 
     if (!currentProblem) return null
 
-    const steps = isBruteForce ? currentProblem.brute_force_steps : currentProblem.optimal_steps
+    const steps = compareMode ? compareRightSteps : (isBruteForce ? currentProblem.brute_force_steps : currentProblem.optimal_steps)
     const currentState = steps?.[currentStepIndex]?.state
     if (!currentState) return null
 
-    const { pointers = {}, customState = {} } = currentState
+    const { pointers = {}, customState = {}, mapState = {}, stack = [] } = currentState
     const items = currentState.array || []
 
-    // Map internal state to standardized labels per spec
     const displayVariables: { label: string, value: any, color?: string }[] = []
 
-    if (isBruteForce) {
-        displayVariables.push({ label: 'INDEX_I', value: (pointers.i != null) ? pointers.i : '?' })
-        displayVariables.push({ label: 'INDEX_J', value: (pointers.j != null) ? pointers.j : '?' })
-        displayVariables.push({ label: 'VALUE_I', value: (pointers.i != null && items[pointers.i as number] != null) ? items[pointers.i as number] : '?' })
-        displayVariables.push({ label: 'VALUE_J', value: (pointers.j != null && items[pointers.j as number] != null) ? items[pointers.j as number] : '?' })
-        displayVariables.push({ label: 'CURRENT_SUM', value: customState.currentSum ?? '?', color: 'text-red-400' })
-        displayVariables.push({ label: 'CYCLE', value: currentStepIndex + 1 })
-    } else {
-        const target = currentState.customState?.target ?? 0
-        const currentVal = (pointers.i != null) ? items[pointers.i as number] : (pointers.index != null ? items[pointers.index as number] : 0)
-        const complement = target - (typeof currentVal === 'number' ? currentVal : 0)
+    // 1. Pointers
+    Object.entries(pointers).forEach(([key, val]) => {
+        if (val === null) return
+        displayVariables.push({ label: `POINTER_${key.toUpperCase()}`, value: val })
+        if (items[val as number] !== undefined) {
+            displayVariables.push({ label: `VALUE_${key.toUpperCase()}`, value: items[val as number] })
+        }
+    })
 
-        displayVariables.push({ label: 'PTR', value: (pointers.i != null) ? pointers.i : (pointers.index ?? 0) })
-        displayVariables.push({ label: 'VAL', value: currentVal || '?' })
-        displayVariables.push({ label: 'COMPLEMENT', value: customState.complement ?? complement, color: 'text-[#EC4186]' })
-        displayVariables.push({ label: 'LOOKUP', value: currentState.phase === 'found' ? 'SUCCESS' : 'SCANNING', color: currentState.phase === 'found' ? 'text-[#EE544A]' : 'text-white/40' })
-        displayVariables.push({ label: 'MAP_SIZE', value: Object.keys(currentState.mapState || {}).length })
+    // 2. Map State
+    if (mapState && Object.keys(mapState).length > 0) {
+        displayVariables.push({ label: 'MAP_SIZE', value: Object.keys(mapState).length, color: 'text-accent-blue' })
+        if (customState.complement !== undefined) {
+            displayVariables.push({ label: 'TARGET_COMP', value: customState.complement, color: 'text-[#EC4186]' })
+        }
     }
+
+    // 3. Stack State
+    if (stack && stack.length > 0) {
+        displayVariables.push({ label: 'STACK_DEPTH', value: stack.length, color: 'text-purple-400' })
+    }
+
+    // 4. Custom & Global Metrics
+    if (customState.currentSum !== undefined) {
+        displayVariables.push({ label: 'CURRENT_SUM', value: customState.currentSum, color: 'text-red-400' })
+    }
+
+    if (currentState.phase) {
+        displayVariables.push({
+            label: 'PHASE',
+            value: currentState.phase.toUpperCase(),
+            color: currentState.phase === 'found' ? 'text-green-400' : 'text-white/40'
+        })
+    }
+
+    displayVariables.push({ label: 'CYCLE', value: currentStepIndex + 1 })
 
     return (
         <div className="h-full flex flex-col bg-[#1b062b] border-l border-white/10 overflow-hidden shadow-2xl">

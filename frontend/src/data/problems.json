@@ -48,8 +48,8 @@
         "space": "O(1)"
       },
       "optimal": {
-        "time": "O(N log N)",
-        "space": "O(1)"
+        "time": "O(N)",
+        "space": "O(N)"
       }
     },
     "patternSignals": [
@@ -80,9 +80,6 @@
       "brute": "for i from 0 to n-1:\n    for j from i+1 to n-1:\n        if nums[i] + nums[j] == target:\n            return [i, j]",
       "optimal": "map = {} // val -> index\nfor i from 0 to n-1:\n    diff = target - nums[i]\n    if diff in map:\n        return [map[diff], i]\n    map[nums[i]] = i"
     },
-    "external_links": {
-      "leetcode": "https://leetcode.com/problems/two-sum/"
-    },
     "input_settings": {
       "input1": {
         "label": "Custom Workspace (Array)",
@@ -92,6 +89,33 @@
         "label": "Target Sum Constraint",
         "placeholder": "19"
       }
+    },
+    "optimal_variants": [
+      {
+        "name": "Hash Map",
+        "explanation": "Uses a frequency map to find the complement of each number in a single pass.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(N)"
+        },
+        "pseudocode": "map = {} \nfor i, n in enumerate(nums):\n    diff = target - n\n    if diff in map: return [map[diff], i]\n    map[n] = i"
+      },
+      {
+        "name": "Two Pointers (Sorted)",
+        "explanation": "If the array is sorted, we can use two pointers at the ends and move them inward based on the current sum.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N log N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "nums.sort()\nl, r = 0, len(nums)-1\nwhile l < r:\n    s = nums[l] + nums[r]\n    if s == target: return [l, r]\n    if s < target: l++\n    else: r--"
+      }
+    ],
+    "external_links": {
+      "leetcode": "https://leetcode.com/problems/two-sum/",
+      "visualgo": "https://visualgo.net/en/sorting",
+      "techiedelight": "https://www.techiedelight.com/two-sum-problem/"
     }
   },
   {
@@ -142,7 +166,9 @@
       }
     },
     "external_links": {
-      "leetcode": "https://leetcode.com/problems/add-two-numbers/"
+      "leetcode": "https://leetcode.com/problems/add-two-numbers/",
+      "geeksforgeeks": "https://www.geeksforgeeks.org/add-two-numbers-represented-by-linked-lists/",
+      "youtube": "https://www.youtube.com/watch?v=wgHm1nJnvQE"
     },
     "input_settings": {
       "input1": {
@@ -339,6 +365,92 @@
       {
         "title": "Cryptography",
         "description": "Large prime number arithmetic used in RSA and Elliptic Curve encryption where keys exceed 2048 bits."
+      }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Linked List",
+        "explanation": "The optimal approach simulates manual 'column-by-column' addition from the least significant digit (LSD) to the most significant. Because the problem reverse-stores the digits (Head = Units, Next = Tens), we traverse from Head to Tail. We maintain a 'carry' state that propagates to the next pair of nodes. This ensures O(max(M, N)) efficiency and handles numbers of infinite length.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Start parallel traversal. Initialize carry = 0.",
+            "state": {
+              "phase": "init",
+              "pointers": {
+                "l1": 0,
+                "l2": 0
+              },
+              "customState": {
+                "carry": 0,
+                "sum": 0
+              },
+              "result": []
+            }
+          },
+          {
+            "step": 2,
+            "description": "Process heads: 2 + 5 = 7. Append 7 to result list.",
+            "state": {
+              "phase": "searching",
+              "pointers": {
+                "l1": 1,
+                "l2": 1
+              },
+              "customState": {
+                "carry": 0,
+                "sum": 7
+              },
+              "result": [
+                7
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "description": "Process next: 4 + 6 = 10. Digit 0, Carry 1.",
+            "state": {
+              "phase": "searching",
+              "pointers": {
+                "l1": 2,
+                "l2": 2
+              },
+              "customState": {
+                "carry": 1,
+                "sum": 10
+              },
+              "result": [
+                7,
+                0
+              ]
+            }
+          },
+          {
+            "step": 4,
+            "description": "Process final: 3 + 4 + 1 = 8. Sum complete.",
+            "state": {
+              "phase": "found",
+              "pointers": {
+                "l1": null,
+                "l2": null
+              },
+              "customState": {
+                "carry": 0,
+                "sum": 8
+              },
+              "result": [
+                7,
+                0,
+                8
+              ]
+            }
+          }
+        ],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(N)"
+        },
+        "pseudocode": "carry = 0\nwhile l1 or l2 or carry:\n    v1 = l1.val if l1 else 0\n    v2 = l2.val if l2 else 0\n    sum = v1 + v2 + carry\n    carry = sum // 10\n    append(sum % 10) to result"
       }
     ]
   },
@@ -560,6 +672,73 @@
         "title": "Genomic Sequencing",
         "description": "Finding non-repetitive DNA sequences in billions of base pairs to identify unique genetic markers."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "The Sliding Window pattern allows us to solve this in a single pass. We use two pointers (Left and Right) to define our window. As we move the Right pointer, we add characters to a Frequency Map. If we hit a duplicate, we shrink the window by moving the Left pointer until the duplicate is gone. This 'dynamic resizing' ensures we only visit each character twice at most.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Window expands: Right pointer at 'a'. Map: {a: 0}. Max length: 1.",
+            "state": {
+              "phase": "searching",
+              "windowRange": [
+                0,
+                0
+              ],
+              "mapState": {
+                "a": true
+              },
+              "customState": {
+                "currentLen": 1
+              }
+            }
+          },
+          {
+            "step": 2,
+            "description": "Window expands: Right pointer at 'b'. Map: {a: 0, b: 1}. Max length: 2.",
+            "state": {
+              "phase": "searching",
+              "windowRange": [
+                0,
+                1
+              ],
+              "mapState": {
+                "a": true,
+                "b": true
+              },
+              "customState": {
+                "currentLen": 2
+              }
+            }
+          },
+          {
+            "step": 3,
+            "description": "Window expands: Right pointer at 'c'. Map: {a: 0, b: 1, c: 2}. Max length: 3.",
+            "state": {
+              "phase": "found",
+              "windowRange": [
+                0,
+                2
+              ],
+              "mapState": {
+                "a": true,
+                "b": true,
+                "c": true
+              },
+              "customState": {
+                "currentLen": 3
+              }
+            }
+          }
+        ],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(min(M, N))"
+        },
+        "pseudocode": "l = 0, maxLen = 0, map = {}\nfor r from 0 to n-1:\n    if s[r] in map:\n        l = max(l, map[s[r]] + 1)\n    map[s[r]] = r\n    maxLen = max(maxLen, r-l+1)"
+      }
     ]
   },
   {
@@ -642,6 +821,18 @@
         "title": "Autonomous Path Median",
         "description": "Synthesizing depth-sensor streams (LIDAR) into a median safety distance calculation in milliseconds."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "Leverage Binary Search to partition the two arrays simultaneously. By ensuring the elements on the left side of the partitions are always smaller than those on the right, we can find the median in logarithmic time without merging.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(log(min(M, N)))",
+          "space": "O(1)"
+        },
+        "pseudocode": "ensure nums1 is shorter\nlow, high = 0, len(nums1)\nwhile low <= high:\n    partitionX = (low + high) // 2\n    partitionY = (total + 1) // 2 - partitionX\n    if maxLeftX <= minRightY and maxLeftY <= minRightX:\n        return median calculation\n    high/low = adjust bounds"
+      }
     ]
   },
   {
@@ -719,6 +910,18 @@
       {
         "title": "Network Protocol Palindromes",
         "description": "Detecting specific data packet patterns that serve as 'headers' or 'footers' in low-latency stream protocols."
+      }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Expand Around Center",
+        "explanation": "The 'Expand Around Center' pattern treats each character (and each gap between characters) as a potential center of a palindrome. By expanding outward as long as characters match, we find the longest palindrome for each center in $O(N)$ time, totaling $O(N^2)$ for the whole string with zero extra space.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N\u00b2)",
+          "space": "O(1)"
+        },
+        "pseudocode": "for i from 0 to n-1:\n    len1 = expand(s, i, i) // odd\n    len2 = expand(s, i, i+1) // even\n    update maxRange if len1 or len2 is larger"
       }
     ]
   },
@@ -798,6 +1001,18 @@
         "title": "Classic Transposition Ciphers",
         "description": "Implementing 'Rail Fence' ciphers used in historical cryptography for basic message encryption."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Cyclic Traversal",
+        "explanation": "Instead of a full matrix, we use an array of strings (one for each row). We traverse the input string once, adding each character to the current row and 'bouncing' the row direction whenever we hit the top or bottom row.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(N)"
+        },
+        "pseudocode": "rows = array of strings\nfor char in s:\n    rows[currRow] += char\n    if currRow == 0 or currRow == max: direction *= -1\n    currRow += direction"
+      }
     ]
   },
   {
@@ -872,6 +1087,18 @@
       {
         "title": "Decimal Arithmetic Verification",
         "description": "Checking numeric properties in accounting software where precise digit-level control is required."
+      }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Digit Manipulation",
+        "explanation": "Repeatedly extract the last digit using `x % 10` and append it to the result `res = res * 10 + lastDigit`. This process is done in a loop until `x` becomes 0, with checks for overflow at each step.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(log X)",
+          "space": "O(1)"
+        },
+        "pseudocode": "while x != 0:\n    pop = x % 10\n    if about_to_overflow: return 0\n    res = res * 10 + pop\n    x /= 10"
       }
     ]
   },
@@ -949,6 +1176,18 @@
       {
         "title": "Embedded Input Handling",
         "description": "Translating user input from keypads or serial monitors into control variables for micro-controllers."
+      }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Deterministic Finite Automata",
+        "explanation": "Use a single-pass implementation that mimics a simple State Machine. Start in 'Whitespace' state, move to 'Sign' state, then finally to 'Digit' state, maintaining the result and checking for overflow on every character.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "skipSpaces(s)\nif +/-: sign = val\nwhile isDigit(s[i]):\n    res = res * 10 + s[i]\n    if overflow: return limit\nreturn res * sign"
       }
     ]
   },
@@ -1029,6 +1268,18 @@
         "title": "Financial Checksumming",
         "description": "Using palindromic properties as simple, fast initial validation for certain data packet structures."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Half-Reversal",
+        "explanation": "Reverse the second half of the number and compare it with the first half. We know we've reached the middle when our reversed number becomes greater than or equal to the remaining original number.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(log N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "if x < 0: return False\nrev = 0\nwhile x > rev:\n    rev = rev * 10 + x % 10\n    x /= 10\nreturn x == rev or x == rev / 10"
+      }
     ]
   },
   {
@@ -1108,6 +1359,18 @@
       {
         "title": "Routing Engines",
         "description": "Used in frameworks like Express or Django to translate URL patterns (e.g., /user/*) into specific function calls."
+      }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Top-Down Memoization",
+        "explanation": "Use Dynamic Programming (Table) or Recursion with Memoization. For each pair (i, j), we check if the current characters match. If the next character in pattern is '*', we have two choices: skip the '*' or continue matching with the same '*' element.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(S*P)",
+          "space": "O(S*P)"
+        },
+        "pseudocode": "dp = matrix[s+1][p+1]\ndp[last][last] = True\nfor i from s to 0:\n    for j from p-1 to 0:\n        // similar logic to recursive but fills table"
       }
     ]
   },
@@ -1203,7 +1466,19 @@
         "2. Calculate area and update global max.",
         "3. Move the pointer pointing to the shorter line to seek higher potential."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointers",
+        "explanation": "Start with two pointers at the extreme ends. The width is at its maximum. To find a larger area, we must move the pointer pointing to the shorter line inward, as it is the limiting factor for height.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "l = 0, r = n-1, max_area = 0\nwhile l < r:\n    area = min(height[l], height[r]) * (r - l)\n    max_area = max(max_area, area)\n    if height[l] < height[r]: l++\n    else: r--\nreturn max_area"
+      }
+    ]
   },
   {
     "id": 15,
@@ -1306,6 +1581,18 @@
         "title": "Gene Sequence Analysis",
         "description": "Finding triples of DNA markers that indicate specific genetic properties."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Sort the array and iterate through each element. For each element `nums[i]`, treat the remaining problem as a 'Two Sum' variations using two pointers on the sorted sub-array `[i+1, n-1]`.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N^2)",
+          "space": "O(log N) or O(N)"
+        },
+        "pseudocode": "sort(nums)\nfor i in 0..n-2:\n    if i > 0 and nums[i] == nums[i-1]: continue\n    l, r = i+1, n-1\n    while l < r:\n        s = nums[i] + nums[l] + nums[r]\n        if s == 0: save_triplet(); l++; r++\n        elif s < 0: l++\n        else: r--"
+      }
     ]
   },
   {
@@ -1370,7 +1657,19 @@
         "      ii. Else, pop from stack.",
         "4. Return True if stack is empty, else False."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Stack",
+        "explanation": "Use a Stack. Iterate through the string; push open brackets onto the stack. When a closing bracket is encountered, check if it matches the top of the stack. If so, pop. If not (or stack is empty), it's invalid. At end, stack must be empty.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(N)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 21,
@@ -1435,7 +1734,19 @@
         "4. If `list2` exists, `tail.next = list2`.",
         "5. Return `dummy.next`."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Linked List",
+        "explanation": "Use the Two Pointer pattern (or Iterative Merge). Maintain a 'dummy' head and a 'current' pointer. Compare the heads of `list1` and `list2`. Attach the smaller node to 'current', and move the pointer forward. Repeat until one list is exhausted, then attach the remainder.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N+M)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 33,
@@ -1502,7 +1813,19 @@
         "      i. If target is in range (`nums[mid]`, `nums[right]`], move `left = mid + 1`.",
         "      ii. Else, move `right = mid - 1`."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "Use a modified Binary Search. Even though the array is rotated, at least one half (left or right) is always sorted. Determine which half is sorted, check if the target lies within that range, and discard the other half. This achieves O(log N).",
+        "steps": [],
+        "efficiency": {
+          "time": "O(log N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 46,
@@ -1565,7 +1888,19 @@
         "      ii. Call `backtrack`.",
         "      iii. Unmark used / Remove from path (Backtrack)."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Backtracking",
+        "explanation": "Use Backtracking to build permutations incrementally. Maintain a 'used' set or swap elements in-place to ensure each number is used once per permutation. Backtrack (undo choice) to explore other branches.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N * N!)",
+          "space": "O(N)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 48,
@@ -1624,7 +1959,19 @@
         "2. Reverse each row of the transposed matrix.",
         "   - This converts the Transpose into a 90-degree Rotation."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Perform the rotation in two steps: a Transpose (swap `matrix[i][j]` with `matrix[j][i]`) followed by a Horizontal Reflection (reverse each row). This achieves the rotation in-place using O(1) extra space.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N^2)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 49,
@@ -1685,7 +2032,19 @@
         "   b. Append `s` to the list at `map[key]`.",
         "3. Return all values from the map."
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Use a Hash Map where the key is the sorted version of the string (or a character count signature) and the value is a list of original strings. Iterate once through the input.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N * L log L)",
+          "space": "O(N * L)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 53,
@@ -1744,7 +2103,19 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 55,
@@ -1803,7 +2174,19 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Greedy",
+        "explanation": "Use the Greedy pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 56,
@@ -1862,7 +2245,19 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Use the Array pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N log N)",
+          "space": "O(N)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 70,
@@ -1921,7 +2316,19 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 74,
@@ -1980,7 +2387,19 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": {
+          "time": "O(log(N*M))",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 75,
@@ -2069,6 +2488,18 @@
         "title": "Image Processing",
         "description": "Color quantization where pixels are grouped into a limited set of primary colors."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "The 'Dutch National Flag' algorithm uses three pointers: `low` for 0s, `high` for 2s, and `curr` for the current element. We partition the array in a single pass by swapping elements into their respective regions.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "low = 0, curr = 0, high = n-1\nwhile curr <= high:\n    if nums[curr] == 0: swap(curr, low); curr++; low++\n    elif nums[curr] == 2: swap(curr, high); high--\n    else: curr++"
+      }
     ]
   },
   {
@@ -2123,7 +2554,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n+m)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 78,
@@ -2177,7 +2617,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Backtracking",
+        "explanation": "Use the Backtracking pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n * 2\u207f)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 79,
@@ -2231,7 +2680,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Backtracking",
+        "explanation": "Use the Backtracking pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(N * 3\u1d38)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 94,
@@ -2343,7 +2801,36 @@
       "concept": "Recursive Depth-First Search (DFS)",
       "internalTheory": "Time Converged Theory: The execution time O(n) is bounded by the total number of edges and nodes visited. Since each edge is traversed twice (once down, once up) and each node is processed once, the efficiency is linear.",
       "optimization": "Tail recursion is difficult here because of the two recursive calls, but iterative solutions using an explicit stack can avoid stack overflow for extremely deep trees."
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Recursive traversal visiting nodes in the sequence: Left Subtree, Current Node, Right Subtree. This is the most natural way to express the problem logic.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Base Case: If the current node is null, return (end this branch of recursion)."
+          },
+          {
+            "step": 2,
+            "description": "Recursive Call: Invoke `inorder(node.left)` to process the entire left subtree."
+          },
+          {
+            "step": 3,
+            "description": "Process: Visit the current node (e.g., add `node.val` to the result list)."
+          },
+          {
+            "step": 4,
+            "description": "Recursive Call: Invoke `inorder(node.right)` to process the entire right subtree."
+          }
+        ],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 95,
@@ -2404,7 +2891,36 @@
         "2. Recurse Left",
         "3. Recurse Right"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Recursive traversal visiting nodes in the sequence: Current Node, Left Subtree, Right Subtree.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Base Case: If the current node is null, return."
+          },
+          {
+            "step": 2,
+            "description": "Process: Visit the current node (Root)."
+          },
+          {
+            "step": 3,
+            "description": "Recursive Call: Invoke `preorder(node.left)` for the left subtree."
+          },
+          {
+            "step": 4,
+            "description": "Recursive Call: Invoke `preorder(node.right)` for the right subtree."
+          }
+        ],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 96,
@@ -2465,7 +2981,36 @@
         "2. Recurse Right",
         "3. Visit Root"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Recursive traversal visiting nodes in the sequence: Left Subtree, Right Subtree, Current Node.",
+        "steps": [
+          {
+            "step": 1,
+            "description": "Base Case: If the current node is null, return."
+          },
+          {
+            "step": 2,
+            "description": "Recursive Call: Invoke `postorder(node.left)` for the left subtree."
+          },
+          {
+            "step": 3,
+            "description": "Recursive Call: Invoke `postorder(node.right)` for the right subtree."
+          },
+          {
+            "step": 4,
+            "description": "Process: Visit the current node (Root)."
+          }
+        ],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 98,
@@ -2520,7 +3065,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 102,
@@ -2574,7 +3128,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 104,
@@ -2628,7 +3191,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 105,
@@ -2682,7 +3254,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 121,
@@ -2736,7 +3317,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 124,
@@ -2790,7 +3380,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 125,
@@ -2893,6 +3492,18 @@
         "title": "Network Packet Validation",
         "description": "Fast symmetry checks for packet headers in low-latency communication protocols."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Two Pointers",
+        "explanation": "Use two pointers starting at the beginning and end of the string. Move them inward, skipping non-alphanumeric characters. Compare the characters at each step without allocating extra memory for a cleaned string.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "l = 0, r = n-1\nwhile l < r:\n    while l < r and not isAlphanum(s[l]): l++\n    while l < r and not isAlphanum(s[r]): r--\n    if lower(s[l]) != lower(s[r]): return False\n    l++; r--\nreturn True"
+      }
     ]
   },
   {
@@ -2947,7 +3558,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Use the Array pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 133,
@@ -3001,7 +3621,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(V+E)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 139,
@@ -3055,7 +3684,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n\u00b3)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 141,
@@ -3109,7 +3747,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 146,
@@ -3163,7 +3810,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Queue",
+        "explanation": "Use the Queue pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(1)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 152,
@@ -3217,7 +3873,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 153,
@@ -3271,7 +3936,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(log n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 155,
@@ -3325,7 +3999,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Stack",
+        "explanation": "Use the Stack pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(1)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 160,
@@ -3379,7 +4062,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(m+n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 169,
@@ -3433,7 +4125,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Use the Array pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 198,
@@ -3487,7 +4188,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 200,
@@ -3541,7 +4251,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(M*N)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 206,
@@ -3595,7 +4314,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 207,
@@ -3649,7 +4377,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(V+E)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 208,
@@ -3703,7 +4440,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(L)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 215,
@@ -3757,7 +4503,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Heap / Priority Queue",
+        "explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n log k)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 217,
@@ -3811,7 +4566,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Use the Array pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 226,
@@ -3866,7 +4630,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 230,
@@ -3921,7 +4694,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 232,
@@ -3975,7 +4757,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Queue",
+        "explanation": "Use the Queue pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(1) amortized",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 234,
@@ -4029,7 +4820,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 236,
@@ -4084,7 +4884,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Trees",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 238,
@@ -4138,7 +4947,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Prefix Sum",
+        "explanation": "Use the Prefix Sum pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 239,
@@ -4192,7 +5010,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 240,
@@ -4246,7 +5073,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(m+n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 242,
@@ -4300,7 +5136,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "Use the Array pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 283,
@@ -4393,6 +5238,18 @@
         "title": "Game Physics",
         "description": "Managing active vs inactive objects in a scene graph by partitioning the entity list."
       }
+    ],
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Maintain a `lastNonZeroFoundAt` pointer. Iterate through the array; whenever a non-zero element is found, swap it with the element at the `lastNonZeroFoundAt` index and increment the pointer.",
+        "steps": [],
+        "efficiency": {
+          "time": "O(N)",
+          "space": "O(1)"
+        },
+        "pseudocode": "lastNonZero = 0\nfor curr in 0..n-1:\n    if nums[curr] != 0:\n        swap(nums[lastNonZero], nums[curr])\n        lastNonZero++"
+      }
     ]
   },
   {
@@ -4447,7 +5304,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "Use the Two Pointer pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 295,
@@ -4501,7 +5367,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Heap / Priority Queue",
+        "explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(log n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 300,
@@ -4555,7 +5430,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n log n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 322,
@@ -4609,7 +5493,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(S*n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 347,
@@ -4663,7 +5556,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Heap / Priority Queue",
+        "explanation": "Use the Heap / Priority Queue pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 394,
@@ -4717,7 +5619,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Stack",
+        "explanation": "Use the Stack pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 416,
@@ -4771,7 +5682,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n * target)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 438,
@@ -4825,7 +5745,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "Use the Sliding Window pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 543,
@@ -4879,7 +5808,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "Use the Recursion pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 560,
@@ -4933,7 +5871,16 @@
         "1. Sort",
         "2. Two Pointers"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Prefix Sum",
+        "explanation": "Use the Prefix Sum pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 704,
@@ -4987,7 +5934,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "Use the Binary Search pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(log n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 739,
@@ -5041,7 +5997,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Stack",
+        "explanation": "Use the Stack pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 994,
@@ -5095,7 +6060,16 @@
         "1. Traverse",
         "2. Process"
       ]
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "Use the Graph (BFS/DFS) pattern for O(n) or O(log n).",
+        "steps": [],
+        "efficiency": "O(m*n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1067,
@@ -5122,7 +6096,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Greedy",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1068,
@@ -5149,7 +6132,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Prefix Sum",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1069,
@@ -5176,7 +6168,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1070,
@@ -5203,7 +6204,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1071,
@@ -5230,7 +6240,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1072,
@@ -5257,7 +6276,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1073,
@@ -5284,7 +6312,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1074,
@@ -5311,7 +6348,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1075,
@@ -5338,7 +6384,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Backtracking",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1076,
@@ -5365,7 +6420,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Stack",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1077,
@@ -5392,7 +6456,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Queue",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1078,
@@ -5419,7 +6492,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Linked List",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1079,
@@ -5446,7 +6528,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1080,
@@ -5473,7 +6564,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Heap / Priority Queue",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1081,
@@ -5500,7 +6600,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Greedy",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1082,
@@ -5527,7 +6636,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Prefix Sum",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1083,
@@ -5554,7 +6672,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1084,
@@ -5581,7 +6708,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1085,
@@ -5608,7 +6744,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1086,
@@ -5635,7 +6780,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1087,
@@ -5662,7 +6816,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Binary Search",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1088,
@@ -5689,7 +6852,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Recursion",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1089,
@@ -5716,7 +6888,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Backtracking",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1090,
@@ -5743,7 +6924,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Stack",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1091,
@@ -5770,7 +6960,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Queue",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1092,
@@ -5797,7 +6996,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Linked List",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1093,
@@ -5824,7 +7032,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Graph (BFS/DFS)",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1094,
@@ -5851,7 +7068,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Heap / Priority Queue",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1095,
@@ -5878,7 +7104,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Greedy",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1096,
@@ -5905,7 +7140,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Prefix Sum",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1097,
@@ -5932,7 +7176,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Dynamic Programming",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1098,
@@ -5959,7 +7212,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Array",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1099,
@@ -5986,7 +7248,16 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Two Pointer",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   },
   {
     "id": 1100,
@@ -6013,6 +7284,15 @@
       "brute": "O(n\u00b2)",
       "optimal": "O(n)",
       "space": "O(1)"
-    }
+    },
+    "optimal_variants": [
+      {
+        "name": "Sliding Window",
+        "explanation": "",
+        "steps": [],
+        "efficiency": "O(n)",
+        "pseudocode": ""
+      }
+    ]
   }
 ]

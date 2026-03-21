@@ -60,9 +60,9 @@ export const LinkedListEngine: React.FC<Props> = ({
                                 className={`
                   w-32 h-16 rounded-xl border-2 flex overflow-hidden transition-all duration-300
                   ${isActive
-                                        ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_20px_rgba(0,112,243,0.4)] scale-110'
+                                        ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_20px_rgba(236, 65, 134,0.4)] scale-110'
                                         : isHighlighted
-                                            ? 'bg-purple-500/20 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
+                                            ? 'bg-purple-500/20 border-purple-500 shadow-[0_0_15px_rgba(236, 65, 134,0.3)]'
                                             : 'bg-white/5 border-white/10'
                                     }
                 `}

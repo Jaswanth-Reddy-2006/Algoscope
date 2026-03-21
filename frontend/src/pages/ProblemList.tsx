@@ -1,9 +1,31 @@
 import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Play, Filter, ChevronDown, X, Grid, List as ListIcon } from 'lucide-react'
+import { Search, Play, Filter, ChevronDown, X, Grid, List as ListIcon, LogIn, Code2, Database, Network, GitBranch, Layers, ArrowLeftRight, BoxSelect, Hash, Minimize2 } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useStore } from '../store/useStore'
 import { PATTERN_HIERARCHY } from '../data/patternHierarchy'
+
+const LEETCODE_TAG_MAP: Record<string, string[]> = {
+    'arrays': ['array'],
+    'strings': ['string'],
+    'hash_maps': ['hash table'],
+    'linked_lists': ['linked list'],
+    'two_pointers': ['two pointers'],
+    'sliding_window': ['sliding window'],
+    'stacks': ['stack', 'monotonic stack'],
+    'queues': ['queue', 'monotonic queue'],
+    'trees': ['tree', 'binary tree', 'binary search tree'],
+    'trie': ['trie'],
+    'heaps': ['heap (priority queue)'],
+    'graphs': ['graph', 'depth-first search', 'breadth-first search', 'union find', 'topological sort', 'shortest path', 'minimum spanning tree'],
+    'binary_search': ['binary search'],
+    'greedy': ['greedy'],
+    'backtracking': ['backtracking'],
+    'dp_1d': ['dynamic programming', 'memoization'],
+    'dp_2d': ['dynamic programming'],
+    'bit_manipulation': ['bit manipulation'],
+    'math_geometry': ['math', 'geometry']
+};
 
 export default function ProblemList() {
     const {
@@ -20,6 +42,14 @@ export default function ProblemList() {
     const [selectedLevels, setSelectedLevels] = useState<Set<string>>(new Set())
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [viewMode, setViewMode] = useState<'list' | 'pattern'>(urlPattern ? 'pattern' : 'list')
+    const [showLoginModal, setShowLoginModal] = useState(false)
+
+    const user = useMemo(() => {
+        const userData = localStorage.getItem('algoscope_user')
+        return userData ? JSON.parse(userData) : null
+    }, [])
+
+    const isLoggedIn = !!user
 
     useEffect(() => {
         fetchAllProblems()
@@ -50,6 +80,7 @@ export default function ProblemList() {
             Object.entries(levelGroup.patterns).map(([patternKey, pattern]) => {
                 // Dynamic count for this pattern: check primary, algorithmType, tags, and secondaryPatterns
                 const count = problems.filter(p => {
+                    const lcTags = LEETCODE_TAG_MAP[patternKey] || [];
                     const topicTitle = pattern.title.toLowerCase()
                     const prim = p.primaryPattern?.toLowerCase() || ''
                     const algo = (p.algorithmType as string)?.toLowerCase() || ''
@@ -58,7 +89,7 @@ export default function ProblemList() {
 
                     return prim.includes(topicTitle) ||
                         algo.includes(topicTitle) ||
-                        tags.some(tag => tag.includes(topicTitle)) ||
+                        tags.some(tag => tag.includes(topicTitle) || lcTags.includes(tag)) ||
                         secondary.some(sec => sec.includes(topicTitle))
                 }).length
 
@@ -81,6 +112,7 @@ export default function ProblemList() {
                 p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
 
             const matchesTopic = selectedTopics.size === 0 || Array.from(selectedTopics).some(topicId => {
+                const lcTags = LEETCODE_TAG_MAP[topicId] || [];
                 const topicTitle = availableTopics.find(t => t.key === topicId)?.title?.toLowerCase() || topicId.toLowerCase()
                 const prim = p.primaryPattern?.toLowerCase() || ''
                 const algo = (p.algorithmType as string)?.toLowerCase() || ''
@@ -89,10 +121,8 @@ export default function ProblemList() {
 
                 return prim.includes(topicTitle) ||
                     algo.includes(topicTitle) ||
-                    tags.some(tag => tag.includes(topicTitle)) ||
-                    secondary.some(sec => sec.includes(topicTitle)) ||
-                    (topicId === 'two_pointers' && (prim.includes('pointer') || algo.includes('pointer'))) ||
-                    (topicId === 'graph' && (prim.includes('graph') || algo.includes('graph') || tags.includes('graph')))
+                    tags.some(tag => tag.includes(topicTitle) || lcTags.includes(tag)) ||
+                    secondary.some(sec => sec.includes(topicTitle))
             })
 
             const matchesLevel = selectedLevels.size === 0 || selectedLevels.has(p.difficulty)
@@ -136,7 +166,7 @@ export default function ProblemList() {
     }
 
     return (
-        <div className="flex-1 flex flex-col bg-[#14051E] relative overflow-hidden font-outfit">
+        <div className="flex-1 flex flex-col bg-[#0f0314] relative overflow-hidden font-outfit">
             {/* Ambient Background Elements */}
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
                 <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-[#EC4186]/10 blur-[120px] rounded-full animate-pulse" />
@@ -146,7 +176,7 @@ export default function ProblemList() {
             </div>
 
             {/* Header Area */}
-            <header className="relative z-10 px-10 pt-0 pb-6 backdrop-blur-md bg-[#14051E]/80 border-b border-white/5">
+            <header className="relative z-10 px-10 pt-8 pb-6 backdrop-blur-md bg-[#0f0314]/80 border-b border-white/5">
                 <div className="flex justify-between items-end mb-8">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -290,7 +320,7 @@ export default function ProblemList() {
                     >
                         {filteredProblems.map((problem, index) => {
                             const difficultyColor = problem.difficulty === 'Easy' ? '#00e699' : problem.difficulty === 'Medium' ? '#EC4186' : '#EE544A'
-                            const primaryPattern = problem.primaryPattern || problem.algorithmType.replace(/_/g, ' ') || 'GENERAL'
+                            const primaryPattern = problem.primaryPattern || (problem.algorithmType ? problem.algorithmType.replace(/_/g, ' ') : 'GENERAL')
 
                             return (
                                 <motion.div
@@ -300,47 +330,72 @@ export default function ProblemList() {
                                     transition={{ duration: 0.5, delay: index * 0.01 }}
                                     className="group relative"
                                 >
-                                    <Link to={`/problems/${problem.slug}`}>
-                                        <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-[#EC4186]/40 transition-all duration-500 group overflow-hidden">
-                                            {/* Hover Glow */}
-                                            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#EC4186] via-[#EE544A] to-[#EC4186] translate-y-full group-hover:translate-y-0 transition-transform duration-500 opacity-50" />
+                                    <div 
+                                        onClick={(e) => {
+                                            if (!isLoggedIn) {
+                                                e.preventDefault()
+                                                setShowLoginModal(true)
+                                            }
+                                        }}
+                                        className="cursor-pointer"
+                                    >
+                                        <Link 
+                                            to={isLoggedIn ? `/problems/${problem.slug}` : '#'}
+                                            className="block"
+                                        >
+                                            <div className="flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-[#EC4186]/40 transition-all duration-500 group overflow-hidden">
+                                                {/* Hover Glow */}
+                                                <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-[#EC4186] via-[#EE544A] to-[#EC4186] translate-y-full group-hover:translate-y-0 transition-transform duration-500 opacity-50" />
 
-                                            {/* Name Section */}
-                                            <div className="flex-1 min-w-0 pr-10">
-                                                <div className="flex items-center gap-3 mb-2">
-                                                    <span className="text-[9px] font-bold text-white/20 font-mono">ID: {problem.id.toString().padStart(3, '0')}</span>
-                                                    <div className="text-[9px] font-bold text-[#EC4186]/70 uppercase tracking-widest">{primaryPattern}</div>
+                                                {/* Name Section */}
+                                                <div className="flex-1 min-w-0 pr-10">
+                                                    <div className="flex items-center gap-3 mb-2">
+                                                        <span className="text-[9px] font-bold text-white/20 font-mono">ID: LE{problem.id}</span>
+                                                        <div className="text-[9px] font-bold text-[#EC4186]/70 uppercase tracking-widest">{primaryPattern}</div>
+                                                    </div>
+                                                    <h3 className="text-xl font-bold text-white group-hover:text-[#EC4186] transition-colors truncate">
+                                                        {problem.title}
+                                                    </h3>
+                                                    <div className="flex gap-4 mt-3">
+                                                        {problem.tags.slice(0, 3).map(tag => (
+                                                            <span key={tag} className="text-[10px] text-white/30 uppercase tracking-[0.1em] font-bold">
+                                                                #{tag}
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <h3 className="text-xl font-bold text-white group-hover:text-[#EC4186] transition-colors truncate">
-                                                    {problem.title}
-                                                </h3>
-                                                <div className="flex gap-4 mt-3">
-                                                    {problem.tags.slice(0, 3).map(tag => (
-                                                        <span key={tag} className="text-[10px] text-white/30 uppercase tracking-[0.1em] font-bold">
-                                                            #{tag}
-                                                        </span>
-                                                    ))}
+
+                                                {/* Status / Level */}
+                                                <div className="flex items-center gap-10 shrink-0">
+                                                    <div className="flex flex-col items-end gap-1">
+                                                        <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em] mb-1">Logic State</span>
+                                                        <div className="flex gap-2">
+                                                            {problem.status === 'synthesizing' && (
+                                                                <span className="text-[10px] font-black text-orange-400 bg-orange-400/10 border border-orange-400/20 px-3 py-1 rounded-xl animate-pulse">
+                                                                    PROCESSING...
+                                                                </span>
+                                                            )}
+                                                            {problem.status === 'complete' && (
+                                                                <span className="text-[10px] font-black text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-3 py-1 rounded-xl">
+                                                                    READY
+                                                                </span>
+                                                            )}
+                                                            <span
+                                                                className="text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-2xl"
+                                                                style={{ color: difficultyColor, backgroundColor: `${difficultyColor}15`, border: `1px solid ${difficultyColor}40` }}
+                                                            >
+                                                                {problem.difficulty}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#EC4186] group-hover:border-[#EC4186] group-hover:shadow-[0_0_25px_rgba(236,65,134,0.5)] transition-all duration-500">
+                                                        <Play className="text-white fill-current translate-x-0.5 group-hover:scale-110 transition-transform" size={16} />
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                            {/* Status / Level */}
-                                            <div className="flex items-center gap-10 shrink-0">
-                                                <div className="flex flex-col items-end gap-1">
-                                                    <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em] mb-1">Status</span>
-                                                    <span
-                                                        className="text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-2xl"
-                                                        style={{ color: difficultyColor, backgroundColor: `${difficultyColor}15`, border: `1px solid ${difficultyColor}40` }}
-                                                    >
-                                                        {problem.difficulty}
-                                                    </span>
-                                                </div>
-
-                                                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#EC4186] group-hover:border-[#EC4186] group-hover:shadow-[0_0_25px_rgba(236,65,134,0.5)] transition-all duration-500">
-                                                    <Play className="text-white fill-current translate-x-0.5 group-hover:scale-110 transition-transform" size={16} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                    </div>
                                 </motion.div>
                             )
                         })}
@@ -366,8 +421,19 @@ export default function ProblemList() {
 
                                 <div className="relative z-10 h-full flex flex-col">
                                     <div className="flex justify-between items-start mb-8">
-                                        <div className="w-16 h-16 rounded-[24px] bg-gradient-to-tr from-[#EC4186]/20 to-[#EE544A]/20 border border-white/10 flex items-center justify-center text-3xl group-hover:scale-110 group-hover:border-[#EC4186]/50 transition-all duration-500 shadow-xl backdrop-blur-md">
-                                            {pattern.title.includes('Pointer') ? '👉' : pattern.title.includes('Window') ? '🗔' : pattern.title.includes('Binary') ? '🔍' : pattern.title.includes('Sort') ? '📊' : pattern.title.includes('Graph') ? '🕸️' : pattern.title.includes('Stack') ? '📚' : pattern.title.includes('Tree') ? '🌲' : '🧬'}
+                                        <div className="w-16 h-16 rounded-[24px] bg-gradient-to-tr from-white/5 to-white/10 border border-white/10 flex items-center justify-center text-white/70 group-hover:scale-110 group-hover:text-[#EC4186] group-hover:bg-[#EC4186]/10 group-hover:border-[#EC4186]/40 transition-all duration-500 shadow-xl backdrop-blur-md">
+                                            {
+                                                pattern.title.includes('Array') ? <Database size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('String') ? <Hash size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Pointer') ? <ArrowLeftRight size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Window') ? <BoxSelect size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Search') ? <Search size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Graph') || pattern.title.includes('Matrix') ? <Network size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Tree') || pattern.title.includes('Trie') ? <GitBranch size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Stack') || pattern.title.includes('Queue') ? <Layers size={28} strokeWidth={1.5} /> :
+                                                pattern.title.includes('Dynamic') ? <Minimize2 size={28} strokeWidth={1.5} /> :
+                                                <Code2 size={28} strokeWidth={1.5} />
+                                            }
                                         </div>
                                         <div className="flex flex-col items-end">
                                             <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">{pattern.level}</span>
@@ -422,6 +488,63 @@ export default function ProblemList() {
                     </motion.div>
                 )}
             </main>
+
+            {/* Login Required Modal */}
+            <AnimatePresence>
+                {showLoginModal && (
+                    <>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowLoginModal(false)}
+                            className="fixed inset-0 bg-[#0f0314]/90 backdrop-blur-md z-[100]"
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-[110] p-1"
+                        >
+                            <div className="bg-[#14051E] border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl font-outfit">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#EC4186] to-[#EE544A]" />
+                                
+                                <div className="w-20 h-20 rounded-3xl bg-[#EC4186]/10 flex items-center justify-center mb-8 border border-[#EC4186]/20">
+                                    <LogIn size={40} className="text-[#EC4186]" />
+                                </div>
+
+                                <h2 className="text-3xl font-black text-white tracking-tighter mb-4 uppercase">Initialize Session</h2>
+                                <p className="text-white/40 text-sm leading-relaxed mb-10">
+                                    Accessing the experimental logic labs requires a neural link. Initialize your session to track progress and sync with LeetCode.
+                                </p>
+
+                                <div className="flex flex-col gap-4">
+                                    <Link 
+                                        to="/login"
+                                        className="w-full h-16 bg-[#EC4186] text-white rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-glow"
+                                    >
+                                        <LogIn size={20} />
+                                        <span>INITIALIZE NOW</span>
+                                    </Link>
+                                    <button 
+                                        onClick={() => setShowLoginModal(false)}
+                                        className="w-full h-16 bg-white/5 text-white/40 rounded-2xl font-bold flex items-center justify-center hover:bg-white/10 transition-all uppercase tracking-widest text-xs"
+                                    >
+                                        Skip for now
+                                    </button>
+                                </div>
+
+                                <button 
+                                    onClick={() => setShowLoginModal(false)}
+                                    className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </div>
     )
 }

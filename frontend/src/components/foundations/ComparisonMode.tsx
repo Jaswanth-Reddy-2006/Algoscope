@@ -16,7 +16,7 @@ export const ComparisonMode: React.FC<Props> = ({ comparisons }) => {
     return (
         <div className="mt-24 space-y-12">
             <div className="flex items-center gap-4">
-                <div className="p-3 rounded-2xl bg-accent-blue/10 text-accent-blue shadow-[0_0_15px_rgba(0,112,243,0.2)]">
+                <div className="p-3 rounded-2xl bg-accent-blue/10 text-accent-blue shadow-[0_0_15px_rgba(236, 65, 134,0.2)]">
                     <ArrowRightLeft size={28} />
                 </div>
                 <div>

@@ -62,7 +62,7 @@ export const HeapEngine: React.FC<Props> = ({ data, type, activeIndex }) => {
                             className={`
                 absolute -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-2 flex items-center justify-center font-bold font-mono transition-all duration-300
                 ${isActive
-                                    ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_15px_rgba(0,112,243,0.4)] scale-110 z-10 text-white'
+                                    ? 'bg-accent-blue/20 border-accent-blue shadow-[0_0_15px_rgba(236, 65, 134,0.4)] scale-110 z-10 text-white'
                                     : 'bg-white/5 border-white/10 text-white/60'
                                 }
               `}

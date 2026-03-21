@@ -39,7 +39,7 @@ const MetricsDisplay: React.FC = () => {
                 value={stats.currentCalls}
                 total={stats.totalCalls}
                 icon={Zap}
-                color="text-[#3B82F6]"
+                color="text-[#EE544A]"
             />
             <MetricCard
                 label="Stack Depth"

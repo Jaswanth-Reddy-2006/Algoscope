@@ -48,6 +48,7 @@ export const foundationEngineRegistry: Record<string, PatternEngine<any, any> | 
 
     // New Structures
     heap: (_props) => <HeapVisualizer />,
+    trie: (props) => <DataStructureEngine {...props} type="trie" />,
     matrix: (_props) => <MatrixVisualizer />,
     prefix_sum: (_props) => <PrefixSumVisualizer />,
     bit_manipulation: (_props) => <BitVisualizer />,

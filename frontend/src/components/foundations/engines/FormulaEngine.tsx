@@ -36,8 +36,8 @@ const FormulaEngine: React.FC<EngineProps> = ({ moduleId }) => {
                                     key={i}
                                     animate={{
                                         scale: isInWindow ? 1.1 : 1,
-                                        backgroundColor: isInWindow ? 'rgba(59, 130, 246, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                                        borderColor: isInWindow ? 'rgba(59, 130, 246, 0.5)' : 'rgba(255, 255, 255, 0.1)'
+                                        backgroundColor: isInWindow ? 'rgba(238, 84, 74, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                                        borderColor: isInWindow ? 'rgba(238, 84, 74, 0.5)' : 'rgba(255, 255, 255, 0.1)'
                                     }}
                                     className="w-12 h-12 rounded-xl border flex items-center justify-center font-mono text-white transition-colors"
                                 >

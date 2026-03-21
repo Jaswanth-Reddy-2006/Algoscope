@@ -39,7 +39,7 @@ export const ProgressionContent: React.FC<Props> = ({ module, level, onVisualize
                             setShowVisualizer(!showVisualizer);
                             onVisualize?.();
                         }}
-                        className="flex items-center gap-3 px-8 py-4 bg-accent-blue hover:bg-accent-blue/80 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(0,112,243,0.3)]"
+                        className="flex items-center gap-3 px-8 py-4 bg-accent-blue hover:bg-accent-blue/80 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(236, 65, 134,0.3)]"
                     >
                         {showVisualizer ? (
                             <>

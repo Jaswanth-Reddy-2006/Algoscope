@@ -5,16 +5,17 @@ import { cn } from '../utils/cn'
 
 interface TwoPointerEngineProps {
     isBrute?: boolean
+    steps?: any[]
 }
 
-const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) => {
+const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false, steps: overrideSteps }) => {
     const currentProblem = useStore(state => state.currentProblem)
     const currentStepIndex = useStore(state => state.currentStepIndex)
     const isBruteForceStore = useStore(state => state.isBruteForce)
     const setPlaying = useStore(state => state.setPlaying)
 
     const effectiveIsBrute = isBrute !== undefined ? isBrute : isBruteForceStore
-    const steps = currentProblem ? (effectiveIsBrute ? currentProblem.brute_force_steps : currentProblem.optimal_steps) : []
+    const steps = overrideSteps || (currentProblem ? (effectiveIsBrute ? currentProblem.brute_force_steps : currentProblem.optimal_steps) : [])
     const safeStep = (steps && steps.length > 0) ? (steps[currentStepIndex] || steps[0]) : null
 
     useEffect(() => {
@@ -296,7 +297,7 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false }) 
                         <div className="flex flex-col items-center gap-4">
                             <h4 className="text-[10px] uppercase font-black text-white/40 tracking-[0.3em]">Stack</h4>
                             <div className="flex flex-col-reverse gap-2 w-32 border-x-2 border-b-2 border-white/10 p-2 rounded-b-xl min-h-[100px]">
-                                {stack.map((s, idx) => (
+                                {stack.map((s: any, idx: number) => (
                                     <motion.div key={idx} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="h-10 bg-accent-purple/20 border border-accent-purple/40 rounded flex items-center justify-center text-accent-purple font-bold">
                                         {s}
                                     </motion.div>

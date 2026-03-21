@@ -56,14 +56,14 @@ export const LinearSearchCanvas: React.FC<Props> = ({ state }) => {
                                                 ? 'rgba(239, 68, 68, 0.5)'
                                                 : isChecked
                                                     ? 'rgba(255, 255, 255, 0.05)'
-                                                    : 'rgba(59, 130, 246, 0.1)',
+                                                    : 'rgba(238, 84, 74, 0.1)',
                                         borderColor: isFound
                                             ? '#FFFFFF'
                                             : isCurrent
                                                 ? '#ef4444'
                                                 : isChecked
                                                     ? 'rgba(255, 255, 255, 0.1)'
-                                                    : 'rgba(59, 130, 246, 0.3)',
+                                                    : 'rgba(238, 84, 74, 0.3)',
                                         opacity: isChecked ? 0.3 : 1
                                     }}
                                     className="w-full rounded-t border flex items-center justify-center transition-colors mb-2"

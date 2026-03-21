@@ -12,6 +12,7 @@ import { useStore } from '../store/useStore'
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     const fetchAllProblems = useStore(state => state.fetchAllProblems)
     const location = useLocation()
+    const isAuthPage = location.pathname === '/login'
     const isLandingPage = location.pathname === '/'
 
     React.useEffect(() => {
@@ -20,7 +21,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
     return (
         <div className="flex h-screen w-full bg-background text-foreground overflow-hidden">
-            {!isLandingPage && <Sidebar />}
+            <div id="algoscope-auth-token" data-token={localStorage.getItem('algoscope_token')} style={{ display: 'none' }}></div>
+            {!isLandingPage && !isAuthPage && <Sidebar />}
             <main className={`flex-1 relative flex flex-col min-w-0 overflow-y-auto mesh-bg ${isLandingPage ? 'scroll-smooth' : ''}`}>
                 <ErrorBoundary>
                     {children}
