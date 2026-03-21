@@ -6,7 +6,7 @@ const PATTERN_MAP = {
     'remove-duplicates-from-sorted-array': 'two_pointers',
     'trapping-rain-water': 'two_pointers',
     
-    // Slinding Window
+    // Sliding Window
     'longest-substring-without-repeating-characters': 'sliding_window',
     'minimum-window-substring': 'sliding_window',
     'sliding-window-maximum': 'sliding_window',
