@@ -42,13 +42,22 @@ const getPatternForSlug = (slug) => {
     // Direct match
     if (PATTERN_MAP[slug]) return PATTERN_MAP[slug];
     
-    // Heuristic matches
-    if (slug.includes('tree')) return 'trees';
-    if (slug.includes('graph') || slug.includes('island')) return 'graphs';
-    if (slug.includes('sum') || slug.includes('array')) return 'arrays';
+    // Detailed Heuristic matches
+    if (slug.includes('tree') || slug.includes('bst') || slug.includes('n-ary')) return 'trees';
+    if (slug.includes('linked-list') || slug.includes('node')) return 'linked_lists';
+    if (slug.includes('graph') || slug.includes('island') || slug.includes('neighbor') || slug.includes('course-schedule')) return 'graphs';
+    if (slug.includes('dynamic-programming') || slug.includes('dp') || slug.includes('edit-distance')) return 'dynamic_programming';
+    if (slug.includes('binary-search') || slug.includes('search')) return 'binary_search';
+    if (slug.includes('stack') || slug.includes('parentheses') || slug.includes('queue')) return 'stack';
+    if (slug.includes('sliding-window')) return 'sliding_window';
+    if (slug.includes('two-pointer') || slug.includes('two-pointers') || slug.includes('sum')) return 'two_pointers';
+    if (slug.includes('heap') || slug.includes('priority-queue')) return 'heaps';
+    if (slug.includes('trie')) return 'tries';
+    if (slug.includes('matrix')) return 'matrices';
     if (slug.includes('string')) return 'strings';
-    if (slug.includes('linked-list')) return 'linked_lists';
-    if (slug.includes('search')) return 'binary_search';
+    if (slug.includes('array')) return 'arrays';
+    if (slug.includes('bit-manipulation')) return 'bit_manipulation';
+    if (slug.includes('math')) return 'math';
     
     return 'arrays'; // Generic fallback
 };

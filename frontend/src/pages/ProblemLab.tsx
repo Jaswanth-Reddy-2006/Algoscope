@@ -52,26 +52,30 @@ const ProblemLab: React.FC = () => {
 
     const steps = isBruteForce ? currentProblem?.brute_force_steps : currentProblem?.optimal_steps
     const totalSteps = globalTotalSteps > 0 ? globalTotalSteps : (steps?.length || 0)
-    const isSuccess = steps && currentStepIndex === totalSteps - 1 && (steps[currentStepIndex]?.state?.found || currentProblem?.algorithmType === 'tree')
+    const isAtEnd = steps && currentStepIndex === totalSteps - 1 && totalSteps > 0
+    const isSuccess = isAtEnd && (steps[currentStepIndex]?.state?.found || currentProblem?.algorithmType === 'tree')
 
     // PLAYBACK LOGIC
     useEffect(() => {
         if (!isPlaying) return
         const interval = setInterval(() => {
-            setStep(Math.min(currentStepIndex + 1, totalSteps - 1))
-            if (currentStepIndex >= totalSteps - 1) {
+            const nextIdx = currentStepIndex + 1
+            if (nextIdx >= totalSteps) {
                 setPlaying(false)
+                setShowSummary(true)
+            } else {
+                setStep(nextIdx)
             }
         }, playbackSpeed)
         return () => clearInterval(interval)
     }, [isPlaying, playbackSpeed, currentStepIndex, totalSteps, setStep, setPlaying])
 
-    // Trigger summary on success
+    // Trigger summary when reaching end manually
     useEffect(() => {
-        if (isSuccess) {
+        if (isAtEnd && !isPlaying) {
             setShowSummary(true)
         }
-    }, [isSuccess])
+    }, [isAtEnd, isPlaying])
 
     if (error) return <Navigate to="/problems" replace />
     if (!currentProblem || !isEngineInitialized) return <LabSkeleton />

@@ -76,6 +76,7 @@ model Problem {
   labConfig               String?
   structuredExamples      String?
   optimal_variants        String?
+  acceptanceRate          Float?
 }
 
 model SolvedProblem {

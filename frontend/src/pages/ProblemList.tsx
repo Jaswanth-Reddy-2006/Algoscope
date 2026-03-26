@@ -238,7 +238,7 @@ export default function ProblemList() {
                         className={`px-8 rounded-[24px] border flex items-center gap-3 font-bold transition-all duration-500 text-sm ${isFilterOpen ? 'bg-white/10 border-[#EC4186]/50 text-white shadow-[0_0_20px_rgba(236,65,134,0.1)]' : 'bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/8'}`}
                     >
                         <Filter size={18} className={isFilterOpen ? 'text-[#EC4186]' : ''} />
-                        Logic Filter
+                        Filter
                         {(selectedTopics.size > 0 || selectedLevels.size > 0) && (
                             <span className="w-5 h-5 rounded-full bg-[#EC4186] flex items-center justify-center text-[10px] text-white">
                                 {selectedTopics.size + selectedLevels.size}
@@ -260,10 +260,6 @@ export default function ProblemList() {
                             <div className="mt-5 p-8 bg-white/[0.03] border border-white/5 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-10 backdrop-blur-2xl">
                                 {/* Levels */}
                                 <div>
-                                    <div className="flex items-center gap-2 mb-5">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[#EC4186]" />
-                                        <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Bias</h4>
-                                    </div>
                                     <div className="flex flex-wrap gap-3">
                                         {levels.map(l => (
                                             <button
@@ -281,15 +277,14 @@ export default function ProblemList() {
                                 <div>
                                     <div className="flex justify-between items-center mb-5">
                                         <div className="flex items-center gap-2">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-[#EE544A]" />
-                                            <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">Pattern Families</h4>
+                                            {/* Labels removed as requested */}
                                         </div>
                                         {(selectedTopics.size > 0 || selectedLevels.size > 0) && (
                                             <button
                                                 onClick={clearFilters}
                                                 className="text-[10px] font-black text-[#EE544A] hover:underline uppercase tracking-widest"
                                             >
-                                                Clear Logic
+                                                Clear Filters
                                             </button>
                                         )}
                                     </div>
@@ -368,18 +363,7 @@ export default function ProblemList() {
                                                 {/* Status / Level */}
                                                 <div className="flex items-center gap-10 shrink-0">
                                                     <div className="flex flex-col items-end gap-1">
-                                                        <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em] mb-1">Logic State</span>
                                                         <div className="flex gap-2">
-                                                            {problem.status === 'synthesizing' && (
-                                                                <span className="text-[10px] font-black text-orange-400 bg-orange-400/10 border border-orange-400/20 px-3 py-1 rounded-xl animate-pulse">
-                                                                    PROCESSING...
-                                                                </span>
-                                                            )}
-                                                            {problem.status === 'complete' && (
-                                                                <span className="text-[10px] font-black text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-3 py-1 rounded-xl">
-                                                                    READY
-                                                                </span>
-                                                            )}
                                                             <span
                                                                 className="text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-2xl"
                                                                 style={{ color: difficultyColor, backgroundColor: `${difficultyColor}15`, border: `1px solid ${difficultyColor}40` }}

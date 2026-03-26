@@ -10,7 +10,8 @@ import {
     Activity,
     Search,
     Bell,
-    History
+    History,
+    LogOut
 } from 'lucide-react'
 import { PATTERN_HIERARCHY } from '../data/patternHierarchy'
 import { useStore } from '../store/useStore'
@@ -25,6 +26,12 @@ const PatternProfile = () => {
     // Backend Stats State
     const [summary, setSummary] = useState<any>(null)
     const [proficiency, setProficiency] = useState<any>(null)
+
+    const handleLogout = () => {
+        localStorage.removeItem('algoscope_token');
+        localStorage.removeItem('algoscope_user');
+        window.location.href = '/login';
+    };
 
     useEffect(() => {
         const fetchAnalytics = async () => {
@@ -146,6 +153,13 @@ const PatternProfile = () => {
                     />
                 </div>
                 <div className="flex items-center gap-6">
+                    <button 
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/5 border border-red-500/10 text-red-400/70 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-all duration-300 text-[10px] font-black uppercase tracking-widest"
+                    >
+                        <LogOut size={14} />
+                        Log Out
+                    </button>
                     <button className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition-all">
                         <Bell size={18} />
                     </button>

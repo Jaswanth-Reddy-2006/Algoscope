@@ -1,6 +1,33 @@
 import React from 'react';
 
-export type AlgorithmType = 'two_pointer' | 'two_pointers' | 'sliding_window' | 'stack' | 'linked_list' | 'tree' | 'graph' | 'binary_search' | 'array' | 'recursion' | 'dynamic_programming' | 'string' | 'math' | 'hash_table';
+export type AlgorithmType =
+    | 'two_pointer'
+    | 'two_pointers'
+    | 'sliding_window'
+    | 'stack'
+    | 'queue'
+    | 'deque'
+    | 'linked_list'
+    | 'tree'
+    | 'binary_tree'
+    | 'bst'
+    | 'heap'
+    | 'trie'
+    | 'graph'
+    | 'union_find'
+    | 'matrix'
+    | 'binary_search'
+    | 'array'
+    | 'arrays'
+    | 'recursion'
+    | 'dynamic_programming'
+    | 'string'
+    | 'math'
+    | 'hash_table'
+    | 'hash_map'
+    | 'bit_manipulation'
+    | 'prefix_sum'
+    | 'set';
 
 export interface Step {
     step: number;
@@ -15,6 +42,29 @@ export interface Step {
         pointers?: Record<string, number | null>;
         windowRange?: [number, number];
         mapState?: Record<string, any>;
+        table?: Record<string, any>;
+        window?: Record<string, any>;
+        values?: Record<string, any>;
+        additionContext?: Record<string, any>;
+        nodes?: Record<string, any>;
+        v1?: number;
+        v2?: number;
+        val1?: number;
+        val2?: number;
+        oldCarry?: number;
+        newCarry?: number;
+        digit?: number;
+        sum?: number;
+        l?: number;
+        r?: number;
+        i?: number;
+        j?: number;
+        start?: number;
+        end?: number;
+        start_pointer?: number;
+        end_pointer?: number;
+        left?: number;
+        right?: number;
         stack?: any[];
         result?: any[];
         found?: boolean;
@@ -23,7 +73,11 @@ export interface Step {
         highlightIndices?: any[];
         phase?: 'init' | 'searching' | 'comparing' | 'found' | 'not_found' | 'lookup';
         finalAnswer?: any;
-        string?: string;
+        string?: string | any[];
+        target?: number;
+        low?: number;
+        high?: number;
+        mid?: number;
         customState?: Record<string, any>;
         tree?: any;
     };

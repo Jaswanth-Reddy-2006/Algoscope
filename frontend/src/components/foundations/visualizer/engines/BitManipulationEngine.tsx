@@ -13,7 +13,7 @@ export const BitManipulationEngine: React.FC<Props> = ({ value, highlightBits = 
     return (
         <div className="flex flex-col items-center gap-8 p-12">
             <div className="flex gap-3">
-                {bits.map((bit, i) => {
+                {bits.map((bit: number, i: number) => {
                     const bitPos = 7 - i;
                     const isHighlighted = highlightBits.includes(bitPos);
 

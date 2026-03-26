@@ -26,11 +26,13 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
         p.id > problem.id
     ) || problems.find(p => p.algorithmType === problem.algorithmType && p.id !== problem.id)
 
+    const isFound = stepState.found || problem.algorithmType === 'tree' || !!stepState.finalAnswer
+
     return (
         <motion.div
             initial={{ scale: 0.95, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            className="w-full max-w-2xl glass-card border border-[#EC4186]/20 p-8 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#1b062b]/95 backdrop-blur-xl rounded-3xl mx-auto"
+            className={`w-full max-w-2xl glass-card border ${isFound ? 'border-[#EC4186]/20' : 'border-white/10'} p-8 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#1b062b]/95 backdrop-blur-xl rounded-3xl mx-auto`}
         >
             {/* Close Button */}
             <button
@@ -41,39 +43,48 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
             </button>
 
             {/* Background Glows */}
-            <div className="absolute -top-12 -right-12 w-32 h-32 bg-accent-blue/10 rounded-full blur-[60px]" />
+            <div className={`absolute -top-12 -right-12 w-32 h-32 ${isFound ? 'bg-accent-blue/10' : 'bg-white/5'} rounded-full blur-[60px]`} />
 
             <div className="text-center mb-8 relative z-10">
                 <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                    className="w-16 h-16 bg-[#EC4186]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#EC4186]/30 shadow-[0_0_30px_rgba(236,65,134,0.2)]"
+                    className={`w-16 h-16 ${isFound ? 'bg-[#EC4186]/10 border-[#EC4186]/30 shadow-[0_0_30px_rgba(236,65,134,0.2)]' : 'bg-white/5 border-white/10'} rounded-2xl flex items-center justify-center mx-auto mb-6 border transition-all`}
                 >
-                    <Trophy className="text-[#EC4186] w-8 h-8" />
+                    <Trophy className={`${isFound ? 'text-[#EC4186]' : 'text-white/20'} w-8 h-8`} />
                 </motion.div>
 
-                <h2 className="text-2xl font-bold tracking-tight mb-2 text-white">Pattern Internalized</h2>
+                <h2 className="text-2xl font-bold tracking-tight mb-2 text-white">
+                    {isFound ? "Pattern Internalized" : "Search Completed"}
+                </h2>
                 <div className="flex items-center justify-center gap-4 mb-2">
-                    <span className="text-[10px] text-[#EC4186] font-bold tracking-[0.2em] uppercase">Confidence Gain: +0%</span>
+                    <span className={`text-[10px] ${isFound ? 'text-[#EC4186]' : 'text-white/20'} font-bold tracking-[0.2em] uppercase`}>
+                        {isFound ? "Confidence Gain: +0%" : "Pattern Analyzed"}
+                    </span>
                     <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
                         <motion.div
                             initial={{ width: 0 }}
-                            animate={{ width: '100%' }}
-                            className="h-full bg-gradient-to-r from-[#EC4186] to-[#EE544A]"
+                            animate={{ width: isFound ? '100%' : '50%' }}
+                            className={`h-full bg-gradient-to-r ${isFound ? 'from-[#EC4186] to-[#EE544A]' : 'from-white/10 to-white/20'}`}
                         />
                     </div>
                 </div>
             </div>
 
             <div className="space-y-4 mb-8 relative z-10">
-                <div className="p-5 bg-white/[0.03] border border-white/5 rounded-xl">
+                <div className={`p-5 bg-white/[0.03] border ${isFound ? 'border-[#EC4186]/10' : 'border-white/10'} rounded-xl`}>
                     <div className="flex items-center gap-2 mb-3">
-                        <span className="text-[9px] font-bold text-[#EC4186] uppercase tracking-[0.2em]">Output Result</span>
-                        <div className="h-px flex-1 bg-[#EC4186]/10" />
+                        <span className={`text-[9px] font-bold ${isFound ? 'text-[#EC4186]' : 'text-white/40'} uppercase tracking-[0.2em]`}>
+                            {isFound ? "Output Result" : "Final State"}
+                        </span>
+                        <div className={`h-px flex-1 ${isFound ? 'bg-[#EC4186]/10' : 'bg-white/5'}`} />
                     </div>
-                    <div className="text-xl font-bold font-mono text-white/90 mb-2 truncate">
-                        {typeof stepState.finalAnswer === 'object' ? JSON.stringify(stepState.finalAnswer) : String(stepState.finalAnswer ?? 'Completed')}
+                    <div className={`text-xl font-bold font-mono ${isFound ? 'text-white/90' : 'text-white/30'} mb-2 truncate`}>
+                        {isFound 
+                            ? (typeof stepState.finalAnswer === 'object' ? JSON.stringify(stepState.finalAnswer) : String(stepState.finalAnswer ?? 'Completed'))
+                            : "No matching result found within these parameters."
+                        }
                     </div>
                     {stepState.explanation && (
                         <p className="text-[10px] text-white/40 leading-relaxed italic font-light">

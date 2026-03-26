@@ -36,96 +36,64 @@ const TwoPointerEngine: React.FC<TwoPointerEngineProps> = ({ isBrute = false, st
 
     if (!safeStep) return null
 
-    const { state } = safeStep
-    const array1 = state.array1 || []
-    const array2 = state.array2 || []
-    const hasDualArrays = array1.length > 0 && array2.length > 0
+    const { state = {} } = safeStep
+    const array1 = state.array1 || state.nums1 || []
+    const array2 = state.array2 || state.nums2 || []
+    const hasDualArrays = (Array.isArray(array1) && array1.length > 0) || (Array.isArray(array2) && array2.length > 0)
 
     const rawItems = state.array || state.string || state.result || []
     const items = typeof rawItems === 'string' ? rawItems.split('') : rawItems
     const pointers = state.pointers || {}
-    const mapState = state.mapState || {}
+    const mapState = state.mapState || state.table || {}
     const highlightIndices = (state.highlightIndices || []) as any[]
     const phase = state.phase
-    const customState = state.customState || {}
+    const customState = state.customState || state.window || {}
+    const values = state.values || {}
     const isFound = phase === 'found'
     const stack = state.stack || []
 
     // Calculation logic for bottom section
+    const targetValue = values.target ?? state.target ?? Number(useStore.getState().customTarget || 0)
     let currentCalculation = null
-    const targetValue = Number(useStore.getState().customTarget || 9)
 
     if (state.calculation) {
         currentCalculation = (
             <div className="flex items-center gap-4 text-xl sm:text-2xl font-black italic uppercase text-white font-mono">
-                {state.calculation}
+                {typeof state.calculation === 'object' ? JSON.stringify(state.calculation) : state.calculation}
             </div>
         )
-    } else if (customState.currentSum !== undefined) {
-        const iIdx = pointers.i;
-        const lIdx = pointers.l;
-        const rIdx = pointers.r;
-        const v1 = (iIdx !== undefined && iIdx !== null) ? items[iIdx] : '?';
-        const v2 = (lIdx !== undefined && lIdx !== null) ? items[lIdx] : '?';
-        const v3 = (rIdx !== undefined && rIdx !== null) ? items[rIdx] : '?';
+    } else if (values.sum !== undefined || customState.currentSum !== undefined) {
+        const sum = values.sum ?? customState.currentSum;
         currentCalculation = (
             <div className="flex items-center gap-4 text-xl sm:text-2xl font-black italic uppercase">
-                <span className="text-white/40">[{v1}, {v2}, {v3}]</span>
                 <span className="text-white/20">SUM:</span>
-                <span className={cn(isFound ? "text-green-400" : "text-white")}>{customState.currentSum}</span>
+                <span className={cn(isFound ? "text-green-400" : "text-white")}>{sum}</span>
+                {targetValue !== 0 && (
+                    <>
+                        <span className="text-white/20">TARGET:</span>
+                        <span className="text-accent-blue">{targetValue}</span>
+                    </>
+                )}
             </div>
         )
-    } else if (effectiveIsBrute) {
-        const iIdx = pointers.i as number;
-        const jIdx = pointers.j as number;
-        const v1 = (iIdx !== undefined && iIdx !== null) ? items[iIdx] : null;
-        const v2 = (jIdx !== undefined && jIdx !== null) ? items[jIdx] : null;
-        if (v1 !== null && v2 !== null) {
-            const sum = Number(v1) + Number(v2);
-            currentCalculation = (
-                <div className="flex items-center gap-4 text-xl sm:text-2xl font-black italic uppercase">
-                    <span className="text-white/80">{v1}</span>
-                    <span className="text-white/20">+</span>
-                    <span className="text-white/80">{v2}</span>
-                    <span className="text-white/20">=</span>
-                    <span className={cn(isFound ? "text-green-400" : "text-white")}>{sum}</span>
-                </div>
-            )
-        }
     } else {
-        const lIdx = pointers.l as number;
-        const rIdx = pointers.r as number;
-        if (lIdx !== undefined && lIdx !== null && rIdx !== undefined && rIdx !== null) {
-            const val1 = Number(items[lIdx] || 0)
-            const val2 = Number(items[rIdx] || 0)
+        // Generic pointer-based value display
+        const activeVals = Object.entries(pointers)
+            .map(([name, idx]) => ({ name, val: items[idx as number] }))
+            .filter(v => v.val !== undefined);
+            
+        if (activeVals.length > 0) {
             currentCalculation = (
-                <div className="flex items-center gap-4 text-xl sm:text-2xl font-black italic uppercase">
-                    <span className="text-accent-blue">{val1}</span>
-                    <span className="text-white/20">+</span>
-                    <span className="text-white/80">{val2}</span>
-                    <span className="text-white/20">=</span>
-                    <span className={cn(isFound ? "text-green-400" : "text-white")}>{Number(val1) + Number(val2)}</span>
+                <div className="flex items-center gap-4 text-lg sm:text-xl font-black italic uppercase">
+                    {activeVals.map((v, i) => (
+                        <React.Fragment key={v.name}>
+                            <span className="text-white/40">{v.name.toUpperCase()}:</span>
+                            <span className="text-white">{v.val}</span>
+                            {i < activeVals.length - 1 && <span className="text-white/10">|</span>}
+                        </React.Fragment>
+                    ))}
                 </div>
             )
-        } else {
-            const iIdx = pointers.i as number;
-            const val = (iIdx !== undefined && iIdx !== null) ? Number(items[iIdx] || 0) : null
-            if (val !== null) {
-                const complement = (targetValue as number) - (val as number)
-                const inMap = mapState[complement] !== undefined
-                currentCalculation = (
-                    <div className="flex items-center gap-3 sm:gap-4 text-lg sm:text-2xl font-black italic uppercase">
-                        <span className="text-white/20">Target(</span>
-                        <span className="text-accent-blue font-mono">{targetValue}</span>
-                        <span className="text-white/20">) - Val(</span>
-                        <span className="text-white/80 font-mono">{val}</span>
-                        <span className="text-white/20">) =</span>
-                        <span className={cn(inMap ? "text-green-400" : "text-accent-blue")}>
-                            {complement}
-                        </span>
-                    </div>
-                )
-            }
         }
     }
 

@@ -26,10 +26,13 @@ const InspectorPanel: React.FC = () => {
     const renderValue = (v: any) => {
         if (v === null || v === undefined) return '-'
         if (typeof v === 'object') {
+            // Check if it's a small object we can show, otherwise summarize
             try {
-                return JSON.stringify(v)
+                const str = JSON.stringify(v)
+                if (str.length < 30) return str
+                return '{...}'
             } catch {
-                return '[Complex Object]'
+                return '[Obj]'
             }
         }
         return String(v)

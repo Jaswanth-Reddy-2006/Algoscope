@@ -4,10 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "npx prisma generate",
-    "start": "npx prisma db push && node server.js",
+    "build": "npx prisma generate --schema ../database/prisma/schema.prisma",
+    "start": "npx prisma db push --schema ../database/prisma/schema.prisma && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:import-leetcode": "node scripts/import_leetcode.js"
+    "db:import-leetcode": "node scripts/import_leetcode.js",
+    "prisma:studio": "npx prisma studio --schema ../database/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",

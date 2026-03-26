@@ -91,17 +91,21 @@ const ProblemInfo: React.FC = () => {
         }
     }
 
+    const resetLabInputs = useStore(state => state.resetLabInputs)
+
     const setRandomExample = () => {
         // Priority 1: Use structuredExamples from store
         if (currentProblem.structuredExamples) {
             try {
-                const examples = currentProblem.structuredExamples;
+                const examples = typeof currentProblem.structuredExamples === 'string' ? JSON.parse(currentProblem.structuredExamples) : currentProblem.structuredExamples;
                 if (Array.isArray(examples) && examples.length > 0) {
                     const randomEx = examples[Math.floor(Math.random() * examples.length)];
                     if (randomEx.input && typeof randomEx.input === 'object') {
+                        const newInputs: Record<string, any> = {};
                         Object.entries(randomEx.input).forEach(([key, value]) => {
-                            setLabInput(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
+                            newInputs[key] = typeof value === 'object' ? JSON.stringify(value) : String(value);
                         });
+                        resetLabInputs(newInputs);
                         setTimeout(() => refreshSteps(), 100);
                         return;
                     }
@@ -116,40 +120,46 @@ const ProblemInfo: React.FC = () => {
         const randomEx = currentProblem.examples[Math.floor(Math.random() * currentProblem.examples.length)];
         
         let exInput = typeof randomEx === 'string' ? randomEx : randomEx.input || '';
-        
+        const newInputs: Record<string, any> = {};
+
         if (currentProblem.labConfig) {
             try {
-                const config = currentProblem.labConfig;
+                const config = typeof currentProblem.labConfig === 'string' ? JSON.parse(currentProblem.labConfig) : currentProblem.labConfig;
                 if (config.parameters) {
                     config.parameters.forEach((param: any) => {
-                        const regex = new RegExp(`${param.name}\\s*=\\s*(\\[.*?\\]|{.*?}|\\".*?\\"|\\d+)`, 'i');
+                        // More robust regex: look for param_name followed by '=', then handle brackets, quotes, or numbers
+                        const regex = new RegExp(`(?:^|,|\\s)${param.name}\\s*=\\s*(\\[[\\s\\S]*?\\]|{[\\s\\S]*?}|\\".*?\\"|[^,\\n]+)`, 'i');
                         const match = exInput.match(regex);
                         if (match) {
-                            setLabInput(param.name, match[1]);
+                            let val = match[1].trim();
+                            // Clean up trailing commas if any
+                            if (val.endsWith(',')) val = val.slice(0, -1).trim();
+                            newInputs[param.name] = val;
                         }
                     });
                 }
-            } catch (e) {}
-        }
-
-        let extractedInput = '';
-        const arrMatch = exInput.match(/\[.*?\]/);
-        const strMatch = exInput.match(/"(.*?)"/);
-        
-        if (arrMatch) {
-            extractedInput = arrMatch[0];
-        } else if (strMatch) {
-            extractedInput = strMatch[0];
-        } else {
-            const parts = exInput.split('=');
-            if (parts.length > 1) {
-                extractedInput = parts[1].split(',')[0].trim();
-            } else {
-                extractedInput = exInput;
+            } catch (e) {
+                console.warn("Failed to parse labConfig for examples:", e);
             }
         }
         
-        setCustomInput(extractedInput);
+        if (Object.keys(newInputs).length > 0) {
+            resetLabInputs(newInputs);
+        } else {
+            // Last resort: extract anything that looks like an array or string
+            let extractedInput = '';
+            const arrMatch = exInput.match(/\[.*?\]/);
+            const strMatch = exInput.match(/"(.*?)"/);
+            
+            if (arrMatch) extractedInput = arrMatch[0];
+            else if (strMatch) extractedInput = strMatch[0];
+            else {
+                const parts = exInput.split('=');
+                extractedInput = parts.length > 1 ? parts[1].split(',')[0].trim() : exInput;
+            }
+            resetLabInputs({ input1: extractedInput });
+        }
+        
         setTimeout(() => refreshSteps(), 100);
     }
 

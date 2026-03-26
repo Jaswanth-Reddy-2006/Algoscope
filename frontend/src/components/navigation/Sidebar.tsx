@@ -36,6 +36,9 @@ const Sidebar: React.FC = () => {
     React.useEffect(() => {
         if (location.pathname.startsWith('/problems/') && location.pathname !== '/problems') {
             setSidebarCollapsed(true)
+        } else {
+            // Uncollapse when leaving a problem page to restore navigation
+            setSidebarCollapsed(false)
         }
     }, [location.pathname, setSidebarCollapsed])
 

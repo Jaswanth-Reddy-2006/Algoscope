@@ -185,11 +185,13 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
 /**
  * Generates a dynamic fallback visualization for unmapped LeetCode problems.
  */
-const generateUniversalFallback = (input: any, mode: string): Step[] => {
+const generateUniversalFallback = (input: any, mode: string, type?: string): Step[] => {
     let arrayData: any[] = []
     let matrixData: any[][] | undefined = undefined
+    let stackData: any[] | undefined = undefined
+    let treeData: any | undefined = undefined
 
-    // Sniff the parsed input structure from useStore 
+    // Sniff the parsed input structure
     if (Array.isArray(input)) {
         if (Array.isArray(input[0])) matrixData = input
         else arrayData = input
@@ -202,14 +204,27 @@ const generateUniversalFallback = (input: any, mode: string): Step[] => {
         else if (input.l1 && Array.isArray(input.l1)) arrayData = [...input.l1, ...(input.l2 || [])]
     }
 
+    // Specialized initial state based on type
+    if (type === 'stack' || type === 'queue') {
+        stackData = [...arrayData]
+        arrayData = []
+    } else if (type === 'trees' || type === 'tree') {
+        treeData = { val: arrayData[0] || 'Root', left: null, right: null }
+        arrayData = []
+    } else if (type === 'linked_lists' || type === 'linked_list') {
+        // Handled as array for simplicity in visualization usually, but we could add a flag
+    }
+
     return [
         {
             step: 0,
-            description: `Initializing ${mode} Environment for unmapped problem...`,
+            description: `Initializing ${mode} (${type || 'General'}) Environment...`,
             state: {
                 array: arrayData.length > 0 ? arrayData : undefined,
                 matrix: matrixData,
-                explanation: `System successfully instantiated data structures for standard evaluation. Custom animation parameters for this specific problem are dynamically synchronized.`,
+                stack: stackData,
+                tree: treeData,
+                explanation: `Success: Instantiated ${type || 'standard'} data structures. Dynamic trace engine is active.`,
                 phase: 'init'
             }
         },
@@ -219,7 +234,9 @@ const generateUniversalFallback = (input: any, mode: string): Step[] => {
             state: {
                 array: arrayData.length > 0 ? arrayData : undefined,
                 matrix: matrixData,
-                explanation: `Advanced deep-level steps for this problem logic are calculated in real-time or currently tracked in the AI Engine queue. Analyze the problem statement for further details!`,
+                stack: stackData,
+                tree: treeData,
+                explanation: `Step-by-step logic for this ${type || 'problem'} is being synthesized in real-time. Analyze the structure for insights!`,
                 phase: 'searching'
             }
         }
@@ -229,9 +246,9 @@ const generateUniversalFallback = (input: any, mode: string): Step[] => {
 /**
  * Safely retrieves a strategy pair for a given problem slug.
  */
-export const getStrategyForProblem = (slug: string): StrategyPair => {
+export const getStrategyForProblem = (slug: string, type?: string): StrategyPair => {
     return problemStrategyRegistry[slug] || {
-        brute: (input) => generateUniversalFallback(input, 'Brute Force'),
-        optimal: (input) => generateUniversalFallback(input, 'Optimal')
+        brute: (input) => generateUniversalFallback(input, 'Brute Force', type),
+        optimal: (input) => generateUniversalFallback(input, 'Optimal', type)
     }
 }

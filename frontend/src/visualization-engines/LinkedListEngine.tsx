@@ -34,14 +34,23 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
 
     if (!safeStep) return null
 
-    const { state } = safeStep
+    const state = ((safeStep as any)?.state || {}) as any
     const pointers = state.pointers || {}
-    const customState = state.customState || {}
+    const customState = state.customState || state.values || {}
     const phase = state.phase
-    const additionContext = customState.additionContext // { v1, v2, oldCarry, newCarry, sum, digit }
+    const additionContext = state.additionContext || customState.additionContext || (state.v1 !== undefined || state.val1 !== undefined || state.sum !== undefined ? state : null)
 
-    // Parse inputs for visualization
+    const safeRender = (val: any) => {
+        if (val === undefined || val === null) return '0'
+        if (typeof val === 'object') return '...'
+        return String(val)
+    }
+
+    // Use nodes from state if available, otherwise fall back to parsing custom input
+    const nodes = state.nodes || {};
+    
     const parseList = (input: string, fallback: number[]) => {
+        if (!input) return fallback;
         try {
             const cleaned = input.trim()
             if (cleaned.startsWith('[') && cleaned.endsWith(']')) return JSON.parse(cleaned)
@@ -51,33 +60,52 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
         }
     }
 
-    const l1 = parseList(customInput, [2, 4, 3])
-    const l2 = parseList(customTarget, [5, 6, 4])
-    const result = state.result || []
+    const l1 = state.l1 || state.list1 || state.array1 || state.nodes1 || parseList(customInput, [2, 4, 3])
+    const l2 = state.l2 || state.list2 || state.array2 || state.nodes2 || parseList(customTarget, [5, 6, 4])
+    const result = state.res || state.result || state.ans || []
 
-    const renderNode = (val: number, isCurrent: boolean, label?: string, type: 'l1' | 'l2' | 'res' = 'l1') => (
-        <div className="flex items-center gap-2">
-            <motion.div
-                layout
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className={cn(
-                    "w-12 h-12 rounded-full border-2 flex flex-col items-center justify-center font-bold relative transition-all duration-500",
-                    isCurrent
-                        ? (type === 'res' ? "border-green-400 bg-green-400/20 text-green-400 shadow-glow" :
-                            type === 'l2' ? "border-purple-400 bg-purple-400/20 text-purple-400 shadow-glow-sm" :
-                                "border-accent-blue bg-accent-blue/20 text-accent-blue shadow-glow-sm")
-                        : "border-white/10 bg-white/5 text-white/40"
-                )}
-            >
-                <span className="text-sm">{val}</span>
-                {label && (
-                    <div className="absolute -top-6 text-[7px] font-black text-white/20 uppercase tracking-widest text-center w-full">{label}</div>
-                )}
-            </motion.div>
-            <ArrowRight size={14} className="text-white/5" />
-        </div>
-    )
+    const renderNode = (val: number, idx: number, type: 'l1' | 'l2' | 'res' = 'l1') => {
+        // Check if any pointer refers to this index in this specific list
+        const activePointerNames = Object.entries(pointers)
+            .filter(([name, ptrIdx]) => {
+                if (ptrIdx !== idx) return false;
+                if (type === 'l1' && (name === 'l1' || name === 'head1' || name === 'p1')) return true;
+                if (type === 'l2' && (name === 'l2' || name === 'head2' || name === 'p2')) return true;
+                if (type === 'res' && (name === 'curr' || name === 'res' || name === 'dummy')) return true;
+                if (name === 'curr' || name === 'p' || name === 'head') return true;
+                return false;
+            })
+            .map(([name]) => name);
+
+        const isCurrent = activePointerNames.length > 0;
+        const label = activePointerNames[0]; // Take the first matching pointer for the label
+
+        return (
+            <div className="flex items-center gap-2">
+                <motion.div
+                    layout
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className={cn(
+                        "w-12 h-12 rounded-full border-2 flex flex-col items-center justify-center font-bold relative transition-all duration-500",
+                        isCurrent
+                            ? (type === 'res' ? "border-green-400 bg-green-400/20 text-green-400 shadow-glow" :
+                                type === 'l2' ? "border-purple-400 bg-purple-400/20 text-purple-400 shadow-glow-sm" :
+                                    "border-accent-blue bg-accent-blue/20 text-accent-blue shadow-glow-sm")
+                            : "border-white/10 bg-white/5 text-white/40"
+                    )}
+                >
+                    <span className="text-sm">{val}</span>
+                    {label && (
+                        <div className="absolute -top-6 text-[7px] font-black text-white/40 bg-black/40 px-1 py-0.5 rounded border border-white/10 uppercase tracking-widest text-center w-max min-w-[30px] z-10">
+                            {label}
+                        </div>
+                    )}
+                </motion.div>
+                <ArrowRight size={14} className="text-white/5" />
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col h-full w-full overflow-hidden bg-black/40 min-h-0">
@@ -105,22 +133,22 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
                         >
                             <div className="flex flex-col items-center">
                                 <span className="text-[7px] text-accent-blue uppercase font-black tracking-tighter">List 1</span>
-                                <span className="text-lg font-black text-white">{additionContext.v1}</span>
+                                <span className="text-lg font-black text-white">{safeRender(additionContext.v1 ?? additionContext.val1)}</span>
                             </div>
                             <span className="text-lg text-white/20 font-light">+</span>
                             <div className="flex flex-col items-center">
                                 <span className="text-[7px] text-purple-400 uppercase font-black tracking-tighter">List 2</span>
-                                <span className="text-lg font-black text-white">{additionContext.v2}</span>
+                                <span className="text-lg font-black text-white">{safeRender(additionContext.v2 ?? additionContext.val2)}</span>
                             </div>
                             <span className="text-lg text-white/20 font-light">+</span>
                             <div className="flex flex-col items-center">
                                 <span className="text-[7px] text-red-400 uppercase font-black tracking-tighter">Carry</span>
-                                <span className="text-lg font-black text-red-500">{additionContext.oldCarry}</span>
+                                <span className="text-lg font-black text-red-500">{safeRender(additionContext.carry ?? additionContext.oldCarry)}</span>
                             </div>
                             <span className="text-lg text-white/20 font-light">=</span>
                             <div className="flex flex-col items-center px-4 py-1 rounded-lg bg-accent-blue/10 border border-accent-blue/20">
                                 <span className="text-[7px] text-accent-blue uppercase font-black tracking-tighter">Total</span>
-                                <span className="text-lg font-black text-accent-blue">{additionContext.sum}</span>
+                                <span className="text-lg font-black text-accent-blue">{safeRender(additionContext.sum)}</span>
                             </div>
                         </motion.div>
                     )}
@@ -142,8 +170,7 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
                             <React.Fragment key={`l1-${idx}`}>
                                 {renderNode(
                                     val,
-                                    pointers.l1 === idx,
-                                    idx === 0 ? "Units (Head)" : idx === 1 ? "Tens" : idx === 2 ? "Hundreds" : "10^" + idx,
+                                    idx,
                                     'l1'
                                 )}
                             </React.Fragment>
@@ -163,8 +190,7 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
                             <React.Fragment key={`l2-${idx}`}>
                                 {renderNode(
                                     val,
-                                    pointers.l2 === idx,
-                                    idx === 0 ? "Units (Head)" : idx === 1 ? "Tens" : idx === 2 ? "Hundreds" : "10^" + idx,
+                                    idx,
                                     'l2'
                                 )}
                             </React.Fragment>
@@ -188,7 +214,7 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
                                 <div className="flex flex-col items-center">
                                     <div className="w-16 h-16 rounded-2xl bg-green-500/10 border-2 border-green-500/30 flex axial-center flex-col items-center justify-center shadow-glow-sm">
                                         <span className="text-[8px] font-black text-green-500/60 uppercase mb-1">Digit</span>
-                                        <span className="text-xl font-black text-green-400">{additionContext.digit}</span>
+                                        <span className="text-xl font-black text-green-400">{safeRender(additionContext.digit)}</span>
                                     </div>
                                     <div className="h-4 w-[1px] bg-green-500/20" />
                                     <span className="text-[7px] font-black text-green-500/40 uppercase tracking-widest">To Result</span>
@@ -198,7 +224,7 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
                                 <div className="flex flex-col items-center">
                                     <div className="w-16 h-16 rounded-2xl bg-red-500/10 border-2 border-red-500/30 flex axial-center flex-col items-center justify-center shadow-glow-sm">
                                         <span className="text-[8px] font-black text-red-500/60 uppercase mb-1">New Carry</span>
-                                        <span className="text-xl font-black text-red-400">{additionContext.newCarry}</span>
+                                        <span className="text-xl font-black text-red-400">{safeRender(additionContext.newCarry ?? additionContext.nextCarry)}</span>
                                     </div>
                                     <div className="h-4 w-[1px] bg-red-500/20" />
                                     <span className="text-[7px] font-black text-red-500/40 uppercase tracking-widest">Next Step</span>
@@ -224,7 +250,7 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
                                     transition={{ type: 'spring', damping: 15 }}
                                     className="flex items-center"
                                 >
-                                    {renderNode(val, idx === result.length - 1, undefined, 'res')}
+                                    {renderNode(val, idx, 'res')}
                                 </motion.div>
                             ))}
                         </AnimatePresence>

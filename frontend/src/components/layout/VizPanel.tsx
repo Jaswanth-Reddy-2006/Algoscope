@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { useStore } from '../../store/useStore'
-import { getEngine } from '../../registry/engineRegistry'
+import { resolveEngine } from '../../registry/engineRegistry'
 import ErrorBoundary from '../common/ErrorBoundary'
 import { cn } from '../../utils/cn'
 
@@ -17,7 +17,7 @@ const VizPanel: React.FC = () => {
     if (!currentProblem) return null
 
     const renderEngine = (mode: 'brute' | 'optimal', steps?: any[]) => {
-        const Engine = getEngine(currentProblem.algorithmType)
+        const Engine = resolveEngine(currentProblem)
 
         if (!Engine) {
             return (

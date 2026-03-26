@@ -46,6 +46,39 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/:id/steps', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { input, target, mode } = req.body;
+        
+        const problemId = parseInt(id);
+        if (isNaN(problemId)) return res.status(400).json({ error: 'Invalid problem ID' });
+
+        const p = await prisma.problem.findUnique({
+            where: { id: problemId }
+        });
+        
+        if (!p) return res.status(404).json({ error: 'Problem not found' });
+        
+        const stepsField = (mode === 'brute' || mode === 'brute_force') 
+            ? p.brute_force_steps 
+            : p.optimal_steps;
+
+        if (stepsField) {
+            try {
+                return res.json(JSON.parse(stepsField));
+            } catch (e) {
+                return res.json([]);
+            }
+        }
+
+        res.status(200).json([]);
+    } catch (err) {
+        console.error("Step synthesis error:", err);
+        res.status(500).json({ error: 'Failed to synthesize steps' });
+    }
+});
+
 router.get('/:slug', async (req, res) => {
     try {
         const p = await prisma.problem.findUnique({

@@ -64,9 +64,9 @@ export const generateTwoSumPointers = (nums: number[], target: number): Step[] =
 /**
  * TWO SUM: BRUTE FORCE (O(N^2))
  */
-export const generateTwoSumBrute = (nums: number[], target: number): Step[] => {
+export const generateTwoSumBrute = (nums: number[] = [], target: number = 0): Step[] => {
     const steps: Step[] = []
-
+    if (!nums || nums.length === 0) return []
     for (let i = 0; i < nums.length; i++) {
         for (let j = i + 1; j < nums.length; j++) {
             const currentSum = nums[i] + nums[j]
@@ -108,8 +108,9 @@ export const generateTwoSumBrute = (nums: number[], target: number): Step[] => {
 /**
  * TWO SUM: OPTIMAL HASHMAP (O(N))
  */
-export const generateTwoSumHashMap = (nums: number[], target: number): Step[] => {
+export const generateTwoSumHashMap = (nums: number[] = [], target: number = 0): Step[] => {
     const steps: Step[] = []
+    if (!nums || nums.length === 0) return []
     const map: Record<number, number> = {}
 
     for (let i = 0; i < nums.length; i++) {

@@ -91,6 +91,7 @@ interface AlgoScopeState {
     setCustomInput: (input: string) => void
     setCustomTarget: (target: string) => void
     setLabInput: (name: string, value: any) => void
+    resetLabInputs: (newInputs: Record<string, any>) => void
     setSidebarCollapsed: (collapsed: boolean) => void
     setHubOpen: (open: boolean) => void
     refreshSteps: () => Promise<void>
@@ -125,6 +126,9 @@ interface AlgoScopeState {
     compareLeftSteps: any[]
     compareRightSteps: any[]
     setCompareSide: (side: 'left' | 'right', config: Partial<ComparisonState>) => void
+    optimal_steps: any[]
+    brute_force_steps: any[]
+    fetchOptimalSteps: (problemId: string, customInput?: string) => Promise<void>
 }
 
 interface AdaptiveBehavior {
@@ -144,6 +148,27 @@ export interface Recommendation {
 }
 
 
+
+const parseJSON = (val: any) => {
+    if (!val || typeof val !== 'string') return val;
+    try { return JSON.parse(val); } catch { return val; }
+};
+
+const normalizeProblem = (p: any): Problem => ({
+    ...p,
+    algorithmType: (p.algorithmType === 'two_pointer' ? 'two_pointers' : p.algorithmType) as AlgorithmType,
+    brute_force_steps: parseJSON(p.brute_force_steps) || [],
+    optimal_steps: parseJSON(p.optimal_steps) || [],
+    thinking_guide: parseJSON(p.thinking_guide),
+    complexity: parseJSON(p.complexity),
+    labConfig: parseJSON(p.labConfig),
+    structuredExamples: parseJSON(p.structuredExamples),
+    optimal_variants: parseJSON(p.optimal_variants),
+    constraints: parseJSON(p.constraints),
+    edgeCases: parseJSON(p.edgeCases),
+    patternSignals: parseJSON(p.patternSignals),
+    secondaryPatterns: parseJSON(p.secondaryPatterns),
+});
 
 export const useStore = create<AlgoScopeState>((set, get) => ({
     currentProblem: null,
@@ -174,6 +199,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     compareRight: { mode: 'optimal', variantIndex: 0 },
     compareLeftSteps: [],
     compareRightSteps: [],
+    optimal_steps: [],
+    brute_force_steps: [],
 
     trackActivity: (pattern: string, metric: keyof Omit<PatternStats, 'confidence'>, value = 1) => {
         set((state) => {
@@ -677,29 +704,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             data.sort((a: any, b: any) => a.id - b.id)
 
             // Normalize algorithmType and parse JSON fields for consistency
-            const normalizedData = data.map((p: any) => {
-                const parseJSON = (val: any) => {
-                    if (!val || typeof val !== 'string') return val;
-                    try { return JSON.parse(val); } catch { return val; }
-                };
-
-                return {
-                    ...p,
-                    algorithmType: (p.algorithmType === 'two_pointer' ? 'two_pointers' : p.algorithmType) as AlgorithmType,
-                    brute_force_steps: parseJSON(p.brute_force_steps),
-                    optimal_steps: parseJSON(p.optimal_steps),
-                    thinking_guide: parseJSON(p.thinking_guide),
-                    complexity: parseJSON(p.complexity),
-                    labConfig: parseJSON(p.labConfig),
-                    structuredExamples: parseJSON(p.structuredExamples),
-                    optimal_variants: parseJSON(p.optimal_variants),
-                    constraints: parseJSON(p.constraints),
-                    edgeCases: parseJSON(p.edgeCases),
-                    patternSignals: parseJSON(p.patternSignals),
-                    secondaryPatterns: parseJSON(p.secondaryPatterns),
-                };
-            });
-
+            const normalizedData = data.map((p: any) => normalizeProblem(p));
             set({ problems: normalizedData as Problem[] })
         } catch (err) {
             console.warn("Using fallback problems (Offline Mode):", err)
@@ -764,26 +769,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                 data = await response.json()
             }
 
-            // Ensure JSON fields are parsed if they come as strings
-            const parseJSON = (val: any) => {
-                if (!val || typeof val !== 'string') return val;
-                try { return JSON.parse(val); } catch { return val; }
-            };
-
-            const parsedData = {
-                ...data,
-                brute_force_steps: parseJSON(data?.brute_force_steps),
-                optimal_steps: parseJSON(data?.optimal_steps),
-                thinking_guide: parseJSON(data?.thinking_guide),
-                complexity: parseJSON(data?.complexity),
-                labConfig: parseJSON(data?.labConfig),
-                structuredExamples: parseJSON(data?.structuredExamples),
-                optimal_variants: parseJSON(data?.optimal_variants),
-                constraints: parseJSON(data?.constraints),
-                edgeCases: parseJSON(data?.edgeCases),
-                patternSignals: parseJSON(data?.patternSignals),
-                secondaryPatterns: parseJSON(data?.secondaryPatterns),
-            } as Problem;
+            const parsedData = normalizeProblem(data);
 
             get().setProblem(parsedData)
 
@@ -847,6 +833,16 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     })),
     setSidebarCollapsed: (collapsed: boolean) => set({ isSidebarCollapsed: collapsed }),
     setHubOpen: (open: boolean) => set({ isHubOpen: open }),
+    resetLabInputs: (newInputs: Record<string, any>) => {
+        const firstKey = Object.keys(newInputs)[0]
+        const firstVal = newInputs[firstKey]
+        set({
+            labInputs: newInputs,
+            customInput: typeof firstVal === 'object' ? JSON.stringify(firstVal) : String(firstVal || ''),
+            currentStepIndex: 0,
+            isPlaying: false
+        })
+    },
     setActivePseudoLine: (line: number | null) => set({ activePseudoLine: line }),
     setObservationText: (text: string | null) => set({ observationText: text }),
     setTotalSteps: (steps: number) => set({ totalSteps: steps }),
@@ -871,15 +867,33 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     prevPage: () => set((state) => ({ currentPage: Math.max(1, state.currentPage - 1) })),
 
     refreshSteps: async () => {
-        const { currentProblem, customInput, customTarget } = get()
-        if (!currentProblem) return
+        const { currentProblem, customInput } = get();
+        if (!currentProblem) return;
+
+        // Priority 1: Use pre-parsed steps from the problem object if available
+        const problemSteps = currentProblem.optimal_steps;
+        if (Array.isArray(problemSteps) && problemSteps.length > 0 && !customInput) {
+            set({ optimal_steps: problemSteps, isEngineInitialized: true, isLoading: false });
+            return;
+        }
+
+        // Fallback: Fetch if missing or custom input active
+        await get().fetchOptimalSteps(customInput);
+        set({ isEngineInitialized: true });
+    },
+
+    fetchOptimalSteps: async (customInput?: string) => {
+        const { currentProblem, customTarget } = get();
+        if (!currentProblem) return;
+
+        set({ isLoading: true });
 
         try {
             // Priority 1: Local Strategy Registry (Strict Master Fix)
-            const strategyPair = getStrategyForProblem(currentProblem.slug)
+            const strategyPair = getStrategyForProblem(currentProblem.slug, currentProblem.algorithmType)
 
             // Robust Input Parsing (Phase 6 Master Fix)
-            const parseArray = (input: string): any[] => {
+            const parseArray = (input: any): any[] => {
                 if (!input) return [2, 7, 11, 15]
                 try {
                     // Try JSON first
@@ -888,7 +902,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                         return JSON.parse(cleaned)
                     }
                     // Try comma-separated if not JSON
-                    return cleaned.split(',').map(s => {
+                    return cleaned.split(',').map((s: string) => {
                         const val = s.trim()
                         return isNaN(Number(val)) ? val : Number(val)
                     })
@@ -916,7 +930,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                             } else if (param.type === 'number') {
                                 dynamicInput[param.name] = Number(rawVal)
                             } else {
-                                dynamicInput[param.name] = rawVal
+                                dynamicInput[param.name] = String(rawVal || "")
                             }
                         })
                         
@@ -931,15 +945,15 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             // Priority 1: Legacy Comprehensive Parsing Logic (Overrides if needed)
             if (Object.keys(parsedInput).length === 0) {
                 // Comprehensive Parsing Logic
-                const nums = parseArray(customInput)
-                const target = isNaN(parseInt(customTarget)) ? customTarget : parseInt(customTarget || '0')
+                const nums = parseArray(customInput || "")
+                const target = isNaN(parseInt(customTarget || "0")) ? customTarget || "0" : parseInt(customTarget || '0')
 
                 if (slug === 'median-of-two-sorted-arrays') {
-                    parsedInput = { nums1: parseArray(customInput), nums2: parseArray(customTarget) }
+                    parsedInput = { nums1: parseArray(customInput || ""), nums2: parseArray(customTarget || "") }
                 } else if (slug === 'regular-expression-matching') {
-                    parsedInput = { s: customInput, p: customTarget }
+                    parsedInput = { s: customInput || "", p: customTarget || "" }
                 } else if (slug === 'add-two-numbers' || slug === 'merge-two-sorted-lists') {
-                    parsedInput = { l1: parseArray(customInput), l2: parseArray(customTarget) }
+                    parsedInput = { l1: parseArray(customInput || ""), l2: parseArray(customTarget || "") }
                 } else if (slug === 'zigzag-conversion') {
                     parsedInput = { s: customInput, target }
                 } else if (slug === 'string-to-integer-atoi' || slug === 'palindrome-number' || slug === 'reverse-integer' || slug === 'valid-parentheses' || slug === 'valid-palindrome') {
@@ -1014,12 +1028,18 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                 target: customTarget
             });
             const data = response.data;
+            if (data.optimal_steps && typeof data.optimal_steps === 'string') {
+                try { data.optimal_steps = JSON.parse(data.optimal_steps); } catch (e) { data.optimal_steps = []; }
+            }
+            if (data.brute_force_steps && typeof data.brute_force_steps === 'string') {
+                try { data.brute_force_steps = JSON.parse(data.brute_force_steps); } catch (e) { data.brute_force_steps = []; }
+            }
 
             set({
                 currentProblem: {
                     ...currentProblem,
-                    brute_force_steps: data.bruteForceSteps || data.brute || [],
-                    optimal_steps: data.optimalSteps || data.optimal || []
+                    brute_force_steps: Array.isArray(data) ? data : (data.bruteForceSteps || data.brute || []),
+                    optimal_steps: Array.isArray(data) ? data : (data.optimalSteps || data.optimal || [])
                 },
                 currentStepIndex: 0,
                 isPlaying: false,
@@ -1033,14 +1053,14 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             // Safe manual fallback to prevent "No implementation Found"
             let fallbackItems: any[] = []
             try {
-                // We use the helper defined inside refreshSteps scope
-                // but since we are in the catch block we need to be careful
-                // For simplicity, let's use a basic split if parseArray fails
                 const cleaned = (customInput || '').trim()
                 if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
                     fallbackItems = JSON.parse(cleaned)
                 } else {
-                    fallbackItems = cleaned.split(',').map(s => Number(s.trim())).filter(n => !isNaN(n))
+                    fallbackItems = cleaned.split(',').map(s => {
+                        const val = s.trim()
+                        return isNaN(Number(val)) ? val : Number(val)
+                    }).filter(v => v !== "")
                 }
                 if (fallbackItems.length === 0) fallbackItems = [1, 2, 3, 4, 5]
             } catch {

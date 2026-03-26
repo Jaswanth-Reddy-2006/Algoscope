@@ -21,9 +21,13 @@ const MatrixEngine: React.FC<MatrixEngineProps> = ({ isBrute = false }) => {
         : []
 
     const safeStep = steps?.[currentStepIndex] ?? steps?.[0] ?? null
-    const state = safeStep?.state
-    const matrix = state?.matrix || []
-    const highlightIndices = state?.highlightIndices || [] // Array of [r, c] or flat index
+    const stepAny = safeStep as any
+    const state = (stepAny?.state || {}) as any
+    const matrix = state?.matrix || state?.dp || []
+    const rowLabels = state?.rowLabels || []
+    const colLabels = state?.colLabels || []
+    const highlightIndices = (state?.highlightIndices || []) as any[]
+    // Removed extra highlightIndices and isHighlighted here
     const efficiency = effectiveIsBrute ? currentProblem?.efficiency?.brute : currentProblem?.efficiency?.optimal
 
     if (!currentProblem) return null
@@ -42,8 +46,11 @@ const MatrixEngine: React.FC<MatrixEngineProps> = ({ isBrute = false }) => {
     if (!safeStep || !state) return null
 
     const isHighlighted = (r: number, c: number) => {
-        return highlightIndices.some(h => Array.isArray(h) && h[0] === r && h[1] === c)
-    }
+        return (highlightIndices as any[]).some(h => 
+            (Array.isArray(h) && h[0] === r && h[1] === c) || 
+            (h && typeof h === 'object' && (h.row === r || h.r === r) && (h.col === c || h.c === c))
+        );
+    };
 
     return (
         <div className="flex flex-col h-full w-full overflow-hidden bg-black/40 min-h-0">
@@ -103,33 +110,59 @@ const MatrixEngine: React.FC<MatrixEngineProps> = ({ isBrute = false }) => {
                 <div className="relative p-6 bg-white/[0.02] border border-white/10 rounded-3xl shadow-2xl">
                     <div
                         className="grid gap-2 sm:gap-4"
-                        style={{ gridTemplateColumns: `repeat(${matrix[0]?.length || 0}, minmax(0, 1fr))` }}
+                        style={{ gridTemplateColumns: `repeat(${(matrix[0]?.length || 0) + (rowLabels.length > 0 ? 1 : 0)}, minmax(0, 1fr))` }}
                     >
                         {matrix.map((row: any[], rIdx: number) => (
-                            row.map((val: any, cIdx: number) => {
-                                const active = isHighlighted(rIdx, cIdx)
-                                return (
-                                    <motion.div
-                                        key={`${rIdx}-${cIdx}`}
-                                        layout
-                                        initial={false}
-                                        animate={{
-                                            scale: active ? 1.05 : 1,
-                                            backgroundColor: active ? "rgba(238, 84, 74, 0.2)" : "rgba(255, 255, 255, 0.05)",
-                                            borderColor: active ? "rgba(238, 84, 74, 0.5)" : "rgba(255, 255, 255, 0.1)"
-                                        }}
-                                        className={cn(
-                                            "w-10 h-10 sm:w-14 sm:h-14 rounded-xl border flex items-center justify-center font-bold text-sm sm:text-lg transition-all relative",
-                                            active ? "text-accent-blue shadow-glow-sm" : "text-white/40"
-                                        )}
-                                    >
-                                        {val}
-                                        <div className="absolute -top-1.5 -left-1.5 text-[6px] text-white/10 font-mono">
-                                            {rIdx},{cIdx}
-                                        </div>
-                                    </motion.div>
-                                )
-                            })
+                            <React.Fragment key={`row-group-${rIdx}`}>
+                                {rIdx === 0 && colLabels.length > 0 && (
+                                    <>
+                                        <div className="w-10 h-10 sm:w-14 sm:h-14" /> {/* Corner spacer */}
+                                        {colLabels.map((label: string, i: number) => (
+                                            <div key={`col-label-${i}`} className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center text-[10px] sm:text-xs font-black text-white/20 uppercase tracking-tighter">
+                                                {label}
+                                            </div>
+                                        ))}
+                                    </>
+                                )}
+                                {rowLabels.length > 0 && (
+                                    <div className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center text-[10px] sm:text-xs font-black text-white/20 uppercase">
+                                        {rowLabels[rIdx]}
+                                    </div>
+                                )}
+                                {row.map((val: any, cIdx: number) => {
+                                    const active = isHighlighted(rIdx, cIdx)
+                                    const isTrue = val === true || val === 1 || val === 'T'
+                                    const isFalse = val === false || val === 0 || val === 'F'
+
+                                    return (
+                                        <motion.div
+                                            key={`${rIdx}-${cIdx}`}
+                                            layout
+                                            initial={false}
+                                            animate={{
+                                                scale: active ? 1.05 : 1,
+                                                backgroundColor: active ? "rgba(238, 84, 74, 0.2)" : 
+                                                                isTrue ? "rgba(34, 197, 94, 0.1)" :
+                                                                isFalse ? "rgba(239, 68, 68, 0.05)" : "rgba(255, 255, 255, 0.05)",
+                                                borderColor: active ? "rgba(238, 84, 74, 0.5)" : 
+                                                             isTrue ? "rgba(34, 197, 94, 0.3)" :
+                                                             isFalse ? "rgba(239, 68, 68, 0.2)" : "rgba(255, 255, 255, 0.1)"
+                                            }}
+                                            className={cn(
+                                                "w-10 h-10 sm:w-14 sm:h-14 rounded-xl border flex items-center justify-center font-bold text-sm sm:text-lg transition-all relative",
+                                                active ? "text-accent-blue shadow-glow-sm" : 
+                                                isTrue ? "text-green-400" :
+                                                isFalse ? "text-red-500/40" : "text-white/40"
+                                            )}
+                                        >
+                                            {typeof val === 'boolean' ? (val ? 'T' : 'F') : val}
+                                            <div className="absolute -top-1.5 -left-1.5 text-[6px] text-white/10 font-mono">
+                                                {rIdx},{cIdx}
+                                            </div>
+                                        </motion.div>
+                                    )
+                                })}
+                            </React.Fragment>
                         ))}
                     </div>
                 </div>

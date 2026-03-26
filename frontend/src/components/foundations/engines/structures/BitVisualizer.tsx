@@ -1,9 +1,28 @@
 import React, { useState } from 'react'
 
-const BitVisualizer: React.FC = () => {
-    const [num, setNum] = useState<number>(42)
-    const [operation, setOperation] = useState('none')
-    const [operand, setOperand] = useState(0)
+interface Props {
+    value?: number;
+    operation?: string;
+    operand?: number;
+    label?: string;
+    mask?: number;
+}
+
+const BitVisualizer: React.FC<Props> = ({ 
+    value: propValue = 42, 
+    operation: propOperation = 'none', 
+    operand: propOperand = 0 
+}) => {
+    const [num, setNum] = useState<number>(propValue)
+    const [operation, setOperation] = useState(propOperation)
+    const [operand, setOperand] = useState(propOperand)
+
+    // Sync state with props if provided
+    React.useEffect(() => {
+        setNum(propValue);
+        setOperation(propOperation);
+        setOperand(propOperand);
+    }, [propValue, propOperation, propOperand]);
 
     const bits = num.toString(2).padStart(8, '0').split('').map(Number)
     const operandBits = operand.toString(2).padStart(8, '0').split('').map(Number)
@@ -23,7 +42,7 @@ const BitVisualizer: React.FC = () => {
             <div className="flex flex-col gap-2 items-end">
                 <div className="flex gap-2 items-center">
                     <span className="text-white/40 text-xs w-16 text-right">A ({num})</span>
-                    {bits.map((b, i) => (
+                    {bits.map((b: number, i: number) => (
                         <div key={i} className={`w-8 h-8 rounded border flex items-center justify-center font-bold ${b ? 'bg-blue-500/20 text-blue-400 border-blue-500' : 'bg-white/5 border-white/10 text-white/20'}`}>
                             {b}
                         </div>
@@ -39,7 +58,7 @@ const BitVisualizer: React.FC = () => {
 
                         <div className="flex gap-2 items-center">
                             <span className="text-white/40 text-xs w-16 text-right">B ({operand})</span>
-                            {operandBits.map((b, i) => (
+                            {operandBits.map((b: number, i: number) => (
                                 <div key={i} className={`w-8 h-8 rounded border flex items-center justify-center font-bold ${b ? 'bg-purple-500/20 text-purple-400 border-purple-500' : 'bg-white/5 border-white/10 text-white/20'}`}>
                                     {b}
                                 </div>
@@ -50,7 +69,7 @@ const BitVisualizer: React.FC = () => {
 
                         <div className="flex gap-2 items-center">
                             <span className="text-white/40 text-xs w-16 text-right text-emerald-400 font-bold">Res ({result})</span>
-                            {resultBits.map((b, i) => (
+                            {resultBits.map((b: number, i: number) => (
                                 <div key={i} className={`w-8 h-8 rounded border flex items-center justify-center font-bold ${b ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]' : 'bg-white/5 border-white/10 text-white/20'}`}>
                                     {b}
                                 </div>

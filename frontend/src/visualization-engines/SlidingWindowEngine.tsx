@@ -13,11 +13,15 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
     const customInput = useStore(state => state.customInput)
 
     const steps = isBrute ? currentProblem?.brute_force_steps : currentProblem?.optimal_steps
-    const safeStep = steps?.[currentStepIndex] ?? steps?.[0] ?? null
-    const state = safeStep?.state
-    const s = customInput != null ? String(customInput).replace(/^"|"$/g, '') : "abcabcbb"
-    const chars = s.split('')
-    const [winL, winR] = state?.windowRange || [null, null]
+    const safeStep = (steps?.[currentStepIndex] ?? steps?.[0] ?? null) as any
+    const state = safeStep?.state || {}
+    const s = state.array || state.string || (customInput != null ? String(customInput).replace(/^"|"$/g, '') : "abcabcbb")
+    const chars = typeof s === 'string' ? s.split('') : Array.isArray(s) ? s : []
+    
+    // Support multiple naming conventions for window pointers
+    const winL = state.pointers?.l ?? state.pointers?.left ?? state.pointers?.start ?? state.start_pointer ?? state.l ?? state.left ?? state.start ?? state.windowRange?.[0] ?? null
+    const winR = state.pointers?.r ?? state.pointers?.right ?? state.pointers?.end ?? state.pointers?.curr ?? state.end_pointer ?? state.curr ?? state.r ?? state.right ?? state.end ?? state.windowRange?.[1] ?? null
+    
     const efficiency = isBrute ? currentProblem?.efficiency?.brute : currentProblem?.efficiency?.optimal
 
     if (!currentProblem) return null
@@ -33,10 +37,11 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
         )
     }
 
-    if (!safeStep || !state) return null
+    if (!safeStep) return null
 
-    return (
-        <div className="flex flex-col h-full w-full overflow-hidden bg-black/40 min-h-0">
+    try {
+        return (
+            <div className="flex flex-col h-full w-full overflow-hidden bg-black/40 min-h-0">
             {/* TOP SECTION: Step Explanation (Fixed Height) */}
             <div className="flex-none min-h-[110px] sm:min-h-[130px] border-b border-white/10 flex flex-col items-center justify-center px-6 sm:px-10 bg-black/60 relative z-30">
                 <div className="flex flex-col items-center gap-3 max-w-3xl w-full">
@@ -48,10 +53,10 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                             exit={{ opacity: 0, y: 5 }}
                             className="text-[10px] sm:text-[12px] text-white/50 font-medium uppercase tracking-[0.15em] text-center leading-relaxed"
                         >
-                            {safeStep.description}
+                            {safeStep.description || state.explanation}
                         </motion.p>
                     </AnimatePresence>
-
+ 
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={`calc-${currentStepIndex}`}
@@ -61,14 +66,14 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                         >
                             <div className="flex items-center gap-4 text-xs font-black italic uppercase">
                                 {state.calculation ? (
-                                    <span className="text-white font-mono">{state.calculation}</span>
+                                    <span className="text-white font-mono">{typeof state.calculation === 'object' ? JSON.stringify(state.calculation) : state.calculation}</span>
                                 ) : (
                                     <>
                                         <span className="text-white/40">Window:</span>
                                         <span className="text-accent-blue">[{winL ?? '-'}, {winR ?? '-'}]</span>
                                         <span className="text-white/20">|</span>
                                         <span className="text-white/40">Len:</span>
-                                        <span className="text-white">{state.customState?.currentLen || 0}</span>
+                                        <span className="text-white">{state.window?.currentLen || state.customState?.currentLen || 0}</span>
                                     </>
                                 )}
                             </div>
@@ -82,7 +87,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
 
             {/* MAIN CONTENT SECTION: SCROLLABLE */}
             <div className="flex-1 min-h-0 relative flex flex-col p-6 sm:p-10 overflow-y-auto custom-scrollbar gap-10">
-                {/* PART 4: Standard Headers (Compact) */}
+                {/* Standard Headers (Compact) */}
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                         <div className="px-3 py-1 rounded bg-white/5 border border-white/10 flex items-center gap-2">
@@ -111,7 +116,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                     </div>
 
                     <div className="flex gap-2 flex-wrap relative pb-10">
-                        {chars.map((char, idx) => {
+                        {(chars as any[]).map((char: any, idx: number) => {
                             const isInWindow = winL !== null && winR !== null && idx >= winL && idx <= winR
                             const isDuplicate = state.customState?.duplicateChar === char && isInWindow
                             const isFound = state.found && isInWindow
@@ -128,7 +133,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                                     {char}
                                     <div className="absolute -top-5 text-[8px] text-white/10 font-mono">[{idx}]</div>
 
-                                    {state.pointers && Object.entries(state.pointers).map(([id, ptrIndex]) => {
+                                    {state.pointers && Object.entries(state.pointers as Record<string, number>).map(([id, ptrIndex]) => {
                                         if (ptrIndex !== idx) return null
                                         const ptrColorClass = id === 'left' || id === 'l' ? 'text-accent-blue' : 'text-purple-500'
                                         const ptrBgClass = id === 'left' || id === 'l' ? 'bg-accent-blue' : 'bg-purple-500'
@@ -156,7 +161,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                         <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Cognitive Map (Character Set)</div>
                         <div className="bg-white/5 border border-white/5 rounded-2xl p-5 flex flex-wrap gap-2 min-h-[100px] content-start shadow-inner">
                             <AnimatePresence>
-                                {state.mapState && typeof state.mapState === 'object' && Object.keys(state.mapState).map(char => (
+                                {state.mapState && typeof state.mapState === 'object' && Object.keys(state.mapState as object).map((char: string) => (
                                     <motion.div
                                         key={char}
                                         initial={{ scale: 0.8, opacity: 0 }}
@@ -167,7 +172,7 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                                         {char}
                                     </motion.div>
                                 ))}
-                                {(!state.mapState || Object.keys(state.mapState).length === 0) && (
+                                {(!state.mapState || Object.keys(state.mapState as object).length === 0) && (
                                     <div className="w-full text-center text-white/10 text-[10px] italic mt-4 uppercase tracking-widest font-bold">Set Empty</div>
                                 )}
                             </AnimatePresence>
@@ -179,19 +184,29 @@ const SlidingWindowEngine: React.FC<SlidingWindowEngineProps> = ({ isBrute }) =>
                         <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Current Active Window</div>
                         <div className="bg-white/5 border border-white/5 rounded-2xl p-5 flex items-center justify-center min-h-[100px] shadow-inner">
                             <motion.span
-                                key={state.windowRange ? state.windowRange.join(',') : 'none'}
+                                key={winL != null && winR != null ? `${winL},${winR}` : 'none'}
                                 initial={{ filter: 'blur(4px)', opacity: 0 }}
                                 animate={{ filter: 'blur(0px)', opacity: 1 }}
                                 className="text-2xl font-bold font-mono tracking-widest text-accent-blue"
                             >
-                                {winL !== null && winR !== null && s ? s.substring(winL, winR + 1) : '-'}
+                                {winL !== null && winR !== null && typeof s === 'string' ? s.substring(winL as number, (winR as number) + 1) : '-'}
                             </motion.span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+        )
+    } catch (error) {
+        console.error("SlidingWindowEngine Render Error:", error);
+        return (
+            <div className="flex flex-col items-center justify-center h-full text-red-400 p-6 text-center">
+                <span className="text-[10px] font-black uppercase tracking-widest mb-2">Render Error</span>
+                <span className="text-xs font-bold leading-relaxed">Failed to visualize window state.</span>
+                <span className="text-[8px] mt-2 opacity-40 whitespace-pre font-mono">{String(error).substring(0, 100)}</span>
+            </div>
+        )
+    }
 }
 
 export default SlidingWindowEngine
