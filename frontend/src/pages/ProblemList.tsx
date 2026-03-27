@@ -31,7 +31,11 @@ export default function ProblemList() {
     const {
         problems,
         isLoading,
-        fetchAllProblems
+        fetchAllProblems,
+        currentPage,
+        itemsPerPage,
+        setCurrentPage,
+        solvedSlugs
     } = useStore()
 
     const [searchParams] = useSearchParams()
@@ -131,6 +135,12 @@ export default function ProblemList() {
         })
     }, [problems, searchQuery, selectedTopics, selectedLevels, availableTopics])
 
+    const totalPages = Math.ceil(filteredProblems.length / itemsPerPage)
+    const paginatedProblems = useMemo(() => {
+        const start = (currentPage - 1) * itemsPerPage
+        return filteredProblems.slice(start, start + itemsPerPage)
+    }, [filteredProblems, currentPage, itemsPerPage])
+
     const toggleTopic = (topicId: string) => {
         const newTopics = new Set(selectedTopics)
         if (newTopics.has(topicId)) newTopics.delete(topicId)
@@ -149,6 +159,13 @@ export default function ProblemList() {
         setSelectedTopics(new Set())
         setSelectedLevels(new Set())
         setSearchQuery('')
+        setCurrentPage(1)
+    }
+
+    const setPage = (page: number) => {
+        setCurrentPage(page)
+        const main = document.querySelector('main')
+        if (main) main.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     if (isLoading) {
@@ -313,7 +330,7 @@ export default function ProblemList() {
                         layout
                         className="space-y-4 max-w-6xl mx-auto"
                     >
-                        {filteredProblems.map((problem, index) => {
+                        {paginatedProblems.map((problem, index) => {
                             const difficultyColor = problem.difficulty === 'Easy' ? '#00e699' : problem.difficulty === 'Medium' ? '#EC4186' : '#EE544A'
                             const primaryPattern = problem.primaryPattern || (problem.algorithmType ? problem.algorithmType.replace(/_/g, ' ') : 'GENERAL')
 
@@ -348,8 +365,13 @@ export default function ProblemList() {
                                                         <span className="text-[9px] font-bold text-white/20 font-mono">ID: LE{problem.id}</span>
                                                         <div className="text-[9px] font-bold text-[#EC4186]/70 uppercase tracking-widest">{primaryPattern}</div>
                                                     </div>
-                                                    <h3 className="text-xl font-bold text-white group-hover:text-[#EC4186] transition-colors truncate">
+                                                    <h3 className="text-xl font-bold text-white group-hover:text-[#EC4186] transition-colors truncate flex items-center gap-2">
                                                         {problem.title}
+                                                        {solvedSlugs.has(problem.slug) && (
+                                                            <div className="w-5 h-5 rounded-full bg-[#00e699]/20 flex items-center justify-center border border-[#00e699]/30">
+                                                                <div className="w-2 h-2 rounded-full bg-[#00e699] shadow-[0_0_10px_#00e699]" />
+                                                            </div>
+                                                        )}
                                                     </h3>
                                                     <div className="flex gap-4 mt-3">
                                                         {problem.tags
@@ -386,6 +408,31 @@ export default function ProblemList() {
                                 </motion.div>
                             )
                         })}
+
+                        {/* Pagination Footer */}
+                        {totalPages > 1 && (
+                            <div className="flex justify-center items-center gap-4 py-12">
+                                <button
+                                    onClick={() => setPage(Math.max(1, currentPage - 1))}
+                                    disabled={currentPage === 1}
+                                    className="px-6 py-3 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black uppercase text-white/40 hover:text-white hover:border-[#EC4186]/50 disabled:opacity-30 disabled:pointer-events-none transition-all"
+                                >
+                                    Previous
+                                </button>
+                                <div className="flex items-baseline gap-2">
+                                    <span className="text-xl font-black text-white">{currentPage}</span>
+                                    <span className="text-white/20 text-xs">/</span>
+                                    <span className="text-sm font-bold text-white/40">{totalPages}</span>
+                                </div>
+                                <button
+                                    onClick={() => setPage(Math.min(totalPages, currentPage + 1))}
+                                    disabled={currentPage === totalPages}
+                                    className="px-6 py-3 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black uppercase text-white/40 hover:text-white hover:border-[#EC4186]/50 disabled:opacity-30 disabled:pointer-events-none transition-all"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        ) }
                     </motion.div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">

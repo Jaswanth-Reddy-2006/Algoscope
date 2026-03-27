@@ -8,7 +8,9 @@
     "start": "npx prisma db push --schema ../database/prisma/schema.prisma && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "node scripts/check_syntax.js",
-    "db:import-leetcode": "node scripts/import_leetcode.js",
+    "db:import-leetcode": "node sync_json_to_db.js",
+    "db:import-all": "node src/scripts/importLeetcode.js",
+    "db:synthesize": "node scripts/synthesize_library.js",
     "prisma:studio": "npx prisma studio --schema ../database/prisma/schema.prisma"
   },
   "keywords": [],

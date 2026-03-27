@@ -67,6 +67,7 @@ interface AlgoScopeState {
     isSidebarCollapsed: boolean
     isHubOpen: boolean
     problems: Problem[]
+    solvedSlugs: Set<string>
     isEngineInitialized: boolean
     patternStats: Record<string, PatternStats>
     startTime: number | null
@@ -112,6 +113,7 @@ interface AlgoScopeState {
     getPatternDependencies: (pattern: string) => { basePattern: string, confidence: number, isMet: boolean, message?: string } | null
     saveDrillProgress: (moduleId: string, subPatternId: string, answeredId: string, isCorrect: boolean) => void
     initializeStore: () => Promise<void>
+    fetchSolvedProblems: () => Promise<void>
     setSimulationMode: (mode: 'brute' | 'optimal' | 'compare') => void
     activePseudoLine: number | null
     observationText: string | null
@@ -185,6 +187,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     isSidebarCollapsed: false,
     isHubOpen: false,
     problems: [],
+    solvedSlugs: new Set<string>(),
     patternStats: JSON.parse(localStorage.getItem('algoScope_patternStats') || '{}'),
     isEngineInitialized: false,
     startTime: null,
@@ -750,8 +753,24 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
             console.error("Failed to load user progress:", e)
         }
 
-        // Also fetch problems
+        // Fetch Solved Problems
+        await get().fetchSolvedProblems()
+
+        // Fetch problems
         await get().fetchAllProblems()
+    },
+
+    fetchSolvedProblems: async () => {
+        const userId = localStorage.getItem('algoScope_userId')
+        if (!userId) return
+
+        try {
+            const response = await api.get('/problems/solved')
+            const solved = response.data.map((s: any) => s.problemSlug)
+            set({ solvedSlugs: new Set(solved) })
+        } catch (e) {
+            console.warn("Failed to fetch solved problems:", e)
+        }
     },
 
     fetchProblemBySlug: async (slug: string) => {
