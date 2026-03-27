@@ -51,10 +51,6 @@ const InspectorPanel: React.FC = () => {
                         <span className="text-[8px] font-bold text-white/20 uppercase">Real-time Memory Stream</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse" />
-                    <span className="text-[9px] font-black text-accent-blue uppercase tracking-widest">Active</span>
-                </div>
             </div>
 
             <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-10">

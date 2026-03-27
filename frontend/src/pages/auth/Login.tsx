@@ -330,7 +330,7 @@ const Login: React.FC = () => {
             </div>
 
             {/* Right Side: Auth Form */}
-            <div className="w-full lg:w-[500px] flex flex-col items-center justify-center p-8 lg:p-12 relative z-10 overflow-y-auto">
+            <div className="w-full lg:w-[500px] flex flex-col items-center justify-center min-h-[100dvh] lg:min-h-screen p-6 sm:p-12 relative z-10 overflow-y-auto bg-[#0c0218]/50 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-0">
                 <motion.div
                     initial={{ opacity: 0, y: 30, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}

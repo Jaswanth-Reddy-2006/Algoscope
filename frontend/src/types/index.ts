@@ -20,6 +20,7 @@ export type AlgorithmType =
     | 'array'
     | 'arrays'
     | 'recursion'
+    | 'backtracking'
     | 'dynamic_programming'
     | 'string'
     | 'math'
@@ -27,7 +28,8 @@ export type AlgorithmType =
     | 'hash_map'
     | 'bit_manipulation'
     | 'prefix_sum'
-    | 'set';
+    | 'set'
+    | 'recursion_tree';
 
 export interface Step {
     step: number;
@@ -42,6 +44,7 @@ export interface Step {
         pointers?: Record<string, number | null>;
         windowRange?: [number, number];
         mapState?: Record<string, any>;
+        hashTable?: Record<string, any>;
         table?: Record<string, any>;
         window?: Record<string, any>;
         values?: Record<string, any>;
@@ -79,8 +82,25 @@ export interface Step {
         high?: number;
         mid?: number;
         customState?: Record<string, any>;
-        tree?: any;
+        tree?: {
+            nodes: Record<string, RecursionNode>;
+            rootId: string;
+            activeNodeId?: string;
+            lastAddedNodeId?: string;
+        };
     };
+}
+
+export interface RecursionNode {
+    id: string;
+    label: string;
+    description?: string;
+    params?: Record<string, any>;
+    result?: any;
+    children: string[];
+    parentId?: string;
+    status: 'pending' | 'active' | 'completed' | 'pruned' | 'returning';
+    depth: number;
 }
 
 export interface OptimalVariant {

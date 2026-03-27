@@ -65,7 +65,9 @@ const VizPanel: React.FC = () => {
                                 "Optimal reduces O(N²) quadratic search to O(N) linear scan by leveraging sorted order." :
                                 currentProblem.algorithmType === 'sliding_window' ?
                                     "Optimal eliminates redundant substring re-scans using a dynamic window." :
-                                    "The optimal strategy eliminates redundant calculations to improve performance."
+                                    currentProblem.algorithmType === 'recursion' || currentProblem.algorithmType === 'backtracking' ?
+                                        "Optimal strategies often use memoization or pruning to reduce exponential branching." :
+                                        "The optimal strategy eliminates redundant calculations to improve performance."
                             }
                         </p>
                         <div className="px-3 py-1 rounded-full border border-white/10 text-[9px] font-black text-white/30 uppercase tracking-widest">

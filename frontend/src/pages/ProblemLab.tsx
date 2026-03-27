@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react'
-import { useParams, Navigate, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useStore } from '../store/useStore'
 import ProblemInfo from '../components/layout/ProblemInfo'
 import ErrorBoundary from '../components/common/ErrorBoundary'
@@ -12,6 +12,7 @@ import {
     SkipBack,
     SkipForward,
     RefreshCw,
+    AlertCircle,
 } from 'lucide-react'
 import { cn } from '../utils/cn'
 
@@ -53,7 +54,6 @@ const ProblemLab: React.FC = () => {
     const steps = isBruteForce ? currentProblem?.brute_force_steps : currentProblem?.optimal_steps
     const totalSteps = globalTotalSteps > 0 ? globalTotalSteps : (steps?.length || 0)
     const isAtEnd = steps && currentStepIndex === totalSteps - 1 && totalSteps > 0
-    const isSuccess = isAtEnd && (steps[currentStepIndex]?.state?.found || currentProblem?.algorithmType === 'tree')
 
     // PLAYBACK LOGIC
     useEffect(() => {
@@ -77,7 +77,26 @@ const ProblemLab: React.FC = () => {
         }
     }, [isAtEnd, isPlaying])
 
-    if (error) return <Navigate to="/problems" replace />
+    if (error) return (
+        <div className="h-screen flex flex-col items-center justify-center bg-[#0a0212] text-white p-10 text-center gap-6">
+            <div className="w-20 h-20 rounded-3xl bg-red-400/5 border border-red-500/20 flex items-center justify-center mb-4">
+                <AlertCircle size={40} className="text-red-400" />
+            </div>
+            <div className="space-y-2 max-w-md">
+                <h2 className="text-xl font-bold uppercase tracking-tight text-white/90">Navigation Interrupted</h2>
+                <p className="text-sm text-white/40 leading-relaxed font-medium">
+                    {error || "We encountered an unexpected issue while loading this problem strategy."}
+                </p>
+            </div>
+            <Link 
+                to="/problems" 
+                onClick={() => useStore.getState().resetState()}
+                className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/10 transition-all mt-4"
+            >
+                Back to Patterns Library
+            </Link>
+        </div>
+    )
     if (!currentProblem || !isEngineInitialized) return <LabSkeleton />
 
     const formattedId = String(currentProblem.id).padStart(3, '0')
@@ -208,7 +227,7 @@ const ProblemLab: React.FC = () => {
 
                     {/* Full Screen Summary Overlay */}
                     <AnimatePresence>
-                        {isSuccess && showSummary && (
+                        {isAtEnd && showSummary && (
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -245,12 +264,15 @@ const ProblemLab: React.FC = () => {
                 </main>
 
                 {/* 4️⃣ RIGHT PANEL – STATE INSPECTOR */}
-                <aside className="flex flex-col h-full bg-[#240b33] border-l border-white/5 overflow-y-auto custom-scrollbar shadow-2xl z-10">
-                    <ErrorBoundary>
-                        <Suspense fallback={<div className="h-full flex items-center justify-center"><span className="text-white/20 animate-pulse font-black uppercase tracking-widest text-xs">Syncing State...</span></div>}>
-                            <InspectorPanel />
-                        </Suspense>
-                    </ErrorBoundary>
+                <aside className="relative flex flex-col h-full bg-[#240b33] border-l border-white/5 shadow-2xl z-10 overflow-hidden">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar">
+                        <ErrorBoundary>
+                            <Suspense fallback={<div className="h-full flex items-center justify-center"><span className="text-white/20 animate-pulse font-black uppercase tracking-widest text-xs">Syncing State...</span></div>}>
+                                <InspectorPanel />
+                            </Suspense>
+                        </ErrorBoundary>
+                    </div>
+                    {/* Completion Notification removed per user's preference for consistency with modal summary */}
                 </aside>
             </div>
         </div>

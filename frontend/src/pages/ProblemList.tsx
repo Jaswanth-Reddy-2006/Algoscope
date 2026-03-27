@@ -352,11 +352,14 @@ export default function ProblemList() {
                                                         {problem.title}
                                                     </h3>
                                                     <div className="flex gap-4 mt-3">
-                                                        {problem.tags.slice(0, 3).map(tag => (
-                                                            <span key={tag} className="text-[10px] text-white/30 uppercase tracking-[0.1em] font-bold">
-                                                                #{tag}
-                                                            </span>
-                                                        ))}
+                                                        {problem.tags
+                                                            .filter(tag => !['amazon', 'google', 'facebook', 'meta', 'apple', 'microsoft', 'uber', 'adobe', 'linkedin'].includes(tag.toLowerCase()))
+                                                            .slice(0, 3)
+                                                            .map(tag => (
+                                                                <span key={tag} className="text-[10px] text-white/30 uppercase tracking-[0.1em] font-bold">
+                                                                    #{tag}
+                                                                </span>
+                                                            ))}
                                                     </div>
                                                 </div>
 
@@ -476,43 +479,43 @@ export default function ProblemList() {
             {/* Login Required Modal */}
             <AnimatePresence>
                 {showLoginModal && (
-                    <>
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setShowLoginModal(false)}
-                            className="fixed inset-0 bg-[#0f0314]/90 backdrop-blur-md z-[100]"
+                            className="fixed inset-0 bg-[#0f0314]/90 backdrop-blur-md"
                         />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-[110] p-1"
+                            className="relative w-full max-w-md z-[110]"
                         >
-                            <div className="bg-[#14051E] border border-white/5 rounded-[40px] p-10 relative overflow-hidden shadow-2xl font-outfit">
+                            <div className="bg-[#14051E] border border-white/5 rounded-[40px] p-8 sm:p-10 relative overflow-hidden shadow-2xl font-outfit">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#EC4186] to-[#EE544A]" />
                                 
-                                <div className="w-20 h-20 rounded-3xl bg-[#EC4186]/10 flex items-center justify-center mb-8 border border-[#EC4186]/20">
-                                    <LogIn size={40} className="text-[#EC4186]" />
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-[#EC4186]/10 flex items-center justify-center mb-6 sm:mb-8 border border-[#EC4186]/20">
+                                    <LogIn size={32} className="text-[#EC4186]" />
                                 </div>
 
-                                <h2 className="text-3xl font-black text-white tracking-tighter mb-4 uppercase">Initialize Session</h2>
-                                <p className="text-white/40 text-sm leading-relaxed mb-10">
+                                <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tighter mb-4 uppercase">Initialize Session</h2>
+                                <p className="text-white/40 text-sm leading-relaxed mb-8 sm:mb-10">
                                     Accessing the experimental logic labs requires a neural link. Initialize your session to track progress and sync with LeetCode.
                                 </p>
 
                                 <div className="flex flex-col gap-4">
                                     <Link 
                                         to="/login"
-                                        className="w-full h-16 bg-[#EC4186] text-white rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-glow"
+                                        className="w-full h-14 sm:h-16 bg-[#EC4186] text-white rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-glow"
                                     >
                                         <LogIn size={20} />
                                         <span>INITIALIZE NOW</span>
                                     </Link>
                                     <button 
                                         onClick={() => setShowLoginModal(false)}
-                                        className="w-full h-16 bg-white/5 text-white/40 rounded-2xl font-bold flex items-center justify-center hover:bg-white/10 transition-all uppercase tracking-widest text-xs"
+                                        className="w-full h-14 sm:h-16 bg-white/5 text-white/40 rounded-2xl font-bold flex items-center justify-center hover:bg-white/10 transition-all uppercase tracking-widest text-[10px]"
                                     >
                                         Skip for now
                                     </button>
@@ -520,13 +523,13 @@ export default function ProblemList() {
 
                                 <button 
                                     onClick={() => setShowLoginModal(false)}
-                                    className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors"
+                                    className="absolute top-6 right-6 sm:top-8 sm:right-8 text-white/20 hover:text-white transition-colors"
                                 >
                                     <X size={24} />
                                 </button>
                             </div>
                         </motion.div>
-                    </>
+                    </div>
                 )}
             </AnimatePresence>
         </div>

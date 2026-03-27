@@ -610,7 +610,8 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
         // Intelligent Lab Input Parsing natively from LeetCode examples
         if (!problem.input_settings && problem.examples && problem.examples.length > 0) {
-            const exInput = problem.examples[0].input || '';
+            const rawInput = problem.examples[0].input;
+            const exInput = typeof rawInput === 'string' ? rawInput : (rawInput ? JSON.stringify(rawInput) : '');
             
             // Extract the first array or string mapping for the primary Custom Input
             const arrMatch = exInput.match(/\[.*?\]/);
@@ -638,7 +639,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                 const config = typeof problem.labConfig === 'string' ? JSON.parse(problem.labConfig) : problem.labConfig
                 if (config.parameters) {
                     config.parameters.forEach((param: any) => {
-                        initialLabInputs[param.name] = param.defaultValue
+                        initialLabInputs[param.name] = param.defaultValue ?? param.default
                     })
                 }
             } catch (e) {
@@ -762,22 +763,28 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
         try {
             let data = problems.find(p => p.slug === slug)
+            console.log(`[debug] [Navigation] Slug: ${slug}, Found in store: ${!!data}`)
 
             if (!data) {
+                console.log(`[debug] [Navigation] Fetching problem from API: ${slug}`)
                 const response = await fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000'}/api/problems/${slug}`)
-                if (!response.ok) throw new Error('Problem not found')
+                if (!response.ok) {
+                    console.error(`[error] [Navigation] API fetch failed for ${slug}: ${response.status} ${response.statusText}`)
+                    throw new Error(`Problem "${slug}" not found in our pattern library.`)
+                }
                 data = await response.json()
             }
 
             const parsedData = normalizeProblem(data);
-
             get().setProblem(parsedData)
 
-            if (data?.status === 'complete' || slug === 'add-two-numbers' || slug === 'longest-substring-without-repeating-characters') {
+            if (data?.status === 'complete' || slug === 'add-two-numbers' || slug === 'longest-substring-without-repeating-characters' || slug === 'two-sum') {
+                console.log(`[debug] [Navigation] Refreshing steps for ${slug}`)
                 await get().refreshSteps()
             }
             set({ isEngineInitialized: true })
         } catch (err: any) {
+            console.error(`[error] [Navigation] Problem switch failed:`, err)
             set({ error: err.message })
         } finally {
             set({ isLoading: false })

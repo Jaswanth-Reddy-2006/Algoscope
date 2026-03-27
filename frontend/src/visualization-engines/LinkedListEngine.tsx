@@ -46,8 +46,7 @@ const LinkedListEngine: React.FC<LinkedListEngineProps> = ({ isBrute = false }) 
         return String(val)
     }
 
-    // Use nodes from state if available, otherwise fall back to parsing custom input
-    const nodes = state.nodes || {};
+    // Use values from state if available, otherwise fall back to parsing custom input
     
     const parseList = (input: string, fallback: number[]) => {
         if (!input) return fallback;

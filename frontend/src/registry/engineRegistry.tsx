@@ -25,16 +25,19 @@ export const engineRegistry: Partial<Record<AlgorithmType, EngineEntry>> = {
         component: lazy(() => import('../visualization-engines/MatrixEngine'))
     },
     'recursion': {
-        component: lazy(() => import('../components/foundations/engines/RecursionEngine'))
+        component: lazy(() => import('../visualization-engines/RecursionTreeEngine'))
+    },
+    'backtracking': {
+        component: lazy(() => import('../visualization-engines/RecursionTreeEngine'))
     },
     'tree': {
-        component: lazy(() => import('../components/foundations/engines/RecursionEngine'))
+        component: lazy(() => import('../visualization-engines/RecursionTreeEngine'))
     },
     'binary_tree': {
-        component: lazy(() => import('../components/foundations/engines/RecursionEngine'))
+        component: lazy(() => import('../visualization-engines/RecursionTreeEngine'))
     },
     'bst': {
-        component: lazy(() => import('../components/foundations/engines/RecursionEngine'))
+        component: lazy(() => import('../visualization-engines/RecursionTreeEngine'))
     },
     'heap': {
         component: lazy(() => import('../visualization-engines/HeapEngine'))
@@ -92,8 +95,12 @@ export const resolveEngine = (problem: Problem) => {
         10: 'matrix',
         11: 'two_pointers',
         15: 'two_pointers',
+        16: 'two_pointers',
+        17: 'recursion',
+        18: 'two_pointers',
         20: 'linked_list',
-        21: 'linked_list'
+        21: 'linked_list',
+        121: 'array'
     };
 
     if (foundationOverrides[problem.id]) {

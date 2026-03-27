@@ -90,6 +90,12 @@
         "placeholder": "19"
       }
     },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Array of Integers", "type": "array", "default": [12, 4, 7, 1, 15, 8, 20] },
+            { "name": "target", "label": "Target Sum", "type": "number", "default": 19 }
+        ]
+    },
     "optimal_variants": [
       {
         "name": "Hash Map",
@@ -134,7 +140,7 @@
     "shortPatternReason": "Simulating manual digit-by-digit addition with carry handling.",
     "time_efficiency": "O(max(m, n))",
     "space_efficiency": "O(max(m, n))",
-    "problem_statement": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself. The core challenge is managing the 'carry' value that propagates from one digit to the next, much like manual elementary addition.",
+    "problem_statement": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list. This means the Head of the list is the Least Significant Digit (LSD), analogous to adding from right-to-left in standard math.",
     "constraints": [
       "The number of nodes in each linked list is in the range [1, 100].",
       "0 <= Node.val <= 9",
@@ -179,6 +185,12 @@
         "label": "List 2 (Digits Reversed)",
         "placeholder": "[5, 6, 4]"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "l1", "label": "List 1 Digits", "type": "array", "default": [2, 4, 3] },
+            { "name": "l2", "label": "List 2 Digits", "type": "array", "default": [5, 6, 4] }
+        ]
     },
     "brute_force_steps": [
       {
@@ -652,11 +664,12 @@
       "input1": {
         "label": "Input Sequence (String)",
         "placeholder": "\"abcabcbb\""
-      },
-      "input2": {
-        "label": "Unique Constraint Type",
-        "placeholder": "All ASCII"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "s", "label": "Input String", "type": "string", "default": "abcabcbb" }
+        ]
     },
     "efficiencyGain": "Sliding Window reduces redundant checks, achieving O(N) linear time versus O(N\u00b3) cubic time.",
     "real_time_applications": [
@@ -807,6 +820,12 @@
         "placeholder": "[2]"
       }
     },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums1", "label": "Sorted Array 1", "type": "array", "default": [1, 3] },
+            { "name": "nums2", "label": "Sorted Array 2", "type": "array", "default": [2] }
+        ]
+    },
     "efficiencyGain": "Logarithmic efficiency scaling ensures high performance even with arrays containing millions of elements.",
     "real_time_applications": [
       {
@@ -891,11 +910,12 @@
       "input1": {
         "label": "Input Sequence (String)",
         "placeholder": "\"babad\""
-      },
-      "input2": {
-        "label": "Case Sensitivity",
-        "placeholder": "Sensitive"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "s", "label": "Input String", "type": "string", "default": "babad" }
+        ]
     },
     "efficiencyGain": "Reducing cubic time to quadratic time by leveraging symmetry, saving thousands of operations on even medium-sized strings.",
     "real_time_applications": [
@@ -987,6 +1007,12 @@
         "placeholder": "3"
       }
     },
+    "labConfig": {
+        "parameters": [
+            { "name": "s", "label": "Input String", "type": "string", "default": "PAYPALISHIRING" },
+            { "name": "numRows", "label": "Number of Rows", "type": "number", "default": 3 }
+        ]
+    },
     "efficiencyGain": "Reducing space efficiency from O(N*K) to O(N) by using row-level accumulation instead of a sparse 2D matrix.",
     "real_time_applications": [
       {
@@ -1068,11 +1094,12 @@
       "input1": {
         "label": "Input Integer",
         "placeholder": "123"
-      },
-      "input2": {
-        "label": "Overflow Boundary",
-        "placeholder": "32-bit"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "x", "label": "Integer Value", "type": "number", "default": 123 }
+        ]
     },
     "efficiencyGain": "Avoiding O(log X) extra space for string storage and the overhead of multiple type conversions.",
     "real_time_applications": [
@@ -1157,11 +1184,12 @@
       "input1": {
         "label": "Input String",
         "placeholder": "\"  -42 with words\""
-      },
-      "input2": {
-        "label": "Digit Clamp Target",
-        "placeholder": "32-bit Signed"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "s", "label": "Raw Input String", "type": "string", "default": "  -42 with words" }
+        ]
     },
     "efficiencyGain": "Reducing memory overhead by processing characters in-place rather than allocating new strings for stripping and filtering.",
     "real_time_applications": [
@@ -1248,11 +1276,12 @@
       "input1": {
         "label": "Input Integer",
         "placeholder": "121"
-      },
-      "input2": {
-        "label": "Base System",
-        "placeholder": "Decimal (Base 10)"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "x", "label": "Integer Value", "type": "number", "default": 121 }
+        ]
     },
     "efficiencyGain": "Eliminating string allocation and half of the iteration count by stopping at the numeric center.",
     "real_time_applications": [
@@ -1346,6 +1375,12 @@
         "placeholder": "\"a*\""
       }
     },
+    "labConfig": {
+        "parameters": [
+            { "name": "s", "label": "Target String (s)", "type": "string", "default": "aa" },
+            { "name": "p", "label": "Regex Pattern (p)", "type": "string", "default": "a*" }
+        ]
+    },
     "efficiencyGain": "From exponential to polynomial time by caching results of sub-matches, handling deep recursion depths in real-world patterns.",
     "real_time_applications": [
       {
@@ -1431,9 +1466,13 @@
     "input_settings": {
       "input1": {
         "label": "Line Heights",
-        "placeholder": "[1,8,6,2,5,4,8,3,7]",
-        "type": "array"
+        "placeholder": "[1,8,6,2,5,4,8,3,7]"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Heights (Array)", "type": "array", "default": [1, 8, 6, 2, 5, 4, 8, 3, 7] }
+        ]
     },
     "efficiencyGain": "Reducing search space from O(N\u00b2) pairs to O(N) by eliminating pairs that can't possibly exceed the current maximum.",
     "real_time_applications": [
@@ -1551,14 +1590,13 @@
     "input_settings": {
       "input1": {
         "label": "Integer Array",
-        "placeholder": "[-1,0,1,2,-1,-4]",
-        "type": "array"
-      },
-      "input2": {
-        "label": "Target Sum",
-        "placeholder": "0",
-        "type": "number"
+        "placeholder": "[-1,0,1,2,-1,-4]"
       }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Integer Values", "type": "array", "default": [-1, 0, 1, 2, -1, -4] }
+        ]
     },
     "pseudocode": {
       "brute": "for i in 0..n-3:\n    for j in i+1..n-2:\n        for k in j+1..n-1:\n            if nums[i]+nums[j]+nums[k] == 0:\n                store_unique_triplet()",
@@ -1624,16 +1662,17 @@
         "space": "O(N)"
       }
     },
-    "patternSignals": [
-      "Processing nested structures.",
-      "\"Last opened, first closed\" logic (LIFO).",
-      "Validation of pairs."
-    ],
-    "edgeCases": [
-      "Single character input (invalid).",
-      "String starting with closing bracket.",
-      "Empty string (valid or invalid depending if empty input allowed)."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "Input Sequence (Parentheses)",
+        "placeholder": "()[]{}"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "s", "label": "Parentheses String", "type": "string", "default": "()[]{}" }
+        ]
+    },
     "thinking_guide": {
       "first_principles": [
         "Every closing bracket needs a corresponding unmatched opening bracket immediately before it.",
@@ -1700,16 +1739,22 @@
         "space": "O(1)"
       }
     },
-    "patternSignals": [
-      "Two sorted inputs to be combined.",
-      "Preserving order during combination.",
-      "Linked List structure implies pointer manipulation."
-    ],
-    "edgeCases": [
-      "One list is empty (return the other).",
-      "Both lists empty.",
-      "Values identical in both lists."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "List 1 (Sorted)",
+        "placeholder": "[1, 2, 4]"
+      },
+      "input2": {
+        "label": "List 2 (Sorted)",
+        "placeholder": "[1, 3, 4]"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "l1", "label": "List 1 Sorted", "type": "array", "default": [1, 2, 4] },
+            { "name": "l2", "label": "List 2 Sorted", "type": "array", "default": [1, 3, 4] }
+        ]
+    },
     "thinking_guide": {
       "first_principles": [
         "Since both lists are sorted, the smallest global element is guaranteed to be at the head of one of the two lists.",
@@ -1777,11 +1822,22 @@
         "space": "O(1)"
       }
     },
-    "patternSignals": [
-      "Sorted array that has been rotated.",
-      "Requirement for O(log N) time efficiency.",
-      "Searching for a specific target value."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "Rotated Array",
+        "placeholder": "[4,5,6,7,0,1,2]"
+      },
+      "input2": {
+        "label": "Target Value",
+        "placeholder": "0"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Rotated Source Array", "type": "array", "default": [4, 5, 6, 7, 0, 1, 2] },
+            { "name": "target", "label": "Search Target", "type": "number", "default": 0 }
+        ]
+    },
     "edgeCases": [
       "Array not rotated (sorted normally).",
       "Empty array or single element.",
@@ -1839,6 +1895,11 @@
     ],
     "primaryPattern": "Backtracking",
     "shortPatternReason": "Generating all possible orderings recursively.",
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Number Set", "type": "array", "defaultValue": [1, 2, 3] }
+        ]
+    },
     "time_efficiency": "O(n * n!)",
     "space_efficiency": "O(n)",
     "problem_statement": "Given an array `nums` of distinct integers, return all the possible permutations. You can return the answer in any order.",
@@ -1856,11 +1917,12 @@
         "space": "O(N)"
       }
     },
-    "patternSignals": [
-      "\"All possible\" arrangements or subsets.",
-      "Input size N is small (N <= 10 usually).",
-      "Ordering matters (Permutations vs Combinations)."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "Distinct Integers",
+        "placeholder": "[1, 2, 3]"
+      }
+    },
     "edgeCases": [
       "Empty array.",
       "Single element.",
@@ -1931,11 +1993,17 @@
         "space": "O(1)"
       }
     },
-    "patternSignals": [
-      "\"In-place\" modification of a matrix.",
-      "Spatial transformation (Rotate, Reflect).",
-      "Coordinate mapping: (row, col) -> (col, n-1-row)."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "N x N Matrix",
+        "placeholder": "[[1,2,3],[4,5,6],[7,8,9]]"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "matrix", "label": "Image Matrix", "type": "array", "default": [[1, 2, 3], [4, 5, 6], [7, 8, 9]] }
+        ]
+    },
     "edgeCases": [
       "1x1 Matrix.",
       "Non-square matrix (though problem specifies n x n)."
@@ -2002,11 +2070,17 @@
         "space": "O(N * L)"
       }
     },
-    "patternSignals": [
-      "\"Group\" items by some property.",
-      "Anagrams = exact same character counts.",
-      "Frequency Map or Sorting can canonicalize data."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "String Array",
+        "placeholder": "[\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "strs", "label": "Strings Batch", "type": "array", "default": ["eat", "tea", "tan", "ate", "nat", "bat"] }
+        ]
+    },
     "edgeCases": [
       "Empty strings.",
       "Strings with unicode characters.",
@@ -2061,10 +2135,17 @@
     "time_efficiency": "O(n)",
     "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Maximum Subarray.",
-    "constraints": [
-      "N <= 10^5",
-      "Elements are integers."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "Integer Array",
+        "placeholder": "[-2,1,-3,4,-1,2,1,-5,4]"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Flowing Array Data", "type": "array", "default": [-2, 1, -3, 4, -1, 2, 1, -5, 4] }
+        ]
+    },
     "examples": [],
     "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
     "optimal_explanation": "Use the Dynamic Programming pattern for O(n) or O(log n).",
@@ -2132,10 +2213,17 @@
     "time_efficiency": "O(n)",
     "space_efficiency": "O(1)",
     "problem_statement": "Standard LeetCode problem: Jump Game.",
-    "constraints": [
-      "N <= 10^5",
-      "Elements are integers."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "Jump Limits Array",
+        "placeholder": "[2, 3, 1, 1, 4]"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Jump Strengths", "type": "array", "default": [2, 3, 1, 1, 4] }
+        ]
+    },
     "examples": [],
     "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
     "optimal_explanation": "Use the Greedy pattern for O(n) or O(log n).",
@@ -2203,10 +2291,17 @@
     "time_efficiency": "O(n log n)",
     "space_efficiency": "O(n)",
     "problem_statement": "Standard LeetCode problem: Merge Intervals.",
-    "constraints": [
-      "N <= 10^5",
-      "Elements are integers."
-    ],
+    "input_settings": {
+      "input1": {
+        "label": "Intervals Array",
+        "placeholder": "[[1,3],[2,6],[8,10],[15,18]]"
+      }
+    },
+    "labConfig": {
+        "parameters": [
+            { "name": "intervals", "label": "Coordinate Pairs", "type": "array", "default": [[1, 3], [2, 6], [8, 10], [15, 18]] }
+        ]
+    },
     "examples": [],
     "brute_force_explanation": "Check all possible combinations O(n\u00b2 or worse).",
     "optimal_explanation": "Use the Array pattern for O(n) or O(log n).",
@@ -7294,5 +7389,256 @@
         "pseudocode": ""
       }
     ]
+  },
+  {
+    "id": 12,
+    "title": "Integer to Roman",
+    "slug": "integer-to-roman",
+    "difficulty": "Medium",
+    "algorithmType": "math",
+    "status": "complete",
+    "tags": ["Greedy", "String"],
+    "primaryPattern": "Math/Greedy",
+    "shortPatternReason": "Mapping numeric magnitudes to symbols greedily.",
+    "time_efficiency": "O(1)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Convert an integer to a Roman numeral.",
+    "labConfig": {
+        "parameters": [
+            { "name": "num", "label": "Value (1-3999)", "type": "number", "default": 1994 }
+        ]
+    }
+  },
+  {
+    "id": 14,
+    "title": "Longest Common Prefix",
+    "slug": "longest-common-prefix",
+    "difficulty": "Easy",
+    "algorithmType": "string",
+    "status": "complete",
+    "tags": ["String"],
+    "primaryPattern": "Horizontal Scanning",
+    "shortPatternReason": "Iteratively shrinking prefix based on next inputs.",
+    "time_efficiency": "O(N * M)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Find the longest common prefix string amongst an array of strings.",
+    "labConfig": {
+        "parameters": [
+            { "name": "strs", "label": "Strings Array", "type": "array", "default": ["flower","flow","flight"] }
+        ]
+    }
+  },
+  {
+    "id": 17,
+    "title": "Letter Combinations of a Phone Number",
+    "slug": "letter-combinations-of-a-phone-number",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "complete",
+    "tags": ["Backtracking", "Hash Table"],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Exploring combination space via recursion.",
+    "time_efficiency": "O(4^N)",
+    "space_efficiency": "O(N)",
+    "problem_statement": "Return all possible letter combinations that the digits could represent.",
+    "labConfig": {
+        "parameters": [
+            { "name": "digits", "label": "Digit String", "type": "string", "default": "23" }
+        ]
+    }
+  },
+  {
+    "id": 22,
+    "title": "Generate Parentheses",
+    "slug": "generate-parentheses",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "complete",
+    "tags": ["Backtracking", "String"],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Rule-based generation of valid subsets.",
+    "time_efficiency": "O(4^N / N sqrt(N))",
+    "space_efficiency": "O(N)",
+    "problem_statement": "Generate all combinations of valid parentheses for N pairs.",
+    "labConfig": {
+        "parameters": [
+            { "name": "n", "label": "Pairs Count", "type": "number", "default": 3 }
+        ]
+    }
+  },
+  {
+    "id": 31,
+    "title": "Next Permutation",
+    "slug": "next-permutation",
+    "difficulty": "Medium",
+    "algorithmType": "array",
+    "status": "complete",
+    "tags": ["Two Pointers"],
+    "primaryPattern": "Array In-place",
+    "shortPatternReason": "Finding first dip and maximizing suffix lexicographically.",
+    "time_efficiency": "O(N)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Rearrange numbers into the lexicographically next greater permutation.",
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Source Order", "type": "array", "default": [1, 2, 3] }
+        ]
+    }
+  },
+  {
+    "id": 34,
+    "title": "Find First and Last Position in Sorted Array",
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "difficulty": "Medium",
+    "algorithmType": "binary_search",
+    "status": "complete",
+    "tags": ["Binary Search"],
+    "primaryPattern": "Modified Binary Search",
+    "shortPatternReason": "Two binary searches for left and right boundaries.",
+    "time_efficiency": "O(log N)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Find the starting and ending position of a given target value.",
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Sorted Array", "type": "array", "default": [5,7,7,8,8,10] },
+            { "name": "target", "label": "Find Value", "type": "number", "default": 8 }
+        ]
+    }
+  },
+  {
+    "id": 39,
+    "title": "Combination Sum",
+    "slug": "combination-sum",
+    "difficulty": "Medium",
+    "algorithmType": "recursion",
+    "status": "complete",
+    "tags": ["Backtracking"],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Decision tree exploring unlimited uses of candidates.",
+    "time_efficiency": "O(2^Target)",
+    "space_efficiency": "O(Target)",
+    "problem_statement": "Find all unique combinations where numbers sum to target.",
+    "labConfig": {
+        "parameters": [
+            { "name": "candidates", "label": "Input values", "type": "array", "default": [2,3,6,7] },
+            { "name": "target", "label": "Sum Goal", "type": "number", "default": 7 }
+        ]
+    }
+  },
+  {
+    "id": 42,
+    "title": "Trapping Rain Water",
+    "slug": "trapping-rain-water",
+    "difficulty": "Hard",
+    "algorithmType": "two_pointers",
+    "status": "complete",
+    "tags": ["Two Pointers", "Stack"],
+    "primaryPattern": "Two Pointers",
+    "shortPatternReason": "Water trapping determined by strictly increasing boundaries.",
+    "time_efficiency": "O(N)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Compute how much water it can trap after raining.",
+    "labConfig": {
+        "parameters": [
+            { "name": "height", "label": "Elevation Map", "type": "array", "defaultValue": [0,1,0,2,1,0,1,3,2,1,2,1] }
+        ]
+    }
+  },
+  {
+    "id": 509,
+    "title": "Fibonacci Number",
+    "slug": "fibonacci-number",
+    "difficulty": "Easy",
+    "algorithmType": "recursion",
+    "status": "complete",
+    "tags": ["Recursion", "Dynamic Programming"],
+    "primaryPattern": "Recursion",
+    "shortPatternReason": "Classical recursive relation where each term depends on the previous two.",
+    "time_efficiency": "O(2^N)",
+    "space_efficiency": "O(N)",
+    "problem_statement": "The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1.",
+    "labConfig": {
+        "parameters": [
+            { "name": "n", "label": "Recursive Index", "type": "number", "defaultValue": 5, "min": 0, "max": 10 }
+        ]
+    }
+  },
+  {
+    "id": 16,
+    "title": "3Sum Closest",
+    "slug": "3sum-closest",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointers",
+    "status": "complete",
+    "tags": ["Two Pointers", "Sorting"],
+    "primaryPattern": "Two Pointers",
+    "shortPatternReason": "Find three integers such that the sum is closest to target.",
+    "time_efficiency": "O(N^2)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given an integer array nums and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.",
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Integer Array", "type": "array", "defaultValue": [-1,2,1,-4] },
+            { "name": "target", "label": "Target Sum", "type": "number", "defaultValue": 1 }
+        ]
+    }
+  },
+  {
+    "id": 18,
+    "title": "4Sum",
+    "slug": "4sum",
+    "difficulty": "Medium",
+    "algorithmType": "two_pointers",
+    "status": "complete",
+    "tags": ["Two Pointers", "Sorting"],
+    "primaryPattern": "Two Pointers",
+    "shortPatternReason": "Generalized sum problem requiring nested loops and pointers.",
+    "time_efficiency": "O(N^3)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "Given an array nums of n integers, return an array of all unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that their sum equals target.",
+    "labConfig": {
+        "parameters": [
+            { "name": "nums", "label": "Integer Array", "type": "array", "defaultValue": [1,0,-1,0,-2,2] },
+            { "name": "target", "label": "Target Sum", "type": "number", "defaultValue": 0 }
+        ]
+    }
+  },
+  {
+    "id": 121,
+    "title": "Best Time to Buy and Sell Stock",
+    "slug": "best-time-to-buy-and-sell-stock",
+    "difficulty": "Easy",
+    "algorithmType": "array",
+    "status": "complete",
+    "tags": ["Array", "Dynamic Programming"],
+    "primaryPattern": "One Pass",
+    "shortPatternReason": "Tracking min price and max profit in a single iteration.",
+    "time_efficiency": "O(N)",
+    "space_efficiency": "O(1)",
+    "problem_statement": "You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.",
+    "labConfig": {
+        "parameters": [
+            { "name": "prices", "label": "Price History", "type": "array", "defaultValue": [7,1,5,3,6,4] }
+        ]
+    }
+  },
+  {
+    "id": 99,
+    "title": "Cartesian Product",
+    "slug": "cartesian-product",
+    "difficulty": "Medium",
+    "algorithmType": "backtracking",
+    "status": "complete",
+    "tags": ["Recursion", "Combinations"],
+    "primaryPattern": "Backtracking",
+    "shortPatternReason": "Recursive exploration of all cross-set combinations.",
+    "time_efficiency": "O(Product of Lengths)",
+    "space_efficiency": "O(N)",
+    "problem_statement": "Given a list of arrays, return all possible combinations containing one element from each array.",
+    "labConfig": {
+        "parameters": [
+            { "name": "arrays", "label": "Nested Arrays", "type": "array", "defaultValue": [[1,2],["a","b"]] }
+        ]
+    }
   }
 ]

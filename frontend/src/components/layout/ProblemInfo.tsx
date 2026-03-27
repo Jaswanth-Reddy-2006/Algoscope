@@ -10,7 +10,8 @@ import {
     Code2,
     RefreshCw,
     Dices,
-    ListChecks
+    ListChecks,
+    Play
 } from 'lucide-react'
 import { cn } from '../../utils/cn'
 import { getStrategyForProblem } from '../../registry/problemStrategyRegistry'
@@ -94,6 +95,42 @@ const ProblemInfo: React.FC = () => {
     const resetLabInputs = useStore(state => state.resetLabInputs)
 
     const setRandomExample = () => {
+        // Priority 0: Problem-specific random generators
+        if (currentProblem.slug === 'two-sum') {
+            const size = Math.floor(Math.random() * 6) + 4; // 4 to 10
+            const nums = Array.from({ length: size }, () => Math.floor(Math.random() * 50) + 1);
+            const idx1 = Math.floor(Math.random() * size);
+            let idx2 = Math.floor(Math.random() * size);
+            while (idx1 === idx2) idx2 = Math.floor(Math.random() * size);
+            const target = nums[idx1] + nums[idx2];
+            
+            resetLabInputs({
+                nums: JSON.stringify(nums),
+                target: String(target)
+            });
+            setTimeout(() => refreshSteps(), 100);
+            return;
+        }
+
+        if (currentProblem.slug === 'add-two-numbers') {
+            const l1 = Array.from({ length: Math.floor(Math.random() * 3) + 2 }, () => Math.floor(Math.random() * 10));
+            const l2 = Array.from({ length: Math.floor(Math.random() * 3) + 2 }, () => Math.floor(Math.random() * 10));
+            resetLabInputs({
+                l1: JSON.stringify(l1),
+                l2: JSON.stringify(l2)
+            });
+            setTimeout(() => refreshSteps(), 100);
+            return;
+        }
+
+        if (currentProblem.slug === 'longest-substring-without-repeating-characters') {
+            const charPool = "abcde";
+            const s = Array.from({ length: 8 }, () => charPool[Math.floor(Math.random() * charPool.length)]).join('');
+            resetLabInputs({ s: `"${s}"` });
+            setTimeout(() => refreshSteps(), 100);
+            return;
+        }
+
         // Priority 1: Use structuredExamples from store
         if (currentProblem.structuredExamples) {
             try {
@@ -119,24 +156,31 @@ const ProblemInfo: React.FC = () => {
         if (!currentProblem.examples || currentProblem.examples.length === 0) return;
         const randomEx = currentProblem.examples[Math.floor(Math.random() * currentProblem.examples.length)];
         
-        let exInput = typeof randomEx === 'string' ? randomEx : randomEx.input || '';
+        let rawInput = typeof randomEx === 'string' ? randomEx : randomEx.input || '';
         const newInputs: Record<string, any> = {};
 
         if (currentProblem.labConfig) {
             try {
                 const config = typeof currentProblem.labConfig === 'string' ? JSON.parse(currentProblem.labConfig) : currentProblem.labConfig;
                 if (config.parameters) {
-                    config.parameters.forEach((param: any) => {
-                        // More robust regex: look for param_name followed by '=', then handle brackets, quotes, or numbers
-                        const regex = new RegExp(`(?:^|,|\\s)${param.name}\\s*=\\s*(\\[[\\s\\S]*?\\]|{[\\s\\S]*?}|\\".*?\\"|[^,\\n]+)`, 'i');
-                        const match = exInput.match(regex);
-                        if (match) {
-                            let val = match[1].trim();
-                            // Clean up trailing commas if any
-                            if (val.endsWith(',')) val = val.slice(0, -1).trim();
-                            newInputs[param.name] = val;
-                        }
-                    });
+                    if (typeof rawInput === 'object' && rawInput !== null) {
+                        config.parameters.forEach((param: any) => {
+                            if (rawInput[param.name] !== undefined) {
+                                newInputs[param.name] = typeof rawInput[param.name] === 'object' ? JSON.stringify(rawInput[param.name]) : String(rawInput[param.name]);
+                            }
+                        });
+                    } else {
+                        const exString = String(rawInput);
+                        config.parameters.forEach((param: any) => {
+                            const regex = new RegExp(`(?:^|,|\\s)${param.name}\\s*=\\s*(\\[[\\s\\S]*?\\\]|{[\\s\\S]*?}|\\".*?\\"|[^,\\n]+)`, 'i');
+                            const match = exString.match(regex);
+                            if (match) {
+                                let val = match[1].trim();
+                                if (val.endsWith(',')) val = val.slice(0, -1).trim();
+                                newInputs[param.name] = val;
+                            }
+                        });
+                    }
                 }
             } catch (e) {
                 console.warn("Failed to parse labConfig for examples:", e);
@@ -148,14 +192,15 @@ const ProblemInfo: React.FC = () => {
         } else {
             // Last resort: extract anything that looks like an array or string
             let extractedInput = '';
-            const arrMatch = exInput.match(/\[.*?\]/);
-            const strMatch = exInput.match(/"(.*?)"/);
+            const exString = typeof rawInput === 'object' ? JSON.stringify(rawInput) : String(rawInput);
+            const arrMatch = exString.match(/\[.*?\]/);
+            const strMatch = exString.match(/"(.*?)"/);
             
             if (arrMatch) extractedInput = arrMatch[0];
             else if (strMatch) extractedInput = strMatch[0];
             else {
-                const parts = exInput.split('=');
-                extractedInput = parts.length > 1 ? parts[1].split(',')[0].trim() : exInput;
+                const parts = exString.split('=');
+                extractedInput = parts.length > 1 ? parts[1].split(',')[0].trim() : exString;
             }
             resetLabInputs({ input1: extractedInput });
         }
@@ -201,6 +246,108 @@ void iterative(Node root) {
             (currentProblem.optimal_steps as any[])?.map(s => s.description).join('\n') ||
             "")
 
+    const expectedOutput = React.useMemo(() => {
+        try {
+            const parseInput = (val: any) => {
+                if (typeof val === 'string') {
+                    try { return JSON.parse(val); } catch { return val; }
+                }
+                return val;
+            };
+
+            const slug = currentProblem.slug.toLowerCase();
+
+            if (slug === 'fibonacci-number') {
+                const n = Number(labInputs.n || 0);
+                const fib = (num: number): number => num <= 1 ? num : fib(num - 1) + fib(num - 2);
+                return fib(n);
+            }
+            if (slug === 'two-sum') {
+                const nums = parseInput(labInputs.nums) || [];
+                const target = Number(labInputs.target || 0);
+                const map = new Map();
+                for (let i = 0; i < nums.length; i++) {
+                    const diff = target - nums[i];
+                    if (map.has(diff)) return [map.get(diff), i];
+                    map.set(nums[i], i);
+                }
+                return "No solution";
+            }
+            if (slug === 'add-two-numbers') {
+                const l1 = parseInput(labInputs.l1) || [];
+                const l2 = parseInput(labInputs.l2) || [];
+                let carry = 0, res = [], i = 0, j = 0;
+                while (i < l1.length || j < l2.length || carry) {
+                    const v1 = i < l1.length ? l1[i++] : 0;
+                    const v2 = j < l2.length ? l2[j++] : 0;
+                    const sum = v1 + v2 + carry;
+                    res.push(sum % 10);
+                    carry = Math.floor(sum / 10);
+                }
+                return res;
+            }
+            if (slug === 'longest-substring-without-repeating-characters') {
+                const s = String(labInputs.s || "").replace(/^"|"$/g, '');
+                let max = 0, start = 0, map = new Map();
+                for (let end = 0; end < s.length; end++) {
+                    if (map.has(s[end])) start = Math.max(map.get(s[end]) + 1, start);
+                    map.set(s[end], end);
+                    max = Math.max(max, end - start + 1);
+                }
+                return max;
+            }
+            if (slug === '3sum' || slug === 'three-sum') {
+                const nums = parseInput(labInputs.nums) || [];
+                if (!Array.isArray(nums)) return null;
+                nums.sort((a, b) => a - b);
+                const res = [];
+                for (let i = 0; i < nums.length - 2; i++) {
+                    if (i > 0 && nums[i] === nums[i - 1]) continue;
+                    let left = i + 1, right = nums.length - 1;
+                    while (left < right) {
+                        const sum = nums[i] + nums[left] + nums[right];
+                        if (sum === 0) {
+                            res.push([nums[i], nums[left], nums[right]]);
+                            while (left < right && nums[left] === nums[left + 1]) left++;
+                            while (left < right && nums[right] === nums[right - 1]) right--;
+                            left++; right--;
+                        } else if (sum < 0) left++;
+                        else right--;
+                    }
+                }
+                return res;
+            }
+            if (slug === 'container-with-most-water') {
+                const height = parseInput(labInputs.height) || [];
+                if (!Array.isArray(height)) return null;
+                let maxArea = 0, left = 0, right = height.length - 1;
+                while (left < right) {
+                    maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left));
+                    if (height[left] < height[right]) left++;
+                    else right--;
+                }
+                return maxArea;
+            }
+
+            // Generic heuristic: Look for match in `examples` payload
+            if (currentProblem.examples && currentProblem.examples.length > 0) {
+                const inputValues = Object.values(labInputs).map(v => String(v).replace(/\s/g, ''));
+                if (inputValues.length > 0) {
+                    for (const ex of currentProblem.examples) {
+                        const exInputStr = typeof ex.input === 'string' ? ex.input : JSON.stringify(ex.input);
+                        const cleanEx = exInputStr.replace(/\s/g, '');
+                        // If all our labInput values are found in this example's input representation
+                        if (inputValues.every(valStr => cleanEx.includes(valStr))) {
+                            return ex.output;
+                        }
+                    }
+                }
+            }
+
+        } catch (e) { return null; }
+        return null;
+    }, [currentProblem.slug, labInputs]);
+
     return (
         <div className="flex flex-col gap-8 pb-32 px-1">
             {/* 1️⃣ Problem & Data context */}
@@ -222,15 +369,6 @@ void iterative(Node root) {
                     </div>
                 </div>
 
-                {currentProblem.companyTags && JSON.parse(currentProblem.companyTags || '[]').length > 0 && (
-                     <div className="flex flex-wrap gap-2 text-[9px] font-black uppercase text-white/40 tracking-widest mt-2">
-                         {JSON.parse(currentProblem.companyTags).slice(0, 5).map((ct: any, idx: number) => (
-                             <span key={idx} className="bg-black/40 px-3 py-1.5 rounded-full border border-white/5">
-                                 {ct.slug}
-                             </span>
-                         ))}
-                     </div>
-                )}
 
                 <div className="p-6 rounded-[24px] bg-white/[0.03] border border-white/10 relative overflow-hidden group hover:border-white/20 transition-all font-sans problem-description-content">
                     <style>{`
@@ -251,15 +389,6 @@ void iterative(Node root) {
                             <Sliders size={12} className="text-[#EC4186]" />
                             <span className="text-[9px] font-black text-white/40 uppercase tracking-[0.2em]">Lab Parameters</span>
                         </div>
-                        {currentProblem.examples && currentProblem.examples.length > 0 && (
-                            <button
-                                onClick={setRandomExample}
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 hover:bg-white/[0.1] transition-all text-[8px] font-black uppercase tracking-widest text-[#EC4186]"
-                            >
-                                <Dices size={10} />
-                                Random Example
-                            </button>
-                        )}
                     </div>
 
                     <div className="space-y-4">
@@ -275,9 +404,19 @@ void iterative(Node root) {
                                                     {param.label || param.name}
                                                 </label>
                                                 <input
-                                                    type="text"
+                                                    type={param.type === 'number' ? 'number' : 'text'}
                                                     value={labInputs[param.name] ?? ''}
-                                                    onChange={(e) => setLabInput(param.name, e.target.value)}
+                                                    min={param.min}
+                                                    max={param.max}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        if (param.type === 'number') {
+                                                            const num = Number(val);
+                                                            if (param.min !== undefined && num < param.min) return;
+                                                            if (param.max !== undefined && num > param.max) return;
+                                                        }
+                                                        setLabInput(param.name, val);
+                                                    }}
                                                     onKeyDown={handleKeyDown}
                                                     className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-xs font-mono text-white focus:border-[#EC4186]/40 outline-none transition-all placeholder:text-white/10"
                                                     placeholder={param.defaultValue ?? ""}
@@ -332,13 +471,37 @@ void iterative(Node root) {
                             )
                         })()}
 
-                        <button
-                            onClick={refreshSteps}
-                            className="w-full py-4 bg-[#EC4186] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_5px_15px_rgba(236,65,134,0.3)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                        >
-                            <RefreshCw size={14} />
-                            Sync Simulation
-                        </button>
+                        {/* Expected Output Preview */}
+                        {expectedOutput !== null && (
+                            <div className="p-4 rounded-2xl bg-[#EC4186]/5 border border-[#EC4186]/10 space-y-2">
+                                <div className="flex items-center gap-2">
+                                    <ListChecks size={12} className="text-[#EC4186]" />
+                                    <span className="text-[9px] font-black text-[#EC4186]/60 uppercase tracking-[0.2em]">Expected Result</span>
+                                </div>
+                                <div className="text-xs font-mono font-bold text-white/90 pl-1">
+                                    {typeof expectedOutput === 'object' ? JSON.stringify(expectedOutput) : String(expectedOutput)}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="pt-4 flex gap-3">
+                            <button
+                                onClick={refreshSteps}
+                                className="flex-1 py-4 bg-[#EC4186] text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_10px_20px_rgba(236,65,134,0.3)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 border border-white/20"
+                            >
+                                <Play size={14} fill="white" />
+                                Execute Logic
+                            </button>
+                            {currentProblem.examples && currentProblem.examples.length > 0 && (
+                                <button
+                                    onClick={setRandomExample}
+                                    className="px-6 py-4 rounded-2xl bg-white/[0.05] border border-white/10 hover:bg-white/[0.1] transition-all text-[#EC4186] flex items-center justify-center"
+                                    title="Randomize Parameters"
+                                >
+                                    <Dices size={18} />
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </section>

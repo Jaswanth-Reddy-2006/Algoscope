@@ -1,4 +1,4 @@
-import { Step } from '../types'
+import { Step, RecursionNode } from '../types'
 
 /**
  * TWO SUM: TWO POINTERS (O(N log N) including sort, or O(N) if already sorted)
@@ -67,6 +67,20 @@ export const generateTwoSumPointers = (nums: number[], target: number): Step[] =
 export const generateTwoSumBrute = (nums: number[] = [], target: number = 0): Step[] => {
     const steps: Step[] = []
     if (!nums || nums.length === 0) return []
+
+    // 0. Initial State
+    steps.push({
+        step: 0,
+        description: `Initializing Brute Force approach. Searching for two numbers that sum to ${target}.`,
+        state: {
+            array: nums,
+            pointers: {},
+            explanation: `We will iterate through each possible pair of numbers in the array to find a sum equal to ${target}.`,
+            phase: 'init',
+            customState: { target }
+        }
+    })
+
     for (let i = 0; i < nums.length; i++) {
         for (let j = i + 1; j < nums.length; j++) {
             const currentSum = nums[i] + nums[j]
@@ -74,13 +88,14 @@ export const generateTwoSumBrute = (nums: number[] = [], target: number = 0): St
 
             steps.push({
                 step: steps.length,
-                description: `Checking pair at indices ${i} and ${j} (${nums[i]} + ${nums[j]} = ${currentSum})`,
+                description: `Comparing nums[${i}] (${nums[i]}) and nums[${j}] (${nums[j]}). Sum = ${currentSum}.`,
                 state: {
                     array: nums,
                     pointers: { i, j },
+                    calculation: `${nums[i]} + ${nums[j]} = ${currentSum}`,
                     explanation: isMatch
                         ? `Match found! ${nums[i]} + ${nums[j]} = ${target}`
-                        : `${nums[i]} + ${nums[j]} = ${currentSum}. Still looking...`,
+                        : `${currentSum} !== ${target}. Shifting search.`,
                     found: isMatch,
                     phase: isMatch ? 'found' : 'searching',
                     highlightIndices: [i, j],
@@ -95,10 +110,10 @@ export const generateTwoSumBrute = (nums: number[] = [], target: number = 0): St
 
     steps.push({
         step: steps.length,
-        description: "Exhausted all pairs. No solution found.",
+        description: "Exhausted all possible pairs. No solution exists.",
         state: {
             array: nums,
-            explanation: "No two numbers sum up to the target.",
+            explanation: "No two numbers in the input array sum up to the target value.",
             phase: 'not_found'
         }
     })
@@ -113,24 +128,37 @@ export const generateTwoSumHashMap = (nums: number[] = [], target: number = 0): 
     if (!nums || nums.length === 0) return []
     const map: Record<number, number> = {}
 
+    // 0. Initial State
+    steps.push({
+        step: 0,
+        description: `Initializing Optimal Hash Map approach for target ${target}.`,
+        state: {
+            array: nums,
+            pointers: {},
+            hashTable: {},
+            explanation: `We will track seen numbers in a Hash Map for O(1) lookups of the complement (target - num).`,
+            phase: 'init',
+            customState: { target }
+        }
+    })
+
     for (let i = 0; i < nums.length; i++) {
         const val = nums[i]
         const complement = target - val
         const complementIdx = map[complement]
         const isMatch = complementIdx !== undefined
 
-        const stepDesc = `Processing ${val} at index ${i}. Target complement is ${complement}.`
-
         steps.push({
             step: steps.length,
-            description: stepDesc,
+            description: `Current number: ${val}. Checking if complement ${complement} exists in map.`,
             state: {
                 array: nums,
                 pointers: { i },
-                mapState: { ...map },
+                hashTable: { ...map },
+                calculation: `${target} - ${val} = ${complement}`,
                 explanation: isMatch
-                    ? `Found complement ${complement} in hash map at index ${complementIdx}!`
-                    : `Complement ${complement} not in map. Adding ${val} to map.`,
+                    ? `Complement ${complement} found at index ${complementIdx}! Perfect pair.`
+                    : `${complement} not found in map. Mapping ${val} to index ${i} for future lookup.`,
                 phase: isMatch ? 'found' : 'searching',
                 highlightIndices: isMatch ? [complementIdx, i] : [i],
                 finalAnswer: isMatch ? [complementIdx, i] : undefined,
@@ -142,24 +170,194 @@ export const generateTwoSumHashMap = (nums: number[] = [], target: number = 0): 
         map[val] = i
     }
 
+    steps.push({
+        step: steps.length,
+        description: "Traversal complete. No valid pair identified.",
+        state: {
+            array: nums,
+            hashTable: { ...map },
+            explanation: "Processed all elements without finding a matching pair.",
+            phase: 'not_found'
+        }
+    })
+
     return steps
 }
 
 /**
- * SLIDING WINDOW: MAX SUM SUBARRAY BRUTE (DEMO)
+ * LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS: BRUTE FORCE (O(N^2))
  */
-export const generateSlidingWindowMaxSumBrute = (_input: any): Step[] => {
-    // Placeholder for standardization
-    return []
-}
+export const generateLongestSubstringBrute = (input: any): Step[] => {
+    const s = typeof input === 'object' ? input.s || "" : String(input);
+    const steps: Step[] = [];
+    if (!s) return [];
+    const n = s.length;
+    let maxLen = 0;
+    let bestStart = 0;
+    let bestEnd = 0;
+
+    steps.push({
+        step: 0,
+        description: "Initializing Brute Force search for longest unique substring.",
+        state: {
+            string: s,
+            explanation: "We will check every possible substring to see if it contains repeating characters.",
+            phase: 'init',
+            customState: { maxLen: 0 }
+        }
+    });
+
+    for (let i = 0; i < n; i++) {
+        const seen = new Set();
+        for (let j = i; j < n; j++) {
+            const char = s[j];
+            if (seen.has(char)) {
+                steps.push({
+                    step: steps.length,
+                    description: `Duplicate '${char}' found at index ${j}.`,
+                    state: {
+                        string: s,
+                        pointers: { i, j },
+                        highlightIndices: Array.from({ length: j - i + 1 }, (_, k) => i + k),
+                        explanation: `Substring "${s.substring(i, j + 1)}" contains duplicate characters. Breaking.`,
+                        phase: 'searching',
+                        customState: { maxLen, duplicateChar: char }
+                    }
+                });
+                break;
+            }
+            seen.add(char);
+            const currentLen = j - i + 1;
+            const isNewMax = currentLen > maxLen;
+            if (isNewMax) {
+                maxLen = currentLen;
+                bestStart = i;
+                bestEnd = j;
+            }
+
+            steps.push({
+                step: steps.length,
+                description: `Checking unique substring: "${s.substring(i, j + 1)}"`,
+                state: {
+                    string: s,
+                    pointers: { i, j },
+                    highlightIndices: Array.from({ length: j - i + 1 }, (_, k) => i + k),
+                    explanation: isNewMax 
+                        ? `New record! "${s.substring(i, j + 1)}" has length ${currentLen}.` 
+                        : `"${s.substring(i, j + 1)}" is unique. Current max: ${maxLen}`,
+                    phase: 'searching',
+                    customState: { maxLen, currentLen }
+                }
+            });
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Search complete.",
+        state: {
+            string: s,
+            windowRange: [bestStart, bestEnd],
+            finalAnswer: maxLen,
+            explanation: `The longest unique substring is "${s.substring(bestStart, bestEnd + 1)}" with length ${maxLen}.`,
+            phase: 'found'
+        }
+    });
+
+    return steps;
+};
 
 /**
- * SLIDING WINDOW: MAX SUM SUBARRAY OPTIMAL (DEMO)
+ * LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS: OPTIMAL SLIDING WINDOW (O(N))
  */
-export const generateSlidingWindowMaxSumOptimal = (_input: any): Step[] => {
-    // Placeholder for standardization
-    return []
-}
+export const generateLongestSubstringOptimal = (input: any): Step[] => {
+    const s = typeof input === 'object' ? input.s || "" : String(input);
+    const steps: Step[] = [];
+    if (!s) return [];
+    
+    const n = s.length;
+    let maxLen = 0;
+    let left = 0;
+    const map: Record<string, number> = {};
+    let bestStart = 0;
+    let bestEnd = 0;
+
+    steps.push({
+        step: 0,
+        description: "Initializing Optimal Sliding Window search.",
+        state: {
+            string: s,
+            hashTable: {},
+            explanation: "We'll use two pointers (left, right) to create a window and a map to store the last seen index of each character.",
+            phase: 'init',
+            customState: { maxLen: 0 }
+        }
+    });
+
+    for (let right = 0; right < n; right++) {
+        const char = s[right];
+        
+        // If char is in map and within window
+        if (map[char] !== undefined && map[char] >= left) {
+            const oldLeft = left;
+            left = map[char] + 1;
+            
+            steps.push({
+                step: steps.length,
+                description: `Duplicate '${char}' detected! Shrinking window.`,
+                state: {
+                    string: s,
+                    pointers: { left, right },
+                    hashTable: { ...map },
+                    calculation: `left = map['${char}'] + 1 = ${left}`,
+                    explanation: `Found ${char} again. Moving 'left' pointer from ${oldLeft} to ${left} to exclude the previous occurrence.`,
+                    phase: 'searching',
+                    customState: { maxLen, duplicateChar: char }
+                }
+            });
+        }
+
+        map[char] = right;
+        const currentLen = right - left + 1;
+        const isNewMax = currentLen > maxLen;
+        if (isNewMax) {
+            maxLen = currentLen;
+            bestStart = left;
+            bestEnd = right;
+        }
+
+        steps.push({
+            step: steps.length,
+            description: `Extending window to "${s.substring(left, right + 1)}"`,
+            state: {
+                string: s,
+                pointers: { left, right },
+                hashTable: { ...map },
+                calculation: `Length: ${right} - ${left} + 1 = ${currentLen}`,
+                explanation: isNewMax 
+                    ? `New max length found: ${currentLen}` 
+                    : `Window unique. Current record: ${maxLen}`,
+                phase: 'searching',
+                customState: { maxLen, currentLen }
+            }
+        });
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Optimal traversal complete.",
+        state: {
+            string: s,
+            hashTable: { ...map },
+            windowRange: [bestStart, bestEnd],
+            finalAnswer: maxLen,
+            explanation: `Longest substring is "${s.substring(bestStart, bestEnd + 1)}" with length ${maxLen}.`,
+            phase: 'found'
+        }
+    });
+
+    return steps;
+};
 
 /**
  * BINARY SEARCH (O(log N))
@@ -264,13 +462,13 @@ export const generateAddTwoNumbersOptimal = (l1: number[], l2: number[]): Step[]
 
     steps.push({
         step: 0,
-        description: "Initializing parallel traversal of both lists.",
+        description: "Initializing parallel addition (Least Significant Digit first).",
         state: {
             pointers: { l1: 0, l2: 0 },
             customState: { carry: 0, sum: 0 },
             result: [],
             phase: 'init',
-            explanation: "Set carry to 0 and started at the head of both lists."
+            explanation: "Numbers are stored in reverse (LSD at head). We start addition from the front of both lists, exactly like standard math."
         }
     })
 
@@ -286,7 +484,7 @@ export const generateAddTwoNumbersOptimal = (l1: number[], l2: number[]): Step[]
 
         steps.push({
             step: steps.length,
-            description: `Processing indices: L1[${i}], L2[${j}]`,
+            description: `Adding digits: ${v1} + ${v2} (Previous Carry: ${oldCarry})`,
             state: {
                 pointers: {
                     l1: i < l1.length ? i : null,
@@ -380,6 +578,7 @@ export const generateAddTwoNumbersBrute = (l1: number[], l2: number[]): Step[] =
         description: "Converting sum back to linked list.",
         state: {
             result: [...result],
+            finalAnswer: result,
             phase: 'found',
             explanation: `Result Integer ${sum} -> Reversed List ${JSON.stringify(result)}`
         }
@@ -442,6 +641,7 @@ export const generateContainerWithMostWater = (heights: number[]): Step[] => {
         state: {
             array: heights,
             customState: { maxArea },
+            finalAnswer: maxArea,
             explanation: `The maximum volume of water that can be contained between any two vertical lines is ${maxArea}.`,
             phase: 'found'
         }
@@ -665,6 +865,7 @@ export const generatePalindromeNumber = (x: number): Step[] => {
         description: "Confirmed: It is a palindrome.",
         state: {
             array: digits,
+            finalAnswer: true,
             phase: 'found',
             explanation: "All pairs matched."
         }
@@ -710,9 +911,23 @@ export const generateAtoI = (s: string): Step[] => {
         i++
     }
 
+    const MAX_INT = 2147483647;
+    const MIN_INT = -2147483648;
+
     // Convert digits
     while (i < s.length && /[0-9]/.test(s[i])) {
         const digit = parseInt(s[i])
+
+        // Check for overflow before adding digit
+        if (sign === 1 && (res > MAX_INT / 10 || (res === MAX_INT / 10 && digit > 7))) {
+            res = MAX_INT;
+            break;
+        }
+        if (sign === -1 && (res > Math.abs(MIN_INT / 10) || (res === Math.abs(MIN_INT / 10) && digit > 8))) {
+            res = Math.abs(MIN_INT);
+            break;
+        }
+
         res = res * 10 + digit
         steps.push({
             step: steps.length,
@@ -729,15 +944,70 @@ export const generateAtoI = (s: string): Step[] => {
         i++
     }
 
+    const finalResult = res * sign;
+
     steps.push({
         step: steps.length,
         description: "Reached non-digit or end of string. Conversion complete.",
         state: {
             array: chars as any,
-            customState: { finalResult: res * sign },
-            explanation: `Final parsed integer: ${res * sign}`,
+            finalAnswer: finalResult,
+            customState: { finalResult: finalResult },
+            explanation: `Final parsed integer: ${finalResult}`,
             phase: 'found'
         }
+    })
+
+    return steps
+}
+
+/**
+ * 3SUM: BRUTE FORCE (O(N^3))
+ */
+export const generate3SumBrute = (nums: number[], target: number = 0): Step[] => {
+    const steps: Step[] = []
+    const results: number[][] = []
+    const n = nums.length
+
+    steps.push({
+        step: 0,
+        description: "Starting 3Sum Brute Force. Checking all possible triplets.",
+        state: { array: nums, explanation: "Iterating through i, j, k indices to find sums equal to target.", phase: 'init' }
+    })
+
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            for (let k = j + 1; k < n; k++) {
+                const sum = nums[i] + nums[j] + nums[k]
+                const isMatch = sum === target
+                
+                steps.push({
+                    step: steps.length,
+                    description: `Checking indexes [${i}, ${j}, ${k}]: ${nums[i]} + ${nums[j]} + ${nums[k]} = ${sum}`,
+                    state: {
+                        array: nums,
+                        pointers: { i, j, k },
+                        highlightIndices: [i, j, k],
+                        customState: { currentSum: sum, target },
+                        explanation: isMatch ? "Match found!" : `Sum ${sum} is not ${target}.`,
+                        phase: isMatch ? 'found' : 'searching'
+                    }
+                })
+                
+                if (isMatch) {
+                    const triplet = [nums[i], nums[j], nums[k]].sort((a,b) => a-b)
+                    if (!results.some(r => r[0] === triplet[0] && r[1] === triplet[1] && r[2] === triplet[2])) {
+                        results.push(triplet)
+                    }
+                }
+            }
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "3Sum Brute Force complete.",
+        state: { array: nums, finalAnswer: results, phase: 'found', explanation: `Found ${results.length} unique triplets.` }
     })
 
     return steps
@@ -807,11 +1077,254 @@ export const generate3Sum = (nums: number[], target: number = 0): Step[] => {
             array: sortedNums,
             customState: { finalTriplets: result },
             explanation: `Found ${result.length} unique triplets that sum to ${target}.`,
-            phase: 'found'
+            phase: 'found',
+            finalAnswer: result
         }
     })
 
     return steps
+}
+
+/**
+ * 3SUM CLOSEST: TWO POINTERS (O(N^2))
+ */
+export const generate3SumClosest = (nums: number[], target: number): Step[] => {
+    const steps: Step[] = []
+    const sortedNums = [...nums].sort((a, b) => a - b)
+    let closestSum = Infinity
+
+    steps.push({
+        step: 0,
+        description: "Starting 3Sum Closest. Sorting array first.",
+        state: {
+            array: sortedNums,
+            explanation: "Sorted array for Two Pointers.",
+            phase: 'init'
+        }
+    })
+
+    if (nums.length < 3) return steps
+
+    for (let i = 0; i < sortedNums.length - 2; i++) {
+        let left = i + 1
+        let right = sortedNums.length - 1
+
+        while (left < right) {
+            const sum = sortedNums[i] + sortedNums[left] + sortedNums[right]
+            if (Math.abs(target - sum) < Math.abs(target - closestSum)) {
+                closestSum = sum
+            }
+
+            steps.push({
+                step: steps.length,
+                description: `Fixed i=${i}. Checking L=${left}, R=${right}. Sum=${sum}`,
+                state: {
+                    array: sortedNums,
+                    pointers: { i, l: left, r: right },
+                    highlightIndices: [i, left, right],
+                    customState: { currentSum: sum, target, closestSum },
+                    explanation: `Distance to target is ${Math.abs(target - sum)}. Best is ${Math.abs(target - closestSum)}`,
+                    phase: 'searching'
+                }
+            })
+
+            if (sum === target) {
+                return steps;
+            } else if (sum < target) {
+                left++
+            } else {
+                right--
+            }
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "3Sum Closest complete.",
+        state: {
+            array: sortedNums,
+            customState: { finalSum: closestSum },
+            explanation: `Closest sum found is ${closestSum}.`,
+            phase: 'found',
+            finalAnswer: closestSum
+        }
+    })
+
+    return steps
+}
+
+/**
+ * 4SUM: BRUTE FORCE (O(N^4))
+ */
+export const generate4SumBrute = (nums: number[], target: number = 0): Step[] => {
+    const steps: Step[] = []
+    const results: number[][] = []
+    const n = nums.length
+
+    steps.push({
+        step: 0,
+        description: "Starting 4Sum Brute Force. Checking all possible quadruplets.",
+        state: { array: nums, explanation: "Trying all combinations of i, j, k, l indices.", phase: 'init' }
+    })
+
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            for (let k = j + 1; k < n; k++) {
+                for (let l = k + 1; l < n; l++) {
+                    const sum = nums[i] + nums[j] + nums[k] + nums[l]
+                    const isMatch = sum === target
+                    
+                    steps.push({
+                        step: steps.length,
+                        description: `Checking [${i}, ${j}, ${k}, ${l}]: ${nums[i]} + ${nums[j]} + ${nums[k]} + ${nums[l]} = ${sum}`,
+                        state: {
+                            array: nums,
+                            pointers: { i, j, k, l },
+                            highlightIndices: [i, j, k, l],
+                            customState: { currentSum: sum, target },
+                            explanation: isMatch ? "Match found!" : `Sum ${sum} is not ${target}.`,
+                            phase: isMatch ? 'found' : 'searching'
+                        }
+                    })
+                    
+                    if (isMatch) {
+                        const quad = [nums[i], nums[j], nums[k], nums[l]].sort((a,b) => a-b)
+                        if (!results.some(r => r[0] === quad[0] && r[1] === quad[1] && r[2] === quad[2] && r[3] === quad[3])) {
+                            results.push(quad)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "4Sum Brute Force complete.",
+        state: { array: nums, finalAnswer: results, phase: 'found', explanation: `Found ${results.length} unique quadruplets.` }
+    })
+
+    return steps
+}
+
+/**
+ * 4SUM: TWO POINTERS (O(N^3))
+ */
+export const generate4Sum = (nums: number[], target: number): Step[] => {
+    const steps: Step[] = []
+    const sortedNums = [...nums].sort((a, b) => a - b)
+    const result: number[][] = []
+
+    steps.push({
+        step: 0,
+        description: "Starting 4Sum. Sorting array first.",
+        state: {
+            array: sortedNums,
+            explanation: "Sorted array for nested loops.",
+            phase: 'init'
+        }
+    })
+
+    for (let i = 0; i < sortedNums.length - 3; i++) {
+        if (i > 0 && sortedNums[i] === sortedNums[i - 1]) continue
+        for (let j = i + 1; j < sortedNums.length - 2; j++) {
+            if (j > i + 1 && sortedNums[j] === sortedNums[j - 1]) continue
+
+            let left = j + 1
+            let right = sortedNums.length - 1
+
+            while (left < right) {
+                const sum = sortedNums[i] + sortedNums[j] + sortedNums[left] + sortedNums[right]
+
+                steps.push({
+                    step: steps.length,
+                    description: `Fixed i=${i}, j=${j}. Checking L=${left}, R=${right}. Sum=${sum}`,
+                    state: {
+                        array: sortedNums,
+                        pointers: { i, j, l: left, r: right },
+                        highlightIndices: [i, j, left, right],
+                        customState: { currentSum: sum, target, quadrupletsFound: result.length },
+                        explanation: sum === target ? "Match found!" : (sum < target ? "Sum < target. Move Left." : "Sum > target. Move Right."),
+                        phase: sum === target ? 'found' : 'searching'
+                    }
+                })
+
+                if (sum === target) {
+                    result.push([sortedNums[i], sortedNums[j], sortedNums[left], sortedNums[right]])
+                    while (left < right && sortedNums[left] === sortedNums[left + 1]) left++
+                    while (left < right && sortedNums[right] === sortedNums[right - 1]) right--
+                    left++
+                    right--
+                } else if (sum < target) {
+                    left++
+                } else {
+                    right--
+                }
+            }
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "4Sum search complete.",
+        state: {
+            array: sortedNums,
+            customState: { finalQuadruplets: result },
+            explanation: `Found ${result.length} unique quadruplets.`,
+            phase: 'found',
+            finalAnswer: result
+        }
+    })
+
+    return steps
+}
+
+/**
+ * BEST TIME TO BUY AND SELL STOCK: TWO POINTERS/MATH (O(N))
+ */
+export const generateBestTimeToBuyAndSellStock = (prices: number[]): Step[] => {
+    const steps: Step[] = [];
+    let minPrice = Infinity;
+    let maxProfit = 0;
+
+    steps.push({
+        step: 0,
+        description: "Initialize variables.",
+        state: { array: prices, customState: { minPrice: "Infinity", maxProfit }, explanation: "Track lowest price and max profit seen so far.", phase: 'init' }
+    });
+
+    for (let i = 0; i < prices.length; i++) {
+        const profit = prices[i] - minPrice;
+        if (prices[i] < minPrice) {
+            minPrice = prices[i];
+            steps.push({
+                step: steps.length,
+                description: `Found new min price: ${prices[i]}`,
+                state: { array: prices, pointers: { i }, highlightIndices: [i], customState: { minPrice, maxProfit, currentPrice: prices[i] }, explanation: `Price ${prices[i]} is tracking lowest.`, phase: 'searching' }
+            });
+        } else if (profit > maxProfit) {
+            maxProfit = profit;
+            steps.push({
+                step: steps.length,
+                description: `Found new max profit: ${profit}`,
+                state: { array: prices, pointers: { i }, highlightIndices: [i], customState: { minPrice, maxProfit, currentPrice: prices[i] }, explanation: `Selling here yields max profit ${profit}.`, phase: 'found' }
+            });
+        } else {
+            steps.push({
+                step: steps.length,
+                description: `Checking price: ${prices[i]}`,
+                state: { array: prices, pointers: { i }, highlightIndices: [i], customState: { minPrice, maxProfit, currentPrice: prices[i] }, explanation: `No new min or optimal profit here.`, phase: 'searching' }
+            });
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Done trading.",
+        state: { array: prices, customState: { finalProfit: maxProfit }, explanation: `Maximum profit possible is ${maxProfit}.`, phase: 'found', finalAnswer: maxProfit }
+    });
+
+    return steps;
 }
 
 /**
@@ -878,7 +1391,8 @@ export const generateValidParentheses = (s: string): Step[] => {
             array: chars as any,
             stack: [...stack],
             explanation: isValid ? "Stack is empty. Balanced!" : `Stack still contains: ${stack.join(', ')}. Unbalanced!`,
-            phase: isValid ? 'found' : 'not_found'
+            phase: isValid ? 'found' : 'not_found',
+            finalAnswer: isValid
         }
     })
 
@@ -956,7 +1470,7 @@ export const generateMergeTwoSortedLists = (l1: number[], l2: number[]): Step[] 
     steps.push({
         step: steps.length,
         description: "Merge complete.",
-        state: { result: [...result], phase: 'found', explanation: "Fused both lists into a single sorted sequence." }
+        state: { result: [...result], phase: 'found', explanation: "Fused both lists into a single sorted sequence.", finalAnswer: result }
     })
 
     return steps
@@ -995,10 +1509,11 @@ export const generateValidPalindrome = (s: string): Step[] => {
         left++; right--
     }
 
+    const isValid = cleanS.length === 0 || left >= right; // If cleanS is empty, it's a valid palindrome. If left >= right, all checks passed.
     steps.push({
         step: steps.length,
         description: "Confirmed: It is a palindrome.",
-        state: { array: chars as any, phase: 'found', explanation: "Passed all symmetry checks." }
+        state: { array: chars as any, phase: 'found', explanation: "Passed all symmetry checks.", finalAnswer: isValid }
     })
     return steps
 }
@@ -1040,7 +1555,7 @@ export const generateMoveZeroes = (nums: number[]): Step[] => {
     steps.push({
         step: steps.length,
         description: "All non-zero elements shifted. Zeroes are now at the end.",
-        state: { array: [...currentNums], phase: 'found', explanation: "Stable mutation complete." }
+        state: { array: [...currentNums], phase: 'found', explanation: "Stable mutation complete.", finalAnswer: currentNums }
     })
     return steps
 }
@@ -1052,6 +1567,7 @@ export const generateSearchInRotatedArray = (nums: number[], target: number): St
     const steps: Step[] = []
     let left = 0
     let right = nums.length - 1
+    let foundIndex = -1
 
     steps.push({
         step: 0,
@@ -1073,7 +1589,10 @@ export const generateSearchInRotatedArray = (nums: number[], target: number): St
             }
         })
 
-        if (nums[mid] === target) return steps
+        if (nums[mid] === target) {
+            foundIndex = mid
+            break
+        }
 
         // Left half is sorted
         if (nums[left] <= nums[mid]) {
@@ -1094,8 +1613,8 @@ export const generateSearchInRotatedArray = (nums: number[], target: number): St
 
     steps.push({
         step: steps.length,
-        description: "Target not found in array.",
-        state: { array: nums as any, phase: 'not_found', explanation: "Search space exhausted." }
+        description: foundIndex !== -1 ? `Target found at index ${foundIndex}.` : "Target not found in array.",
+        state: { array: nums as any, phase: foundIndex !== -1 ? 'found' : 'not_found', explanation: foundIndex !== -1 ? `Target ${target} found.` : "Search space exhausted.", finalAnswer: foundIndex }
     })
     return steps
 }
@@ -1149,7 +1668,7 @@ export const generateRotateImage = (matrix: number[][]): Step[] => {
     steps.push({
         step: steps.length,
         description: "Matrix rotation complete.",
-        state: { matrix: currentMatrix.map(row => [...row]), phase: 'found', explanation: "90-degree clockwise rotation achieved." }
+        state: { matrix: currentMatrix.map(row => [...row]), phase: 'found', explanation: "90-degree clockwise rotation achieved.", finalAnswer: currentMatrix }
     })
     return steps
 }
@@ -1166,6 +1685,7 @@ export const generateMedianTwoSortedArrays = (nums1: number[], nums2: number[]):
     const n = nums2.length
     let left = 0
     let right = m
+    let median = 0
 
     steps.push({
         step: 0,
@@ -1183,6 +1703,11 @@ export const generateMedianTwoSortedArrays = (nums1: number[], nums2: number[]):
         const i = Math.floor((left + right) / 2)
         const j = Math.floor((m + n + 1) / 2) - i
 
+        const maxLeft1 = (i === 0) ? -Infinity : nums1[i - 1]
+        const minRight1 = (i === m) ? Infinity : nums1[i]
+        const maxLeft2 = (j === 0) ? -Infinity : nums2[j - 1]
+        const minRight2 = (j === n) ? Infinity : nums2[j]
+
         steps.push({
             step: steps.length,
             description: `Checking partitions i=${i}, j=${j}.`,
@@ -1190,17 +1715,19 @@ export const generateMedianTwoSortedArrays = (nums1: number[], nums2: number[]):
                 array1: nums1,
                 array2: nums2,
                 pointers: { i, j },
-                explanation: `Partition X at ${i}, Partition Y at ${j}. Checking boundaries.`,
-                phase: 'searching'
+                calculation: `L1:${maxLeft1} vs R2:${minRight2} | L2:${maxLeft2} vs R1:${minRight1}`,
+                explanation: `Partition boundaries: [${maxLeft1} | ${minRight1}] in X, [${maxLeft2} | ${minRight2}] in Y.`,
+                phase: 'searching',
+                customState: { maxLeft1, minRight1, maxLeft2, minRight2 }
             }
         })
 
-        const maxLeft1 = (i === 0) ? -Infinity : nums1[i - 1]
-        const minRight1 = (i === m) ? Infinity : nums1[i]
-        const maxLeft2 = (j === 0) ? -Infinity : nums2[j - 1]
-        const minRight2 = (j === n) ? Infinity : nums2[j]
-
         if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+            if ((m + n) % 2 === 0) {
+                median = (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2
+            } else {
+                median = Math.max(maxLeft1, maxLeft2)
+            }
             steps.push({
                 step: steps.length,
                 description: "Correct partition found!",
@@ -1211,7 +1738,8 @@ export const generateMedianTwoSortedArrays = (nums1: number[], nums2: number[]):
                     calculation: (m + n) % 2 === 0
                         ? `(max(${maxLeft1}, ${maxLeft2}) + min(${minRight1}, ${minRight2})) / 2`
                         : `max(${maxLeft1}, ${maxLeft2})`,
-                    phase: 'found'
+                    phase: 'found',
+                    finalAnswer: median
                 }
             })
             return steps
@@ -1222,6 +1750,12 @@ export const generateMedianTwoSortedArrays = (nums1: number[], nums2: number[]):
         }
     }
 
+    // Should not reach here for valid inputs
+    steps.push({
+        step: steps.length,
+        description: "Median calculation failed (should not happen for valid inputs).",
+        state: { phase: 'not_found', explanation: "Algorithm did not converge.", finalAnswer: null }
+    })
     return steps
 }
 
@@ -1257,10 +1791,11 @@ export const generateGroupAnagrams = (strs: string[]): Step[] => {
         })
     }
 
+    const finalResult = Object.values(map)
     steps.push({
         step: steps.length,
         description: "Groups finalized.",
-        state: { array: strs, mapState: JSON.parse(JSON.stringify(map)), phase: 'found', explanation: "Grouping complete." }
+        state: { array: strs, mapState: JSON.parse(JSON.stringify(map)), phase: 'found', explanation: "Grouping complete.", finalAnswer: finalResult }
     })
     return steps
 }
@@ -1377,7 +1912,7 @@ export const generateRegExpMatching = (s: string, p: string): Step[] => {
     steps.push({
         step: steps.length,
         description: dp[m][n] ? "String matches Pattern!" : "No match found.",
-        state: { matrix: dp.map(row => [...row]), phase: dp[m][n] ? 'found' : 'not_found', explanation: "DP complete." }
+        state: { matrix: dp.map(row => [...row]), finalAnswer: dp[m][n], phase: dp[m][n] ? 'found' : 'not_found', explanation: "DP complete." }
     })
     return steps
 }
@@ -1471,7 +2006,8 @@ export const generateSortColors = (nums: number[]): Step[] => {
         state: {
             array: [...currentNums],
             phase: 'found',
-            explanation: "Array is now partitioned into Red (0), White (1), and Blue (2) regions."
+            explanation: "Array is now partitioned into Red (0), White (1), and Blue (2) regions.",
+            finalAnswer: currentNums
         }
     })
 
@@ -1528,7 +2064,8 @@ export const generateSortColorsBrute = (nums: number[]): Step[] => {
         state: {
             array: [...currentNums],
             phase: 'found',
-            explanation: "Array sorted using two passes (Count and Write)."
+            explanation: "Array sorted using two passes (Count and Write).",
+            finalAnswer: currentNums
         }
     })
 
@@ -1552,7 +2089,7 @@ export const generateJumpGame = (nums: number[]): Step[] => {
             steps.push({
                 step: steps.length,
                 description: `Stopped at index ${i}. Max reach ${maxReach} is less than current index.`,
-                state: { array: nums, pointers: { i }, customState: { maxReach }, explanation: "Game Over: Cannot jump further.", phase: 'not_found' }
+                state: { array: nums, pointers: { i }, customState: { maxReach }, explanation: "Game Over: Cannot jump further.", phase: 'not_found', finalAnswer: false }
             })
             return steps
         }
@@ -1569,8 +2106,8 @@ export const generateJumpGame = (nums: number[]): Step[] => {
                 pointers: { i },
                 customState: { maxReach, currentReach },
                 highlightIndices: [i],
-                explanation: currentReach > oldMax 
-                    ? `Expanded max reach from ${oldMax} to ${maxReach}!` 
+                explanation: currentReach > oldMax
+                    ? `Expanded max reach from ${oldMax} to ${maxReach}!`
                     : `Current jump doesn't exceed existing max reach of ${maxReach}.`,
                 phase: 'searching'
             }
@@ -1580,12 +2117,17 @@ export const generateJumpGame = (nums: number[]): Step[] => {
             steps.push({
                 step: steps.length,
                 description: `Success! Max reach ${maxReach} covers the end of the array.`,
-                state: { array: nums, customState: { maxReach }, phase: 'found', explanation: "Reached the goal index." }
+                state: { array: nums, customState: { maxReach }, phase: 'found', explanation: "Reached the goal index.", finalAnswer: true }
             })
             return steps
         }
     }
 
+    steps.push({
+        step: steps.length,
+        description: "End of array reached, but last index was not reachable.",
+        state: { array: nums, customState: { maxReach }, phase: 'not_found', explanation: "Could not reach the last index.", finalAnswer: false }
+    })
     return steps
 }
 
@@ -1594,7 +2136,14 @@ export const generateJumpGame = (nums: number[]): Step[] => {
  */
 export const generateMergeIntervals = (intervals: number[][]): Step[] => {
     const steps: Step[] = []
-    if (intervals.length === 0) return []
+    if (intervals.length === 0) {
+        steps.push({
+            step: 0,
+            description: "No intervals provided.",
+            state: { intervals: [], result: [], explanation: "Empty input, returning empty array.", phase: 'found', finalAnswer: [] }
+        })
+        return steps
+    }
 
     const sorted = [...intervals].sort((a, b) => a[0] - b[0])
     const merged: number[][] = []
@@ -1621,8 +2170,8 @@ export const generateMergeIntervals = (intervals: number[][]): Step[] => {
                 pointers: { i },
                 result: JSON.parse(JSON.stringify(merged)),
                 highlightIndices: [i, merged.length - 1],
-                explanation: overlaps 
-                    ? `Overlapping detected (${next[0]} <= ${last[1]}). Merging...` 
+                explanation: overlaps
+                    ? `Overlapping detected (${next[0]} <= ${last[1]}). Merging...`
                     : `No overlap. Appending [${next}] as a new interval.`,
                 phase: 'searching'
             }
@@ -1638,7 +2187,7 @@ export const generateMergeIntervals = (intervals: number[][]): Step[] => {
     steps.push({
         step: steps.length,
         description: "Merge process complete.",
-        state: { result: merged, phase: 'found', explanation: `Consolidated into ${merged.length} intervals.` }
+        state: { result: merged, phase: 'found', explanation: `Consolidated into ${merged.length} intervals.`, finalAnswer: merged }
     })
 
     return steps
@@ -1649,7 +2198,14 @@ export const generateMergeIntervals = (intervals: number[][]): Step[] => {
  */
 export const generateClimbingStairs = (n: number): Step[] => {
     const steps: Step[] = []
-    if (n <= 2) return [{ step: 0, description: `For n=${n}, ways = ${n}`, state: { phase: 'found', explanation: "" } }]
+    if (n <= 2) {
+        steps.push({
+            step: 0,
+            description: `For n=${n}, ways = ${n}`,
+            state: { phase: 'found', explanation: `Base case for n=${n}.`, finalAnswer: n }
+        })
+        return steps
+    }
 
     const dp = new Array(n + 1).fill(0)
     dp[1] = 1
@@ -1670,7 +2226,7 @@ export const generateClimbingStairs = (n: number): Step[] => {
                 array: [...dp],
                 pointers: { i },
                 highlightIndices: [i - 1, i - 2],
-                explanation: `Ways for step ${i} = dp[${i-1}] + dp[${i-2}] = ${dp[i-1]} + ${dp[i-2]} = ${dp[i]}.`,
+                explanation: `Ways for step ${i} = dp[${i - 1}] + dp[${i - 2}] = ${dp[i - 1]} + ${dp[i - 2]} = ${dp[i]}.`,
                 phase: 'searching'
             }
         })
@@ -1679,7 +2235,7 @@ export const generateClimbingStairs = (n: number): Step[] => {
     steps.push({
         step: steps.length,
         description: `Total ways to climb ${n} stairs: ${dp[n]}`,
-        state: { array: dp, phase: 'found', explanation: "Completed Fibonacci-based DP traversal." }
+        state: { array: dp, phase: 'found', explanation: "Completed Fibonacci-based DP traversal.", finalAnswer: dp[n] }
     })
 
     return steps
@@ -1691,10 +2247,27 @@ export const generateClimbingStairs = (n: number): Step[] => {
 export const generateSearch2DMatrix = (matrix: number[][], target: number): Step[] => {
     const steps: Step[] = []
     const m = matrix.length
-    if (m === 0) return []
+    if (m === 0) {
+        steps.push({
+            step: 0,
+            description: "Empty matrix provided.",
+            state: { matrix, phase: 'not_found', explanation: "Matrix is empty, target cannot be found.", finalAnswer: false }
+        })
+        return steps
+    }
     const n = matrix[0].length
+    if (n === 0) {
+        steps.push({
+            step: 0,
+            description: "Empty rows in matrix provided.",
+            state: { matrix, phase: 'not_found', explanation: "Matrix rows are empty, target cannot be found.", finalAnswer: false }
+        })
+        return steps
+    }
+
     let left = 0
     let right = m * n - 1
+    let found = false
 
     steps.push({
         step: 0,
@@ -1715,21 +2288,24 @@ export const generateSearch2DMatrix = (matrix: number[][], target: number): Step
                 matrix,
                 pointers: { l: left, r: right, mid },
                 highlightIndices: [[r, c]],
-                explanation: val === target 
-                    ? `Found target ${target}!` 
+                explanation: val === target
+                    ? `Found target ${target}!`
                     : (val < target ? `${val} < ${target}, searching right half.` : `${val} > ${target}, searching left half.`),
                 phase: val === target ? 'found' : 'searching'
             }
         })
 
-        if (val === target) return steps
+        if (val === target) {
+            found = true
+            break
+        }
         if (val < target) left = mid + 1; else right = mid - 1
     }
 
     steps.push({
         step: steps.length,
-        description: "Target not found in matrix.",
-        state: { matrix, phase: 'not_found', explanation: "Search space exhausted." }
+        description: found ? `Target ${target} found in matrix.` : "Target not found in matrix.",
+        state: { matrix, phase: found ? 'found' : 'not_found', explanation: found ? "Target found." : "Search space exhausted.", finalAnswer: found }
     })
 
     return steps
@@ -1988,6 +2564,634 @@ export const generateProductExceptSelf = (nums: number[]): Step[] => {
             finalAnswer: res,
             phase: 'found',
             explanation: "Successfully computed products for all positions."
+        }
+    })
+
+    return steps
+}
+
+/**
+ * INTEGER TO ROMAN: GREEDY SUBTRACTION (O(1) given 1-3999 range)
+ */
+export const generateIntegerToRoman = (num: number): Step[] => {
+    const steps: Step[] = []
+    const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+    const symbols = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
+    let current = num
+    let roman = ""
+
+    steps.push({
+        step: 0,
+        description: `Converting ${num} to Roman numerals.`,
+        state: { customState: { num, roman: "" }, explanation: "Starting Greedy conversion from largest symbols.", phase: 'init' }
+    })
+
+    for (let i = 0; i < values.length && current > 0; i++) {
+        while (current >= values[i]) {
+            current -= values[i]
+            roman += symbols[i]
+            steps.push({
+                step: steps.length,
+                description: `Adding "${symbols[i]}" because balance (${current + values[i]}) >= ${values[i]}.`,
+                state: {
+                    customState: { num: current, roman },
+                    explanation: `Subtracted ${values[i]}, balance is now ${current}.`,
+                    phase: 'searching'
+                }
+            })
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: `Conversion complete: ${roman}`,
+        state: { customState: { num: current, roman }, finalAnswer: roman, phase: 'found', explanation: "All integer value components translated." }
+    })
+    return steps
+}
+
+/**
+ * LONGEST COMMON PREFIX: HORIZONTAL SCANNING (O(N * M))
+ */
+export const generateLongestCommonPrefix = (strs: string[]): Step[] => {
+    const steps: Step[] = []
+    if (strs.length === 0) return []
+    let prefix = strs[0]
+
+    steps.push({
+        step: 0,
+        description: `Starting with first string as initial prefix: "${prefix}".`,
+        state: { array: strs, customState: { prefix }, explanation: "Iteratively shrinking prefix based on subsequent strings.", phase: 'init' }
+    })
+
+    for (let i = 1; i < strs.length; i++) {
+        const s = strs[i]
+        const oldPrefix = prefix
+        while (s.indexOf(prefix) !== 0) {
+            prefix = prefix.substring(0, prefix.length - 1)
+            steps.push({
+                step: steps.length,
+                description: `Shrinking prefix for string "${s}".`,
+                state: {
+                    array: strs,
+                    pointers: { i },
+                    customState: { prefix },
+                    explanation: `"${oldPrefix}" is not a prefix of "${s}". Reduced to "${prefix}".`,
+                    phase: 'searching'
+                }
+            })
+            if (prefix === "") break
+        }
+        if (prefix === "") break
+    }
+
+    steps.push({
+        step: steps.length,
+        description: prefix === "" ? "No common prefix found." : `Global Longest Common Prefix: "${prefix}"`,
+        state: { array: strs, customState: { prefix }, finalAnswer: prefix, phase: 'found', explanation: "All strings scanned." }
+    })
+    return steps
+}
+
+/**
+ * TRAPPING RAIN WATER: TWO POINTERS (O(N))
+ */
+export const generateTrappingRainWater = (height: number[]): Step[] => {
+    const steps: Step[] = []
+    let left = 0
+    let right = height.length - 1
+    let leftMax = 0
+    let rightMax = 0
+    let totalWater = 0
+
+    steps.push({
+        step: 0,
+        description: "Initializing pointers at boundaries.",
+        state: { array: height, pointers: { left, right }, explanation: "Simulating water trapping from sides to center.", phase: 'init' }
+    })
+
+    while (left < right) {
+        let currentType: 'left' | 'right' = height[left] < height[right] ? 'left' : 'right'
+        
+        if (currentType === 'left') {
+            if (height[left] >= leftMax) {
+                leftMax = height[left]
+                steps.push({
+                    step: steps.length,
+                    description: `New LeftMax: ${leftMax}`,
+                    state: { array: height, pointers: { left, right }, customState: { leftMax, rightMax, totalWater }, explanation: "Cannot trap water at current peak.", phase: 'searching' }
+                })
+            } else {
+                totalWater += leftMax - height[left]
+                steps.push({
+                    step: steps.length,
+                    description: `Trapped ${leftMax - height[left]} units at index ${left}.`,
+                    state: { array: height, pointers: { left, right }, customState: { leftMax, rightMax, totalWater }, highlightIndices: [left], explanation: `Height is ${height[left]}, while LeftMax is ${leftMax}.`, phase: 'searching' }
+                })
+            }
+            left++
+        } else {
+            if (height[right] >= rightMax) {
+                rightMax = height[right]
+                steps.push({
+                    step: steps.length,
+                    description: `New RightMax: ${rightMax}`,
+                    state: { array: height, pointers: { left, right }, customState: { leftMax, rightMax, totalWater }, explanation: "Cannot trap water at current peak.", phase: 'searching' }
+                })
+            } else {
+                totalWater += rightMax - height[right]
+                steps.push({
+                    step: steps.length,
+                    description: `Trapped ${rightMax - height[right]} units at index ${right}.`,
+                    state: { array: height, pointers: { left, right }, customState: { leftMax, rightMax, totalWater }, highlightIndices: [right], explanation: `Height is ${height[right]}, while RightMax is ${rightMax}.`, phase: 'searching' }
+                })
+            }
+            right--
+        }
+    }
+
+    steps.push({
+        step: steps.length,
+        description: `Total Trapped Water: ${totalWater}`,
+        state: { array: height, finalAnswer: totalWater, phase: 'found', explanation: "Converged at highest point." }
+    })
+    return steps
+}
+
+/**
+ * NEXT PERMUTATION: DIJKSTRA'S SYMMETRY (O(N))
+ */
+export const generateNextPermutation = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    const arr = [...nums]
+    let i = arr.length - 2
+
+    steps.push({
+        step: 0,
+        description: "Starting lexicographical scan from right to left.",
+        state: { array: [...arr], explanation: "Searching for the first index 'i' where arr[i] < arr[i+1].", phase: 'init' }
+    })
+
+    while (i >= 0 && arr[i] >= arr[i + 1]) i--
+
+    if (i >= 0) {
+        let j = arr.length - 1
+        while (arr[j] <= arr[i]) j--
+        
+        steps.push({
+            step: steps.length,
+            description: `Found pivot index ${i} (value ${arr[i]}). Swapping with ${arr[j]}.`,
+            state: { array: [...arr], pointers: { i, j }, highlightIndices: [i, j], explanation: `Swap ${arr[i]} with the first larger value from right (${arr[j]}).`, phase: 'searching' }
+        })
+        
+        const temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+    } else {
+        steps.push({
+            step: steps.length,
+            description: "No pivot found. Array is in reverse order.",
+            state: { array: [...arr], explanation: "Will result in the smallest permutation (strictly increasing).", phase: 'searching' }
+        })
+    }
+
+    // Reverse from i + 1 to end
+    let l = i + 1, r = arr.length - 1
+    while (l < r) {
+        const temp = arr[l]
+        arr[l] = arr[r]
+        arr[r] = temp
+        l++; r--
+    }
+
+    steps.push({
+        step: steps.length,
+        description: "Reversed suffix to achieve next greater lexicographical order.",
+        state: { array: [...arr], finalAnswer: arr, phase: 'found', explanation: "Transformation complete." }
+    })
+    return steps
+}
+
+/**
+ * COMBINATION SUM: BACKTRACKING (O(2^N))
+ */
+export const generateCombinationSum = (candidates: number[], target: number): Step[] => {
+    const steps: Step[] = []
+    const results: number[][] = []
+
+    steps.push({
+        step: 0,
+        description: `Searching for combinations that sum to ${target}.`,
+        state: { array: candidates, explanation: "Exploring decision tree allowing multiple uses of each number.", phase: 'init' }
+    })
+
+    const backtrack = (curr: number[], currentSum: number, start: number) => {
+        steps.push({
+            step: steps.length,
+            description: `Current [${curr.join(',')}] Sum: ${currentSum}`,
+            state: {
+                array: candidates,
+                customState: { curr, target, currentSum },
+                explanation: currentSum === target ? "Target reached!" : `Available: ${candidates.slice(start).join(', ')}`,
+                phase: currentSum === target ? 'found' : 'searching'
+            }
+        })
+
+        if (currentSum === target) {
+            results.push([...curr])
+            return
+        }
+        if (currentSum > target) return
+
+        for (let i = start; i < candidates.length; i++) {
+            const num = candidates[i]
+            backtrack([...curr, num], currentSum + num, i)
+        }
+    }
+
+    backtrack([], 0, 0)
+    steps.push({
+        step: steps.length,
+        description: "Exploration complete.",
+        state: { array: candidates, finalAnswer: results, phase: 'found', explanation: `Total groups found: ${results.length}` }
+    })
+    return steps
+}
+
+/**
+ * CARTESIAN PRODUCT: BACKTRACKING (O(Product of array lengths))
+ */
+export const generateCartesianProduct = (arrays: any[][]): Step[] => {
+    const steps: Step[] = []
+    const results: any[][] = []
+    const nodes: Record<string, RecursionNode> = {}
+    let nodeCounter = 0
+
+    if (!arrays || arrays.length === 0) return []
+
+    const buildStep = (activeId: string, description: string, curr: any[], phase: any = 'searching') => {
+        steps.push({
+            step: steps.length,
+            description,
+            state: {
+                tree: {
+                    nodes: JSON.parse(JSON.stringify(nodes)),
+                    rootId: "node-0",
+                    activeNodeId: activeId
+                },
+                array: curr,
+                explanation: description,
+                phase
+            }
+        })
+    }
+
+    const backtrack = (arrayIndex: number, curr: any[], parentId: string | undefined, depth: number) => {
+        const id = `node-${nodeCounter++}`
+        const label = arrayIndex === 0 ? "root" : `pick(${curr[curr.length - 1]})`
+        
+        const node: RecursionNode = {
+            id,
+            label,
+            parentId,
+            description: `Level ${arrayIndex}: [${curr.join(',')}]`,
+            children: [],
+            status: 'active',
+            params: { level: arrayIndex, current: curr },
+            depth
+        }
+        nodes[id] = node
+        if (parentId) nodes[parentId].children.push(id)
+
+        buildStep(id, `Processing Level ${arrayIndex}. Current path: [${curr.join(',')}]`, curr)
+
+        if (arrayIndex === arrays.length) {
+            results.push([...curr])
+            node.result = [...curr]
+            node.status = 'completed'
+            buildStep(id, `Reached bottom. Found result: [${curr.join(',')}]`, curr, 'found')
+            return
+        }
+
+        const choices = arrays[arrayIndex]
+        for (let i = 0; i < choices.length; i++) {
+            backtrack(arrayIndex + 1, [...curr, choices[i]], id, depth + 1)
+            
+            node.status = 'returning'
+            buildStep(id, `Returning from branch. Backtracking...`, curr)
+            node.status = 'active'
+        }
+        
+        node.status = 'completed'
+    }
+
+    backtrack(0, [], undefined, 0)
+
+    steps.push({
+        step: steps.length,
+        description: `Cartesian Product complete. Found ${results.length} total combinations.`,
+        state: {
+            tree: {
+                nodes: JSON.parse(JSON.stringify(nodes)),
+                rootId: "node-0",
+                activeNodeId: undefined
+            },
+            finalAnswer: results,
+            phase: 'found',
+            explanation: `Generation finished matching all combinations from ${arrays.length} input sets.`
+        }
+    })
+
+    return steps
+}
+
+/**
+ * LETTER COMBINATIONS OF A PHONE NUMBER: BFS/BACKTRACKING (O(4^N))
+ */
+export const generateLetterCombinations = (digits: string): Step[] => {
+    const steps: Step[] = []
+    if (!digits) return []
+    const mapping: Record<string, string[]> = {
+        '2': ['a', 'b', 'c'], '3': ['d', 'e', 'f'], '4': ['g', 'h', 'i'],
+        '5': ['j', 'k', 'l'], '6': ['m', 'n', 'o'], '7': ['p', 'q', 'r', 's'],
+        '8': ['t', 'u', 'v'], '9': ['w', 'x', 'y', 'z']
+    }
+    const results: string[] = []
+
+    steps.push({
+        step: 0,
+        description: `Starting combinations for digits "${digits}".`,
+        state: { string: digits.split(''), explanation: "Treating this as a decision tree with N levels.", phase: 'init' }
+    })
+
+    const backtrack = (index: number, curr: string) => {
+        if (index === digits.length) {
+            results.push(curr)
+            steps.push({
+                step: steps.length,
+                description: `Found combination: "${curr}".`,
+                state: { string: digits.split(''), customState: { curr, results: [...results] }, explanation: "Base case reached.", phase: 'found' }
+            })
+            return
+        }
+
+        const letters = mapping[digits[index]]
+        for (const char of letters) {
+            backtrack(index + 1, curr + char)
+        }
+    }
+
+    backtrack(0, "")
+    steps.push({
+        step: steps.length,
+        description: "All combinations generated.",
+        state: { string: digits.split(''), finalAnswer: results, phase: 'found', explanation: `Total: ${results.length}` }
+    })
+    return steps
+}
+
+/**
+ * GENERATE PARENTHESES: BACKTRACKING (O(4^N / N sqrt(N)))
+ */
+export const generateGenerateParentheses = (n: number): Step[] => {
+    const steps: Step[] = []
+    const results: string[] = []
+
+    steps.push({
+        step: 0,
+        description: `Generating all valid combinations of ${n} pairs of parentheses.`,
+        state: { customState: { n, open: 0, close: 0, current: "" }, explanation: "Rule: Cannot add ')' if count of ')' >= '('.", phase: 'init' }
+    })
+
+    const backtrack = (curr: string, open: number, close: number) => {
+        if (curr.length === n * 2) {
+            results.push(curr)
+            steps.push({
+                step: steps.length,
+                description: `Valid pair complete: ${curr}`,
+                state: { customState: { curr, open, close, results: [...results] }, explanation: "Found a balanced combination.", phase: 'found' }
+            })
+            return
+        }
+
+        if (open < n) {
+            backtrack(curr + "(", open + 1, close)
+        }
+        if (close < open) {
+            backtrack(curr + ")", open, close + 1)
+        }
+    }
+
+    backtrack("", 0, 0)
+    steps.push({
+        step: steps.length,
+        description: "Generation complete.",
+        state: { finalAnswer: results, phase: 'found', explanation: `Generated ${results.length} valid sequences.` }
+    })
+    return steps
+}
+
+/**
+ * SEARCH FOR A RANGE (First and Last Position): BINARY SEARCH (O(log N))
+ */
+export const generateSearchRange = (nums: number[], target: number): Step[] => {
+    const steps: Step[] = []
+    const findBound = (isFirst: boolean) => {
+        let left = 0, right = nums.length - 1
+        let bound = -1
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2)
+            steps.push({
+                step: steps.length,
+                description: `Looking for ${isFirst ? 'First' : 'Last'} index at mid=${mid}.`,
+                state: { array: nums, pointers: { left, right, mid }, highlightIndices: [mid], explanation: `Current: ${nums[mid]} vs Target: ${target}`, phase: 'searching' }
+            })
+            if (nums[mid] === target) {
+                bound = mid
+                if (isFirst) right = mid - 1; else left = mid + 1
+            } else if (nums[mid] < target) left = mid + 1; else right = mid - 1
+        }
+        return bound
+    }
+
+    const first = findBound(true)
+    const last = findBound(false)
+
+    steps.push({
+        step: steps.length,
+        description: `Final Range: [${first}, ${last}]`,
+        state: { array: nums, finalAnswer: [first, last], phase: 'found', explanation: "Binary search completed for both boundaries." }
+    })
+    return steps
+}
+
+/**
+ * FIBONACCI (RECURSIVE): O(2^N)
+ */
+export const generateFibonacciTree = (n: number): Step[] => {
+    const steps: Step[] = []
+    const nodes: Record<string, RecursionNode> = {}
+    let nodeCounter = 0
+
+    const buildStep = (activeId: string, description: string, phase: any = 'searching') => {
+        steps.push({
+            step: steps.length,
+            description,
+            state: {
+                tree: {
+                    nodes: JSON.parse(JSON.stringify(nodes)),
+                    rootId: "node-0",
+                    activeNodeId: activeId
+                },
+                explanation: description,
+                phase
+            }
+        })
+    }
+
+    const fib = (val: number, parentId: string | undefined, depth: number): number => {
+        const id = `node-${nodeCounter++}`
+        const node: RecursionNode = {
+            id,
+            label: `fib(${val})`,
+            parentId,
+            description: `Abstract Logic: State n=${val}`,
+            children: [],
+            status: 'active',
+            params: { n: val },
+            depth
+        }
+        nodes[id] = node
+        if (parentId) nodes[parentId].children.push(id)
+
+        buildStep(id, `Evaluating Recursive Branch: fib(${val})`, 'searching')
+
+        if (val <= 1) {
+            node.result = val
+            node.status = 'completed'
+            buildStep(id, `Base Case Reached: fib(${val}) = ${val}`, 'found')
+            return val
+        }
+
+        // Left Call
+        buildStep(id, `Recursive Descent: Exploring Left Branch (n-1)`)
+        const left = fib(val - 1, id, depth + 1)
+        
+        // Right Call
+        buildStep(id, `Recursive Descent: Exploring Right Branch (n-2)`)
+        const right = fib(val - 2, id, depth + 1)
+        
+        const res = left + right
+
+        node.result = res
+        node.status = 'returning'
+        buildStep(id, `Aggregation Logic: Combining Results (${left} + ${right} = ${res})`, 'found')
+        node.status = 'completed'
+        
+        return res
+    }
+
+    fib(n, undefined, 0)
+    
+    steps.push({
+        step: steps.length,
+        description: `Fibonacci(${n}) calculation complete: ${nodes["node-0"].result}`,
+        state: {
+            tree: {
+                nodes: JSON.parse(JSON.stringify(nodes)),
+                rootId: "node-0",
+                activeNodeId: undefined
+            },
+            finalAnswer: nodes["node-0"].result,
+            phase: 'found',
+            explanation: `Computed Fibonacci sequence up to index ${n}.`
+        }
+    })
+
+    return steps
+}
+
+/**
+ * PERMUTATIONS (RECURSIVE TREE): O(N!)
+ */
+export const generatePermutationsTree = (nums: number[]): Step[] => {
+    const steps: Step[] = []
+    const results: number[][] = []
+    const nodes: Record<string, RecursionNode> = {}
+    let nodeCounter = 0
+
+    const buildStep = (activeId: string, description: string, currPerm: number[], remaining: number[], phase: any = 'searching') => {
+        steps.push({
+            step: steps.length,
+            description,
+            state: {
+                tree: {
+                    nodes: JSON.parse(JSON.stringify(nodes)),
+                    rootId: "node-0",
+                    activeNodeId: activeId
+                },
+                array: currPerm,
+                customState: { remaining },
+                explanation: description,
+                phase
+            }
+        })
+    }
+
+    const backtrack = (curr: number[], remaining: number[], parentId: string | undefined, depth: number) => {
+        const id = `node-${nodeCounter++}`
+        const label = curr.length === 0 ? "root" : `pick(${curr[curr.length - 1]})`
+        const node: RecursionNode = {
+            id,
+            label,
+            parentId,
+            description: `Exploring branch: [${curr.join(',')}]`,
+            children: [],
+            status: 'active',
+            params: { curr, remaining },
+            depth
+        }
+        nodes[id] = node
+        if (parentId) nodes[parentId].children.push(id)
+
+        buildStep(id, curr.length === 0 ? "Starting permutation search." : `Exploring permutations starting with ${curr[curr.length-1]}`, curr, remaining)
+
+        if (remaining.length === 0) {
+            results.push([...curr])
+            node.result = [...curr]
+            node.status = 'completed'
+            buildStep(id, `Found valid permutation: [${curr.join(',')}]`, curr, remaining, 'found')
+            return
+        }
+
+        for (let i = 0; i < remaining.length; i++) {
+            const next = remaining[i]
+            const nextRemaining = remaining.filter((_, idx) => idx !== i)
+            backtrack([...curr, next], nextRemaining, id, depth + 1)
+            
+            // Backtracking step visuals
+            node.status = 'returning'
+            buildStep(id, `Finished sub-branch. Returning to explore other options.`, curr, remaining)
+            node.status = 'active'
+        }
+        
+        node.status = 'completed'
+    }
+
+    backtrack([], nums, undefined, 0)
+
+    steps.push({
+        step: steps.length,
+        description: `All ${results.length} permutations explored.`,
+        state: {
+            tree: {
+                nodes: JSON.parse(JSON.stringify(nodes)),
+                rootId: "node-0",
+                activeNodeId: undefined
+            },
+            finalAnswer: results,
+            phase: 'found',
+            explanation: `Total unique orderings found: ${results.length}`
         }
     })
 

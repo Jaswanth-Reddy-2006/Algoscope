@@ -3,8 +3,8 @@ import {
     generateTwoSumBrute,
     generateTwoSumHashMap,
     generateTwoSumPointers,
-    generateSlidingWindowMaxSumBrute,
-    generateSlidingWindowMaxSumOptimal,
+    generateLongestSubstringBrute,
+    generateLongestSubstringOptimal,
     generateBinarySearch,
     generateMaximumSubarrayKadane,
     generateAddTwoNumbersOptimal,
@@ -24,7 +24,7 @@ import {
     generateRotateImage,
     generateMedianTwoSortedArrays,
     generateGroupAnagrams,
-    generatePermutations,
+    generatePermutationsTree,
     generateRegExpMatching,
     generateJumpGame,
     generateMergeIntervals,
@@ -35,7 +35,22 @@ import {
     generateSortColors,
     generateSortColorsBrute,
     generatePalindromeLinkedList,
-    generateProductExceptSelf
+    generateProductExceptSelf,
+    generateIntegerToRoman,
+    generateLongestCommonPrefix,
+    generateTrappingRainWater,
+    generateNextPermutation,
+    generateCombinationSum,
+    generateLetterCombinations,
+    generateGenerateParentheses,
+    generateSearchRange,
+    generateFibonacciTree,
+    generate3SumClosest,
+    generate3SumBrute,
+    generate4Sum,
+    generate4SumBrute,
+    generateBestTimeToBuyAndSellStock,
+    generateCartesianProduct
 } from '../utils/algoGenerators'
 
 export type StrategyFunction = (input: any, target?: any) => Step[]
@@ -69,8 +84,8 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
         optimal: (input) => generateBinarySearch(input.nums, input.target)
     },
     "longest-substring-without-repeating-characters": {
-        brute: (input) => generateSlidingWindowMaxSumBrute(input),
-        optimal: (input) => generateSlidingWindowMaxSumOptimal(input)
+        brute: (input) => generateLongestSubstringBrute(input.s || input),
+        optimal: (input) => generateLongestSubstringOptimal(input.s || input)
     },
     "add-two-numbers": {
         brute: (input) => generateAddTwoNumbersBrute(input.l1, input.l2),
@@ -81,28 +96,44 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
         optimal: (input) => generateContainerWithMostWater(input.nums)
     },
     "longest-palindromic-substring": {
-        brute: (input) => generateLongestPalindromeExpand(input),
-        optimal: (input) => generateLongestPalindromeExpand(input)
+        brute: (input) => generateLongestPalindromeExpand(input.s || input),
+        optimal: (input) => generateLongestPalindromeExpand(input.s || input)
     },
     "zigzag-conversion": {
-        brute: (input) => generateZigzagSteps(input.s || input, parseInt(input.target || 3)),
-        optimal: (input) => generateZigzagSteps(input.s || input, parseInt(input.target || 3))
+        brute: (input) => generateZigzagSteps(input.s || input, Number(input.numRows || 3)),
+        optimal: (input) => generateZigzagSteps(input.s || input, Number(input.numRows || 3))
     },
     "reverse-integer": {
-        brute: (input) => generateReverseInteger(Number(input)),
-        optimal: (input) => generateReverseInteger(Number(input))
+        brute: (input) => generateReverseInteger(Number(input.x !== undefined ? input.x : input)),
+        optimal: (input) => generateReverseInteger(Number(input.x !== undefined ? input.x : input))
     },
     "palindrome-number": {
-        brute: (input) => generatePalindromeNumber(Number(input)),
-        optimal: (input) => generatePalindromeNumber(Number(input))
+        brute: (input) => generatePalindromeNumber(Number(input.x !== undefined ? input.x : input)),
+        optimal: (input) => generatePalindromeNumber(Number(input.x !== undefined ? input.x : input))
     },
     "string-to-integer-atoi": {
-        brute: (input) => generateAtoI(String(input)),
-        optimal: (input) => generateAtoI(String(input))
+        brute: (input) => generateAtoI(String(input.s || input)),
+        optimal: (input) => generateAtoI(String(input.s || input))
     },
     "3sum": {
-        brute: (input) => generate3Sum(input.nums || []),
-        optimal: (input) => generate3Sum(input.nums || [])
+        brute: (input) => generate3SumBrute(input.nums || [], Number(input.target || 0)),
+        optimal: (input) => generate3Sum(input.nums || [], Number(input.target || 0))
+    },
+    "3sum-closest": {
+        brute: (input) => generate3SumClosest(input.nums || [], Number(input.target || 0)),
+        optimal: (input) => generate3SumClosest(input.nums || [], Number(input.target || 0))
+    },
+    "4sum": {
+        brute: (input) => generate4SumBrute(input.nums || [], Number(input.target || 0)),
+        optimal: (input) => generate4Sum(input.nums || [], Number(input.target || 0))
+    },
+    "best-time-to-buy-and-sell-stock": {
+        brute: (input) => generateBestTimeToBuyAndSellStock(input.prices || []),
+        optimal: (input) => generateBestTimeToBuyAndSellStock(input.prices || [])
+    },
+    "cartesian-product": {
+        brute: (input) => generateCartesianProduct(input.arrays || []),
+        optimal: (input) => generateCartesianProduct(input.arrays || [])
     },
     "valid-parentheses": {
         brute: (input) => generateValidParentheses(String(input)),
@@ -137,8 +168,8 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
         optimal: (input) => generateGroupAnagrams(input.strs || [])
     },
     "permutations": {
-        brute: (input) => generatePermutations(input.nums || []),
-        optimal: (input) => generatePermutations(input.nums || [])
+        brute: (input) => generatePermutationsTree(input.nums || []),
+        optimal: (input) => generatePermutationsTree(input.nums || [])
     },
     "regular-expression-matching": {
         brute: (input) => generateRegExpMatching(String(input.s || ""), String(input.p || "")),
@@ -175,6 +206,42 @@ export const problemStrategyRegistry: Record<string, StrategyPair> = {
     "palindrome-linked-list": {
         brute: (input) => generatePalindromeLinkedList(input.nums || input || []),
         optimal: (input) => generatePalindromeLinkedList(input.nums || input || [])
+    },
+    "integer-to-roman": {
+        brute: (input) => generateIntegerToRoman(Number(input.num || input)),
+        optimal: (input) => generateIntegerToRoman(Number(input.num || input))
+    },
+    "longest-common-prefix": {
+        brute: (input) => generateLongestCommonPrefix(input.strs || input || []),
+        optimal: (input) => generateLongestCommonPrefix(input.strs || input || [])
+    },
+    "trapping-rain-water": {
+        brute: (input) => generateTrappingRainWater(input.height || input || []),
+        optimal: (input) => generateTrappingRainWater(input.height || input || [])
+    },
+    "next-permutation": {
+        brute: (input) => generateNextPermutation(input.nums || input || []),
+        optimal: (input) => generateNextPermutation(input.nums || input || [])
+    },
+    "combination-sum": {
+        brute: (input) => generateCombinationSum(input.candidates || [], Number(input.target || 0)),
+        optimal: (input) => generateCombinationSum(input.candidates || [], Number(input.target || 0))
+    },
+    "letter-combinations-of-a-phone-number": {
+        brute: (input) => generateLetterCombinations(String(input.digits || input || "")),
+        optimal: (input) => generateLetterCombinations(String(input.digits || input || ""))
+    },
+    "generate-parentheses": {
+        brute: (input) => generateGenerateParentheses(Number(input.n || input)),
+        optimal: (input) => generateGenerateParentheses(Number(input.n || input))
+    },
+    "find-first-and-last-position-of-element-in-sorted-array": {
+        brute: (input) => generateSearchRange(input.nums || [], Number(input.target || 0)),
+        optimal: (input) => generateSearchRange(input.nums || [], Number(input.target || 0))
+    },
+    "fibonacci-number": {
+        brute: (input) => generateFibonacciTree(Number(input.n || input || 5)),
+        optimal: (input) => generateFibonacciTree(Number(input.n || input || 5))
     },
     "product-of-array-except-self": {
         brute: (input) => generateProductExceptSelf(input.nums || input || []),

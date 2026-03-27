@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Trophy, Clock, Database, RotateCcw, ArrowRight, BookOpen, GraduationCap, X } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Trophy, Clock, Database, RotateCcw, ArrowRight, BookOpen, X, ChevronDown, ChevronUp } from 'lucide-react'
+import { useNavigate, Link } from 'react-router-dom'
 import { useStore } from '../../store/useStore'
 import { Problem, Step } from '../../types'
 
@@ -12,19 +12,52 @@ interface SuccessSummaryProps {
     onClose: () => void
 }
 
+const SimilarQuestionsDropdown: React.FC<{ currentProblem: Problem, onClose: () => void }> = ({ currentProblem, onClose }) => {
+    const [isOpen, setIsOpen] = React.useState(false)
+    const problems = useStore(state => state.problems)
+
+    const similar = problems.filter(p => 
+        p.id !== currentProblem.id && 
+        (p.algorithmType === currentProblem.algorithmType || 
+         p.tags.some(t => currentProblem.tags.includes(t)))
+    ).slice(0, 5)
+
+    if (similar.length === 0) return null
+
+    return (
+        <div className="w-full">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex items-center justify-between py-3 px-5 bg-white/[0.03] border border-white/5 rounded-xl text-white/40 hover:text-white/80 hover:bg-white/5 transition-all text-[9px] font-black uppercase tracking-[0.2em]"
+            >
+                <span>Discover Similar Logic</span>
+                {isOpen ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+            </button>
+            {isOpen && (
+                <div className="mt-2 bg-black/40 border border-white/5 rounded-2xl overflow-hidden backdrop-blur-xl">
+                    {similar.map(p => (
+                        <Link
+                            key={p.slug}
+                            to={`/problems/${p.slug}`}
+                            onClick={onClose}
+                            className="flex items-center justify-between p-4 hover:bg-white/5 border-b border-white/5 last:border-0 transition-colors group"
+                        >
+                            <span className="text-[10px] font-bold text-white/50 group-hover:text-[#EC4186] transition-colors line-clamp-1">{p.title}</span>
+                            <span className="text-[8px] font-mono text-white/20 uppercase">{p.difficulty}</span>
+                        </Link>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}
+
 const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset, onClose }) => {
     const navigate = useNavigate()
-    const problems = useStore(state => state.problems)
+    const isBruteForce = useStore(state => state.isBruteForce)
 
     if (!step || !step.state) return null
     const { state: stepState } = step
-
-    // Calculate next challenge
-    const nextChallenge = problems.find(p =>
-        p.algorithmType === problem.algorithmType &&
-        p.difficulty !== problem.difficulty &&
-        p.id > problem.id
-    ) || problems.find(p => p.algorithmType === problem.algorithmType && p.id !== problem.id)
 
     const isFound = stepState.found || problem.algorithmType === 'tree' || !!stepState.finalAnswer
 
@@ -32,7 +65,7 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
         <motion.div
             initial={{ scale: 0.95, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            className={`w-full max-w-2xl glass-card border ${isFound ? 'border-[#EC4186]/20' : 'border-white/10'} p-8 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#1b062b]/95 backdrop-blur-xl rounded-3xl mx-auto`}
+            className={`w-full max-w-2xl glass-card border ${isFound ? 'border-[#EC4186]/20' : 'border-white/10'} p-8 relative overflow-y-auto max-h-[85vh] custom-scrollbar shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#1b062b]/95 backdrop-blur-xl rounded-3xl mx-auto`}
         >
             {/* Close Button */}
             <button
@@ -56,31 +89,26 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
                 </motion.div>
 
                 <h2 className="text-2xl font-bold tracking-tight mb-2 text-white">
-                    {isFound ? "Pattern Internalized" : "Search Completed"}
+                    {isFound ? "Analysis Completed" : "Search Completed"}
                 </h2>
-                <div className="flex items-center justify-center gap-4 mb-2">
-                    <span className={`text-[10px] ${isFound ? 'text-[#EC4186]' : 'text-white/20'} font-bold tracking-[0.2em] uppercase`}>
-                        {isFound ? "Confidence Gain: +0%" : "Pattern Analyzed"}
-                    </span>
-                    <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: isFound ? '100%' : '50%' }}
-                            className={`h-full bg-gradient-to-r ${isFound ? 'from-[#EC4186] to-[#EE544A]' : 'from-white/10 to-white/20'}`}
-                        />
-                    </div>
+                <div className="h-1 w-24 bg-[#EC4186]/20 mx-auto rounded-full mt-4">
+                    <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: '100%' }}
+                        className="h-full bg-[#EC4186]"
+                    />
                 </div>
             </div>
 
             <div className="space-y-4 mb-8 relative z-10">
-                <div className={`p-5 bg-white/[0.03] border ${isFound ? 'border-[#EC4186]/10' : 'border-white/10'} rounded-xl`}>
+                <div className={`p-5 bg-white/[0.03] border ${isFound ? 'border-[#EC4186]/10' : 'border-white/10'} rounded-[24px]`}>
                     <div className="flex items-center gap-2 mb-3">
                         <span className={`text-[9px] font-bold ${isFound ? 'text-[#EC4186]' : 'text-white/40'} uppercase tracking-[0.2em]`}>
-                            {isFound ? "Output Result" : "Final State"}
+                            {isFound ? "Final Simulation Output" : "Final State"}
                         </span>
                         <div className={`h-px flex-1 ${isFound ? 'bg-[#EC4186]/10' : 'bg-white/5'}`} />
                     </div>
-                    <div className={`text-xl font-bold font-mono ${isFound ? 'text-white/90' : 'text-white/30'} mb-2 truncate`}>
+                    <div className={`text-xl font-black font-mono tracking-tighter ${isFound ? 'text-white/90' : 'text-white/30'} mb-2`}>
                         {isFound 
                             ? (typeof stepState.finalAnswer === 'object' ? JSON.stringify(stepState.finalAnswer) : String(stepState.finalAnswer ?? 'Completed'))
                             : "No matching result found within these parameters."
@@ -97,14 +125,14 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
                     <KPICard
                         icon={Clock}
                         color="text-[#EE544A]"
-                        label="Naive"
-                        value={problem.efficiency?.brute?.time || "O(N²)"}
+                        label="Computational Depth"
+                        value={isBruteForce ? (problem.efficiency?.brute?.time || "O(N²)") : (problem.efficiency?.optimal?.time || "O(N)")}
                     />
                     <KPICard
                         icon={Database}
                         color="text-[#EC4186]"
-                        label="Memory"
-                        value={problem.efficiency?.optimal?.space || "O(1)"}
+                        label="Memory Footprint"
+                        value={isBruteForce ? (problem.efficiency?.brute?.space || "O(1)") : (problem.efficiency?.optimal?.space || "O(1)")}
                     />
                 </div>
             </div>
@@ -113,36 +141,30 @@ const SuccessSummary: React.FC<SuccessSummaryProps> = ({ problem, step, onReset,
                 <div className="grid grid-cols-2 gap-3">
                     <button
                         onClick={onReset}
-                        className="flex items-center justify-center gap-2 py-3 px-4 bg-white/5 text-white/60 font-bold text-[9px] uppercase tracking-widest rounded-xl border border-white/5 hover:bg-white/10 hover:text-white transition-all shadow-glow"
+                        className="flex items-center justify-center gap-2 py-4 px-4 bg-white/5 text-white/80 font-black text-[9px] uppercase tracking-widest rounded-2xl border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all"
                     >
                         <RotateCcw size={12} />
                         <span>Re-simulate</span>
                     </button>
                     <button
-                        onClick={() => navigate('/foundations')}
-                        className="flex items-center justify-center gap-2 py-3 px-4 bg-white/5 text-white/60 font-bold text-[9px] uppercase tracking-widest rounded-xl border border-white/5 hover:bg-white/10 hover:text-white transition-all text-center"
+                        onClick={() => {
+                           useStore.getState().toggleApproach();
+                           onReset();
+                        }}
+                        className="flex items-center justify-center gap-2 py-4 px-4 bg-[#EC4186]/10 text-[#EC4186] font-black text-[9px] uppercase tracking-widest rounded-2xl border border-[#EC4186]/20 hover:bg-[#EC4186]/20 transition-all"
                     >
-                        <GraduationCap size={12} />
-                        <span>Deep Dive</span>
+                        <ArrowRight size={12} />
+                        <span>Check {isBruteForce ? 'Optimal' : 'Brute Force'}</span>
                     </button>
                 </div>
 
-                {nextChallenge && (
-                    <button
-                        onClick={() => navigate(`/problem/${nextChallenge.slug}`)}
-                        className="flex items-center justify-center gap-3 py-4 px-6 bg-gradient-to-r from-[#EC4186] to-[#EE544A] text-white font-bold text-[10px] uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_10px_20px_rgba(236,65,134,0.3)] group"
-                    >
-                        <div className="flex flex-col items-start gap-1">
-                            <span className="text-[8px] opacity-70">Next Challenge</span>
-                            <span className="truncate max-w-[150px]">{nextChallenge.title}</span>
-                        </div>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform ml-auto" />
-                    </button>
-                )}
+                <div className="relative">
+                   <SimilarQuestionsDropdown currentProblem={problem} onClose={onClose} />
+                </div>
 
                 <button
                     onClick={() => navigate('/problems')}
-                    className="flex items-center justify-center gap-3 py-3 px-6 bg-white/5 text-white/40 font-bold text-[9px] uppercase tracking-widest rounded-xl border border-white/5 hover:bg-[#EC4186]/10 hover:text-[#EC4186] transition-all"
+                    className="flex items-center justify-center gap-3 py-4 px-6 bg-white/[0.02] text-white/40 font-black text-[9px] uppercase tracking-widest rounded-2xl border border-white/5 hover:text-white hover:bg-white/5 transition-all text-center"
                 >
                     <BookOpen size={12} />
                     <span>Back to Patterns</span>

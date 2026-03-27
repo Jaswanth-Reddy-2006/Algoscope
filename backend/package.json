@@ -7,6 +7,7 @@
     "build": "npx prisma generate --schema ../database/prisma/schema.prisma",
     "start": "npx prisma db push --schema ../database/prisma/schema.prisma && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "node scripts/check_syntax.js",
     "db:import-leetcode": "node scripts/import_leetcode.js",
     "prisma:studio": "npx prisma studio --schema ../database/prisma/schema.prisma"
   },
