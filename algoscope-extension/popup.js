@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     syncButton.addEventListener('click', () => {
-        chrome.tabs.create({ url: 'http://localhost:5173/settings' });
+        chrome.tabs.create({ url: 'https://algoscope.me/settings' });
     });
 
     function updateStatus(token) {

@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.storage.local.set({ sync_history: syncHistory });
 
         // Forward to Algoscope Backend
-        fetch('http://localhost:5000/api/leetcode/sync-submission', {
+        fetch('https://algoscope.me/api/leetcode/sync-submission', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',

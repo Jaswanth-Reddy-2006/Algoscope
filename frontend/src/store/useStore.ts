@@ -786,7 +786,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
             if (!data) {
                 console.log(`[debug] [Navigation] Fetching problem from API: ${slug}`)
-                const response = await fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000'}/api/problems/${slug}`)
+                const response = await fetch(`${(import.meta as any).env?.VITE_API_BASE_URL || 'https://algoscope.me'}/api/problems/${slug}`)
                 if (!response.ok) {
                     console.error(`[error] [Navigation] API fetch failed for ${slug}: ${response.status} ${response.statusText}`)
                     throw new Error(`Problem "${slug}" not found in our pattern library.`)
