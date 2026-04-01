@@ -18,7 +18,28 @@ router.get('/solved', authMiddleware, async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const problems = await prisma.problem.findMany();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 100; // Default limit for performance
+        const search = req.query.search || '';
+        const skip = (page - 1) * limit;
+
+        const where = search ? {
+            OR: [
+                { title: { contains: search, mode: 'insensitive' } },
+                { slug: { contains: search, mode: 'insensitive' } },
+                { algorithmType: { contains: search, mode: 'insensitive' } }
+            ]
+        } : {};
+
+        const [problems, total] = await Promise.all([
+            prisma.problem.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy: { id: 'asc' }
+            }),
+            prisma.problem.count({ where })
+        ]);
         
         // Parse JSON strings back to objects for frontend compatibility
         const parsed = problems.map(p => ({
@@ -36,7 +57,12 @@ router.get('/', async (req, res) => {
             labConfig: p.labConfig ? JSON.parse(p.labConfig) : null
         }));
         
-        res.json(parsed);
+        res.json({
+            problems: parsed,
+            total,
+            page,
+            totalPages: Math.ceil(total / limit)
+        });
     } catch (err) {
         console.error("Fetch problems error:", err.name, err.message);
         res.status(500).json({ 

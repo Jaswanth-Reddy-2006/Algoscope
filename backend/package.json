@@ -10,6 +10,7 @@
     "check": "node scripts/check_syntax.js",
     "db:import-leetcode": "node sync_json_to_db.js",
     "db:import-all": "node src/scripts/importLeetcode.js",
+    "db:sync-aws": "node aws_sync.js",
     "db:synthesize": "node scripts/synthesize_library.js",
     "prisma:studio": "npx prisma studio --schema ../database/prisma/schema.prisma"
   },
