@@ -680,9 +680,10 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     fetchAllProblems: async () => {
         if (get().problems.length > 0) return
         try {
-            let data = await problemService.getProblems()
+            const response = await problemService.getProblems()
+            let data = response.problems || response // Handle both paginated and legacy arrays
 
-            // Validation Logic: Ensure IDs 1-100 exist and find duplicates
+            // Validation Logic: Ensure IDs exist and find duplicates
             const ids = data.map((p: any) => p.id)
             const duplicates = ids.filter((item: any, index: number) => ids.indexOf(item) !== index)
 
@@ -694,14 +695,6 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                     seen.add(p.id)
                     return !duplicate
                 })
-            }
-
-            const missingIds = []
-            for (let i = 1; i <= 100; i++) {
-                if (!ids.includes(i)) missingIds.push(i)
-            }
-            if (missingIds.length > 0) {
-                console.warn(`[Data Warning] Missing Problem IDs in sequence 1-100: ${missingIds.join(', ')}`)
             }
 
             // Default Sort: ID Ascending
