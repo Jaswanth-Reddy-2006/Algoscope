@@ -13,19 +13,13 @@ const PatternProfile = lazy(() => import('./pages/PatternProfile'))
 const PatternMastery = lazy(() => import('./pages/PatternMastery'))
 const FoundationsLayout = lazy(() => import('./pages/FoundationsLayout'))
 const FoundationModule = lazy(() => import('./components/foundations/FoundationModule'))
-const Login = lazy(() => import('./pages/auth/Login'))
-const AuthSuccess = lazy(() => import('./pages/auth/AuthSuccess'))
 const LeetCodeConnect = lazy(() => import('./pages/LeetCodeConnect'))
 const Analysis = lazy(() => import('./pages/Analysis'))
 const Settings = lazy(() => import('./pages/Settings'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-    const token = localStorage.getItem('algoscope_token');
-
-    if (!token) {
-        return <Navigate to="/login" replace />;
-    }
+    // Development Bypass: Authentication is disabled for now
     return <>{children}</>;
 };
 
@@ -42,8 +36,8 @@ const AnimatedRoutes = () => {
             <Suspense fallback={<PageLoader />}>
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/auth-success" element={<AuthSuccess />} />
+                    <Route path="/login" element={<Navigate to="/" replace />} />
+                    <Route path="/auth-success" element={<Navigate to="/" replace />} />
                     
                     {/* Public Routes */}
                     <Route path="/problems" element={<ProblemList />} />

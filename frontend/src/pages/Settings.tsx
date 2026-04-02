@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import {
     Settings as SettingsIcon, Link2, User, Bell, ChevronRight,
-    Palette, Info, MessageSquare, Shield, Zap, Check, LogOut,
+    Palette, Info, MessageSquare, Shield, Zap, Check,
     Globe, Mail, Layers, ArrowRight
 } from 'lucide-react';
 import LeetCodeConnect from './LeetCodeConnect';
@@ -92,11 +92,6 @@ const Settings: React.FC = () => {
 
     const user = JSON.parse(localStorage.getItem('algoscope_user') || '{}');
 
-    const handleLogout = () => {
-        localStorage.removeItem('algoscope_token');
-        localStorage.removeItem('algoscope_user');
-        window.location.href = '/login';
-    };
 
     return (
         <div className="flex-1 min-h-screen bg-gradient-to-b from-[#0c0218] to-[#0f0314] font-outfit overflow-y-auto">
@@ -129,18 +124,10 @@ const Settings: React.FC = () => {
                                 </div>
                             </div>
         
-                            <motion.button
-                                onClick={handleLogout}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/5 border border-red-500/10 text-red-400/70 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-all duration-300 text-[10px] font-black uppercase tracking-widest"
-                            >
-                                <LogOut size={14} />
-                                Log Out
-                            </motion.button>
                         </motion.div>
                     )}
                 </AnimatePresence>
+
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                     {/* Sidebar */}

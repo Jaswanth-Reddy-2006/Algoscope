@@ -715,6 +715,12 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
     },
 
     initializeStore: async () => {
+        // Development Bypass: Provide a dummy token and user to enable all features
+        if (!localStorage.getItem('algoscope_token')) {
+            localStorage.setItem('algoscope_token', 'dev-bypass-token');
+            localStorage.setItem('algoscope_user', JSON.stringify({ id: 1, username: 'guest', experience: 'beginner', language: 'javascript' }));
+        }
+
         const userId = localStorage.getItem('algoScope_userId') || 'guest_' + Date.now()
         if (!localStorage.getItem('algoScope_userId')) localStorage.setItem('algoScope_userId', userId)
 

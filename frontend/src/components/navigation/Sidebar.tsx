@@ -9,7 +9,6 @@ import {
     ChevronLeft,
     Activity,
     User as UserIcon,
-    LogIn,
     LayoutGrid,
     X,
     Palette,
@@ -47,7 +46,6 @@ const Sidebar: React.FC = () => {
         return userData ? JSON.parse(userData) : null
     }, [])
 
-    const isLoggedIn = !!user
 
     // Derived state: effectively open if not collapsed OR if hovered
     const isExpanded = !isSidebarCollapsed || isHovered
@@ -170,52 +168,30 @@ const Sidebar: React.FC = () => {
 
                 {/* User Profile Footer / Login */}
                 <div className="mt-auto border-t border-white/5 p-4 shrink-0">
-                    {isLoggedIn ? (
-                        <button
-                            onClick={() => {
-                                setHubOpen(true);
-                                navigate('/settings?tab=profile&hub=true');
-                            }}
-                            className={cn(
-                                "w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300",
-                                "bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] hover:border-white/10 group/profile"
-                            )}
-                        >
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#EC4186] to-[#EE544A] p-[1px] shrink-0">
-                                <div className="w-full h-full rounded-lg bg-[#38124A] flex items-center justify-center">
-                                    <UserIcon size={14} className="text-white/40 group-hover/profile:text-white transition-colors" />
-                                </div>
+                    <button
+                        onClick={() => {
+                            setHubOpen(true);
+                            navigate('/settings?tab=profile&hub=true');
+                        }}
+                        className={cn(
+                            "w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300",
+                            "bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] hover:border-white/10 group/profile"
+                        )}
+                    >
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#EC4186] to-[#EE544A] p-[1px] shrink-0">
+                            <div className="w-full h-full rounded-lg bg-[#38124A] flex items-center justify-center">
+                                <UserIcon size={14} className="text-white/40 group-hover/profile:text-white transition-colors" />
                             </div>
-                            <div className={cn(
-                                "flex-1 text-left transition-all duration-300 overflow-hidden",
-                                isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
-                            )}>
-                                <p className="text-xs font-bold text-white truncate uppercase tracking-tighter">
-                                    {user.username}
-                                </p>
-                            </div>
-                        </button>
-                    ) : (
-                        <Link
-                            to="/login"
-                            className={cn(
-                                "w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300",
-                                "bg-[#EC4186]/10 border border-[#EC4186]/20 hover:bg-[#EC4186]/20 group/login"
-                            )}
-                        >
-                            <div className="w-8 h-8 rounded-lg bg-[#EC4186] flex items-center justify-center shrink-0">
-                                <LogIn size={14} className="text-white" />
-                            </div>
-                            <div className={cn(
-                                "flex-1 text-left transition-all duration-300 overflow-hidden",
-                                isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
-                            )}>
-                                <p className="text-xs font-bold text-[#EC4186] uppercase tracking-widest">
-                                    Initialize
-                                </p>
-                            </div>
-                        </Link>
-                    )}
+                        </div>
+                        <div className={cn(
+                            "flex-1 text-left transition-all duration-300 overflow-hidden",
+                            isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
+                        )}>
+                            <p className="text-xs font-bold text-white truncate uppercase tracking-tighter">
+                                {user?.username || 'Guest'}
+                            </p>
+                        </div>
+                    </button>
                 </div>
 
                 {/* Profile Side Drawer (Overlay) */}
@@ -248,10 +224,10 @@ const Sidebar: React.FC = () => {
                                         </div>
                                         <div>
                                             <h3 className="text-lg font-black text-white uppercase tracking-tighter">
-                                                {user.username}
+                                                {user?.username || 'Guest'}
                                             </h3>
                                             <p className="text-[10px] text-[#EC4186] font-bold uppercase tracking-widest leading-none">
-                                                {user.experience}
+                                                {user?.experience || 'Explorer'}
                                             </p>
                                         </div>
                                     </div>
