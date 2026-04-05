@@ -9,7 +9,7 @@ const OLLAMA_URL = "http://localhost:11434/api/generate";
 const MODEL_NAME = "llama3:latest";
 
 const PROMPT_TEMPLATE = `
-You are an expert Algoscope Algorithm Architect. Your job is to transform raw LeetCode problem data into structured, cognitive learning metadata.
+You are an expert Algoscope Algorithm Architect. Your job is to transform raw LeetCode problem data into structured, cognitive learning metadata for a massive library of 3,900+ problems.
 
 PROBLEM:
 Title: {title}
@@ -18,55 +18,39 @@ Statement: {statement}
 Hints: {hints}
 
 INSTRUCTIONS:
-Generate a valid JSON object with the following fields:
-1. "brute_force_explanation": A concise string explaining the intuitive but inefficient way to solve this. Focus on state management.
-2. "brute_force_steps": An array of objects [{ "description": "string", "line": number, "state": object }] describing the logical flow of the brute force code.
-3. "optimal_variants": An array of objects. Each object represents one optimal (or near-optimal) solution:
-    {
-        "name": "string",
-        "explanation": "string",
-        "complexity": { "time": "string", "space": "string" },
-        "steps": [{ "description": "string", "line": number, "state": object }],
-        "pseudocode": "string"
-    }
-4. "thinking_guide": {
-    "first_principles": [string],
-    "pattern_signals": [string],
-    "naive_approach": [string],
-    "approach_blueprint": [string],
-    "hints": [string]
-}
-5. "complexity": { "brute": { "time": "string", "space": "string" }, "optimal": { "time": "string", "space": "string" } }
-6. "constraints": [string] - List of technical constraints from the problem.
-7. "edgeCases": [string] - List of edge cases that might break a naive solution.
-8. "primaryPattern": "string" - The main algorithmic pattern (e.g., "Two Pointers", "Sliding Window", "BFS").
-9. "patternSignals": [string] - Keywords or indicators that lead to this pattern.
-10. "examples": [object] - [{ "input": "string", "output": "string", "explanation": "string" }]
-11. "optimal_explanation": "string" - A high-level conceptual explanation of why the optimal logic works.
-12. "optimal_steps": [object] - A sequence of refined visualizer steps. 
+Generate a valid JSON object. The "optimal_steps" must provide a COMPLETE ANIMATION.
+Every single pointer movement, comparison, or state change MUST be its own discrete step.
 
-STRICT SCHEMA FOR "state" in "optimal_steps":
-- "two_pointers": { "pointers": { "left": index, "right": index }, "values": { "sum": number, "target": number }, "array": [] }
-- "sliding_window": { "pointers": { "l": index, "r": index }, "window": { "sum": number, "chars": {} }, "array": [] }
-- "linked_list": { "pointers": { "curr": nodeId, "l1": nodeId, "l2": nodeId }, "nodes": { "id": { "val": any, "next": id } } }
-- "binary_search": { "low": index, "high": index, "mid": index, "target": number, "array": [] }
-- "hash_table": { "pointers": { "i": index }, "table": { "key": value }, "array": [] }
-- "recursion": { "stack": [{ "call": string, "variables": {} }], "tree": { "nodes": {}, "rootId": string } }
+ENGINE-SPECIFIC STATE REQUIREMENTS:
+1. Two Pointers: { "pointers": { "l", "r", "i", "j" }, "highlightIndices": [index], "array": [], "calculation": "string" }
+2. Sliding Window: { "pointers": { "l", "r" }, "window": { "sum", "chars" }, "highlightIndices": [index], "array": [] }
+3. Matrix / DP: { "matrix": [[]], "rowLabels": [], "colLabels": [], "highlightIndices": [[r, c]], "explanation": "string" }
+4. Recursion / Tree: { "tree": { "nodes": {}, "rootId": "id", "activeNodeId": "id" }, "customState": {} }
+5. Hash Table: { "hashTable": {}, "pointers": { "i" }, "array": [], "calculation": "string" }
+6. Heap / Priority Queue: { "heap": [], "action": "push|pop|peek", "highlightIndices": [index] }
+7. Trie: { "trie": { "nodes": {}, "rootId": "root" }, "pointers": { "nodeId": "id" }, "string": "" }
 
-IMPORTANT:
-- RESPONSE MUST BE PURE JSON. DO NOT INCLUDE MARKDOWN CODE BLOCKS. NO PREAMBLE.
-- HIGH-FIDELITY REQUIREMENT: PROVIDE A FULL STEP-BY-STEP TRACE (at least 20 steps).
-- DO NOT summarizes algorithm phases. Capture EVERY comparison and pointer move.
-- EVERY STEP MUST INCLUDE THE COMPLETE 'state' REQUIRED BY THE SCHEMA.
+FIELDS TO GENERATE:
+1. "brute_force_explanation": Insight into the naive approach inefficiency.
+2. "brute_force_steps": 10-15 steps showing the naive flow.
+3. "optimal_variants": [{ "name", "explanation", "complexity": { "time", "space" }, "steps", "pseudocode" }]
+4. "thinking_guide": { "first_principles", "pattern_signals", "naive_approach", "approach_blueprint", "hints" }
+5. "optimal_explanation": Conceptual deep-dive.
+6. "optimal_steps": [20-30 DETAILED STEPS FOR ANIMATION]
+
+STRICT: RESPONSE MUST BE PURE JSON. NO MARKDOWN. NO PREAMBLE.
 `;
 
 const ENGINE_SCHEMAS = {
-    'two_pointers': '{ "pointers": { "left": index, "right": index, "i": index, "j": index }, "values": { "sum": number, "target": number }, "array1": [], "array2": [], "array": [], "string": "string", "hashTable": { "key": "value" }, "calculation": "string" }',
-    'sliding_window': '{ "left": number, "right": number, "charMap": { "char": index }, "window": "string", "maxLength": number, "array": [], "pointers": { "l": index, "r": index } }',
-    'linked_list': '{ "pointers": { "curr": nodeId, "l1": nodeId, "l2": nodeId }, "nodes": { "id": { "val": number, "next": id } }, "res": [], "additionContext": { "v1": number, "v2": number, "carry": number, "digit": number, "sum": number, "newCarry": number } }',
-    'binary_search': '{ "low": number, "high": number, "mid": number, "target": number, "array": [] }',
-    'hash_table': '{ "pointers": { "i": index }, "hashTable": { "num": index }, "array": [], "complement": number, "variables": { "x": number, "ans": number, "pop": number } }',
-    'matrix': '{ "pointers": { "r": index, "c": index }, "matrix": [[]], "visited": [[]], "dp": [[]], "highlightIndices": [[r, c]], "explanation": "string" }'
+    'two_pointers': '{ "pointers": { "left": index, "right": index, "i": index, "j": index }, "values": { "sum": number, "target": number }, "array": [], "highlightIndices": [index], "calculation": "string" }',
+    'sliding_window': '{ "pointers": { "l": index, "r": index }, "window": { "sum": number, "chars": {} }, "array": [], "highlightIndices": [index], "maxLength": number }',
+    'linked_list': '{ "pointers": { "curr": nodeId, "l1": nodeId, "l2": nodeId }, "nodes": { "id": { "val": number, "next": id } }, "highlightIndices": [nodeId] }',
+    'binary_search': '{ "low": number, "high": number, "mid": number, "target": number, "array": [], "highlightIndices": [mid] }',
+    'hash_table': '{ "pointers": { "i": index }, "hashTable": { "key": "value" }, "array": [], "complement": number, "calculation": "string" }',
+    'matrix': '{ "pointers": { "r": index, "c": index }, "matrix": [[]], "rowLabels": [], "colLabels": [], "highlightIndices": [[r, c]], "explanation": "string" }',
+    'recursion': '{ "tree": { "nodes": {}, "rootId": "root", "activeNodeId": "id" }, "customState": { "var": val } }',
+    'heap': '{ "heap": [], "highlightIndices": [index], "action": "string" }',
+    'trie': '{ "trie": { "nodes": {}, "rootId": "root" }, "pointers": { "nodeId": "id" }, "string": "abc" }'
 };
 
 const typeMap = {
@@ -239,7 +223,13 @@ async function main() {
         const pendingProblems = await prisma.problem.findMany({
             where: { 
                 problem_statement: { not: null },
-                status: null,
+                OR: [
+                    { status: null },
+                    { status: 'draft' },
+                    { status: 'pending' },
+                    { status: 'failed' },
+                    { status: '' }
+                ],
                 id: { gte: minId, lte: maxId }
             },
             take: 1,

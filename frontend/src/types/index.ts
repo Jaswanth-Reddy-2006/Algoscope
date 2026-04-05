@@ -29,6 +29,8 @@ export type AlgorithmType =
     | 'bit_manipulation'
     | 'prefix_sum'
     | 'set'
+    | 'sorting'
+    | 'union_find_structure'
     | 'recursion_tree';
 
 export interface Step {
@@ -68,6 +70,12 @@ export interface Step {
         end_pointer?: number;
         left?: number;
         right?: number;
+        swapIndices?: number[];
+        pivotIndex?: number;
+        sortedIndices?: number[];
+        parent?: number[];
+        rank?: number[];
+        mergeIndices?: number[];
         stack?: any[];
         result?: any[];
         found?: boolean;

@@ -48,9 +48,6 @@ export const engineRegistry: Partial<Record<AlgorithmType, EngineEntry>> = {
     'graph': {
         component: lazy(() => import('../visualization-engines/GraphEngine'))
     },
-    'union_find': {
-        component: lazy(() => import('../visualization-engines/GraphEngine'))
-    },
     'matrix': {
         component: lazy(() => import('../visualization-engines/MatrixEngine'))
     },
@@ -74,14 +71,21 @@ export const engineRegistry: Partial<Record<AlgorithmType, EngineEntry>> = {
     },
     'hash_map': {
         component: lazy(() => import('../visualization-engines/HashTableEngine'))
+    },
+    'sorting': {
+        component: lazy(() => import('../visualization-engines/SortingEngine'))
+    },
+    'union_find': {
+        component: lazy(() => import('../visualization-engines/UnionFindEngine'))
     }
 }
 
 /**
  * Robust engine resolver that maps descriptive AI-generated patterns to visualizers.
+ * This is the "brain" that ensures each of the 3,900 problems gets the suitable visualization.
  */
 export const resolveEngine = (problem: Problem) => {
-    // 0. Hard Override for Foundation Problems (IDs 1-50)
+    // 0. Hard Override for Foundation Problems (IDs 1-100)
     const foundationOverrides: Record<number, AlgorithmType> = {
         1: 'hash_table',
         2: 'linked_list',
@@ -112,39 +116,75 @@ export const resolveEngine = (problem: Problem) => {
         return engineRegistry[problem.algorithmType]?.component;
     }
 
-    // 2. Resolve via primaryPattern keyword matching
+    // 2. Resolve via keyword matching from primaryPattern, tags, and problem statement
     const pattern = (problem.primaryPattern || "").toLowerCase();
-    
-    if (pattern.includes('tree') || pattern.includes('dfs') || pattern.includes('recursive')) {
+    const tags = (problem.tags || []).join(' ').toLowerCase();
+    const statement = (problem.problem_statement || "").toLowerCase();
+
+    // -- RECURSION / TREES / BACKTRACKING --
+    if (pattern.includes('tree') || pattern.includes('dfs') || pattern.includes('recursive') || 
+        tags.includes('tree') || tags.includes('recursion') || tags.includes('backtracking') ||
+        statement.includes('recursive') || statement.includes('binary tree')) {
         return engineRegistry['tree']?.component;
     }
-    if (pattern.includes('two pointer') || pattern.includes('binary search') || pattern.includes('sorted')) {
-        if (pattern.includes('binary search')) return engineRegistry['binary_search']?.component;
+
+    // -- SEARCH / POINTERS --
+    if (pattern.includes('binary search') || tags.includes('binary search')) {
+        return engineRegistry['binary_search']?.component;
+    }
+    if (pattern.includes('two pointer') || pattern.includes('pointer') || tags.includes('two pointers') ||
+        statement.includes('two pointers')) {
         return engineRegistry['two_pointers']?.component;
     }
-    if (pattern.includes('window')) {
+
+    // -- WINDOWS --
+    if (pattern.includes('window') || tags.includes('sliding window') || statement.includes('sliding window')) {
         return engineRegistry['sliding_window']?.component;
     }
-    if (pattern.includes('list')) {
+
+    // -- LINEAR STRUCTURES --
+    if (pattern.includes('list') || tags.includes('linked list') || statement.includes('linked list')) {
         return engineRegistry['linked_list']?.component;
     }
-    if (pattern.includes('heap')) {
+    if (pattern.includes('stack') || pattern.includes('queue') || tags.includes('stack') || tags.includes('queue')) {
+        return engineRegistry['hash_table']?.component; // Fallback to Hash for stack/queue viz for now or specialized
+    }
+
+    // -- ADVANCED STRUCTURES --
+    if (pattern.includes('heap') || pattern.includes('priority') || tags.includes('heap')) {
         return engineRegistry['heap']?.component;
     }
-    if (pattern.includes('graph') || pattern.includes('island') || pattern.includes('path')) {
+    if (pattern.includes('trie') || tags.includes('trie')) {
+        return engineRegistry['trie']?.component;
+    }
+    if (pattern.includes('graph') || pattern.includes('island') || pattern.includes('path') || 
+        tags.includes('graph') || tags.includes('union find') || tags.includes('disjoint set') || 
+        statement.includes('graph')) {
+        if (tags.includes('union find') || tags.includes('disjoint set')) return engineRegistry['union_find']?.component;
         return engineRegistry['graph']?.component;
     }
-    if (pattern.includes('bit')) {
+
+    // -- SORTING --
+    if (pattern.includes('sort') || tags.includes('sorting') || statement.includes('sort colors')) {
+        return engineRegistry['sorting']?.component;
+    }
+
+    // -- SYSTEMS --
+    if (pattern.includes('bit') || tags.includes('bit manipulation') || statement.includes('bitwise')) {
         return engineRegistry['bit_manipulation']?.component;
     }
-    if (pattern.includes('sql') || pattern.includes('query')) {
-        return engineRegistry['math']?.component;
-    }
-    if (pattern.includes('hash') || pattern.includes('map') || pattern.includes('table')) {
+    if (pattern.includes('hash') || pattern.includes('map') || pattern.includes('table') || 
+        tags.includes('hash table') || tags.includes('hash map')) {
         return engineRegistry['hash_table']?.component;
     }
 
-    // 3. Fallback to Matrix/Array for general problem structures
+    // -- GRID / MATRIX --
+    if (pattern.includes('matrix') || pattern.includes('grid') || tags.includes('matrix') || 
+        tags.includes('2d array') || statement.includes('grid')) {
+        return engineRegistry['matrix']?.component;
+    }
+
+    // 3. Last Resort Fallback (The Swiss Army Knife)
     return engineRegistry['array']?.component;
 }
 

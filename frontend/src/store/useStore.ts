@@ -679,9 +679,14 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
     fetchAllProblems: async () => {
         if (get().problems.length > 0) return
+        set({ isLoading: true, error: null })
         try {
             const response = await problemService.getProblems()
             let data = response.problems || response // Handle both paginated and legacy arrays
+
+            if (!data || !Array.isArray(data)) {
+                throw new Error("Invalid data format received from API")
+            }
 
             // Validation Logic: Ensure IDs exist and find duplicates
             const ids = data.map((p: any) => p.id)
@@ -702,7 +707,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
 
             // Normalize algorithmType and parse JSON fields for consistency
             const normalizedData = data.map((p: any) => normalizeProblem(p));
-            set({ problems: normalizedData as Problem[] })
+            set({ problems: normalizedData as Problem[], isLoading: false })
         } catch (err) {
             console.warn("Using fallback problems (Offline Mode):", err)
             // Use fallback data and normalize names
@@ -710,7 +715,7 @@ export const useStore = create<AlgoScopeState>((set, get) => ({
                 ...p,
                 algorithmType: (p.algorithmType === 'two_pointer' ? 'two_pointers' : p.algorithmType) as AlgorithmType
             }))
-            set({ problems: data as Problem[] })
+            set({ problems: data as Problem[], isLoading: false })
         }
     },
 

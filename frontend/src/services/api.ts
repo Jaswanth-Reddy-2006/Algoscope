@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-export const VITE_API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || 'https://algoscope.me';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const devDefault = 'http://localhost:5000';
+const prodDefault = 'https://algoscope.me';
+
+export const VITE_API_BASE_URL = 
+    (import.meta as any).env.VITE_API_BASE_URL || 
+    (isLocal ? devDefault : prodDefault);
+
 export const API_BASE_URL = VITE_API_BASE_URL.endsWith('/api') ? VITE_API_BASE_URL : `${VITE_API_BASE_URL}/api`;
 
 const api = axios.create({

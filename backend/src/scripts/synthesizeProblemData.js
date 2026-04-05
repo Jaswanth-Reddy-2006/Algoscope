@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 const PROMPT_TEMPLATE = `
-You are an expert Algoscope Algorithm Architect. Your job is to transform raw LeetCode problem data into structured, cognitive learning metadata.
+You are an expert Algoscope Algorithm Architect. Your job is to transform raw LeetCode problem data into structured, cognitive learning metadata for 3,900+ problems.
 
 PROBLEM:
 Title: {title}
@@ -17,13 +17,35 @@ Statement: {statement}
 Hints: {hints}
 
 INSTRUCTIONS:
-Generate a valid JSON object with the following fields:
-1. "brute_force_explanation": A concise string explaining the intuitive but inefficient way to solve this.
-2. "brute_force_steps": An array of objects [{ "description": "string", "line": number, "state": object }] describing the flow.
-3. "optimal_variants": [{ "name": "string", "explanation": "string", "complexity": { "time": "string", "space": "string" }, "steps": [{ "description": "string", "state": object }], "pseudocode": "string" }]
+Generate a valid JSON object. The "steps" in both brute_force and optimal_variants must be HIGH-FIDELITY. 
+Each step's "state" object must be compatible with Algoscope React Engines.
+
+ENGINE-SPECIFIC STATE REQUIREMENTS:
+1. Two Pointers / Sliding Window: Use "pointers" (e.g., { l, r, i, j }) and "highlightIndices" (array of indices to glow).
+2. Matrix / DP: Use "matrix" (2D array), "rowLabels", "colLabels", and "highlightIndices" ([row, col] pairs).
+3. Recursion / Tree: Use "tree" (nested { val, left, right, active: bool, result: any }).
+4. Linked List: Use "array" (representing nodes) and "pointers".
+5. Hash Table: Use "hashTable" (Record<string, any>).
+6. General: Use "explanation" (detailed logic for this specific step) and "phase" ('init', 'searching', 'found', 'not_found').
+
+FIELDS TO GENERATE:
+1. "brute_force_explanation": Deep insight into the inefficiency.
+2. "brute_force_steps": 10-15 steps showing the naive flow.
+3. "optimal_variants": [{ 
+    "name": "Strategy Name", 
+    "explanation": "Deep intuition", 
+    "complexity": { "time": "O(?)", "space": "O(?)" }, 
+    "steps": [12-20 detailed steps focusing on the 'Aha!' moment], 
+    "pseudocode": "Clean code" 
+   }]
 4. "thinking_guide": { "first_principles": [], "pattern_signals": [], "naive_approach": [], "approach_blueprint": [], "hints": [] }
 5. "lab_config": { "parameters": [{ "name": "string", "type": "string", "defaultValue": any }], "randomizer_logic": "string" }
 6. "metadata": { "primaryPattern": "string", "scenarios": [], "intuition": "string" }
+
+CRITICAL: 
+- ALWAYS include "highlightIndices" to make the UI feel alive.
+- Brute force must show the nested loops visually.
+- Optimal must show the logic that avoids work.
 
 RESPONSE MUST BE PURE JSON. NO MARKDOWN.
 `;
